@@ -19,6 +19,73 @@ CREATE TABLE entities (
     UNIQUE (project_id, entity_type, canonical_code)
 );
 
+CREATE TABLE organize_groups (
+    id UUID PRIMARY KEY,
+    project_id UUID NOT NULL REFERENCES projects(id),
+    name TEXT NOT NULL,
+    status TEXT NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'ARCHIVED')),
+    created_at TIMESTAMPTZ NOT NULL,
+    updated_at TIMESTAMPTZ NOT NULL,
+    UNIQUE (id, project_id)
+);
+
+CREATE UNIQUE INDEX organize_groups_project_name_lower
+    ON organize_groups (project_id, lower(name));
+
+CREATE TABLE organize_group_parents (
+    project_id UUID NOT NULL REFERENCES projects(id),
+    child_group_id UUID NOT NULL REFERENCES organize_groups(id) ON DELETE CASCADE,
+    parent_group_id UUID NOT NULL REFERENCES organize_groups(id) ON DELETE CASCADE,
+    PRIMARY KEY (project_id, child_group_id, parent_group_id),
+    FOREIGN KEY (child_group_id, project_id)
+        REFERENCES organize_groups(id, project_id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_group_id, project_id)
+        REFERENCES organize_groups(id, project_id) ON DELETE CASCADE,
+    CHECK (child_group_id <> parent_group_id)
+);
+
+CREATE TABLE organize_tags (
+    id UUID PRIMARY KEY,
+    project_id UUID NOT NULL REFERENCES projects(id),
+    name TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL,
+    UNIQUE (id, project_id)
+);
+
+CREATE UNIQUE INDEX organize_tags_project_name_lower
+    ON organize_tags (project_id, lower(name));
+
+CREATE TABLE organize_group_memberships (
+    project_id UUID NOT NULL REFERENCES projects(id),
+    item_type TEXT NOT NULL CHECK (item_type IN ('ENTITY', 'SOURCE_FILE', 'IMPORT')),
+    item_id UUID NOT NULL,
+    group_id UUID NOT NULL REFERENCES organize_groups(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL,
+    PRIMARY KEY (project_id, item_type, item_id, group_id),
+    FOREIGN KEY (group_id, project_id)
+        REFERENCES organize_groups(id, project_id) ON DELETE CASCADE
+);
+
+CREATE TABLE organize_tag_memberships (
+    project_id UUID NOT NULL REFERENCES projects(id),
+    item_type TEXT NOT NULL CHECK (item_type IN ('ENTITY', 'SOURCE_FILE', 'IMPORT')),
+    item_id UUID NOT NULL,
+    tag_id UUID NOT NULL REFERENCES organize_tags(id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ NOT NULL,
+    PRIMARY KEY (project_id, item_type, item_id, tag_id),
+    FOREIGN KEY (tag_id, project_id)
+        REFERENCES organize_tags(id, project_id) ON DELETE CASCADE
+);
+
+CREATE TABLE organize_item_lifecycle (
+    project_id UUID NOT NULL REFERENCES projects(id),
+    item_type TEXT NOT NULL CHECK (item_type IN ('ENTITY', 'SOURCE_FILE', 'IMPORT')),
+    item_id UUID NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('ACTIVE', 'ARCHIVED', 'DELETED')),
+    updated_at TIMESTAMPTZ NOT NULL,
+    PRIMARY KEY (project_id, item_type, item_id)
+);
+
 CREATE TABLE entity_revisions (
     id UUID PRIMARY KEY,
     entity_id UUID NOT NULL REFERENCES entities(id),

@@ -2,8 +2,10 @@ export type EntityId = string;
 export type ProjectId = string;
 export type RevisionNumber = number;
 export type SourceFileId = string;
-
 export type ProjectStatus = "ACTIVE" | "ARCHIVED" | "DELETED";
+export type OrganizeItemType = "ENTITY" | "SOURCE_FILE" | "IMPORT";
+export type OrganizeLifecycleStatus = "ACTIVE" | "ARCHIVED" | "DELETED";
+
 export type Representation = "DESIGNED" | "AS_BUILT";
 
 export interface SourceLocator {
@@ -12,6 +14,49 @@ export interface SourceLocator {
   sheet: string;
   row: number;
   column: string;
+}
+
+export interface OrganizeItemRef {
+  type: OrganizeItemType;
+  id: string;
+}
+
+export interface OrganizeGroup {
+  id: string;
+  projectId: ProjectId;
+  name: string;
+  parentIds: string[];
+  status: OrganizeLifecycleStatus;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface OrganizeTag {
+  id: string;
+  projectId: ProjectId;
+  name: string;
+  createdAt: string;
+}
+
+export interface OrganizeGroupMembership {
+  projectId: ProjectId;
+  item: OrganizeItemRef;
+  groupId: string;
+  createdAt: string;
+}
+
+export interface OrganizeTagMembership {
+  projectId: ProjectId;
+  item: OrganizeItemRef;
+  tagId: string;
+  createdAt: string;
+}
+
+export interface OrganizeItemLifecycle {
+  projectId: ProjectId;
+  item: OrganizeItemRef;
+  status: OrganizeLifecycleStatus;
+  updatedAt: string;
 }
 
 export type FileVersionStatus = "DISCOVERED" | "SYNCED" | "SUPERSEDED";

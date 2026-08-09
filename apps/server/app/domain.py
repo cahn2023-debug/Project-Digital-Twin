@@ -8,6 +8,7 @@ from ipaddress import ip_address
 from pathlib import Path
 from typing import Any
 from uuid import UUID, uuid4
+from zipfile import BadZipFile
 
 
 def utc_now() -> datetime:
@@ -86,6 +87,52 @@ class Camera:
     status: str | None = None
     properties: dict[str, Any] = field(default_factory=dict)
     source: SourceLocator | None = None
+
+
+@dataclass
+class OrganizeGroup:
+    id: UUID
+    project_id: UUID
+    name: str
+    parent_ids: list[UUID] = field(default_factory=list)
+    status: str = "ACTIVE"
+    created_at: datetime = field(default_factory=utc_now)
+    updated_at: datetime = field(default_factory=utc_now)
+
+
+@dataclass(frozen=True)
+class OrganizeTag:
+    id: UUID
+    project_id: UUID
+    name: str
+    created_at: datetime = field(default_factory=utc_now)
+
+
+@dataclass(frozen=True)
+class OrganizeGroupMembership:
+    project_id: UUID
+    item_type: str
+    item_id: UUID
+    group_id: UUID
+    created_at: datetime = field(default_factory=utc_now)
+
+
+@dataclass(frozen=True)
+class OrganizeTagMembership:
+    project_id: UUID
+    item_type: str
+    item_id: UUID
+    tag_id: UUID
+    created_at: datetime = field(default_factory=utc_now)
+
+
+@dataclass(frozen=True)
+class OrganizeItemLifecycle:
+    project_id: UUID
+    item_type: str
+    item_id: UUID
+    status: str
+    updated_at: datetime = field(default_factory=utc_now)
 
 
 @dataclass(frozen=True)
@@ -236,6 +283,31 @@ class FileWriteJob:
     result_file_revision: int | None = None
     result_file_hash: str | None = None
     backup_path: str | None = None
+    plan_id: UUID | None = None
+    destination_mode: str = "IN_PLACE"
+    destination_path: str | None = None
+    batch_strategy: str = "PER_FILE"
+    confirmed: bool = False
+    safety_enforced: bool = False
+
+
+@dataclass
+class WriteBackPreviewPlan:
+    id: UUID
+    project_id: UUID
+    created_by: str
+    created_at: datetime
+    item_type: str
+    item_ids: list[UUID]
+    format: str
+    destination_mode: str
+    batch_strategy: str
+    status: str
+    confirmation_required: bool
+    can_confirm: bool
+    write_performed: bool
+    files: list[dict[str, Any]]
+    warnings: list[str]
 
 
 class RevisionConflict(Exception):
@@ -256,6 +328,14 @@ class FileImportConflict(Exception):
 
 
 class FileWriteConflict(Exception):
+    pass
+
+
+class OrganizeValidationError(ValueError):
+    pass
+
+
+class OrganizeConflictError(ValueError):
     pass
 
 
@@ -285,9 +365,17 @@ class CameraStore:
         self.outbox: list[OutboxEvent] = []
         self.audit_events: list[AuditEvent] = []
         self.write_jobs: dict[UUID, FileWriteJob] = {}
+        self.writeback_plans: dict[UUID, WriteBackPreviewPlan] = {}
+        self.file_locks: dict[UUID, UUID] = {}
         self.file_versions: dict[UUID, list[dict[str, Any]]] = {}
         self.self_write_hashes: set[tuple[UUID, str]] = set()
         self.source_assets: dict[UUID, dict[str, Any]] = {}
+        self.organize_groups: dict[UUID, OrganizeGroup] = {}
+        self.organize_tags: dict[UUID, OrganizeTag] = {}
+        self.organize_group_parents: set[tuple[UUID, UUID]] = set()
+        self.organize_group_memberships: dict[tuple[UUID, str, UUID, UUID], datetime] = {}
+        self.organize_tag_memberships: dict[tuple[UUID, str, UUID, UUID], datetime] = {}
+        self.organize_item_lifecycle: dict[tuple[UUID, str, UUID], str] = {}
         self._idempotency: dict[str, UUID] = {}
         self._changeset_idempotency: dict[str, UUID] = {}
         self._file_import_idempotency: dict[tuple[UUID, int, str], UUID] = {}
@@ -386,6 +474,605 @@ class CameraStore:
             (camera for camera in self.cameras.values() if camera.project_id == project_id),
             key=lambda camera: camera.code,
         )
+
+    @staticmethod
+    def _organize_name(value: str, kind: str) -> str:
+        normalized = normalize_text(value)
+        if normalized is None:
+            raise OrganizeValidationError(f"Organize {kind} name is required")
+        return normalized
+
+    @staticmethod
+    def _organize_item_type(item_type: str) -> str:
+        normalized = item_type.strip().upper()
+        if normalized not in {"ENTITY", "SOURCE_FILE", "IMPORT"}:
+            raise OrganizeValidationError(f"Unsupported Organize item type: {item_type}")
+        return normalized
+
+    def _organize_items(self, project_id: UUID, item_type: str, item_ids: set[UUID]) -> None:
+        if item_type != "ENTITY":
+            return
+        for item_id in item_ids:
+            camera = self.cameras.get(item_id)
+            if camera is not None and camera.project_id != project_id:
+                raise OrganizeConflictError("Organize item belongs to another project")
+
+    def _require_organize_project(self, project_id: UUID) -> Project:
+        project = self.get_project(project_id)
+        if project is None:
+            raise KeyError("Project not found")
+        if project.status == "DELETED":
+            raise OrganizeConflictError("Deleted projects cannot be organized")
+        return project
+
+    def _organize_group(self, project_id: UUID, group_id: UUID) -> OrganizeGroup:
+        group = self.organize_groups.get(group_id)
+        if group is None:
+            raise KeyError("Organize group not found")
+        if group.project_id != project_id:
+            raise OrganizeConflictError("Organize group belongs to another project")
+        return group
+
+    def _organize_tag(self, project_id: UUID, tag_id: UUID) -> OrganizeTag:
+        tag = self.organize_tags.get(tag_id)
+        if tag is None:
+            raise KeyError("Organize tag not found")
+        if tag.project_id != project_id:
+            raise OrganizeConflictError("Organize tag belongs to another project")
+        return tag
+
+    def _organize_parent_ids(self, group_id: UUID) -> set[UUID]:
+        return {
+            parent_id
+            for child_id, parent_id in self.organize_group_parents
+            if child_id == group_id
+        }
+
+    def _would_create_organize_cycle(self, group_id: UUID, parent_ids: set[UUID]) -> bool:
+        pending = list(parent_ids)
+        visited: set[UUID] = set()
+        while pending:
+            current = pending.pop()
+            if current == group_id:
+                return True
+            if current in visited:
+                continue
+            visited.add(current)
+            pending.extend(self._organize_parent_ids(current))
+        return False
+
+    def create_organize_group(
+        self,
+        project_id: UUID,
+        name: str,
+        parent_ids: list[UUID] | None = None,
+    ) -> OrganizeGroup:
+        self._require_organize_project(project_id)
+        group_name = self._organize_name(name, "group")
+        if any(
+            group.project_id == project_id and group.name.casefold() == group_name.casefold()
+            for group in self.organize_groups.values()
+        ):
+            raise OrganizeConflictError("Organize group name is already in use")
+        normalized_parents = set(parent_ids or [])
+        for parent_id in normalized_parents:
+            self._organize_group(project_id, parent_id)
+        group_id = uuid4()
+        group = OrganizeGroup(
+            id=group_id,
+            project_id=project_id,
+            name=group_name,
+            parent_ids=sorted(normalized_parents, key=str),
+        )
+        self.organize_groups[group_id] = group
+        self.organize_group_parents.update((group_id, parent_id) for parent_id in normalized_parents)
+        return group
+
+    def rename_organize_group(self, project_id: UUID, group_id: UUID, name: str) -> OrganizeGroup:
+        group = self._organize_group(project_id, group_id)
+        group_name = self._organize_name(name, "group")
+        if any(
+            candidate.project_id == project_id
+            and candidate.id != group_id
+            and candidate.name.casefold() == group_name.casefold()
+            for candidate in self.organize_groups.values()
+        ):
+            raise OrganizeConflictError("Organize group name is already in use")
+        group.name = group_name
+        group.updated_at = utc_now()
+        return group
+
+    def update_organize_group(
+        self,
+        project_id: UUID,
+        group_id: UUID,
+        *,
+        name: str | None = None,
+        parent_ids: list[UUID] | None = None,
+        status: str | None = None,
+    ) -> OrganizeGroup:
+        group = self._organize_group(project_id, group_id)
+        if name is None and parent_ids is None and status is None:
+            raise OrganizeValidationError("Organize group update is empty")
+
+        group_name = self._organize_name(name, "group") if name is not None else group.name
+        if any(
+            candidate.project_id == project_id
+            and candidate.id != group_id
+            and candidate.name.casefold() == group_name.casefold()
+            for candidate in self.organize_groups.values()
+        ):
+            raise OrganizeConflictError("Organize group name is already in use")
+
+        normalized_parents = set(parent_ids) if parent_ids is not None else set(group.parent_ids)
+        for parent_id in normalized_parents:
+            self._organize_group(project_id, parent_id)
+        if self._would_create_organize_cycle(group_id, normalized_parents):
+            raise OrganizeConflictError("Organize group hierarchy cannot contain a cycle")
+
+        normalized_status = status.strip().upper() if status is not None else group.status
+        if normalized_status not in {"ACTIVE", "ARCHIVED"}:
+            raise OrganizeValidationError(f"Unsupported Organize group status: {status}")
+
+        if parent_ids is not None:
+            self.organize_group_parents.difference_update(
+                (child_id, existing_parent_id)
+                for child_id, existing_parent_id in self.organize_group_parents
+                if child_id == group_id
+            )
+            self.organize_group_parents.update((group_id, parent_id) for parent_id in normalized_parents)
+        group.name = group_name
+        group.parent_ids = sorted(normalized_parents, key=str)
+        group.status = normalized_status
+        group.updated_at = utc_now()
+        return group
+
+    def move_organize_group(
+        self,
+        project_id: UUID,
+        group_id: UUID,
+        parent_ids: list[UUID],
+    ) -> OrganizeGroup:
+        group = self._organize_group(project_id, group_id)
+        normalized_parents = set(parent_ids)
+        for parent_id in normalized_parents:
+            self._organize_group(project_id, parent_id)
+        if self._would_create_organize_cycle(group_id, normalized_parents):
+            raise OrganizeConflictError("Organize group hierarchy cannot contain a cycle")
+        self.organize_group_parents.difference_update(
+            (child_id, parent_id)
+            for child_id, parent_id in self.organize_group_parents
+            if child_id == group_id
+        )
+        self.organize_group_parents.update((group_id, parent_id) for parent_id in normalized_parents)
+        group.parent_ids = sorted(normalized_parents, key=str)
+        group.updated_at = utc_now()
+        return group
+
+    def set_organize_group_status(self, project_id: UUID, group_id: UUID, status: str) -> OrganizeGroup:
+        group = self._organize_group(project_id, group_id)
+        normalized_status = status.strip().upper()
+        if normalized_status not in {"ACTIVE", "ARCHIVED"}:
+            raise OrganizeValidationError(f"Unsupported Organize group status: {status}")
+        group.status = normalized_status
+        group.updated_at = utc_now()
+        return group
+
+    def delete_organize_group(self, project_id: UUID, group_id: UUID) -> None:
+        self._organize_group(project_id, group_id)
+        self.organize_groups.pop(group_id)
+        self.organize_group_parents = {
+            (child_id, parent_id)
+            for child_id, parent_id in self.organize_group_parents
+            if child_id != group_id and parent_id != group_id
+        }
+        for group in self.organize_groups.values():
+            if group.project_id == project_id and group_id in group.parent_ids:
+                group.parent_ids = [parent_id for parent_id in group.parent_ids if parent_id != group_id]
+                group.updated_at = utc_now()
+        self.organize_group_memberships = {
+            membership: created_at
+            for membership, created_at in self.organize_group_memberships.items()
+            if membership[0] != project_id or membership[3] != group_id
+        }
+
+    def list_organize_groups(self, project_id: UUID, include_archived: bool = False) -> list[OrganizeGroup]:
+        self._require_organize_project(project_id)
+        return sorted(
+            (
+                group
+                for group in self.organize_groups.values()
+                if group.project_id == project_id and (include_archived or group.status == "ACTIVE")
+            ),
+            key=lambda group: (group.name.casefold(), str(group.id)),
+        )
+
+    def create_organize_tag(self, project_id: UUID, name: str) -> OrganizeTag:
+        self._require_organize_project(project_id)
+        tag_name = self._organize_name(name, "tag")
+        if any(
+            tag.project_id == project_id and tag.name.casefold() == tag_name.casefold()
+            for tag in self.organize_tags.values()
+        ):
+            raise OrganizeConflictError("Organize tag name is already in use")
+        tag = OrganizeTag(id=uuid4(), project_id=project_id, name=tag_name)
+        self.organize_tags[tag.id] = tag
+        return tag
+
+    def assign_organize_groups(
+        self,
+        project_id: UUID,
+        item_type: str,
+        item_ids: list[UUID],
+        group_ids: list[UUID],
+        replace: bool = False,
+    ) -> list[OrganizeGroupMembership]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type)
+        normalized_items = set(item_ids)
+        normalized_groups = set(group_ids)
+        for group_id in normalized_groups:
+            self._organize_group(project_id, group_id)
+        if replace:
+            self.organize_group_memberships = {
+                membership: created_at
+                for membership, created_at in self.organize_group_memberships.items()
+                if not (
+                    membership[0] == project_id
+                    and membership[1] == normalized_type
+                    and membership[2] in normalized_items
+                )
+            }
+        self._organize_items(project_id, normalized_type, normalized_items)
+        for item_id in normalized_items:
+            for group_id in normalized_groups:
+                key = (project_id, normalized_type, item_id, group_id)
+                self.organize_group_memberships.setdefault(key, utc_now())
+        return self.list_organize_group_memberships(project_id, normalized_type, normalized_items)
+
+    def validate_organize_membership_targets(
+        self,
+        project_id: UUID,
+        group_ids: list[UUID],
+        tag_ids: list[UUID],
+    ) -> None:
+        self._require_organize_project(project_id)
+        for group_id in set(group_ids):
+            self._organize_group(project_id, group_id)
+        for tag_id in set(tag_ids):
+            self._organize_tag(project_id, tag_id)
+
+    def remove_organize_groups(
+        self,
+        project_id: UUID,
+        item_type: str,
+        item_ids: list[UUID],
+        group_ids: list[UUID],
+    ) -> list[OrganizeGroupMembership]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type)
+        normalized_items = set(item_ids)
+        normalized_groups = set(group_ids)
+        self.organize_group_memberships = {
+            membership: created_at
+            for membership, created_at in self.organize_group_memberships.items()
+            if not (
+                membership[0] == project_id
+                and membership[1] == normalized_type
+                and membership[2] in normalized_items
+                and membership[3] in normalized_groups
+            )
+        }
+        return self.list_organize_group_memberships(project_id, normalized_type, normalized_items)
+
+    def list_organize_group_memberships(
+        self,
+        project_id: UUID,
+        item_type: str | None = None,
+        item_ids: set[UUID] | None = None,
+    ) -> list[OrganizeGroupMembership]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type) if item_type else None
+        return sorted(
+            (
+                OrganizeGroupMembership(project_id, membership[1], membership[2], membership[3], created_at)
+                for membership, created_at in self.organize_group_memberships.items()
+                if membership[0] == project_id
+                and (normalized_type is None or membership[1] == normalized_type)
+                and (item_ids is None or membership[2] in item_ids)
+            ),
+            key=lambda membership: (membership.item_type, str(membership.item_id), str(membership.group_id)),
+        )
+
+    def assign_organize_tags(
+        self,
+        project_id: UUID,
+        item_type: str,
+        item_ids: list[UUID],
+        tag_ids: list[UUID],
+        replace: bool = False,
+    ) -> list[OrganizeTagMembership]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type)
+        normalized_items = set(item_ids)
+        normalized_tags = set(tag_ids)
+        for tag_id in normalized_tags:
+            self._organize_tag(project_id, tag_id)
+        if replace:
+            self.organize_tag_memberships = {
+                membership: created_at
+                for membership, created_at in self.organize_tag_memberships.items()
+                if not (
+                    membership[0] == project_id
+                    and membership[1] == normalized_type
+                    and membership[2] in normalized_items
+                )
+            }
+        self._organize_items(project_id, normalized_type, normalized_items)
+        for item_id in normalized_items:
+            for tag_id in normalized_tags:
+                key = (project_id, normalized_type, item_id, tag_id)
+                self.organize_tag_memberships.setdefault(key, utc_now())
+        return self.list_organize_tag_memberships(project_id, normalized_type, normalized_items)
+
+    def remove_organize_tags(
+        self,
+        project_id: UUID,
+        item_type: str,
+        item_ids: list[UUID],
+        tag_ids: list[UUID],
+    ) -> list[OrganizeTagMembership]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type)
+        normalized_items = set(item_ids)
+        normalized_tags = set(tag_ids)
+        self.organize_tag_memberships = {
+            membership: created_at
+            for membership, created_at in self.organize_tag_memberships.items()
+            if not (
+                membership[0] == project_id
+                and membership[1] == normalized_type
+                and membership[2] in normalized_items
+                and membership[3] in normalized_tags
+            )
+        }
+        return self.list_organize_tag_memberships(project_id, normalized_type, normalized_items)
+
+    def list_organize_tag_memberships(
+        self,
+        project_id: UUID,
+        item_type: str | None = None,
+        item_ids: set[UUID] | None = None,
+    ) -> list[OrganizeTagMembership]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type) if item_type else None
+        return sorted(
+            (
+                OrganizeTagMembership(project_id, membership[1], membership[2], membership[3], created_at)
+                for membership, created_at in self.organize_tag_memberships.items()
+                if membership[0] == project_id
+                and (normalized_type is None or membership[1] == normalized_type)
+                and (item_ids is None or membership[2] in item_ids)
+            ),
+            key=lambda membership: (membership.item_type, str(membership.item_id), str(membership.tag_id)),
+        )
+
+    def set_organize_item_status(
+        self,
+        project_id: UUID,
+        item_type: str,
+        item_ids: list[UUID],
+        status: str,
+    ) -> list[OrganizeItemLifecycle]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type)
+        normalized_status = status.strip().upper()
+        if normalized_status not in {"ACTIVE", "ARCHIVED", "DELETED"}:
+            raise OrganizeValidationError(f"Unsupported Organize lifecycle status: {status}")
+        normalized_items = set(item_ids)
+        self._organize_items(project_id, normalized_type, normalized_items)
+        now = utc_now()
+        for item_id in normalized_items:
+            self.organize_item_lifecycle[(project_id, normalized_type, item_id)] = normalized_status
+        return [
+            OrganizeItemLifecycle(project_id, normalized_type, item_id, normalized_status, now)
+            for item_id in sorted(normalized_items, key=str)
+        ]
+
+    def restore_organize_items(
+        self,
+        project_id: UUID,
+        item_type: str,
+        item_ids: list[UUID],
+    ) -> list[OrganizeItemLifecycle]:
+        return self.set_organize_item_status(project_id, item_type, item_ids, "ACTIVE")
+
+    def record_organize_event(
+        self,
+        project_id: UUID,
+        event_type: str,
+        aggregate_id: UUID,
+        actor: str,
+        payload: dict[str, Any],
+        *,
+        before: dict[str, Any] | None = None,
+        after: dict[str, Any] | None = None,
+        status: str = "APPLIED",
+    ) -> OutboxEvent:
+        self._require_organize_project(project_id)
+        return self._add_event(
+            event_type,
+            aggregate_id,
+            project_id,
+            len(self.outbox) + 1,
+            payload,
+            actor=actor,
+            object_id=aggregate_id,
+            status=status,
+            before=before,
+            after=after,
+        )
+
+    def organize_snapshot(
+        self,
+        project_id: UUID,
+        *,
+        query: str | None = None,
+        item_type: str | None = None,
+        group_id: UUID | None = None,
+        tag_id: UUID | None = None,
+        status: str | None = None,
+        source_file_id: UUID | None = None,
+    ) -> dict[str, Any]:
+        self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type) if item_type else None
+        normalized_status = status.strip().upper() if status else None
+        if normalized_status is not None and normalized_status not in {"ACTIVE", "ARCHIVED", "DELETED"}:
+            raise OrganizeValidationError(f"Unsupported Organize lifecycle status: {status}")
+        if group_id is not None:
+            self._organize_group(project_id, group_id)
+        if tag_id is not None:
+            self._organize_tag(project_id, tag_id)
+        query_text = query.strip().casefold() if query else None
+
+        def memberships(item_kind: str, item_id: UUID) -> tuple[list[UUID], list[UUID]]:
+            groups = sorted((
+                membership[3]
+                for membership in self.organize_group_memberships
+                if membership[0] == project_id
+                and membership[1] == item_kind
+                and membership[2] == item_id
+            ), key=str)
+            tags = sorted((
+                membership[3]
+                for membership in self.organize_tag_memberships
+                if membership[0] == project_id
+                and membership[1] == item_kind
+                and membership[2] == item_id
+            ), key=str)
+            return groups, tags
+
+        def include_item(item: dict[str, Any]) -> bool:
+            if normalized_type is not None and item["type"] != normalized_type:
+                return False
+            if normalized_status is not None and item["status"] != normalized_status:
+                return False
+            if group_id is not None and group_id not in item["group_ids"]:
+                return False
+            if tag_id is not None and tag_id not in item["tag_ids"]:
+                return False
+            if source_file_id is not None and item.get("source_file_id") != source_file_id:
+                return False
+            if query_text:
+                searchable = " ".join(
+                    str(item.get(field) or "")
+                    for field in ("name", "code", "status", "import_status", "source_path")
+                ).casefold()
+                if query_text not in searchable:
+                    return False
+            return True
+
+        items: list[dict[str, Any]] = []
+        for camera in self.list_cameras(project_id):
+            group_ids, tag_ids = memberships("ENTITY", camera.entity_id)
+            status_value = self.organize_item_lifecycle.get((project_id, "ENTITY", camera.entity_id), "ACTIVE")
+            source = asdict(camera.source) if camera.source else None
+            source_file = camera.source.file_id if camera.source else None
+            source_revision = camera.source.file_revision if camera.source else None
+            item = {
+                "type": "ENTITY",
+                "id": camera.entity_id,
+                "name": camera.name or camera.code,
+                "code": camera.code,
+                "status": status_value,
+                "group_ids": group_ids,
+                "tag_ids": tag_ids,
+                "metadata": self._camera_payload(camera),
+                "source": source,
+                "source_file_id": source_file,
+                "file_revision": source_revision,
+                "source_path": None,
+                "import_status": None,
+            }
+            if include_item(item):
+                items.append(item)
+
+        project_file_ids = {
+            event.file_id
+            for event in self.audit_events
+            if event.project_id == project_id and event.file_id is not None
+        }
+        project_file_ids.update(
+            changeset.file_id
+            for changeset in self.changesets.values()
+            if changeset.project_id == project_id and changeset.file_id is not None
+        )
+        project_file_ids.update(
+            job.file_id
+            for job in self.write_jobs.values()
+            if job.project_id == project_id
+        )
+        for file_id in sorted(project_file_ids, key=str):
+            versions = self.file_versions.get(file_id, [])
+            latest = versions[-1] if versions else None
+            group_ids, tag_ids = memberships("SOURCE_FILE", file_id)
+            status_value = self.organize_item_lifecycle.get((project_id, "SOURCE_FILE", file_id), "ACTIVE")
+            item = {
+                "type": "SOURCE_FILE",
+                "id": file_id,
+                "name": (latest or {}).get("source_path") or str(file_id),
+                "code": None,
+                "status": status_value,
+                "group_ids": group_ids,
+                "tag_ids": tag_ids,
+                "metadata": {"version_count": len(versions)},
+                "source": latest,
+                "source_file_id": file_id,
+                "file_revision": (latest or {}).get("revision"),
+                "source_path": (latest or {}).get("source_path"),
+                "import_status": None,
+            }
+            if include_item(item):
+                items.append(item)
+
+        for changeset in sorted(self.changesets.values(), key=lambda value: (value.submitted_at, str(value.id))):
+            if changeset.project_id != project_id:
+                continue
+            group_ids, tag_ids = memberships("IMPORT", changeset.id)
+            status_value = self.organize_item_lifecycle.get((project_id, "IMPORT", changeset.id), "ACTIVE")
+            versions = self.file_versions.get(changeset.file_id, []) if changeset.file_id else []
+            latest = versions[-1] if versions else None
+            item = {
+                "type": "IMPORT",
+                "id": changeset.id,
+                "name": changeset.origin,
+                "code": None,
+                "status": status_value,
+                "group_ids": group_ids,
+                "tag_ids": tag_ids,
+                "metadata": {"submitted_by": changeset.submitted_by, "raw_count": len(changeset.raw_rows)},
+                "source": {
+                    "file_id": changeset.file_id,
+                    "file_revision": changeset.file_revision,
+                    "sha256": changeset.file_hash,
+                    "version": latest,
+                },
+                "source_file_id": changeset.file_id,
+                "file_revision": changeset.file_revision,
+                "source_path": (latest or {}).get("source_path"),
+                "import_status": changeset.status,
+            }
+            if include_item(item):
+                items.append(item)
+
+        return {
+            "groups": self.list_organize_groups(project_id, include_archived=normalized_status in {"ARCHIVED", "DELETED"}),
+            "tags": sorted(
+                (tag for tag in self.organize_tags.values() if tag.project_id == project_id),
+                key=lambda tag: (tag.name.casefold(), str(tag.id)),
+            ),
+            "items": sorted(items, key=lambda item: (item["type"], str(item.get("name") or ""), str(item["id"]))),
+        }
 
     def import_camera(self, project_id: UUID, camera: Camera, created_by: str) -> str:
         key = (project_id, camera.code)
@@ -819,24 +1506,480 @@ class CameraStore:
         entity_revision: UUID,
         expected_file_hash: str | None = None,
         source_path: str | None = None,
+        *,
+        plan_id: UUID | None = None,
+        destination_mode: str = "IN_PLACE",
+        destination_path: str | None = None,
+        batch_strategy: str = "PER_FILE",
+        confirmed: bool = False,
+        safety_enforced: bool = False,
     ) -> FileWriteJob:
         job = FileWriteJob(
             id=uuid4(), project_id=project_id, file_id=file_id,
             expected_file_revision=expected_file_revision, entity_revision=entity_revision,
             expected_file_hash=expected_file_hash, source_path=source_path,
+            plan_id=plan_id, destination_mode=destination_mode, destination_path=destination_path,
+            batch_strategy=batch_strategy, confirmed=confirmed, safety_enforced=safety_enforced,
         )
+        if safety_enforced:
+            if not confirmed:
+                raise OrganizeValidationError("Write job requires explicit confirmation")
+            if file_id in self.file_locks:
+                raise FileWriteConflict("FILE_LOCKED: another write job is active")
+            self.file_locks[file_id] = job.id
         self.write_jobs[job.id] = job
         self._add_event(
             "FileWriteJobCreated",
             job.id,
             project_id,
             expected_file_revision,
-            {"file_id": str(file_id), "operation": job.operation},
+            {
+                "file_id": str(file_id),
+                "operation": job.operation,
+                "plan_id": str(plan_id) if plan_id else None,
+                "destination_mode": destination_mode,
+                "destination_path": destination_path,
+                "batch_strategy": batch_strategy,
+                "confirmed": confirmed,
+            },
             file_id=file_id,
             status=job.status,
             duration_ms=None,
         )
         return job
+
+    def _writeback_file_evidence(self, project_id: UUID, file_id: UUID) -> dict[str, Any]:
+        versions = self.file_versions.get(file_id, [])
+        latest = dict(versions[-1]) if versions else {}
+        changeset = max(
+            (
+                changeset
+                for changeset in self.changesets.values()
+                if changeset.project_id == project_id and changeset.file_id == file_id
+            ),
+            key=lambda value: (value.file_revision or 0, value.submitted_at),
+            default=None,
+        )
+        if latest:
+            return {
+                "revision": latest.get("revision"),
+                "sha256": latest.get("sha256"),
+                "source_path": latest.get("source_path"),
+            }
+        if changeset is not None:
+            return {
+                "revision": changeset.file_revision,
+                "sha256": changeset.file_hash,
+                "source_path": None,
+            }
+        return {"revision": None, "sha256": None, "source_path": None}
+
+    @staticmethod
+    def _new_excel_destination(source_path: str | None, file_id: UUID, root_path: str) -> str:
+        if source_path:
+            source = Path(source_path)
+            return str(source.with_name(f"{source.stem}.organize{source.suffix or '.xlsx'}"))
+        return str(Path(root_path) / f"organize-{file_id}.xlsx")
+
+    @staticmethod
+    def _writeback_adapter_preview(
+        format_name: str,
+        source_path: str | None,
+        file_id: UUID,
+        file_revision: int | None,
+        manual_mapping: dict[str, Any] | None,
+    ) -> dict[str, Any]:
+        if format_name == "EXCEL":
+            return {
+                "adapter": "excel",
+                "serializer": "excel-preserving",
+                "structure_detected": True,
+                "manual_mapping_required": False,
+                "mapping_status": "NOT_REQUIRED",
+                "observed_hash": None,
+                "warnings": [],
+                "source_summary": {"managed_structure": "workbook"},
+            }
+
+        expected_document_format = {"MARKDOWN": "markdown", "TXT": "text", "WORD": "word"}[format_name]
+        warnings: list[str] = []
+        parsed: Any = None
+        observed_hash: str | None = None
+        if source_path:
+            try:
+                from .documents import parse_document
+
+                parsed = parse_document(source_path, file_id=file_id, file_revision=file_revision or 1)
+                observed_hash = parsed.source_hash
+            except (BadZipFile, OSError, ValueError):
+                warnings.append("SOURCE_CONTENT_UNAVAILABLE")
+        else:
+            warnings.append("SOURCE_CONTENT_UNAVAILABLE")
+
+        if parsed is not None and parsed.format != expected_document_format:
+            warnings.append("SOURCE_FORMAT_MISMATCH")
+        structure_detected = bool(parsed and (
+            parsed.tables
+            or any(node.kind in {"heading", "metadata", "list_item"} for node in parsed.nodes)
+        ))
+        mapping_status = "DETECTED" if structure_detected else "MANUAL" if manual_mapping else "REQUIRED"
+        if not structure_detected and not manual_mapping:
+            warnings.append("MANUAL_MAPPING_REQUIRED")
+        return {
+            "adapter": format_name.casefold(),
+            "serializer": f"{format_name.casefold()}-preserving",
+            "structure_detected": structure_detected,
+            "manual_mapping_required": not structure_detected and not manual_mapping,
+            "mapping_status": mapping_status,
+            "observed_hash": observed_hash,
+            "warnings": warnings,
+            "source_summary": {
+                "node_count": len(parsed.nodes) if parsed else 0,
+                "table_count": len(parsed.tables) if parsed else 0,
+                "unmanaged_content": "preserved",
+            },
+        }
+
+    def create_organize_excel_preview(
+        self,
+        project_id: UUID,
+        item_type: str,
+        item_ids: list[UUID],
+        *,
+        file_ids: list[UUID] | None = None,
+        destination_mode: str = "IN_PLACE",
+        batch_strategy: str = "PER_FILE",
+        destination_paths: dict[str, str] | None = None,
+        expected_file_revisions: dict[str, int] | None = None,
+        expected_file_hashes: dict[str, str] | None = None,
+        format_name: str = "EXCEL",
+        manual_mapping: dict[str, dict[str, Any]] | None = None,
+        created_by: str = "organize-editor",
+    ) -> WriteBackPreviewPlan:
+        project = self._require_organize_project(project_id)
+        normalized_type = self._organize_item_type(item_type)
+        normalized_format = format_name.strip().upper()
+        normalized_destination = destination_mode.strip().upper()
+        normalized_strategy = batch_strategy.strip().upper()
+        if not item_ids:
+            raise OrganizeValidationError("At least one item is required for write-back preview")
+        if normalized_destination not in {"IN_PLACE", "NEW_FILE"}:
+            raise OrganizeValidationError("destination_mode must be IN_PLACE or NEW_FILE")
+        if normalized_strategy not in {"PER_FILE", "ALL_OR_NOTHING"}:
+            raise OrganizeValidationError("batch_strategy must be PER_FILE or ALL_OR_NOTHING")
+        if normalized_format not in {"EXCEL", "MARKDOWN", "TXT", "WORD"}:
+            raise OrganizeValidationError("format must be EXCEL, MARKDOWN, TXT or WORD")
+
+        destination_paths = destination_paths or {}
+        expected_file_revisions = expected_file_revisions or {}
+        expected_file_hashes = expected_file_hashes or {}
+        manual_mapping = manual_mapping or {}
+        snapshot_items = {
+            item["id"]: item
+            for item in self.organize_snapshot(project_id)["items"]
+            if item["type"] == normalized_type
+        }
+        missing = [str(item_id) for item_id in item_ids if item_id not in snapshot_items]
+        if missing:
+            raise KeyError(f"Organize items not found: {', '.join(missing)}")
+
+        selected_items = [snapshot_items[item_id] for item_id in item_ids]
+        derived_file_ids = list(dict.fromkeys(
+            item["source_file_id"]
+            for item in selected_items
+            if item.get("source_file_id") is not None
+        ))
+        target_file_ids = list(dict.fromkeys(file_ids or derived_file_ids))
+        if not target_file_ids:
+            raise OrganizeValidationError("Selected items have no source file target")
+        project_file_ids = set(derived_file_ids)
+        project_file_ids.update(
+            changeset.file_id
+            for changeset in self.changesets.values()
+            if changeset.project_id == project_id and changeset.file_id is not None
+        )
+        project_file_ids.update(
+            job.file_id
+            for job in self.write_jobs.values()
+            if job.project_id == project_id
+        )
+        project_file_ids.update(
+            event.file_id
+            for event in self.audit_events
+            if event.project_id == project_id and event.file_id is not None
+        )
+        if any(file_id not in project_file_ids for file_id in target_file_ids):
+            raise OrganizeConflictError("Source file belongs to another project or is not registered")
+
+        all_warnings: list[str] = []
+        file_plans: list[dict[str, Any]] = []
+        for file_id in target_file_ids:
+            evidence = self._writeback_file_evidence(project_id, file_id)
+            source_items = [item for item in selected_items if item.get("source_file_id") == file_id]
+            if not source_items and len(target_file_ids) == 1:
+                source_items = selected_items
+            current_revision = evidence["revision"] or next((item.get("file_revision") for item in source_items if item.get("file_revision")), None)
+            current_hash = evidence["sha256"] or next((item.get("source", {}).get("sha256") for item in source_items if item.get("source")), None)
+            expected_revision = expected_file_revisions.get(str(file_id), current_revision)
+            expected_hash = expected_file_hashes.get(str(file_id), current_hash)
+            source_path = evidence["source_path"] or next((item.get("source_path") for item in source_items if item.get("source_path")), None)
+            requested_destination = destination_paths.get(str(file_id))
+            destination_path = requested_destination
+            if normalized_destination == "IN_PLACE":
+                destination_path = destination_path or source_path
+            else:
+                destination_path = destination_path or self._new_excel_destination(source_path, file_id, project.root_path)
+
+            warnings: list[str] = []
+            adapter = self._writeback_adapter_preview(
+                normalized_format,
+                source_path,
+                file_id,
+                current_revision,
+                manual_mapping.get(str(file_id)),
+            )
+            warnings.extend(adapter["warnings"])
+            if normalized_destination == "IN_PLACE" and not source_path:
+                warnings.append("SOURCE_PATH_UNAVAILABLE")
+            if normalized_destination == "IN_PLACE" and requested_destination and source_path and requested_destination != source_path:
+                warnings.append("IN_PLACE_DESTINATION_MISMATCH")
+            if normalized_destination == "NEW_FILE" and not requested_destination:
+                warnings.append("DESTINATION_EXPLICIT_REQUIRED")
+            if not expected_revision:
+                warnings.append("SOURCE_REVISION_UNAVAILABLE")
+            if not expected_hash:
+                warnings.append("SOURCE_HASH_UNAVAILABLE")
+            if expected_revision and current_revision and expected_revision != current_revision:
+                warnings.append("STALE_SOURCE_REVISION")
+            if expected_hash and current_hash and expected_hash != current_hash:
+                warnings.append("STALE_SOURCE_HASH")
+            if expected_hash and (len(expected_hash) != 64 or any(character not in "0123456789abcdefABCDEF" for character in expected_hash)):
+                raise OrganizeValidationError("expected_file_hash must be a SHA-256 hex value")
+            allowed_extensions = {
+                "EXCEL": {".xlsx", ".xlsm", ".xls"},
+                "MARKDOWN": {".md", ".markdown"},
+                "TXT": {".txt"},
+                "WORD": {".docx"},
+            }[normalized_format]
+            if destination_path and Path(destination_path).suffix.lower() not in allowed_extensions:
+                warnings.append("UNSUPPORTED_FORMAT_DESTINATION")
+            if adapter["observed_hash"] and current_hash and adapter["observed_hash"] != current_hash:
+                warnings.append("STALE_SOURCE_CONTENT")
+
+            changes: list[dict[str, Any]] = []
+            for item in source_items:
+                source_locator = item.get("source") or {}
+                groups = [
+                    self.organize_groups[group_id].name
+                    for group_id in item.get("group_ids", [])
+                    if group_id in self.organize_groups
+                ]
+                tags = [
+                    self.organize_tags[tag_id].name
+                    for tag_id in item.get("tag_ids", [])
+                    if tag_id in self.organize_tags
+                ]
+                locator = {
+                    "file_id": str(file_id),
+                    "file_revision": item.get("file_revision") or current_revision,
+                    "sheet": source_locator.get("sheet"),
+                    "row": source_locator.get("row"),
+                    "column": source_locator.get("column"),
+                }
+                changes.extend([
+                    {
+                        "kind": "METADATA",
+                        "item_type": item["type"],
+                        "item_id": str(item["id"]),
+                        "locator": locator,
+                        "adapter": adapter["adapter"],
+                        "before": {"managed_fields": "current managed source values"},
+                        "after": {"organize_groups": groups, "organize_tags": tags, "lifecycle": item["status"]},
+                    },
+                    {
+                        "kind": "CONTENT",
+                        "item_type": item["type"],
+                        "item_id": str(item["id"]),
+                        "locator": locator,
+                        "adapter": adapter["adapter"],
+                        "operation": "preserve_unmanaged_and_reflect_group_structure",
+                        "before": "existing unmanaged content preserved",
+                        "after": {"group_paths": groups, "source_locator_preserved": True},
+                    },
+                ])
+
+            all_warnings.extend(warnings)
+            file_plans.append({
+                "file_id": str(file_id),
+                "format": normalized_format,
+                "adapter": adapter["adapter"],
+                "serializer": adapter["serializer"],
+                "structure_detected": adapter["structure_detected"],
+                "manual_mapping_required": adapter["manual_mapping_required"],
+                "mapping_status": adapter["mapping_status"],
+                "source_summary": adapter["source_summary"],
+                "source_path": source_path,
+                "destination_path": destination_path,
+                "destination_mode": normalized_destination,
+                "current_version": {"revision": current_revision, "sha256": current_hash},
+                "expected_version": {"revision": expected_revision, "sha256": expected_hash},
+                "changes": changes,
+                "warnings": warnings,
+                "blocked": bool(warnings),
+                "unmanaged_content": "PRESERVE",
+                "write_performed": False,
+            })
+
+        plan = WriteBackPreviewPlan(
+            id=uuid4(),
+            project_id=project_id,
+            created_by=created_by,
+            created_at=utc_now(),
+            item_type=normalized_type,
+            item_ids=item_ids,
+            format=normalized_format,
+            destination_mode=normalized_destination,
+            batch_strategy=normalized_strategy,
+            status="PREVIEW",
+            confirmation_required=True,
+            can_confirm=not all_warnings,
+            write_performed=False,
+            files=file_plans,
+            warnings=list(dict.fromkeys(all_warnings)),
+        )
+        self.writeback_plans[plan.id] = plan
+        self._add_event(
+            "FileWriteBackPreviewCreated",
+            plan.id,
+            project_id,
+            1,
+            {
+                "plan_id": str(plan.id),
+                "item_type": normalized_type,
+                "item_ids": [str(item_id) for item_id in item_ids],
+                "file_ids": [str(file_id) for file_id in target_file_ids],
+                "destination_mode": normalized_destination,
+                "batch_strategy": normalized_strategy,
+                "write_performed": False,
+            },
+            actor=created_by,
+            status=plan.status,
+            after={"confirmation_required": True, "can_confirm": plan.can_confirm},
+        )
+        return plan
+
+    def _release_write_lock(self, job: FileWriteJob) -> None:
+        if self.file_locks.get(job.file_id) == job.id:
+            self.file_locks.pop(job.file_id, None)
+
+    def _refresh_writeback_plan_status(self, plan_id: UUID | None) -> None:
+        if plan_id is None or plan_id not in self.writeback_plans:
+            return
+        plan = self.writeback_plans[plan_id]
+        jobs = [job for job in self.write_jobs.values() if job.plan_id == plan_id]
+        if any(job.status in {"FAILED", "CONFLICT"} for job in jobs):
+            plan.status = "FAILED"
+        elif jobs and all(job.status == "APPLIED" for job in jobs):
+            plan.status = "APPLIED"
+
+    def execute_organize_writeback(
+        self,
+        project_id: UUID,
+        plan_id: UUID,
+        *,
+        confirmed: bool,
+        actor: str,
+    ) -> dict[str, Any]:
+        plan = self.writeback_plans.get(plan_id)
+        if plan is None or plan.project_id != project_id:
+            raise KeyError("Write-back preview plan not found")
+        if not confirmed:
+            raise OrganizeValidationError("Explicit confirmation is required before write-back")
+        if plan.status != "PREVIEW":
+            raise OrganizeConflictError(f"Preview plan cannot be confirmed from {plan.status}")
+        if not plan.can_confirm:
+            raise FileWriteConflict("WRITE_BACK_BLOCKED: preview contains unresolved safety warnings")
+
+        conflicts: list[str] = []
+        for file_plan in plan.files:
+            file_id = UUID(file_plan["file_id"])
+            if file_id in self.file_locks:
+                conflicts.append(f"FILE_LOCKED:{file_id}")
+                continue
+            evidence = self._writeback_file_evidence(project_id, file_id)
+            expected = file_plan["expected_version"]
+            if expected.get("revision") != evidence.get("revision"):
+                conflicts.append(f"STALE_SOURCE_REVISION:{file_id}")
+            if expected.get("sha256") != evidence.get("sha256"):
+                conflicts.append(f"STALE_SOURCE_HASH:{file_id}")
+            source_path = file_plan.get("source_path")
+            if source_path and Path(source_path).is_file() and expected.get("sha256"):
+                actual_hash = hashlib.sha256(Path(source_path).read_bytes()).hexdigest()
+                if actual_hash != expected["sha256"]:
+                    conflicts.append(f"STALE_SOURCE_CONTENT:{file_id}")
+        if conflicts:
+            plan.status = "CONFLICT"
+            self._add_event(
+                "FileWriteBackBlocked",
+                plan.id,
+                project_id,
+                1,
+                {"plan_id": str(plan.id), "conflicts": conflicts},
+                actor=actor,
+                status=plan.status,
+                after={"confirmed": False},
+            )
+            raise FileWriteConflict("WRITE_BACK_BLOCKED: " + ", ".join(conflicts))
+
+        jobs: list[FileWriteJob] = []
+        try:
+            for file_plan in plan.files:
+                file_id = UUID(file_plan["file_id"])
+                item_revision = UUID(int=0)
+                if plan.item_type == "ENTITY":
+                    item_id = next((UUID(change["item_id"]) for change in file_plan["changes"] if change["item_type"] == "ENTITY"), None)
+                    current = self.current_revision(item_id, "DESIGNED") if item_id else None
+                    if current is not None:
+                        item_revision = current.id
+                job = self.create_write_job(
+                    project_id,
+                    file_id,
+                    file_plan["expected_version"]["revision"],
+                    item_revision,
+                    file_plan["expected_version"]["sha256"],
+                    file_plan.get("source_path"),
+                    plan_id=plan.id,
+                    destination_mode=file_plan["destination_mode"],
+                    destination_path=file_plan.get("destination_path"),
+                    batch_strategy=plan.batch_strategy,
+                    confirmed=True,
+                    safety_enforced=True,
+                )
+                jobs.append(job)
+        except FileWriteConflict:
+            for job in jobs:
+                job.status = "FAILED"
+                self._release_write_lock(job)
+            plan.status = "FAILED"
+            raise
+
+        plan.status = "QUEUED"
+        self._add_event(
+            "FileWriteBackConfirmed",
+            plan.id,
+            project_id,
+            1,
+            {
+                "plan_id": str(plan.id),
+                "job_ids": [str(job.id) for job in jobs],
+                "batch_strategy": plan.batch_strategy,
+                "destination_mode": plan.destination_mode,
+            },
+            actor=actor,
+            status=plan.status,
+            after={"confirmed": True, "job_count": len(jobs)},
+        )
+        return {"plan": plan, "jobs": jobs}
 
     def register_file_version(
         self,
@@ -894,8 +2037,38 @@ class CameraStore:
             return job
         if job.status != "PENDING":
             raise ValueError(f"Write job cannot complete from {job.status}")
+        if job.safety_enforced:
+            if not job.confirmed or (job.plan_id is None and job.operation != "RESTORE"):
+                self._release_write_lock(job)
+                job.status = "FAILED"
+                self._refresh_writeback_plan_status(job.plan_id)
+                raise FileWriteConflict("WRITE_BACK_BLOCKED: job confirmation is missing")
+            current_revision = len(self.file_versions.get(job.file_id, []))
+            if current_revision != job.expected_file_revision:
+                self._release_write_lock(job)
+                job.status = "CONFLICT"
+                self._refresh_writeback_plan_status(job.plan_id)
+                raise FileWriteConflict(
+                    f"FILE_CONFLICT: expected revision {job.expected_file_revision}, found {current_revision}"
+                )
+            if job.source_path and Path(job.source_path).is_file():
+                actual_source_hash = hashlib.sha256(Path(job.source_path).read_bytes()).hexdigest()
+                if actual_source_hash != source_hash:
+                    self._release_write_lock(job)
+                    job.status = "CONFLICT"
+                    self._refresh_writeback_plan_status(job.plan_id)
+                    raise FileWriteConflict(
+                        f"FILE_CONFLICT: worker source hash {source_hash}, file hash {actual_source_hash}"
+                    )
+            if job.destination_mode == "IN_PLACE" and not backup_path:
+                self._release_write_lock(job)
+                job.status = "FAILED"
+                self._refresh_writeback_plan_status(job.plan_id)
+                raise FileWriteConflict("BACKUP_REQUIRED: in-place write-back requires a backup path")
         if job.expected_file_hash is not None and job.expected_file_hash != source_hash:
+            self._release_write_lock(job)
             job.status = "CONFLICT"
+            self._refresh_writeback_plan_status(job.plan_id)
             raise FileWriteConflict(
                 f"FILE_CONFLICT: expected {job.expected_file_hash}, found {source_hash}"
             )
@@ -913,6 +2086,7 @@ class CameraStore:
         job.result_file_hash = result_hash
         job.backup_path = backup_path
         self.self_write_hashes.add((job.file_id, result_hash))
+        self._release_write_lock(job)
         if job.changeset_id is not None and job.changeset_id in self.changesets:
             self.changesets[job.changeset_id].status = "APPLIED"
         self._add_event(
@@ -934,10 +2108,50 @@ class CameraStore:
             after={"file_hash": result_hash},
             duration_ms=None,
         )
+        self._refresh_writeback_plan_status(job.plan_id)
         return job
 
     def is_self_write(self, file_id: UUID, file_hash: str) -> bool:
         return (file_id, file_hash) in self.self_write_hashes
+
+    def fail_write_job(self, project_id: UUID, job_id: UUID, actor: str, reason: str) -> FileWriteJob:
+        job = self.write_jobs.get(job_id)
+        if job is None or job.project_id != project_id:
+            raise KeyError("Write job not found")
+        if job.status == "APPLIED":
+            raise ValueError("Applied write job cannot fail")
+        job.status = "FAILED"
+        self._release_write_lock(job)
+        if job.batch_strategy == "ALL_OR_NOTHING" and job.plan_id is not None:
+            for sibling in self.write_jobs.values():
+                if sibling.plan_id == job.plan_id and sibling.id != job.id and sibling.status == "PENDING":
+                    sibling.status = "FAILED"
+                    self._release_write_lock(sibling)
+        self._add_event(
+            "FileWriteFailed",
+            job.id,
+            project_id,
+            1,
+            {"file_id": str(job.file_id), "reason": reason, "operation": job.operation},
+            actor=actor,
+            file_id=job.file_id,
+            status=job.status,
+            after={"reason": reason},
+        )
+        self._refresh_writeback_plan_status(job.plan_id)
+        return job
+
+    def record_self_write_suppression(self, project_id: UUID, file_id: UUID, file_hash: str, actor: str) -> None:
+        self._add_event(
+            "SelfWriteSuppressed",
+            file_id,
+            project_id,
+            1,
+            {"file_id": str(file_id), "file_hash": file_hash, "suppressed": True},
+            actor=actor,
+            file_id=file_id,
+            status="SUPPRESSED",
+        )
 
     def create_restore_job(
         self,
@@ -952,6 +2166,13 @@ class CameraStore:
         target = next((version for version in versions if version["revision"] == target_file_revision), None)
         if target is None:
             raise KeyError("File version not found")
+        current_revision = len(versions)
+        if current_revision != expected_file_revision:
+            raise FileWriteConflict(
+                f"FILE_CONFLICT: expected revision {expected_file_revision}, found {current_revision}"
+            )
+        if file_id in self.file_locks:
+            raise FileWriteConflict("FILE_LOCKED: another write job is active")
         changeset_id = uuid4()
         changeset = ChangeSet(
             id=changeset_id,
@@ -976,11 +2197,17 @@ class CameraStore:
             expected_file_revision=expected_file_revision,
             entity_revision=UUID(int=0),
             operation="RESTORE",
+            expected_file_hash=versions[-1]["sha256"] if versions else None,
             source_path=source_path,
             source_file_revision=target_file_revision,
             changeset_id=changeset_id,
+            destination_mode="IN_PLACE",
+            destination_path=source_path,
+            confirmed=True,
+            safety_enforced=True,
         )
         self.write_jobs[job.id] = job
+        self.file_locks[file_id] = job.id
         self._add_event(
             "FileRestoreJobCreated",
             job.id,

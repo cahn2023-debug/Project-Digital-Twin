@@ -731,9 +731,13 @@ tbody tr:hover { background: var(--surface-2); }
 .mobile-head { display: block; padding: 10px; }
 .mobile-head div { margin-top: 2px; color: var(--muted); font-size: 8px; }
 .mobile-map { position: relative; height: 122px; overflow: hidden; background: #e4ece9; }
-.mobile-map .map-grid { background-size: 24px 24px; }
-.mobile-map .road.r1 { top: 48%; }
-.mobile-map .road.r2 { top: 64%; }
+.mobile-map .map-grid { position: absolute; inset: 0; opacity: .26; background-image: linear-gradient(to right, #98a6ae 1px, transparent 1px), linear-gradient(to bottom, #98a6ae 1px, transparent 1px); background-size: 24px 24px; }
+.mobile-map .road { position: absolute; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, .8); box-shadow: 0 0 0 2px rgba(155, 170, 177, .2); }
+.mobile-map .road.r1 { top: 48%; left: -8%; width: 62%; transform: rotate(-18deg); }
+.mobile-map .road.r2 { top: 64%; left: 26%; width: 86%; transform: rotate(24deg); }
+.mobile-map .camera-pin, .mobile-map .node-pin { position: absolute; border-radius: 50%; box-shadow: 0 0 0 3px rgba(255, 255, 255, .72), 0 2px 6px rgba(19, 46, 69, .2); }
+.mobile-map .camera-pin { width: 9px; height: 9px; background: var(--accent); }
+.mobile-map .node-pin { width: 11px; height: 11px; background: var(--warning); }
 .mobile-map .camera-pin.p2 { top: 45%; left: 53%; }
 .mobile-map .node-pin.n1 { top: 59%; left: 65%; }
 .mobile-list { padding: 4px 9px; }

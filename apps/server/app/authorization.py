@@ -31,6 +31,7 @@ def authorize(principal: Principal, action: str, project_id: UUID) -> None:
     allowed_roles = {
         "read": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER, Role.APPROVER, Role.CONTRACTOR_USER, Role.VIEWER},
         "design.edit": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER},
+        "organize.edit": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER},
         "field.submit": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.CONTRACTOR_USER},
         "approval.apply": {Role.PROJECT_ADMIN, Role.APPROVER},
         "audit.view": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER, Role.APPROVER, Role.CONTRACTOR_USER, Role.VIEWER},
