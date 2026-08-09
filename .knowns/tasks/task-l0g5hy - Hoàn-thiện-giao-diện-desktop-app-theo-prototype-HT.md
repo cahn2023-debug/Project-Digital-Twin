@@ -8,7 +8,7 @@ labels:
   - ui
   - desktop
 createdAt: '2026-08-09T09:30:45.070Z'
-updatedAt: '2026-08-09T09:50:56.397Z'
+updatedAt: '2026-08-09T09:55:01.219Z'
 completedAt: '2026-08-09T09:50:56.397Z'
 timeSpent: 1200
 assignee: '@me'
@@ -50,5 +50,6 @@ assignee: '@me'
 
 <!-- SECTION:NOTES:BEGIN -->
 Done: replaced the minimal web shell with a React implementation matching project_platform_ui_prototype.html across DATACENTER, DESIGN, OPERATE, ORGANIZE, and DASHBOARD; added design tokens/layout, sidebar/module navigation, status/table/map/timeline/chart fixtures, responsive breakpoints, theme persistence, sidebar collapse, global Ctrl/Cmd+K search focus, working camera filtering, and toast interactions. Changed only apps/web/src/App.tsx, apps/web/src/styles.css, and apps/web/index.html; no API, server, Tauri, or native boundaries changed. Verification: web typecheck passed; web production build passed (Vite); web test script passed with 0 tests; git diff --check passed. Automated browser screenshot was unavailable because no Playwright/Chrome runtime is installed; responsive behavior is covered by the CSS breakpoints and build validation. System Decision Impact: none — this task implements the supplied UI prototype and introduces no durable architecture, API, storage, or workflow guidance.
+📚 Extracted learnings to @doc/learnings/learning-desktop-ui-prototype-implementation. Proposed memories: @memory/n30nrl (prototype-to-React visual parity pattern) and @memory/yr1ord (UI visual verification prerequisite). No first-class System Decision or critical-pattern promotion created.
 <!-- SECTION:NOTES:END -->
 
