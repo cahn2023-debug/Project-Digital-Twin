@@ -1,6 +1,7 @@
 {
   "paths": {
     "learnings/learning-desktop-ui-prototype-implementation": "doc-0542cffac9fa8c9a5a31f2b1aa9079c4",
+    "specs/2026-08-09/local-file-ingestion-and-synchronization": "doc-04f813624015441b70e6f24f21a489c2",
     "specs/2026-08-09/phase-0b-architecture-decision-records": "doc-e0b759e9bf80ff8d02165e4d37e00040"
   }
 }

@@ -1,0 +1,178 @@
+{
+  "taskId": "1feoxs",
+  "currentVersion": 3,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "1feoxs",
+      "version": 1,
+      "timestamp": "2026-08-09T10:50:29.4661457Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.4641149Z",
+        "description": "Create one ChangeSet per file after preview, preserve Raw/unmapped data, validate before canonical apply, merge multi-source fields and resolve base/server/local conflicts.",
+        "fulfills": [
+          "AC-10",
+          "AC-13"
+        ],
+        "id": "1feoxs",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "changeset",
+          "conflicts"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-05] Implement ChangeSet import, approval and conflict resolution",
+        "updatedAt": "2026-08-09T10:50:29.4641149Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "1feoxs",
+      "version": 2,
+      "timestamp": "2026-08-09T10:50:54.8468684Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Create one ChangeSet per file after preview and keep canonical state unchanged until approval."
+            },
+            {
+              "completed": false,
+              "text": "Persist unmapped data in Raw and show user-visible notices."
+            },
+            {
+              "completed": false,
+              "text": "Present source-file and base/server/local field conflicts and apply only resolved changes."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Create one ChangeSet per file after preview and keep canonical state unchanged until approval."
+          },
+          {
+            "completed": false,
+            "text": "Persist unmapped data in Raw and show user-visible notices."
+          },
+          {
+            "completed": false,
+            "text": "Present source-file and base/server/local field conflicts and apply only resolved changes."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.464Z",
+        "description": "Create one ChangeSet per file after preview, preserve Raw/unmapped data, validate before canonical apply, merge multi-source fields and resolve base/server/local conflicts.",
+        "fulfills": [
+          "AC-10",
+          "AC-13"
+        ],
+        "id": "1feoxs",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "changeset",
+          "conflicts"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-05] Implement ChangeSet import, approval and conflict resolution",
+        "updatedAt": "2026-08-09T10:50:54.8468684Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "1feoxs",
+      "version": 3,
+      "timestamp": "2026-08-09T11:25:18.1744442Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Extend the existing ChangeSet and import boundaries in apps/server/app/domain.py and apps/server/app/main.py so each accepted file preview produces one explicit file-origin ChangeSet with Raw/unmapped references and no canonical mutation before approval.\n2. Implement validation state transitions, approval/apply behavior, field-level base/server/local conflict payloads and same-object multi-source conflict resolution using the task-03 mapping output.\n3. Preserve idempotency by file_id/revision/hash and emit the existing outbox/audit hooks exactly once for an applied ChangeSet; retain rejected/failed/conflicted history.\n4. Add API/domain tests for one-ChangeSet-per-file, pre-approval immutability, partial valid import, Raw notices, non-overlapping field rebase, field conflict and retry idempotency.\n5. Run pytest/API checks, package checks, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01–04 and existing ADR-003/005/006 contracts.\n- Does not implement Excel discovery, document parsing or write-back; it consumes their stable contracts.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Create one ChangeSet per file after preview and keep canonical state unchanged until approval.",
+            "completed": false
+          },
+          {
+            "text": "Persist unmapped data in Raw and show user-visible notices.",
+            "completed": false
+          },
+          {
+            "text": "Present source-file and base/server/local field conflicts and apply only resolved changes.",
+            "completed": false
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.464Z",
+        "description": "Create one ChangeSet per file after preview, preserve Raw/unmapped data, validate before canonical apply, merge multi-source fields and resolve base/server/local conflicts.",
+        "fulfills": [
+          "AC-10",
+          "AC-13"
+        ],
+        "id": "1feoxs",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the existing ChangeSet and import boundaries in apps/server/app/domain.py and apps/server/app/main.py so each accepted file preview produces one explicit file-origin ChangeSet with Raw/unmapped references and no canonical mutation before approval.\n2. Implement validation state transitions, approval/apply behavior, field-level base/server/local conflict payloads and same-object multi-source conflict resolution using the task-03 mapping output.\n3. Preserve idempotency by file_id/revision/hash and emit the existing outbox/audit hooks exactly once for an applied ChangeSet; retain rejected/failed/conflicted history.\n4. Add API/domain tests for one-ChangeSet-per-file, pre-approval immutability, partial valid import, Raw notices, non-overlapping field rebase, field conflict and retry idempotency.\n5. Run pytest/API checks, package checks, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01–04 and existing ADR-003/005/006 contracts.\n- Does not implement Excel discovery, document parsing or write-back; it consumes their stable contracts.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "changeset",
+          "conflicts"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-05] Implement ChangeSet import, approval and conflict resolution",
+        "updatedAt": "2026-08-09T11:25:18.1744442Z"
+      }
+    }
+  ]
+}

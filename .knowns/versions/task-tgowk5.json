@@ -1,0 +1,178 @@
+{
+  "taskId": "tgowk5",
+  "currentVersion": 3,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "tgowk5",
+      "version": 1,
+      "timestamp": "2026-08-09T10:50:29.5427727Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.5407552Z",
+        "description": "Parse Markdown-like text and Word content including structure, tables, images and attachments; register source assets and create evidence-backed relationship proposals.",
+        "fulfills": [
+          "AC-17",
+          "AC-18"
+        ],
+        "id": "tgowk5",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "documents",
+          "relationships"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-07] Implement Markdown, TXT and Word parsing, assets and relations",
+        "updatedAt": "2026-08-09T10:50:29.5407552Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "tgowk5",
+      "version": 2,
+      "timestamp": "2026-08-09T10:50:57.8321083Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Parse Markdown-like TXT/Markdown/Word structure, tables, images and attachments without modifying source originals."
+            },
+            {
+              "completed": false,
+              "text": "Register image/attachment assets with hash/version and source-location links."
+            },
+            {
+              "completed": false,
+              "text": "Create relationship proposals with evidence and require confirmation before canonical apply."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Parse Markdown-like TXT/Markdown/Word structure, tables, images and attachments without modifying source originals."
+          },
+          {
+            "completed": false,
+            "text": "Register image/attachment assets with hash/version and source-location links."
+          },
+          {
+            "completed": false,
+            "text": "Create relationship proposals with evidence and require confirmation before canonical apply."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.54Z",
+        "description": "Parse Markdown-like text and Word content including structure, tables, images and attachments; register source assets and create evidence-backed relationship proposals.",
+        "fulfills": [
+          "AC-17",
+          "AC-18"
+        ],
+        "id": "tgowk5",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "documents",
+          "relationships"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-07] Implement Markdown, TXT and Word parsing, assets and relations",
+        "updatedAt": "2026-08-09T10:50:57.8321083Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "tgowk5",
+      "version": 3,
+      "timestamp": "2026-08-09T11:25:23.1339623Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Define a common read-only document model and source-location contract for Markdown-like text, TXT and Word in the server/document boundary; select only the minimum parser dependencies needed for the supported formats.\n2. Implement parsing of headings, paragraphs, lists, links, key-value metadata, tables, images and attachments without modifying originals; route extracted tables through the task-02/03 mapping contracts.\n3. Register images/attachments as source assets with hash/version and source-location links, preserving the parent document/file version relationship.\n4. Implement UUID/code-first and normalized object/context reference resolution; create evidence-backed relationship proposals in ChangeSets and require confirmation before canonical apply.\n5. Add Markdown/TXT/Word fixtures with tables, ambiguous references, images and attachments; verify no source mutation, asset hashes/links and proposal evidence. Run parser tests, package checks, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01–05 for file versions, mapping and ChangeSet proposal contracts.\n- The formal LLW grammar remains Markdown-like as approved; unsupported extensions stay explicit open questions.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Parse Markdown-like TXT/Markdown/Word structure, tables, images and attachments without modifying source originals.",
+            "completed": false
+          },
+          {
+            "text": "Register image/attachment assets with hash/version and source-location links.",
+            "completed": false
+          },
+          {
+            "text": "Create relationship proposals with evidence and require confirmation before canonical apply.",
+            "completed": false
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.54Z",
+        "description": "Parse Markdown-like text and Word content including structure, tables, images and attachments; register source assets and create evidence-backed relationship proposals.",
+        "fulfills": [
+          "AC-17",
+          "AC-18"
+        ],
+        "id": "tgowk5",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.",
+        "implementationPlan": "## Implementation Plan\n\n1. Define a common read-only document model and source-location contract for Markdown-like text, TXT and Word in the server/document boundary; select only the minimum parser dependencies needed for the supported formats.\n2. Implement parsing of headings, paragraphs, lists, links, key-value metadata, tables, images and attachments without modifying originals; route extracted tables through the task-02/03 mapping contracts.\n3. Register images/attachments as source assets with hash/version and source-location links, preserving the parent document/file version relationship.\n4. Implement UUID/code-first and normalized object/context reference resolution; create evidence-backed relationship proposals in ChangeSets and require confirmation before canonical apply.\n5. Add Markdown/TXT/Word fixtures with tables, ambiguous references, images and attachments; verify no source mutation, asset hashes/links and proposal evidence. Run parser tests, package checks, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01–05 for file versions, mapping and ChangeSet proposal contracts.\n- The formal LLW grammar remains Markdown-like as approved; unsupported extensions stay explicit open questions.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "documents",
+          "relationships"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-07] Implement Markdown, TXT and Word parsing, assets and relations",
+        "updatedAt": "2026-08-09T11:25:23.1339623Z"
+      }
+    }
+  ]
+}
