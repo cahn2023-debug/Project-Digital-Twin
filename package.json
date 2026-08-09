@@ -1,0 +1,12 @@
+{
+  "name": "project-digital-twin",
+  "private": true,
+  "packageManager": "pnpm@11.20.0",
+  "scripts": {
+    "dev": "corepack pnpm --parallel --filter @project/web --filter @project/server dev",
+    "build": "corepack pnpm -r build",
+    "test": "corepack pnpm -r test",
+    "typecheck": "corepack pnpm -r typecheck",
+    "lint": "corepack pnpm -r lint"
+  }
+}

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Project Platform — UI Prototype</title>
+  <style>
+    :root {
+      --font-sans: Inter, "Segoe UI Variable", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-2: #f8fafb;
+      --surface-3: #eef2f5;
+      --text: #18212b;
+      --muted: #687481;
+      --muted-2: #8b96a1;
+      --border: #dbe2e8;
+      --border-strong: #cbd4dc;
+      --accent: #1457d9;
+      --accent-soft: #eaf1ff;
+      --accent-strong: #0d42a7;
+      --success: #0a7b58;
+      --success-soft: #e8f7f1;
+      --warning: #a86400;
+      --warning-soft: #fff4df;
+      --danger: #b33636;
+      --danger-soft: #fff0f0;
+      --info: #2f6f93;
+      --info-soft: #eaf5fb;
+      --shadow-sm: 0 1px 2px rgba(18, 32, 47, .06);
+      --shadow-md: 0 8px 24px rgba(18, 32, 47, .09);
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --topbar-h: 58px;
+      --tabs-h: 50px;
+      --sidebar-w: 248px;
+      --sidebar-mini: 72px;
+      --transition: 160ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    html[data-theme="dark"] {
+      --bg: #0e1319;
+      --surface: #151c24;
+      --surface-2: #1a222c;
+      --surface-3: #222c37;
+      --text: #edf2f7;
+      --muted: #a8b2bd;
+      --muted-2: #7f8a96;
+      --border: #2b3642;
+      --border-strong: #394653;
+      --accent: #6fa0ff;
+      --accent-soft: #1a2b4c;
+      --accent-strong: #9ab9ff;
+      --success: #4bd1a3;
+      --success-soft: #14352c;
+      --warning: #f1b854;
+      --warning-soft: #3b2d12;
+      --danger: #ff8585;
+      --danger-soft: #3d1d20;
+      --info: #70b9df;
+      --info-soft: #173141;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,.28);
+      --shadow-md: 0 10px 30px rgba(0,0,0,.3);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    svg { display: block; }
+
+    .app-shell {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+      grid-template-rows: var(--topbar-h) var(--tabs-h) minmax(0,1fr);
+      height: 100vh;
+      transition: grid-template-columns var(--transition);
+    }
+    .app-shell.sidebar-collapsed { grid-template-columns: var(--sidebar-mini) minmax(0, 1fr); }
+
+    .topbar {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 232px;
+    }
+    .brand-mark {
+      width: 32px; height: 32px; border-radius: 9px;
+      display: grid; place-items: center;
+      background: linear-gradient(145deg, #0d43a6, #1f72ff);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 4px 12px rgba(20,87,217,.24);
+      color: white;
+    }
+    .brand-title { font-weight: 720; letter-spacing: -.02em; }
+    .brand-sub { color: var(--muted); font-size: 11px; margin-top: -1px; }
+
+    .project-switcher {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 10px;
+      min-width: 290px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      border-radius: 10px;
+    }
+    .project-code {
+      width: 30px; height: 30px; border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 760;
+      color: var(--accent-strong); background: var(--accent-soft);
+    }
+    .project-meta { min-width: 0; flex: 1; }
+    .project-name { font-size: 13px; font-weight: 650; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .project-line { color: var(--muted); font-size: 11px; display: flex; gap: 8px; margin-top: 1px; }
+    .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); display:inline-block; margin-right: 4px; }
+
+    .topbar-spacer { flex: 1; }
+    .quick-search {
+      display:flex; align-items:center; gap:8px;
+      width: min(390px, 28vw);
+      height: 34px; padding: 0 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      color: var(--muted);
+    }
+    .quick-search input {
+      width:100%; border:0; outline:0; background:transparent; min-width:0;
+    }
+    .shortcut { font-family: var(--font-mono); font-size: 10px; color: var(--muted-2); border:1px solid var(--border); background:var(--surface); border-radius:5px; padding:1px 5px; }
+
+    .icon-btn {
+      width: 34px; height: 34px; border-radius: 9px;
+      border: 1px solid transparent; background: transparent; color: var(--muted);
+      display:grid; place-items:center;
+    }
+    .icon-btn:hover { background:var(--surface-2); border-color:var(--border); color:var(--text); }
+
+    .avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--text); color:var(--surface); display:grid; place-items:center; font-size:11px; font-weight:740; }
+
+    .module-tabs {
+      grid-column: 2;
+      grid-row: 2;
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      padding: 0 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      min-width: 0;
+      overflow-x: auto;
+    }
+    .module-tab {
+      position: relative;
+      display:flex; align-items:center; gap:8px;
+      border:0; background:transparent;
+      padding: 0 14px;
+      font-size: 12px; letter-spacing: .025em; font-weight: 700;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .module-tab:hover { color:var(--text); }
+    .module-tab.active { color: var(--accent); }
+    .module-tab.active::after {
+      content:""; position:absolute; left:12px; right:12px; bottom:-1px; height:2px; background:var(--accent); border-radius:2px 2px 0 0;
+    }
+    .count-badge { min-width:18px; height:18px; padding:0 5px; display:grid; place-items:center; border-radius:9px; background:var(--surface-3); color:var(--muted); font-size:10px; }
+    .module-tab.active .count-badge { background: var(--accent-soft); color:var(--accent); }
+
+    .sidebar {
+      grid-column: 1;
+      grid-row: 2 / 4;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow:hidden;
+      z-index: 40;
+    }
+    .side-head { height: var(--tabs-h); display:flex; align-items:center; justify-content:space-between; padding:0 12px 0 16px; border-bottom:1px solid var(--border); }
+    .side-head-title { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:750; }
+    .side-scroll { overflow:auto; padding: 10px 9px; flex:1; }
+    .side-section { margin-bottom: 16px; }
+    .side-label { padding: 0 10px 7px; color:var(--muted-2); font-size:10px; font-weight:720; text-transform:uppercase; letter-spacing:.08em; }
+    .side-item {
+      width:100%; border:0; background:transparent;
+      display:flex; align-items:center; gap:10px;
+      min-height:38px; padding:8px 10px;
+      border-radius:9px; color:var(--muted);
+      text-align:left; white-space:nowrap;
+    }
+    .side-item:hover { color:var(--text); background:var(--surface-2); }
+    .side-item.active { background:var(--accent-soft); color:var(--accent); font-weight:650; }
+    .side-item .side-text { overflow:hidden; text-overflow:ellipsis; }
+    .side-item .mini-count { margin-left:auto; font-size:10px; padding:1px 6px; border-radius:8px; background:var(--surface-3); color:var(--muted); }
+    .side-item.active .mini-count { background:rgba(255,255,255,.55); color:var(--accent); }
+    .sidebar-foot { padding:10px; border-top:1px solid var(--border); }
+    .storage-card { border:1px solid var(--border); background:var(--surface-2); border-radius:10px; padding:10px; }
+    .storage-line { display:flex; justify-content:space-between; color:var(--muted); font-size:11px; }
+    .progress { height:6px; border-radius:99px; background:var(--surface-3); overflow:hidden; margin-top:8px; }
+    .progress > span { display:block; height:100%; border-radius:inherit; background:var(--accent); }
+
+    .app-shell.sidebar-collapsed .side-head-title,
+    .app-shell.sidebar-collapsed .side-label,
+    .app-shell.sidebar-collapsed .side-text,
+    .app-shell.sidebar-collapsed .mini-count,
+    .app-shell.sidebar-collapsed .storage-card { display:none; }
+    .app-shell.sidebar-collapsed .side-item { justify-content:center; padding:8px; }
+    .app-shell.sidebar-collapsed .side-head { justify-content:center; padding:0; }
+
+    main {
+      grid-column: 2;
+      grid-row: 3;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .view { display:none; height:100%; overflow:auto; }
+    .view.active { display:block; }
+    .page { padding: 18px; min-height:100%; }
+    .page-header { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:16px; }
+    .title-row { display:flex; align-items:center; gap:10px; }
+    h1 { font-size:22px; line-height:1.2; letter-spacing:-.025em; margin:0; }
+    .page-subtitle { color:var(--muted); margin-top:5px; max-width:860px; }
+    .page-actions { display:flex; gap:8px; flex-wrap:wrap; }
+
+    .btn {
+      height:34px; padding:0 12px; border-radius:9px;
+      border:1px solid var(--border-strong); background:var(--surface);
+      display:inline-flex; align-items:center; justify-content:center; gap:7px;
+      font-weight:620; font-size:12px; box-shadow:var(--shadow-sm);
+    }
+    .btn:hover { background:var(--surface-2); }
+    .btn.primary { background:var(--accent); border-color:var(--accent); color:white; }
+    .btn.primary:hover { filter:brightness(.96); }
+    .btn.danger { color:var(--danger); border-color:color-mix(in srgb, var(--danger) 28%, var(--border)); }
+
+    .kpi-grid { display:grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap:12px; margin-bottom:14px; }
+    .kpi-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px; box-shadow:var(--shadow-sm); min-width:0; }
+    .kpi-top { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .kpi-label { color:var(--muted); font-size:11px; font-weight:650; text-transform:uppercase; letter-spacing:.055em; }
+    .kpi-icon { width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--surface-2); color:var(--muted); }
+    .kpi-value { font-size:25px; font-weight:730; letter-spacing:-.035em; margin-top:8px; }
+    .kpi-foot { display:flex; gap:7px; align-items:center; margin-top:5px; font-size:11px; color:var(--muted); }
+    .delta.up { color:var(--success); font-weight:650; }
+    .delta.warn { color:var(--warning); font-weight:650; }
+    .delta.down { color:var(--danger); font-weight:650; }
+
+    .grid-12 { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:14px; }
+    .col-8 { grid-column:span 8; } .col-7 { grid-column:span 7; } .col-6 { grid-column:span 6; }
+    .col-5 { grid-column:span 5; } .col-4 { grid-column:span 4; } .col-3 { grid-column:span 3; }
+    .col-12 { grid-column:span 12; }
+
+    .panel { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); box-shadow:var(--shadow-sm); min-width:0; overflow:hidden; }
+    .panel-head { height:47px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:0 13px 0 14px; border-bottom:1px solid var(--border); }
+    .panel-title { font-size:12px; font-weight:720; }
+    .panel-sub { font-size:10px; color:var(--muted); margin-top:1px; }
+    .panel-body { padding:14px; }
+    .panel-body.flush { padding:0; }
+
+    .toolbar { min-height:44px; display:flex; align-items:center; gap:8px; padding:7px 10px; border-bottom:1px solid var(--border); background:var(--surface-2); }
+    .filter-input { height:30px; min-width:180px; padding:0 9px; border:1px solid var(--border); border-radius:8px; background:var(--surface); outline:none; }
+    .filter-input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+    .select { height:30px; padding:0 30px 0 9px; border:1px solid var(--border); border-radius:8px; background:var(--surface); outline:none; }
+
+    .table-wrap { overflow:auto; }
+    table { width:100%; border-collapse:collapse; font-size:12px; }
+    thead th { position:sticky; top:0; z-index:2; height:34px; background:var(--surface-2); color:var(--muted); text-align:left; font-weight:650; padding:0 10px; border-bottom:1px solid var(--border); white-space:nowrap; }
+    tbody td { height:40px; padding:0 10px; border-bottom:1px solid var(--border); white-space:nowrap; }
+    tbody tr:hover { background:var(--surface-2); }
+    .mono { font-family:var(--font-mono); font-size:11px; }
+    .entity-code { font-family:var(--font-mono); font-weight:700; color:var(--accent); }
+
+    .status { display:inline-flex; align-items:center; gap:5px; padding:3px 7px; border-radius:999px; font-size:10px; font-weight:670; }
+    .status::before { content:""; width:5px;height:5px;border-radius:50%;background:currentColor; }
+    .status.success { color:var(--success); background:var(--success-soft); }
+    .status.warning { color:var(--warning); background:var(--warning-soft); }
+    .status.danger { color:var(--danger); background:var(--danger-soft); }
+    .status.info { color:var(--info); background:var(--info-soft); }
+    .status.neutral { color:var(--muted); background:var(--surface-3); }
+
+    .source-row { display:flex; gap:10px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); }
+    .source-row:last-child { border-bottom:0; }
+    .file-icon { width:34px;height:34px;border-radius:8px;background:var(--success-soft);color:var(--success);display:grid;place-items:center;flex:0 0 auto;font-weight:800;font-size:11px; }
+    .file-meta { min-width:0; flex:1; }
+    .file-name { font-weight:650; overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+    .meta-line { color:var(--muted); font-size:10px; margin-top:2px; }
+
+    .mini-chart { height:170px; display:flex; align-items:flex-end; gap:8px; padding:20px 3px 0; position:relative; }
+    .mini-chart::before { content:"";position:absolute;left:0;right:0;bottom:36px;border-top:1px dashed var(--border); }
+    .bar { flex:1; min-width:10px; border-radius:5px 5px 2px 2px; background:linear-gradient(180deg, var(--accent), color-mix(in srgb,var(--accent) 60%,transparent)); opacity:.9; position:relative; }
+    .bar span { position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);font-size:9px;color:var(--muted); }
+
+    .donut-wrap { display:flex; align-items:center; gap:20px; padding:8px; }
+    .donut { width:126px;height:126px;border-radius:50%; background:conic-gradient(var(--success) 0 58%, var(--accent) 58% 78%, var(--warning) 78% 91%, var(--surface-3) 91% 100%); position:relative; flex:0 0 auto; }
+    .donut::after { content:"";position:absolute;inset:22px;border-radius:50%;background:var(--surface); }
+    .donut-center { position:absolute;inset:0;display:grid;place-items:center;z-index:1;text-align:center;pointer-events:none; }
+    .donut-center b { font-size:20px; letter-spacing:-.04em; }
+    .legend { display:grid; gap:8px; font-size:11px; flex:1; }
+    .legend-row { display:flex;justify-content:space-between;gap:10px; }
+    .legend-key { display:flex; align-items:center;gap:6px;color:var(--muted); }
+    .legend-dot { width:7px;height:7px;border-radius:50%; }
+
+    .map-panel { position:relative; min-height:440px; background:linear-gradient(145deg, #edf3f0, #e2e9ed); overflow:hidden; }
+    html[data-theme="dark"] .map-panel { background:linear-gradient(145deg, #151f20, #17202a); }
+    .map-grid { position:absolute; inset:0; opacity:.26; background-image:linear-gradient(to right, #98a6ae 1px, transparent 1px),linear-gradient(to bottom,#98a6ae 1px,transparent 1px); background-size:38px 38px; transform:rotate(2deg) scale(1.1); }
+    .road { position:absolute; height:12px; background:var(--surface); border:1px solid color-mix(in srgb,var(--border) 55%,transparent); box-shadow:0 1px 3px rgba(0,0,0,.08); border-radius:10px; opacity:.92; }
+    .road.r1 { width:130%; left:-15%; top:52%; transform:rotate(-14deg); }
+    .road.r2 { width:100%; left:4%; top:44%; transform:rotate(48deg); }
+    .road.r3 { width:70%; left:22%; top:73%; transform:rotate(4deg); height:8px; }
+    .fiber-line { position:absolute; width:68%; height:3px; left:14%; top:38%; transform:rotate(18deg); background:#7d4bd1; box-shadow:0 0 0 2px rgba(125,75,209,.15); border-radius:10px; }
+    .camera-pin, .node-pin { position:absolute; width:28px;height:28px;border-radius:50% 50% 50% 8px; transform:rotate(-45deg); background:var(--accent); box-shadow:0 4px 12px rgba(20,87,217,.28); border:3px solid white; }
+    .camera-pin::after,.node-pin::after { content:"";position:absolute;width:6px;height:6px;border-radius:50%;background:white;left:8px;top:8px; }
+    .camera-pin.p1{left:28%;top:34%}.camera-pin.p2{left:53%;top:49%;}.camera-pin.p3{left:68%;top:30%;}.camera-pin.p4{left:71%;top:66%;}
+    .node-pin { width:32px;height:32px;background:var(--warning); }
+    .node-pin.n1{left:46%;top:42%}
+    .map-controls { position:absolute;right:12px;top:12px;display:grid;gap:6px; }
+    .map-control { width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow-sm);display:grid;place-items:center;color:var(--muted); }
+    .map-layer-card { position:absolute;left:12px;bottom:12px;width:205px;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-md);padding:10px; }
+    .layer-row { display:flex;align-items:center;gap:8px;padding:5px 2px;font-size:11px; }
+    .layer-swatch { width:10px;height:10px;border-radius:3px;background:var(--accent); }
+    .map-popup { position:absolute;left:57%;top:27%;width:220px;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-md);padding:10px; }
+    .map-popup::after { content:"";position:absolute;bottom:-7px;left:35px;width:12px;height:12px;background:var(--surface);border-right:1px solid var(--border);border-bottom:1px solid var(--border);transform:rotate(45deg); }
+    .map-popup-title{font-weight:730}.map-popup-line{display:flex;justify-content:space-between;gap:10px;font-size:10px;margin-top:6px;color:var(--muted)}
+
+    .timeline { position:relative; padding-left:22px; }
+    .timeline::before { content:"";position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--border); }
+    .timeline-item { position:relative; padding:0 0 14px 8px; }
+    .timeline-dot { position:absolute;left:-20px;top:2px;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--accent); }
+    .timeline-title { font-size:11px;font-weight:660; }
+    .timeline-meta { color:var(--muted);font-size:10px;margin-top:2px; }
+
+    .alert-list { display:grid; gap:8px; }
+    .alert-item { display:flex; gap:9px; padding:9px; border:1px solid var(--border); border-radius:9px; background:var(--surface-2); }
+    .alert-icon { width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:0 0 auto; }
+    .alert-icon.warning { color:var(--warning); background:var(--warning-soft); }
+    .alert-icon.danger { color:var(--danger); background:var(--danger-soft); }
+    .alert-icon.info { color:var(--info); background:var(--info-soft); }
+    .alert-title { font-size:11px;font-weight:680; }
+    .alert-meta { color:var(--muted);font-size:10px;margin-top:2px; }
+
+    .workflow { display:grid; grid-template-columns:repeat(5,minmax(120px,1fr)); gap:8px; }
+    .workflow-step { position:relative; border:1px solid var(--border); background:var(--surface-2); border-radius:10px; padding:10px; min-height:80px; }
+    .workflow-step::after { content:"→";position:absolute;right:-11px;top:28px;color:var(--muted-2);z-index:2; }
+    .workflow-step:last-child::after { display:none; }
+    .workflow-kicker { font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted); }
+    .workflow-title { font-size:11px;font-weight:700;margin-top:4px; }
+    .workflow-meta { font-size:10px;color:var(--muted);margin-top:5px; }
+
+    .contractor-card { border:1px solid var(--border);border-radius:10px;padding:12px;background:var(--surface-2); }
+    .contractor-head{display:flex;justify-content:space-between;gap:10px}.contractor-name{font-weight:700;font-size:12px}.contractor-code{font-family:var(--font-mono);font-size:10px;color:var(--muted)}
+    .contractor-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.contractor-stat{border-left:2px solid var(--border);padding-left:7px}.contractor-stat b{display:block;font-size:14px}.contractor-stat span{font-size:9px;color:var(--muted)}
+
+    .mobile-preview { width:258px; margin:auto; border:7px solid #222a33; background:var(--surface); border-radius:28px; box-shadow:var(--shadow-md); overflow:hidden; }
+    .mobile-status { height:24px;background:#222a33;color:white;font-size:8px;display:flex;align-items:center;justify-content:space-between;padding:0 10px; }
+    .mobile-head { padding:12px;border-bottom:1px solid var(--border); }
+    .mobile-map { height:170px;position:relative;overflow:hidden;background:linear-gradient(145deg,#eaf2ed,#dde7ec); }
+    .mobile-list { padding:8px;display:grid;gap:7px; }
+    .mobile-item { border:1px solid var(--border);border-radius:8px;padding:8px;font-size:9px;background:var(--surface-2); }
+    .mobile-bottom { height:38px;display:flex;align-items:center;justify-content:space-around;border-top:1px solid var(--border);color:var(--muted);font-size:8px; }
+
+    .material-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:8px; }
+    .material-stage { border:1px solid var(--border);border-radius:9px;padding:10px;background:var(--surface-2); }
+    .material-stage b { font-size:18px;display:block;letter-spacing:-.03em; }.material-stage span{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+
+    .gantt { display:grid; gap:8px; }
+    .gantt-row { display:grid;grid-template-columns:140px 1fr;gap:10px;align-items:center; }
+    .gantt-label { font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .gantt-track { height:20px;border-radius:6px;background:var(--surface-3);position:relative;overflow:hidden; }
+    .gantt-plan { position:absolute;height:100%;border-radius:6px;background:color-mix(in srgb,var(--accent) 23%,transparent);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent); }
+    .gantt-actual { position:absolute;height:8px;top:6px;border-radius:4px;background:var(--accent); }
+    .gantt-late { background:var(--danger); }
+
+    .inspector { display:grid;grid-template-columns:1fr 320px;gap:12px; }
+    .property-list { display:grid;grid-template-columns:130px 1fr;border-top:1px solid var(--border); }
+    .property-list > div { min-height:36px;padding:9px;border-bottom:1px solid var(--border); }
+    .property-list .label { color:var(--muted);background:var(--surface-2);font-size:10px; }
+    .property-list .value { font-size:11px; }
+
+    .design-tokens { display:grid;grid-template-columns:repeat(6,1fr);gap:8px; }
+    .token { min-height:74px;border:1px solid var(--border);border-radius:9px;padding:9px;background:var(--surface); }
+    .token-swatch { height:28px;border-radius:6px;margin-bottom:7px;border:1px solid rgba(0,0,0,.05); }
+    .token-name{font-size:9px;color:var(--muted);font-family:var(--font-mono)}
+
+    .toast { position:fixed;right:18px;bottom:18px;z-index:1000;display:none;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--text);color:var(--surface);box-shadow:var(--shadow-md);font-size:11px; }
+    .toast.show { display:flex; animation:toastIn .18s ease-out; }
+    @keyframes toastIn { from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1} }
+
+    .divider { width:1px;height:22px;background:var(--border); }
+    .muted { color:var(--muted); }
+    .text-success { color:var(--success); }.text-danger{color:var(--danger)}.text-warning{color:var(--warning)}
+    .w-full { width:100%; }
+    .mb-14 { margin-bottom:14px; }
+
+    @media (max-width: 1180px) {
+      :root { --sidebar-w: 210px; }
+      .kpi-grid { grid-template-columns:repeat(2,1fr); }
+      .col-8,.col-7,.col-6,.col-5,.col-4,.col-3 { grid-column:span 12; }
+      .quick-search { display:none; }
+      .inspector { grid-template-columns:1fr; }
+      .workflow { grid-template-columns:repeat(2,1fr); }
+      .workflow-step::after { display:none; }
+    }
+    @media (max-width: 760px) {
+      .app-shell { grid-template-columns: 1fr; grid-template-rows:var(--topbar-h) var(--tabs-h) 1fr; }
+      .sidebar { display:none; }
+      .module-tabs { grid-column:1; }
+      main { grid-column:1; }
+      .brand-sub, .project-switcher { display:none; }
+      .brand { min-width:auto; }
+      .page { padding:12px; }
+      .kpi-grid { grid-template-columns:1fr 1fr; }
+      .page-header { flex-direction:column; }
+      .design-tokens { grid-template-columns:repeat(3,1fr); }
+    }
+  </style>
+</head>
+<body>
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m16 16 4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 7 3 7 3 7H3s3 0 3-7Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 20h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-map" viewBox="0 0 24 24"><path d="m3 6 5-2 8 3 5-2v13l-5 2-8-3-5 2V6Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 4v13M16 7v13" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-mobile" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10 5h4M11 18.5h2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-box" viewBox="0 0 24 24"><path d="m4 7 8-4 8 4-8 4-8-4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M4 7v10l8 4 8-4V7M12 11v10" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2.5h8l4 4V21H6V2.5Z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M14 2.5v4h4M9 12h6M9 16h6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="3" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="3" y="14" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="14" width="7" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><circle cx="6" cy="5" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="18" cy="7" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="6" cy="19" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M6 7v10M8 9c4 0 3-2 8-2" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19L12 3Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v5M12 17.5v.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 20c0-4 2.2-6 5.5-6s5.5 2 5.5 6M15 5.5c2 0 3.5 1.5 3.5 3.5S17 12.5 15 12.5M16 15c2.8.3 4.5 2 4.5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.4-2.4 1a7 7 0 0 0-1.7-1L14.5 3h-5L9.1 6.1a7 7 0 0 0-1.7 1L5 6.1 3 9.5 5 11a7 7 0 0 0 0 2l-2 1.5 2 3.4 2.4-1a7 7 0 0 0 1.7 1l.4 3.1h5l.4-3.1a7 7 0 0 0 1.7-1l2.4 1 2-3.4L19 13a7 7 0 0 0 .1-1Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M18 12a6 6 0 0 0-10.4-4M6 12a6 6 0 0 0 10.4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4-2v-4L3 5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="m13 7 4 4" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h4l1.5-2h5L16 8h4v11H4V8Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="13" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+  </svg>
+
+  <div class="app-shell" id="appShell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><svg width="19" height="19"><use href="#i-grid"/></svg></div>
+        <div><div class="brand-title">Project Platform</div><div class="brand-sub">Digital Twin Workspace</div></div>
+      </div>
+      <div class="project-switcher">
+        <div class="project-code">269</div>
+        <div class="project-meta">
+          <div class="project-name">Hệ thống giao thông thông minh — 269 nút</div>
+          <div class="project-line"><span><i class="sync-dot"></i>Đã đồng bộ</span><span>Revision 134</span></div>
+        </div>
+        <button class="icon-btn" title="Đổi dự án">⌄</button>
+      </div>
+      <div class="topbar-spacer"></div>
+      <label class="quick-search"><svg width="15" height="15"><use href="#i-search"/></svg><input placeholder="Tìm entity, file, nhà thầu…"/><span class="shortcut">Ctrl K</span></label>
+      <button class="icon-btn" id="themeToggle" title="Đổi giao diện"><svg width="17" height="17"><use href="#i-sun"/></svg></button>
+      <button class="icon-btn" title="Thông báo"><svg width="17" height="17"><use href="#i-bell"/></svg></button>
+      <div class="avatar">MH</div>
+    </header>
+
+    <aside class="sidebar">
+      <div class="side-head"><span class="side-head-title" id="sideTitle">DATACENTER</span><button class="icon-btn" id="collapseSidebar"><svg width="17" height="17"><use href="#i-menu"/></svg></button></div>
+      <div class="side-scroll" id="sideNav"></div>
+      <div class="sidebar-foot">
+        <div class="storage-card">
+          <div class="storage-line"><span>Project storage</span><b>38%</b></div>
+          <div class="progress"><span style="width:38%"></span></div>
+          <div class="meta-line" style="margin-top:7px">3.8 GB / 10 GB • local + synced assets</div>
+        </div>
+      </div>
+    </aside>
+
+    <nav class="module-tabs" aria-label="Modules">
+      <button class="module-tab active" data-view="datacenter"><svg width="16" height="16"><use href="#i-db"/></svg>DATACENTER<span class="count-badge">17</span></button>
+      <button class="module-tab" data-view="design"><svg width="16" height="16"><use href="#i-map"/></svg>DESIGN</button>
+      <button class="module-tab" data-view="operate"><svg width="16" height="16"><use href="#i-mobile"/></svg>OPERATE<span class="count-badge">8</span></button>
+      <button class="module-tab" data-view="organize"><svg width="16" height="16"><use href="#i-box"/></svg>ORGANIZE</button>
+      <button class="module-tab" data-view="dashboard"><svg width="16" height="16"><use href="#i-chart"/></svg>DASHBOARD<span class="count-badge">4</span></button>
+    </nav>
+
+    <main>
+      <!-- DATACENTER -->
+      <section class="view active" id="view-datacenter">
+        <div class="page">
+          <div class="page-header">
+            <div><div class="title-row"><h1>DATACENTER</h1><span class="status success">Data core healthy</span></div><div class="page-subtitle">Quản trị nguồn dữ liệu, canonical entities, phiên bản file, ChangeSet và chất lượng dữ liệu của toàn dự án.</div></div>
+            <div class="page-actions"><button class="btn" data-toast="Đang quét thay đổi trong thư mục dự án"><svg width="14" height="14"><use href="#i-refresh"/></svg>Quét thay đổi</button><button class="btn primary" data-toast="Mở hộp thoại đăng ký nguồn dữ liệu"><svg width="14" height="14"><use href="#i-plus"/></svg>Thêm nguồn dữ liệu</button></div>
+          </div>
+
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Canonical entities</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-db"/></svg></span></div><div class="kpi-value">1,842</div><div class="kpi-foot"><span class="delta up">+32</span><span>từ lần sync gần nhất</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Nguồn được quản lý</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-file"/></svg></span></div><div class="kpi-value">46</div><div class="kpi-foot"><span>39 synced</span><span>•</span><span class="delta warn">7 local-only</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Pending changes</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-git"/></svg></span></div><div class="kpi-value">17</div><div class="kpi-foot"><span class="delta warn">8</span><span>từ hiện trường</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Data quality</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-check"/></svg></span></div><div class="kpi-value">94.6%</div><div class="kpi-foot"><span class="delta up">+1.8%</span><span>7 ngày</span></div></div>
+          </div>
+
+          <div class="grid-12 mb-14">
+            <div class="panel col-8">
+              <div class="panel-head"><div><div class="panel-title">Camera Dataset</div><div class="panel-sub">Canonical view • CameraMaster.xlsx • Revision 18</div></div><button class="btn"><svg width="13" height="13"><use href="#i-eye"/></svg>Mở dataset</button></div>
+              <div class="toolbar"><input class="filter-input" placeholder="Tìm camera…"><select class="select"><option>Tất cả trạng thái</option><option>Designed</option><option>As-built</option></select><button class="btn"><svg width="13" height="13"><use href="#i-filter"/></svg>Bộ lọc</button><div style="margin-left:auto" class="muted">1,230 bản ghi</div></div>
+              <div class="panel-body flush table-wrap" style="max-height:315px">
+                <table><thead><tr><th>Camera</th><th>Nút giao</th><th>IP</th><th>Thiết kế</th><th>As-built</th><th>Nguồn</th><th>Rev.</th></tr></thead><tbody>
+                  <tr><td><span class="entity-code">CAM-001</span></td><td>NG-031 Nguyễn Trãi</td><td class="mono">10.32.1.21</td><td><span class="status info">Designed</span></td><td><span class="status success">Verified</span></td><td>CameraMaster.xlsx</td><td class="mono">18</td></tr>
+                  <tr><td><span class="entity-code">CAM-002</span></td><td>NG-031 Nguyễn Trãi</td><td class="mono">10.32.1.22</td><td><span class="status info">Designed</span></td><td><span class="status warning">Pending</span></td><td>CameraMaster.xlsx</td><td class="mono">18</td></tr>
+                  <tr><td><span class="entity-code">CAM-114</span></td><td>NG-044 Trần Duy Hưng</td><td class="mono">10.44.2.14</td><td><span class="status info">Designed</span></td><td><span class="status danger">Conflict</span></td><td>CameraMaster.xlsx</td><td class="mono">18</td></tr>
+                  <tr><td><span class="entity-code">CAM-215</span></td><td>NG-078 Kim Mã</td><td class="mono">10.78.1.15</td><td><span class="status info">Designed</span></td><td><span class="status success">Verified</span></td><td>CameraMaster.xlsx</td><td class="mono">18</td></tr>
+                  <tr><td><span class="entity-code">CAM-216</span></td><td>NG-078 Kim Mã</td><td class="mono">10.78.1.16</td><td><span class="status info">Designed</span></td><td><span class="status neutral">Not deployed</span></td><td>CameraMaster.xlsx</td><td class="mono">18</td></tr>
+                  <tr><td><span class="entity-code">CAM-398</span></td><td>NG-102 Tây Sơn</td><td class="mono">10.102.3.18</td><td><span class="status info">Designed</span></td><td><span class="status success">Verified</span></td><td>CameraMaster.xlsx</td><td class="mono">18</td></tr>
+                </tbody></table>
+              </div>
+            </div>
+            <div class="panel col-4">
+              <div class="panel-head"><div><div class="panel-title">Nguồn dữ liệu gần đây</div><div class="panel-sub">File Registry</div></div><button class="icon-btn"><svg width="15" height="15"><use href="#i-file"/></svg></button></div>
+              <div class="panel-body">
+                <div class="source-row"><div class="file-icon">XLSX</div><div class="file-meta"><div class="file-name">CameraMaster.xlsx</div><div class="meta-line">MANAGED_FILE_MASTER • rev 18 • 2 phút trước</div></div><span class="status success">Synced</span></div>
+                <div class="source-row"><div class="file-icon" style="background:var(--info-soft);color:var(--info)">SHP</div><div class="file-meta"><div class="file-name">Intersection_269.shp</div><div class="meta-line">SOURCE_ONLY • rev 9 • 31 phút trước</div></div><span class="status success">Synced</span></div>
+                <div class="source-row"><div class="file-icon" style="background:var(--warning-soft);color:var(--warning)">PDF</div><div class="file-meta"><div class="file-name">BBNT_031.pdf</div><div class="meta-line">SOURCE_ONLY • local-only</div></div><span class="status warning">Local</span></div>
+                <div class="source-row"><div class="file-icon">XLSX</div><div class="file-meta"><div class="file-name">Contractor_A.xlsx</div><div class="meta-line">SOURCE_ONLY • rev 3 • hôm qua</div></div><span class="status success">Synced</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-12">
+            <div class="panel col-7"><div class="panel-head"><div><div class="panel-title">Change Inbox</div><div class="panel-sub">Thay đổi cần xem xét trước khi cập nhật canonical state</div></div><span class="status warning">17 pending</span></div>
+              <div class="panel-body flush table-wrap"><table><thead><tr><th>ChangeSet</th><th>Entity</th><th>Nguồn</th><th>Thay đổi</th><th>Trạng thái</th></tr></thead><tbody>
+                <tr><td class="mono">#CS-0281</td><td><span class="entity-code">CAM-114</span></td><td>OPERATE / Field</td><td>Vị trí lệch 4.3 m</td><td><span class="status danger">Conflict</span></td></tr>
+                <tr><td class="mono">#CS-0280</td><td><span class="entity-code">CAM-002</span></td><td>OPERATE / Field</td><td>GPS + 3 ảnh</td><td><span class="status warning">Approval</span></td></tr>
+                <tr><td class="mono">#CS-0279</td><td><span class="entity-code">CAM-398</span></td><td>DATACENTER / Excel</td><td>IP 10.102.3.17 → .18</td><td><span class="status info">Validating</span></td></tr>
+              </tbody></table></div>
+            </div>
+            <div class="panel col-5"><div class="panel-head"><div><div class="panel-title">Data Quality</div><div class="panel-sub">Các vấn đề cần xử lý</div></div><button class="btn">Xem tất cả</button></div><div class="panel-body alert-list">
+              <div class="alert-item"><div class="alert-icon danger"><svg width="14" height="14"><use href="#i-alert"/></svg></div><div><div class="alert-title">3 Camera trùng mã định danh</div><div class="alert-meta">Cần xử lý trước lần publish tiếp theo.</div></div></div>
+              <div class="alert-item"><div class="alert-icon warning"><svg width="14" height="14"><use href="#i-alert"/></svg></div><div><div class="alert-title">21 Camera thiếu ảnh nghiệm thu</div><div class="alert-meta">Thuộc WP-CAM-03 và WP-CAM-04.</div></div></div>
+              <div class="alert-item"><div class="alert-icon info"><svg width="14" height="14"><use href="#i-alert"/></svg></div><div><div class="alert-title">7 file đang ở chế độ local-only</div><div class="alert-meta">Metadata đã đăng ký, binary chưa publish lên server.</div></div></div>
+            </div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DESIGN -->
+      <section class="view" id="view-design">
+        <div class="page">
+          <div class="page-header"><div><div class="title-row"><h1>DESIGN</h1><span class="status info">Revision D-042</span></div><div class="page-subtitle">Không gian thiết kế Digital Twin: GIS, geometry và các representation DESIGNED độc lập với AS_BUILT.</div></div><div class="page-actions"><button class="btn"><svg width="14" height="14"><use href="#i-git"/></svg>So sánh revision</button><button class="btn primary" data-toast="Đã lưu bản nháp thiết kế"><svg width="14" height="14"><use href="#i-check"/></svg>Lưu thiết kế</button></div></div>
+          <div class="grid-12">
+            <div class="panel col-8">
+              <div class="panel-head"><div><div class="panel-title">Bản đồ thiết kế</div><div class="panel-sub">EPSG:4326 • 1,230 Camera • 269 Intersection</div></div><div style="display:flex;gap:6px"><button class="btn"><svg width="13" height="13"><use href="#i-edit"/></svg>Chỉnh sửa</button><button class="btn">Layers</button></div></div>
+              <div class="map-panel">
+                <div class="map-grid"></div><div class="road r1"></div><div class="road r2"></div><div class="road r3"></div><div class="fiber-line"></div><div class="camera-pin p1"></div><div class="camera-pin p2"></div><div class="camera-pin p3"></div><div class="camera-pin p4"></div><div class="node-pin n1"></div>
+                <div class="map-popup"><div class="map-popup-title">CAM-114</div><div class="map-popup-line"><span>Nút giao</span><b>NG-044</b></div><div class="map-popup-line"><span>Representation</span><b class="text-success">DESIGNED</b></div><div class="map-popup-line"><span>Model</span><b>XNV-8080</b></div></div>
+                <div class="map-controls"><button class="map-control">+</button><button class="map-control">−</button><button class="map-control">⌖</button></div>
+                <div class="map-layer-card"><b style="font-size:11px">Layers</b><div class="layer-row"><span class="layer-swatch"></span><span>Camera — Designed</span><span style="margin-left:auto">1,230</span></div><div class="layer-row"><span class="layer-swatch" style="background:var(--warning)"></span><span>Intersection</span><span style="margin-left:auto">269</span></div><div class="layer-row"><span class="layer-swatch" style="background:#7d4bd1"></span><span>Fiber draft</span><span style="margin-left:auto">Off</span></div></div>
+              </div>
+            </div>
+            <div class="panel col-4"><div class="panel-head"><div><div class="panel-title">Inspector — CAM-114</div><div class="panel-sub">Canonical ID • 7ae9…91f2</div></div><button class="icon-btn"><svg width="15" height="15"><use href="#i-edit"/></svg></button></div><div class="panel-body flush">
+              <div class="property-list"><div class="label">Code</div><div class="value entity-code">CAM-114</div><div class="label">Nút giao</div><div class="value">NG-044 • Trần Duy Hưng</div><div class="label">Model</div><div class="value">Hanwha XNV-8080</div><div class="label">Designed Lat</div><div class="value mono">21.0104821</div><div class="label">Designed Lon</div><div class="value mono">105.8012319</div><div class="label">As-built</div><div class="value"><span class="status danger">Conflict</span></div><div class="label">Revision</div><div class="value mono">DESIGNED/3</div></div>
+              <div class="panel-body"><b style="font-size:11px">Lịch sử thiết kế</b><div class="timeline" style="margin-top:12px"><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-title">Điều chỉnh hướng camera 12°</div><div class="timeline-meta">Rev 3 • Nguyễn A • hôm nay 14:21</div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-title">Di chuyển vị trí thiết kế 1.2 m</div><div class="timeline-meta">Rev 2 • Nguyễn A • 07/08</div></div><div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-title">Tạo từ CameraMaster.xlsx</div><div class="timeline-meta">Rev 1 • Import Job #184</div></div></div></div>
+            </div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPERATE -->
+      <section class="view" id="view-operate">
+        <div class="page">
+          <div class="page-header"><div><div class="title-row"><h1>OPERATE</h1><span class="status success">Field sync online</span></div><div class="page-subtitle">Triển khai field package, xác minh hiện trường, GPS, ảnh và đồng bộ ChangeSet về DATACENTER.</div></div><div class="page-actions"><button class="btn">Quản lý thiết bị</button><button class="btn primary"><svg width="14" height="14"><use href="#i-plus"/></svg>Tạo Field Package</button></div></div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Field packages</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-box"/></svg></span></div><div class="kpi-value">12</div><div class="kpi-foot"><span class="delta up">8 active</span><span>4 completed</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Verified today</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-check"/></svg></span></div><div class="kpi-value">47</div><div class="kpi-foot"><span class="delta up">+18%</span><span>so với hôm qua</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Pending upload</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-refresh"/></svg></span></div><div class="kpi-value">8</div><div class="kpi-foot"><span class="delta warn">23 ảnh</span><span>đang chờ Wi‑Fi</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Field conflicts</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-alert"/></svg></span></div><div class="kpi-value">3</div><div class="kpi-foot"><span class="delta down">cần xử lý</span><span>trước approval</span></div></div>
+          </div>
+          <div class="grid-12">
+            <div class="panel col-8"><div class="panel-head"><div><div class="panel-title">Field Package Deployment</div><div class="panel-sub">Work package → entities → offline client</div></div><button class="btn">Publish selected</button></div><div class="panel-body">
+              <div class="workflow"><div class="workflow-step"><div class="workflow-kicker">01 • Prepare</div><div class="workflow-title">WP-CAM-03</div><div class="workflow-meta">146 Camera • Nhà thầu A</div></div><div class="workflow-step"><div class="workflow-kicker">02 • Publish</div><div class="workflow-title">Package v7</div><div class="workflow-meta">24.8 MB • map + entities</div></div><div class="workflow-step"><div class="workflow-kicker">03 • Offline</div><div class="workflow-title">4 thiết bị</div><div class="workflow-meta">Last sync 11 phút</div></div><div class="workflow-step"><div class="workflow-kicker">04 • Verify</div><div class="workflow-title">103 / 146</div><div class="workflow-meta">70.5% hoàn thành</div></div><div class="workflow-step"><div class="workflow-kicker">05 • Review</div><div class="workflow-title">8 pending</div><div class="workflow-meta">2 conflict</div></div></div>
+              <div class="panel" style="margin-top:14px"><div class="toolbar"><input class="filter-input" placeholder="Tìm field package…"><select class="select"><option>Đang triển khai</option></select></div><div class="panel-body flush table-wrap"><table><thead><tr><th>Package</th><th>Nhà thầu</th><th>Entities</th><th>Verified</th><th>Sync</th><th>Status</th></tr></thead><tbody><tr><td class="entity-code">FP-CAM-003</td><td>Nhà thầu A</td><td>146</td><td>103</td><td>11 phút</td><td><span class="status info">Active</span></td></tr><tr><td class="entity-code">FP-CAM-004</td><td>Nhà thầu B</td><td>82</td><td>78</td><td>2 phút</td><td><span class="status success">Near complete</span></td></tr><tr><td class="entity-code">FP-CAM-006</td><td>Nhà thầu C</td><td>66</td><td>21</td><td>1 giờ</td><td><span class="status warning">Offline device</span></td></tr></tbody></table></div></div>
+            </div></div>
+            <div class="panel col-4"><div class="panel-head"><div><div class="panel-title">Mobile field preview</div><div class="panel-sub">Offline-first experience</div></div><span class="status neutral">Android</span></div><div class="panel-body">
+              <div class="mobile-preview"><div class="mobile-status"><span>15:48</span><span>Offline • 78%</span></div><div class="mobile-head"><b style="font-size:11px">FP-CAM-003</b><div style="font-size:8px;color:var(--muted)">NG-031 • 4 Camera còn lại</div></div><div class="mobile-map"><div class="map-grid"></div><div class="road r1"></div><div class="road r2"></div><div class="camera-pin p2"></div><div class="node-pin n1"></div></div><div class="mobile-list"><div class="mobile-item"><b>CAM-001</b><span class="status success" style="float:right">Done</span><div class="meta-line">GPS 2.7 m • 3 photos</div></div><div class="mobile-item"><b>CAM-002</b><span class="status warning" style="float:right">Verify</span><div class="meta-line">Designed location 48 m away</div></div></div><div class="mobile-bottom"><span>Map</span><span>Tasks</span><span>Sync 8</span></div></div>
+            </div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ORGANIZE -->
+      <section class="view" id="view-organize">
+        <div class="page">
+          <div class="page-header"><div><div class="title-row"><h1>ORGANIZE</h1><span class="status info">4 nhà thầu</span></div><div class="page-subtitle">Tổ chức nhà thầu, work package, phân công đối tượng và nền tảng logistics/vật tư của dự án.</div></div><div class="page-actions"><button class="btn">Nhập phân bổ</button><button class="btn primary"><svg width="14" height="14"><use href="#i-plus"/></svg>Tạo Work Package</button></div></div>
+          <div class="grid-12 mb-14">
+            <div class="panel col-8"><div class="panel-head"><div><div class="panel-title">Nhà thầu & Work Package</div><div class="panel-sub">Entity assignment và tiến độ thực hiện</div></div><button class="btn">Quản lý quyền</button></div><div class="panel-body" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+              <div class="contractor-card"><div class="contractor-head"><div><div class="contractor-name">Công ty Hạ tầng A</div><div class="contractor-code">CTR-A</div></div><span class="status success">On track</span></div><div class="contractor-stats"><div class="contractor-stat"><b>312</b><span>Assigned</span></div><div class="contractor-stat"><b>231</b><span>Verified</span></div><div class="contractor-stat"><b>74%</b><span>Progress</span></div></div></div>
+              <div class="contractor-card"><div class="contractor-head"><div><div class="contractor-name">Công ty Công nghệ B</div><div class="contractor-code">CTR-B</div></div><span class="status warning">At risk</span></div><div class="contractor-stats"><div class="contractor-stat"><b>246</b><span>Assigned</span></div><div class="contractor-stat"><b>131</b><span>Verified</span></div><div class="contractor-stat"><b>53%</b><span>Progress</span></div></div></div>
+              <div class="contractor-card"><div class="contractor-head"><div><div class="contractor-name">Liên danh C</div><div class="contractor-code">CTR-C</div></div><span class="status info">Active</span></div><div class="contractor-stats"><div class="contractor-stat"><b>188</b><span>Assigned</span></div><div class="contractor-stat"><b>109</b><span>Verified</span></div><div class="contractor-stat"><b>58%</b><span>Progress</span></div></div></div>
+              <div class="contractor-card"><div class="contractor-head"><div><div class="contractor-name">Nhà thầu D</div><div class="contractor-code">CTR-D</div></div><span class="status neutral">Preparing</span></div><div class="contractor-stats"><div class="contractor-stat"><b>104</b><span>Assigned</span></div><div class="contractor-stat"><b>0</b><span>Verified</span></div><div class="contractor-stat"><b>0%</b><span>Progress</span></div></div></div>
+            </div></div>
+            <div class="panel col-4"><div class="panel-head"><div><div class="panel-title">Phân bổ theo trạng thái</div><div class="panel-sub">Toàn dự án</div></div></div><div class="panel-body"><div class="donut-wrap"><div class="donut"><div class="donut-center"><div><b>850</b><div class="meta-line">assigned</div></div></div></div><div class="legend"><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--success)"></i>Verified</span><b>58%</b></div><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--accent)"></i>In progress</span><b>20%</b></div><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--warning)"></i>Pending</span><b>13%</b></div><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--surface-3)"></i>Not started</span><b>9%</b></div></div></div></div></div>
+          </div>
+          <div class="grid-12"><div class="panel col-7"><div class="panel-head"><div><div class="panel-title">Material lifecycle — preview</div><div class="panel-sub">Module mở rộng sau Camera MVP</div></div><span class="status neutral">Phase 2</span></div><div class="panel-body"><div class="material-grid"><div class="material-stage"><b>1,420</b><span>Planned</span></div><div class="material-stage"><b>1,180</b><span>Delivered</span></div><div class="material-stage"><b>934</b><span>Issued</span></div><div class="material-stage"><b>781</b><span>Installed</span></div></div></div></div><div class="panel col-5"><div class="panel-head"><div><div class="panel-title">Responsibility map</div><div class="panel-sub">Cross-contractor dependency</div></div></div><div class="panel-body alert-list"><div class="alert-item"><div class="alert-icon info"><svg width="14" height="14"><use href="#i-users"/></svg></div><div><div class="alert-title">CTR-B cần read geometry của 17 tủ CTR-A</div><div class="alert-meta">Phục vụ đấu nối camera thuộc WP-CAM-04.</div></div></div><div class="alert-item"><div class="alert-icon warning"><svg width="14" height="14"><use href="#i-alert"/></svg></div><div><div class="alert-title">2 dependency chưa có quyền truy cập</div><div class="alert-meta">Có thể chặn field package tiếp theo.</div></div></div></div></div></div>
+        </div>
+      </section>
+
+      <!-- DASHBOARD -->
+      <section class="view" id="view-dashboard">
+        <div class="page">
+          <div class="page-header"><div><div class="title-row"><h1>DASHBOARD</h1><span class="status success">Projection lag 1.7s</span></div><div class="page-subtitle">Read model điều hành: tiến độ, nhà thầu, field verification, dữ liệu, cảnh báo và forecast dự án.</div></div><div class="page-actions"><button class="btn">7 ngày</button><button class="btn"><svg width="14" height="14"><use href="#i-refresh"/></svg>Làm mới</button><button class="btn primary">Xuất báo cáo</button></div></div>
+          <div class="kpi-grid">
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Tiến độ tổng thể</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-chart"/></svg></span></div><div class="kpi-value">68.4%</div><div class="kpi-foot"><span class="delta down">−4.8%</span><span>so với baseline</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Field verified</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-check"/></svg></span></div><div class="kpi-value">721</div><div class="kpi-foot"><span class="delta up">+47 hôm nay</span><span>/ 1,230 camera</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Pending approval</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-git"/></svg></span></div><div class="kpi-value">17</div><div class="kpi-foot"><span class="delta warn">5 quá 24h</span><span>cần xử lý</span></div></div>
+            <div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Forecast delay</span><span class="kpi-icon"><svg width="15" height="15"><use href="#i-alert"/></svg></span></div><div class="kpi-value">+8 ngày</div><div class="kpi-foot"><span class="delta down">CTR-B</span><span>là critical path</span></div></div>
+          </div>
+          <div class="grid-12 mb-14">
+            <div class="panel col-8"><div class="panel-head"><div><div class="panel-title">Planned vs Actual — 7 tuần</div><div class="panel-sub">Camera verification progress</div></div><span class="muted">Last updated 16:12:31</span></div><div class="panel-body"><div class="mini-chart"><div class="bar" style="height:35%"><span>W1</span></div><div class="bar" style="height:44%"><span>W2</span></div><div class="bar" style="height:53%"><span>W3</span></div><div class="bar" style="height:62%"><span>W4</span></div><div class="bar" style="height:67%"><span>W5</span></div><div class="bar" style="height:74%"><span>W6</span></div><div class="bar" style="height:81%"><span>W7</span></div><div class="bar" style="height:68%;background:var(--warning)"><span>Actual</span></div></div></div></div>
+            <div class="panel col-4"><div class="panel-head"><div><div class="panel-title">Project health</div><div class="panel-sub">Weighted operating signals</div></div></div><div class="panel-body"><div class="donut-wrap"><div class="donut" style="background:conic-gradient(var(--success) 0 68%,var(--warning) 68% 84%,var(--danger) 84% 91%,var(--surface-3) 91% 100%)"><div class="donut-center"><div><b>82</b><div class="meta-line">Health score</div></div></div></div><div class="legend"><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--success)"></i>Healthy</span><b>68%</b></div><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--warning)"></i>At risk</span><b>16%</b></div><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--danger)"></i>Critical</span><b>7%</b></div><div class="legend-row"><span class="legend-key"><i class="legend-dot" style="background:var(--surface-3)"></i>Unknown</span><b>9%</b></div></div></div></div></div>
+          </div>
+          <div class="grid-12">
+            <div class="panel col-7"><div class="panel-head"><div><div class="panel-title">Work package schedule variance</div><div class="panel-sub">Baseline và actual progress</div></div></div><div class="panel-body gantt"><div class="gantt-row"><span class="gantt-label">WP-CAM-01 • CTR-A</span><div class="gantt-track"><i class="gantt-plan" style="left:4%;width:62%"></i><i class="gantt-actual" style="left:4%;width:57%"></i></div></div><div class="gantt-row"><span class="gantt-label">WP-CAM-03 • CTR-A</span><div class="gantt-track"><i class="gantt-plan" style="left:18%;width:68%"></i><i class="gantt-actual" style="left:18%;width:49%"></i></div></div><div class="gantt-row"><span class="gantt-label">WP-CAM-04 • CTR-B</span><div class="gantt-track"><i class="gantt-plan" style="left:23%;width:70%"></i><i class="gantt-actual gantt-late" style="left:23%;width:34%"></i></div></div><div class="gantt-row"><span class="gantt-label">WP-CAM-06 • CTR-C</span><div class="gantt-track"><i class="gantt-plan" style="left:40%;width:51%"></i><i class="gantt-actual" style="left:40%;width:32%"></i></div></div></div></div>
+            <div class="panel col-5"><div class="panel-head"><div><div class="panel-title">Cảnh báo điều hành</div><div class="panel-sub">Rules + projection signals</div></div><span class="status danger">4 alerts</span></div><div class="panel-body alert-list"><div class="alert-item"><div class="alert-icon danger"><svg width="14" height="14"><use href="#i-alert"/></svg></div><div><div class="alert-title">WP-CAM-04 dự kiến trễ 8 ngày</div><div class="alert-meta">Năng suất 7 ngày: 13.2 camera/ngày, yêu cầu 20.</div></div></div><div class="alert-item"><div class="alert-icon warning"><svg width="14" height="14"><use href="#i-alert"/></svg></div><div><div class="alert-title">5 approval tồn đọng quá 24 giờ</div><div class="alert-meta">Ảnh hưởng việc phát hành As-Built.</div></div></div><div class="alert-item"><div class="alert-icon warning"><svg width="14" height="14"><use href="#i-alert"/></svg></div><div><div class="alert-title">21 Camera thiếu ảnh nghiệm thu</div><div class="alert-meta">Có thể làm giảm Data Quality Gate của đợt bàn giao.</div></div></div></div></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"><svg width="15" height="15"><use href="#i-check"/></svg><span id="toastText">Hoàn tất</span></div>
+
+  <script>
+    const views = {
+      datacenter: {
+        title: 'DATACENTER',
+        sections: [
+          ['Tổng quan', 'grid', 'overview', ''],
+          ['Nguồn dữ liệu', 'file', 'sources', '46'],
+          ['Data Catalog', 'db', 'catalog', ''],
+          ['Camera Dataset', 'camera', 'camera', '1230'],
+          ['Change Inbox', 'git', 'changes', '17'],
+          ['Data Quality', 'alert', 'quality', '24'],
+          ['File Versions', 'refresh', 'versions', ''],
+          ['Đồng bộ', 'refresh', 'sync', '']
+        ]
+      },
+      design: {
+        title: 'DESIGN',
+        sections: [
+          ['Bản đồ thiết kế', 'map', 'map', ''],
+          ['Layers', 'grid', 'layers', '12'],
+          ['Camera', 'camera', 'camera', '1230'],
+          ['Intersection', 'map', 'intersection', '269'],
+          ['Design Revisions', 'git', 'revisions', '42'],
+          ['Compare', 'eye', 'compare', ''],
+          ['Fiber Network', 'git', 'fiber', 'Phase 2']
+        ]
+      },
+      operate: {
+        title: 'OPERATE',
+        sections: [
+          ['Tổng quan hiện trường', 'grid', 'overview', ''],
+          ['Field Packages', 'box', 'packages', '12'],
+          ['Verification', 'check', 'verification', '47'],
+          ['Field Map', 'map', 'map', ''],
+          ['Pending Sync', 'refresh', 'sync', '8'],
+          ['Observations', 'eye', 'observations', ''],
+          ['Conflicts', 'alert', 'conflicts', '3'],
+          ['Thiết bị mobile', 'mobile', 'devices', '4']
+        ]
+      },
+      organize: {
+        title: 'ORGANIZE',
+        sections: [
+          ['Tổng quan', 'grid', 'overview', ''],
+          ['Nhà thầu', 'users', 'contractors', '4'],
+          ['Work Packages', 'box', 'packages', '12'],
+          ['Phân công Entity', 'git', 'assignment', '850'],
+          ['Vật tư', 'box', 'materials', 'Phase 2'],
+          ['Giao nhận', 'file', 'delivery', 'Phase 2'],
+          ['Trách nhiệm & quyền', 'users', 'permission', '']
+        ]
+      },
+      dashboard: {
+        title: 'DASHBOARD',
+        sections: [
+          ['Executive Summary', 'chart', 'summary', ''],
+          ['Tiến độ', 'chart', 'progress', ''],
+          ['Nhà thầu', 'users', 'contractors', ''],
+          ['Field Verification', 'check', 'field', ''],
+          ['Data Quality', 'db', 'quality', ''],
+          ['Cảnh báo', 'alert', 'alerts', '4'],
+          ['Forecast', 'chart', 'forecast', ''],
+          ['Báo cáo', 'file', 'reports', '']
+        ]
+      }
+    };
+
+    function icon(name) {
+      return `<svg width="16" height="16"><use href="#i-${name}"></use></svg>`;
+    }
+
+    const tabs = document.querySelectorAll('.module-tab');
+    const sideNav = document.getElementById('sideNav');
+    const sideTitle = document.getElementById('sideTitle');
+
+    function renderSide(viewName) {
+      const cfg = views[viewName];
+      sideTitle.textContent = cfg.title;
+      const primary = cfg.sections.slice(0, Math.min(6, cfg.sections.length));
+      const secondary = cfg.sections.slice(Math.min(6, cfg.sections.length));
+      const group = (label, items, firstActive=false) => items.length ? `<div class="side-section"><div class="side-label">${label}</div>${items.map((x,i)=>`<button class="side-item ${firstActive && i===0?'active':''}" data-side="${x[2]}">${icon(x[1])}<span class="side-text">${x[0]}</span>${x[3]?`<span class="mini-count">${x[3]}</span>`:''}</button>`).join('')}</div>` : '';
+      sideNav.innerHTML = group('Workspace', primary, true) + group('Khác', secondary);
+      sideNav.querySelectorAll('.side-item').forEach(btn => btn.addEventListener('click', () => {
+        sideNav.querySelectorAll('.side-item').forEach(x=>x.classList.remove('active'));
+        btn.classList.add('active');
+        showToast(`${cfg.title} / ${btn.querySelector('.side-text').textContent}`);
+      }));
+    }
+
+    function activateView(name) {
+      tabs.forEach(t=>t.classList.toggle('active', t.dataset.view===name));
+      document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+      document.getElementById(`view-${name}`).classList.add('active');
+      renderSide(name);
+    }
+
+    tabs.forEach(tab => tab.addEventListener('click', ()=>activateView(tab.dataset.view)));
+    renderSide('datacenter');
+
+    document.getElementById('collapseSidebar').addEventListener('click', ()=>document.getElementById('appShell').classList.toggle('sidebar-collapsed'));
+    document.getElementById('themeToggle').addEventListener('click', ()=>{
+      const root = document.documentElement;
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem('pp-theme', root.dataset.theme);
+    });
+    const savedTheme = localStorage.getItem('pp-theme');
+    if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+
+    let toastTimer;
+    function showToast(text) {
+      const el = document.getElementById('toast');
+      document.getElementById('toastText').textContent = text;
+      el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2200);
+    }
+    document.querySelectorAll('[data-toast]').forEach(b=>b.addEventListener('click',()=>showToast(b.dataset.toast)));
+
+    document.addEventListener('keydown', e=>{
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k') { e.preventDefault(); const input=document.querySelector('.quick-search input'); if(input){input.focus(); showToast('Global Search sẵn sàng');} }
+    });
+  </script>
+</body>
+</html>

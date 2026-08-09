@@ -1,0 +1,102 @@
+{
+  "docId": "doc-0542cffac9fa8c9a5a31f2b1aa9079c4",
+  "docPath": "learnings/learning-desktop-ui-prototype-implementation",
+  "currentPath": "learnings/learning-desktop-ui-prototype-implementation",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "docId": "doc-0542cffac9fa8c9a5a31f2b1aa9079c4",
+      "docPath": "learnings/learning-desktop-ui-prototype-implementation",
+      "currentPath": "learnings/learning-desktop-ui-prototype-implementation",
+      "version": 1,
+      "timestamp": "2026-08-09T09:54:37.7768819Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "newHash": "be096f762a7aaa0d687e5072f8f43ad563bb8738ff6b704f5802ee6412dcd22e",
+      "checkpoint": true,
+      "changes": [
+        {
+          "field": "path",
+          "oldValue": null,
+          "newValue": "learnings/learning-desktop-ui-prototype-implementation"
+        },
+        {
+          "field": "title",
+          "oldValue": null,
+          "newValue": "Learning: desktop UI prototype implementation"
+        },
+        {
+          "field": "description",
+          "oldValue": null,
+          "newValue": "Reusable patterns and environment learnings from implementing the Project Platform desktop UI prototype."
+        },
+        {
+          "field": "content",
+          "oldValue": null,
+          "newValue": "# Learning: desktop UI prototype implementation\n\nSource: @task-l0g5hy\n\n## Patterns\n\n### Prototype-to-React visual parity\n\n- **What:** Represent repeated module navigation as typed configuration, keep prototype values in local fixtures, and render shared UI through small presentational components such as status badges, panels, KPI cards, alerts, and map mockups.\n- **When to use:** When a static HTML prototype must become an interactive React shell before backend data contracts are ready.\n- **Example:** `modules` owns tab/sidebar metadata while `Panel`, `KpiCard`, `StatusBadge`, and view components own presentation.\n- **Source:** @task-l0g5hy\n\n## Decisions\n\n### Keep visual parity isolated from backend integration\n\n- **Chose:** Implement the prototype in `apps/web`, preserve the existing health check, and leave API/native/MapLibre behavior to the related implementation work.\n- **Over:** Introducing new UI dependencies or expanding this visual task into backend and Tauri changes.\n- **Tag:** GOOD_CALL / TRADEOFF\n- **Outcome:** The UI could be completed and verified with the existing TypeScript/Vite boundary while keeping the functional desktop work independently schedulable.\n- **Recommendation:** Use fixture-driven visual shells for prototype parity, then replace fixtures behind stable boundaries in follow-up tasks.\n\n## Failures\n\n### Missing browser runtime for visual verification\n\n- **What went wrong:** The repository had no Playwright, Puppeteer, Chrome, or equivalent runtime, so automated 1280x800/narrow screenshots could not be produced.\n- **Root cause:** The frontend package has no browser E2E dependency or configured visual verification harness.\n- **Time lost:** Low; typecheck, build, zero-test script, CSS breakpoints, and diff checks still completed successfully.\n- **Prevention:** Add a browser-based smoke/e2e verification path before the next UI-heavy task if screenshot-level regression checks are required.\n"
+        },
+        {
+          "field": "tags",
+          "oldValue": null,
+          "newValue": [
+            "learning",
+            "ui",
+            "desktop",
+            "react"
+          ]
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "path",
+          "field": "path",
+          "summary": "path",
+          "newBytes": 56,
+          "deltaBytes": 56
+        },
+        {
+          "type": "field",
+          "field": "title",
+          "summary": "title",
+          "newBytes": 47,
+          "deltaBytes": 47
+        },
+        {
+          "type": "field",
+          "field": "description",
+          "summary": "description",
+          "newBytes": 106,
+          "deltaBytes": 106
+        },
+        {
+          "type": "whole_doc",
+          "field": "content",
+          "summary": "Whole document content",
+          "newBytes": 1944,
+          "deltaBytes": 1944
+        },
+        {
+          "type": "field",
+          "field": "tags",
+          "summary": "tags",
+          "newBytes": 35,
+          "deltaBytes": 35
+        }
+      ],
+      "snapshot": {
+        "content": "# Learning: desktop UI prototype implementation\n\nSource: @task-l0g5hy\n\n## Patterns\n\n### Prototype-to-React visual parity\n\n- **What:** Represent repeated module navigation as typed configuration, keep prototype values in local fixtures, and render shared UI through small presentational components such as status badges, panels, KPI cards, alerts, and map mockups.\n- **When to use:** When a static HTML prototype must become an interactive React shell before backend data contracts are ready.\n- **Example:** `modules` owns tab/sidebar metadata while `Panel`, `KpiCard`, `StatusBadge`, and view components own presentation.\n- **Source:** @task-l0g5hy\n\n## Decisions\n\n### Keep visual parity isolated from backend integration\n\n- **Chose:** Implement the prototype in `apps/web`, preserve the existing health check, and leave API/native/MapLibre behavior to the related implementation work.\n- **Over:** Introducing new UI dependencies or expanding this visual task into backend and Tauri changes.\n- **Tag:** GOOD_CALL / TRADEOFF\n- **Outcome:** The UI could be completed and verified with the existing TypeScript/Vite boundary while keeping the functional desktop work independently schedulable.\n- **Recommendation:** Use fixture-driven visual shells for prototype parity, then replace fixtures behind stable boundaries in follow-up tasks.\n\n## Failures\n\n### Missing browser runtime for visual verification\n\n- **What went wrong:** The repository had no Playwright, Puppeteer, Chrome, or equivalent runtime, so automated 1280x800/narrow screenshots could not be produced.\n- **Root cause:** The frontend package has no browser E2E dependency or configured visual verification harness.\n- **Time lost:** Low; typecheck, build, zero-test script, CSS breakpoints, and diff checks still completed successfully.\n- **Prevention:** Add a browser-based smoke/e2e verification path before the next UI-heavy task if screenshot-level regression checks are required.\n",
+        "description": "Reusable patterns and environment learnings from implementing the Project Platform desktop UI prototype.",
+        "path": "learnings/learning-desktop-ui-prototype-implementation",
+        "tags": [
+          "learning",
+          "ui",
+          "desktop",
+          "react"
+        ],
+        "title": "Learning: desktop UI prototype implementation"
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+node_modules/
+dist/
+target/
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+*.bak
+*.project-digital-twin.tmp.xlsx
+apps/desktop/src-tauri/icons/icon.ico
+.env

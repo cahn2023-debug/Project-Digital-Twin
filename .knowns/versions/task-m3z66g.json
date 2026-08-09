@@ -1,0 +1,43 @@
+{
+  "taskId": "m3z66g",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "m3z66g",
+      "version": 1,
+      "timestamp": "2026-08-09T09:23:55.1603201Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:23:55.1583403Z",
+        "description": "Integrate real authentication and project authorization, metrics/log correlation/health, deployment environments, Windows release packaging, 1k/10k/50k performance tests, and real-project pilot acceptance metrics.",
+        "id": "m3z66g",
+        "labels": [
+          "implementation",
+          "security",
+          "observability",
+          "pilot"
+        ],
+        "parent": "swito3",
+        "priority": "high",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Add production auth, observability, deployment, and pilot gates",
+        "updatedAt": "2026-08-09T09:23:55.1583403Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,476 @@
+{
+  "taskId": "36jukk",
+  "currentVersion": 7,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "36jukk",
+      "version": 1,
+      "timestamp": "2026-08-09T08:28:03.708583Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "medium"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T08:28:03.7070467Z",
+        "description": "Audit the current repository against Project Platform Architecture v1.1. Produce a truthful current-architecture baseline, gap analysis, Camera Vertical Slice blockers, and an Iteration 0–3 backlog. Scope is documentation and audit only; do not implement platform code or create the Phase 0B ADR set in this task.",
+        "id": "36jukk",
+        "labels": [
+          "normal",
+          "repository-audit",
+          "architecture"
+        ],
+        "priority": "medium",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Repository audit against Project Platform Architecture v1.1",
+        "updatedAt": "2026-08-09T08:28:03.7070467Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "36jukk",
+      "version": 2,
+      "timestamp": "2026-08-09T08:28:11.3389272Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T08:28:03.707Z",
+        "description": "Audit the current repository against Project Platform Architecture v1.1. Produce a truthful current-architecture baseline, gap analysis, Camera Vertical Slice blockers, and an Iteration 0–3 backlog. Scope is documentation and audit only; do not implement platform code or create the Phase 0B ADR set in this task.",
+        "id": "36jukk",
+        "labels": [
+          "normal",
+          "repository-audit",
+          "architecture"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Repository audit against Project Platform Architecture v1.1",
+        "updatedAt": "2026-08-09T08:28:11.3389272Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "36jukk",
+      "version": 3,
+      "timestamp": "2026-08-09T08:28:44.2831861Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+            },
+            {
+              "completed": false,
+              "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+            },
+            {
+              "completed": false,
+              "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+            },
+            {
+              "completed": false,
+              "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+            },
+            {
+              "completed": false,
+              "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+            }
+          ]
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Establish the read-only baseline. Inventory the repository, Git state, manifests, source files, tests, database/GIS/API/auth/sync configuration, `.knowns`, and `.codegraph`; preserve all existing user changes and record absent categories explicitly.\n2. Build the architecture gap matrix. Compare observed evidence with Project Platform Architecture v1.1: the shared Project Data Core, six foundations, system invariants, MVP entity scope, and the Camera Vertical Slice. Classify each area as present, partial, absent, or not verifiable without inventing a stack.\n3. Create `docs/architecture/CURRENT_ARCHITECTURE.md` with the required sections: Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy. Include the evidence-backed inventory, gap matrix, and explicit unknowns.\n4. Add the recommended Iteration 0–3 backlog and migration order to the document: Iteration 0 audit/contracts and ADR preparation; Iteration 1 Project, Entity Identity, and Camera canonical model; Iteration 2 Managed Camera Excel and file registry; Iteration 3 DESIGNED camera geometry. Keep the eight Phase 0B ADR files out of this task.\n5. Validate the deliverable with required-heading and evidence checks, Markdown/link checks, `git diff --check`, CodeGraph/index status, and Knowns task validation. Record that application tests are unavailable if no source/test harness exists; make no code, schema, or API changes."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+          },
+          {
+            "completed": false,
+            "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+          },
+          {
+            "completed": false,
+            "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+          },
+          {
+            "completed": false,
+            "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+          },
+          {
+            "completed": false,
+            "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T08:28:03.707Z",
+        "description": "Audit the current repository against Project Platform Architecture v1.1. Produce a truthful current-architecture baseline, gap analysis, Camera Vertical Slice blockers, and an Iteration 0–3 backlog. Scope is documentation and audit only; do not implement platform code or create the Phase 0B ADR set in this task.",
+        "id": "36jukk",
+        "implementationPlan": "## Implementation Plan\n\n1. Establish the read-only baseline. Inventory the repository, Git state, manifests, source files, tests, database/GIS/API/auth/sync configuration, `.knowns`, and `.codegraph`; preserve all existing user changes and record absent categories explicitly.\n2. Build the architecture gap matrix. Compare observed evidence with Project Platform Architecture v1.1: the shared Project Data Core, six foundations, system invariants, MVP entity scope, and the Camera Vertical Slice. Classify each area as present, partial, absent, or not verifiable without inventing a stack.\n3. Create `docs/architecture/CURRENT_ARCHITECTURE.md` with the required sections: Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy. Include the evidence-backed inventory, gap matrix, and explicit unknowns.\n4. Add the recommended Iteration 0–3 backlog and migration order to the document: Iteration 0 audit/contracts and ADR preparation; Iteration 1 Project, Entity Identity, and Camera canonical model; Iteration 2 Managed Camera Excel and file registry; Iteration 3 DESIGNED camera geometry. Keep the eight Phase 0B ADR files out of this task.\n5. Validate the deliverable with required-heading and evidence checks, Markdown/link checks, `git diff --check`, CodeGraph/index status, and Knowns task validation. Record that application tests are unavailable if no source/test harness exists; make no code, schema, or API changes.",
+        "labels": [
+          "normal",
+          "repository-audit",
+          "architecture"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Repository audit against Project Platform Architecture v1.1",
+        "updatedAt": "2026-08-09T08:28:44.2831861Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "36jukk",
+      "version": 4,
+      "timestamp": "2026-08-09T08:36:50.0193802Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+            },
+            {
+              "completed": false,
+              "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+            },
+            {
+              "completed": false,
+              "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+            },
+            {
+              "completed": false,
+              "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+            },
+            {
+              "completed": false,
+              "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+            },
+            {
+              "completed": true,
+              "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+            },
+            {
+              "completed": true,
+              "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+            },
+            {
+              "completed": true,
+              "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+            },
+            {
+              "completed": false,
+              "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: completed repository inventory and created docs/architecture/CURRENT_ARCHITECTURE.md with evidence-backed current state, target comparison, six-foundation/invariant gap matrix, Camera Vertical Slice blockers, risks, and Iteration 0–3 backlog. Phase 0B ADR files remain out of scope."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+          },
+          {
+            "completed": true,
+            "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+          },
+          {
+            "completed": true,
+            "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+          },
+          {
+            "completed": true,
+            "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+          },
+          {
+            "completed": false,
+            "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T08:28:03.707Z",
+        "description": "Audit the current repository against Project Platform Architecture v1.1. Produce a truthful current-architecture baseline, gap analysis, Camera Vertical Slice blockers, and an Iteration 0–3 backlog. Scope is documentation and audit only; do not implement platform code or create the Phase 0B ADR set in this task.",
+        "id": "36jukk",
+        "implementationNotes": "Done: completed repository inventory and created docs/architecture/CURRENT_ARCHITECTURE.md with evidence-backed current state, target comparison, six-foundation/invariant gap matrix, Camera Vertical Slice blockers, risks, and Iteration 0–3 backlog. Phase 0B ADR files remain out of scope.",
+        "implementationPlan": "## Implementation Plan\n\n1. Establish the read-only baseline. Inventory the repository, Git state, manifests, source files, tests, database/GIS/API/auth/sync configuration, `.knowns`, and `.codegraph`; preserve all existing user changes and record absent categories explicitly.\n2. Build the architecture gap matrix. Compare observed evidence with Project Platform Architecture v1.1: the shared Project Data Core, six foundations, system invariants, MVP entity scope, and the Camera Vertical Slice. Classify each area as present, partial, absent, or not verifiable without inventing a stack.\n3. Create `docs/architecture/CURRENT_ARCHITECTURE.md` with the required sections: Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy. Include the evidence-backed inventory, gap matrix, and explicit unknowns.\n4. Add the recommended Iteration 0–3 backlog and migration order to the document: Iteration 0 audit/contracts and ADR preparation; Iteration 1 Project, Entity Identity, and Camera canonical model; Iteration 2 Managed Camera Excel and file registry; Iteration 3 DESIGNED camera geometry. Keep the eight Phase 0B ADR files out of this task.\n5. Validate the deliverable with required-heading and evidence checks, Markdown/link checks, `git diff --check`, CodeGraph/index status, and Knowns task validation. Record that application tests are unavailable if no source/test harness exists; make no code, schema, or API changes.",
+        "labels": [
+          "normal",
+          "repository-audit",
+          "architecture"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Repository audit against Project Platform Architecture v1.1",
+        "updatedAt": "2026-08-09T08:36:50.0193802Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "36jukk",
+      "version": 5,
+      "timestamp": "2026-08-09T08:37:23.9446823Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": true,
+              "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+            },
+            {
+              "completed": true,
+              "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+            },
+            {
+              "completed": true,
+              "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+            },
+            {
+              "completed": true,
+              "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+            },
+            {
+              "completed": false,
+              "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+            },
+            {
+              "completed": true,
+              "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+            },
+            {
+              "completed": true,
+              "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+            },
+            {
+              "completed": true,
+              "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+            },
+            {
+              "completed": true,
+              "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: completed repository inventory and created docs/architecture/CURRENT_ARCHITECTURE.md with evidence-backed current state, target comparison, six-foundation/invariant gap matrix, Camera Vertical Slice blockers, risks, and Iteration 0–3 backlog. Phase 0B ADR files remain out of scope.",
+          "newValue": "Done: completed repository inventory and created docs/architecture/CURRENT_ARCHITECTURE.md with evidence-backed current state, target comparison, six-foundation/invariant gap matrix, Camera Vertical Slice blockers, risks, and Iteration 0–3 backlog. Phase 0B ADR files remain out of scope.\nValidation: Knowns task validation passed with 0 errors, 0 warnings, and 0 info; required headings and trailing-whitespace checks passed; git diff --check passed; no application tests were available because no application source/test harness exists; only docs/architecture/CURRENT_ARCHITECTURE.md was added. System Decision Impact: none — the document records repository evidence and the already-supplied Architecture v1.1 target without introducing a new implementation decision, contract, or policy."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+          },
+          {
+            "completed": true,
+            "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+          },
+          {
+            "completed": true,
+            "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+          },
+          {
+            "completed": true,
+            "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+          },
+          {
+            "completed": true,
+            "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T08:28:03.707Z",
+        "description": "Audit the current repository against Project Platform Architecture v1.1. Produce a truthful current-architecture baseline, gap analysis, Camera Vertical Slice blockers, and an Iteration 0–3 backlog. Scope is documentation and audit only; do not implement platform code or create the Phase 0B ADR set in this task.",
+        "id": "36jukk",
+        "implementationNotes": "Done: completed repository inventory and created docs/architecture/CURRENT_ARCHITECTURE.md with evidence-backed current state, target comparison, six-foundation/invariant gap matrix, Camera Vertical Slice blockers, risks, and Iteration 0–3 backlog. Phase 0B ADR files remain out of scope.\nValidation: Knowns task validation passed with 0 errors, 0 warnings, and 0 info; required headings and trailing-whitespace checks passed; git diff --check passed; no application tests were available because no application source/test harness exists; only docs/architecture/CURRENT_ARCHITECTURE.md was added. System Decision Impact: none — the document records repository evidence and the already-supplied Architecture v1.1 target without introducing a new implementation decision, contract, or policy.",
+        "implementationPlan": "## Implementation Plan\n\n1. Establish the read-only baseline. Inventory the repository, Git state, manifests, source files, tests, database/GIS/API/auth/sync configuration, `.knowns`, and `.codegraph`; preserve all existing user changes and record absent categories explicitly.\n2. Build the architecture gap matrix. Compare observed evidence with Project Platform Architecture v1.1: the shared Project Data Core, six foundations, system invariants, MVP entity scope, and the Camera Vertical Slice. Classify each area as present, partial, absent, or not verifiable without inventing a stack.\n3. Create `docs/architecture/CURRENT_ARCHITECTURE.md` with the required sections: Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy. Include the evidence-backed inventory, gap matrix, and explicit unknowns.\n4. Add the recommended Iteration 0–3 backlog and migration order to the document: Iteration 0 audit/contracts and ADR preparation; Iteration 1 Project, Entity Identity, and Camera canonical model; Iteration 2 Managed Camera Excel and file registry; Iteration 3 DESIGNED camera geometry. Keep the eight Phase 0B ADR files out of this task.\n5. Validate the deliverable with required-heading and evidence checks, Markdown/link checks, `git diff --check`, CodeGraph/index status, and Knowns task validation. Record that application tests are unavailable if no source/test harness exists; make no code, schema, or API changes.",
+        "labels": [
+          "normal",
+          "repository-audit",
+          "architecture"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Repository audit against Project Platform Architecture v1.1",
+        "updatedAt": "2026-08-09T08:37:23.9446823Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "36jukk",
+      "version": 6,
+      "timestamp": "2026-08-09T08:37:35.2955173Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 561
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status."
+          },
+          {
+            "completed": true,
+            "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy."
+          },
+          {
+            "completed": true,
+            "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions."
+          },
+          {
+            "completed": true,
+            "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope."
+          },
+          {
+            "completed": true,
+            "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T08:28:03.707Z",
+        "description": "Audit the current repository against Project Platform Architecture v1.1. Produce a truthful current-architecture baseline, gap analysis, Camera Vertical Slice blockers, and an Iteration 0–3 backlog. Scope is documentation and audit only; do not implement platform code or create the Phase 0B ADR set in this task.",
+        "id": "36jukk",
+        "implementationNotes": "Done: completed repository inventory and created docs/architecture/CURRENT_ARCHITECTURE.md with evidence-backed current state, target comparison, six-foundation/invariant gap matrix, Camera Vertical Slice blockers, risks, and Iteration 0–3 backlog. Phase 0B ADR files remain out of scope.\nValidation: Knowns task validation passed with 0 errors, 0 warnings, and 0 info; required headings and trailing-whitespace checks passed; git diff --check passed; no application tests were available because no application source/test harness exists; only docs/architecture/CURRENT_ARCHITECTURE.md was added. System Decision Impact: none — the document records repository evidence and the already-supplied Architecture v1.1 target without introducing a new implementation decision, contract, or policy.",
+        "implementationPlan": "## Implementation Plan\n\n1. Establish the read-only baseline. Inventory the repository, Git state, manifests, source files, tests, database/GIS/API/auth/sync configuration, `.knowns`, and `.codegraph`; preserve all existing user changes and record absent categories explicitly.\n2. Build the architecture gap matrix. Compare observed evidence with Project Platform Architecture v1.1: the shared Project Data Core, six foundations, system invariants, MVP entity scope, and the Camera Vertical Slice. Classify each area as present, partial, absent, or not verifiable without inventing a stack.\n3. Create `docs/architecture/CURRENT_ARCHITECTURE.md` with the required sections: Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy. Include the evidence-backed inventory, gap matrix, and explicit unknowns.\n4. Add the recommended Iteration 0–3 backlog and migration order to the document: Iteration 0 audit/contracts and ADR preparation; Iteration 1 Project, Entity Identity, and Camera canonical model; Iteration 2 Managed Camera Excel and file registry; Iteration 3 DESIGNED camera geometry. Keep the eight Phase 0B ADR files out of this task.\n5. Validate the deliverable with required-heading and evidence checks, Markdown/link checks, `git diff --check`, CodeGraph/index status, and Knowns task validation. Record that application tests are unavailable if no source/test harness exists; make no code, schema, or API changes.",
+        "labels": [
+          "normal",
+          "repository-audit",
+          "architecture"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 561,
+        "title": "Repository audit against Project Platform Architecture v1.1",
+        "updatedAt": "2026-08-09T08:37:35.2955173Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "36jukk",
+      "version": 7,
+      "timestamp": "2026-08-09T08:37:37.5889178Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T08:37:37.5889178Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Repository inventory covers stack, desktop architecture, database, GIS, entity/data models, file parsing, sync/network, authentication/permissions, API, tests, performance, and technical debt, with evidence or explicit not-present/not-verifiable status.",
+            "completed": true
+          },
+          {
+            "text": "docs/architecture/CURRENT_ARCHITECTURE.md contains Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy.",
+            "completed": true
+          },
+          {
+            "text": "The document maps the baseline to the six foundations, system invariants, Camera Vertical Slice, and concrete blockers without unsupported architecture assumptions.",
+            "completed": true
+          },
+          {
+            "text": "An evidence-backed Iteration 0–3 backlog and migration order is documented; Phase 0B ADR files remain out of scope.",
+            "completed": true
+          },
+          {
+            "text": "Validation is recorded, no application code/schema/API is changed, and pre-existing user changes are preserved.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T08:37:37.5889178Z",
+        "createdAt": "2026-08-09T08:28:03.707Z",
+        "description": "Audit the current repository against Project Platform Architecture v1.1. Produce a truthful current-architecture baseline, gap analysis, Camera Vertical Slice blockers, and an Iteration 0–3 backlog. Scope is documentation and audit only; do not implement platform code or create the Phase 0B ADR set in this task.",
+        "id": "36jukk",
+        "implementationNotes": "Done: completed repository inventory and created docs/architecture/CURRENT_ARCHITECTURE.md with evidence-backed current state, target comparison, six-foundation/invariant gap matrix, Camera Vertical Slice blockers, risks, and Iteration 0–3 backlog. Phase 0B ADR files remain out of scope.\nValidation: Knowns task validation passed with 0 errors, 0 warnings, and 0 info; required headings and trailing-whitespace checks passed; git diff --check passed; no application tests were available because no application source/test harness exists; only docs/architecture/CURRENT_ARCHITECTURE.md was added. System Decision Impact: none — the document records repository evidence and the already-supplied Architecture v1.1 target without introducing a new implementation decision, contract, or policy.",
+        "implementationPlan": "## Implementation Plan\n\n1. Establish the read-only baseline. Inventory the repository, Git state, manifests, source files, tests, database/GIS/API/auth/sync configuration, `.knowns`, and `.codegraph`; preserve all existing user changes and record absent categories explicitly.\n2. Build the architecture gap matrix. Compare observed evidence with Project Platform Architecture v1.1: the shared Project Data Core, six foundations, system invariants, MVP entity scope, and the Camera Vertical Slice. Classify each area as present, partial, absent, or not verifiable without inventing a stack.\n3. Create `docs/architecture/CURRENT_ARCHITECTURE.md` with the required sections: Current state, Target state, Reusable components, Components requiring refactor, Components requiring replacement, Risks, and Migration strategy. Include the evidence-backed inventory, gap matrix, and explicit unknowns.\n4. Add the recommended Iteration 0–3 backlog and migration order to the document: Iteration 0 audit/contracts and ADR preparation; Iteration 1 Project, Entity Identity, and Camera canonical model; Iteration 2 Managed Camera Excel and file registry; Iteration 3 DESIGNED camera geometry. Keep the eight Phase 0B ADR files out of this task.\n5. Validate the deliverable with required-heading and evidence checks, Markdown/link checks, `git diff --check`, CodeGraph/index status, and Knowns task validation. Record that application tests are unavailable if no source/test harness exists; make no code, schema, or API changes.",
+        "labels": [
+          "normal",
+          "repository-audit",
+          "architecture"
+        ],
+        "priority": "medium",
+        "status": "done",
+        "timeSpent": 561,
+        "title": "Repository audit against Project Platform Architecture v1.1",
+        "updatedAt": "2026-08-09T08:37:37.5889178Z"
+      }
+    }
+  ]
+}

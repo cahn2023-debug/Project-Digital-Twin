@@ -1,0 +1,43 @@
+{
+  "taskId": "trbw1k",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "trbw1k",
+      "version": 1,
+      "timestamp": "2026-08-09T09:23:54.928636Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:23:54.9261353Z",
+        "description": "Implement scoped Rust file watching/debounce/hash jobs, SQLite manifest persistence, desktop sync queue execution, and the DATACENTER/DESIGN MapLibre UI against the existing API contracts.",
+        "id": "trbw1k",
+        "labels": [
+          "implementation",
+          "desktop",
+          "gis",
+          "sync"
+        ],
+        "parent": "swito3",
+        "priority": "high",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Implement desktop watcher, SQLite worker, and MapLibre workflow",
+        "updatedAt": "2026-08-09T09:23:54.9261353Z"
+      }
+    }
+  ]
+}

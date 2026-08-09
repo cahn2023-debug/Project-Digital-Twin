@@ -1,0 +1,318 @@
+{
+  "taskId": "l0g5hy",
+  "currentVersion": 6,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "l0g5hy",
+      "version": 1,
+      "timestamp": "2026-08-09T09:30:45.0727384Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "medium"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T09:30:45.0703963Z",
+        "description": "Đối chiếu giao diện ứng dụng desktop hiện tại với project_platform_ui_prototype.html và triển khai các phần còn thiếu để đạt bố cục, nội dung, trạng thái tương tác và phong cách hiển thị theo prototype.",
+        "id": "l0g5hy",
+        "labels": [
+          "normal",
+          "ui",
+          "desktop"
+        ],
+        "priority": "medium",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Hoàn thiện giao diện desktop app theo prototype HTML",
+        "updatedAt": "2026-08-09T09:30:45.0703963Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "l0g5hy",
+      "version": 2,
+      "timestamp": "2026-08-09T09:30:50.3698503Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:30:45.07Z",
+        "description": "Đối chiếu giao diện ứng dụng desktop hiện tại với project_platform_ui_prototype.html và triển khai các phần còn thiếu để đạt bố cục, nội dung, trạng thái tương tác và phong cách hiển thị theo prototype.",
+        "id": "l0g5hy",
+        "labels": [
+          "normal",
+          "ui",
+          "desktop"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Hoàn thiện giao diện desktop app theo prototype HTML",
+        "updatedAt": "2026-08-09T09:30:50.3698503Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "l0g5hy",
+      "version": 3,
+      "timestamp": "2026-08-09T09:32:28.142006Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Frontend matches the prototype shell, module navigation, sidebar, five module views, and key visual states."
+            },
+            {
+              "completed": false,
+              "text": "Theme, sidebar collapse, search shortcut, module/sidebar selection, and toast interactions work in the web app."
+            },
+            {
+              "completed": false,
+              "text": "Web typecheck/build and repository diff validation pass without changing API/native boundaries."
+            }
+          ]
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Chuyển cấu trúc prototype thành React UI trong `apps/web/src/App.tsx`: top bar/project switcher/global search, module tabs DATACENTER/DESIGN/OPERATE/ORGANIZE/DASHBOARD, sidebar động theo module, và các view/panel/kpi/table/map mockup tương ứng. Dữ liệu hiển thị giữ dạng fixture giống prototype; health check API hiện có vẫn được giữ và thể hiện trạng thái kết nối.\n2. Port hệ design token và layout desktop từ `project_platform_ui_prototype.html` vào `apps/web/src/styles.css`: light/dark theme, grid/sidebar/topbar, cards/tables/status badges, map placeholder, timeline/charts, responsive breakpoint cho cửa sổ hẹp; không thêm dependency UI bên ngoài.\n3. Bổ sung hành vi tương tác bằng state/effect React: chuyển module và active sidebar, thu gọn sidebar, đổi theme và lưu localStorage, toast cho action buttons, Ctrl/Cmd+K focus global search; dùng button/label/aria phù hợp và không dùng `innerHTML`.\n4. Cập nhật metadata locale/title trong `apps/web/index.html` để khớp prototype và kiểm tra giao diện ở kích thước desktop Tauri 1280×800 cùng breakpoint hẹp.\n5. Xác minh bằng `pnpm --filter @project/web typecheck`, `pnpm --filter @project/web build`, test script hiện có nếu không phát sinh lỗi môi trường, và `git diff --check`; ghi nhận rõ phần API/MapLibre/backend tiếp tục thuộc task `trbw1k`.\n\n## Assumptions\n\n- “Window desktop app” là frontend React được Tauri load qua `apps/desktop/src-tauri/tauri.conf.json`; không cần thay đổi Rust/Tauri window configuration.\n- Các số liệu/panel trong prototype là fixture cho UI parity; việc nối toàn bộ dashboard/map vào API thật nằm ngoài task này.\n- Không có System Decision hay template liên quan cần áp dụng."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Frontend matches the prototype shell, module navigation, sidebar, five module views, and key visual states."
+          },
+          {
+            "completed": false,
+            "text": "Theme, sidebar collapse, search shortcut, module/sidebar selection, and toast interactions work in the web app."
+          },
+          {
+            "completed": false,
+            "text": "Web typecheck/build and repository diff validation pass without changing API/native boundaries."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:30:45.07Z",
+        "description": "Đối chiếu giao diện ứng dụng desktop hiện tại với project_platform_ui_prototype.html và triển khai các phần còn thiếu để đạt bố cục, nội dung, trạng thái tương tác và phong cách hiển thị theo prototype.",
+        "id": "l0g5hy",
+        "implementationPlan": "## Implementation Plan\n\n1. Chuyển cấu trúc prototype thành React UI trong `apps/web/src/App.tsx`: top bar/project switcher/global search, module tabs DATACENTER/DESIGN/OPERATE/ORGANIZE/DASHBOARD, sidebar động theo module, và các view/panel/kpi/table/map mockup tương ứng. Dữ liệu hiển thị giữ dạng fixture giống prototype; health check API hiện có vẫn được giữ và thể hiện trạng thái kết nối.\n2. Port hệ design token và layout desktop từ `project_platform_ui_prototype.html` vào `apps/web/src/styles.css`: light/dark theme, grid/sidebar/topbar, cards/tables/status badges, map placeholder, timeline/charts, responsive breakpoint cho cửa sổ hẹp; không thêm dependency UI bên ngoài.\n3. Bổ sung hành vi tương tác bằng state/effect React: chuyển module và active sidebar, thu gọn sidebar, đổi theme và lưu localStorage, toast cho action buttons, Ctrl/Cmd+K focus global search; dùng button/label/aria phù hợp và không dùng `innerHTML`.\n4. Cập nhật metadata locale/title trong `apps/web/index.html` để khớp prototype và kiểm tra giao diện ở kích thước desktop Tauri 1280×800 cùng breakpoint hẹp.\n5. Xác minh bằng `pnpm --filter @project/web typecheck`, `pnpm --filter @project/web build`, test script hiện có nếu không phát sinh lỗi môi trường, và `git diff --check`; ghi nhận rõ phần API/MapLibre/backend tiếp tục thuộc task `trbw1k`.\n\n## Assumptions\n\n- “Window desktop app” là frontend React được Tauri load qua `apps/desktop/src-tauri/tauri.conf.json`; không cần thay đổi Rust/Tauri window configuration.\n- Các số liệu/panel trong prototype là fixture cho UI parity; việc nối toàn bộ dashboard/map vào API thật nằm ngoài task này.\n- Không có System Decision hay template liên quan cần áp dụng.",
+        "labels": [
+          "normal",
+          "ui",
+          "desktop"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Hoàn thiện giao diện desktop app theo prototype HTML",
+        "updatedAt": "2026-08-09T09:32:28.142006Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "l0g5hy",
+      "version": 4,
+      "timestamp": "2026-08-09T09:50:43.4980872Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Frontend matches the prototype shell, module navigation, sidebar, five module views, and key visual states."
+            },
+            {
+              "completed": false,
+              "text": "Theme, sidebar collapse, search shortcut, module/sidebar selection, and toast interactions work in the web app."
+            },
+            {
+              "completed": false,
+              "text": "Web typecheck/build and repository diff validation pass without changing API/native boundaries."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Frontend matches the prototype shell, module navigation, sidebar, five module views, and key visual states."
+            },
+            {
+              "completed": true,
+              "text": "Theme, sidebar collapse, search shortcut, module/sidebar selection, and toast interactions work in the web app."
+            },
+            {
+              "completed": true,
+              "text": "Web typecheck/build and repository diff validation pass without changing API/native boundaries."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: replaced the minimal web shell with a React implementation matching project_platform_ui_prototype.html across DATACENTER, DESIGN, OPERATE, ORGANIZE, and DASHBOARD; added design tokens/layout, sidebar/module navigation, status/table/map/timeline/chart fixtures, responsive breakpoints, theme persistence, sidebar collapse, global Ctrl/Cmd+K search focus, working camera filtering, and toast interactions. Changed only apps/web/src/App.tsx, apps/web/src/styles.css, and apps/web/index.html; no API, server, Tauri, or native boundaries changed. Verification: web typecheck passed; web production build passed (Vite); web test script passed with 0 tests; git diff --check passed. Automated browser screenshot was unavailable because no Playwright/Chrome runtime is installed; responsive behavior is covered by the CSS breakpoints and build validation. System Decision Impact: none — this task implements the supplied UI prototype and introduces no durable architecture, API, storage, or workflow guidance."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Frontend matches the prototype shell, module navigation, sidebar, five module views, and key visual states."
+          },
+          {
+            "completed": true,
+            "text": "Theme, sidebar collapse, search shortcut, module/sidebar selection, and toast interactions work in the web app."
+          },
+          {
+            "completed": true,
+            "text": "Web typecheck/build and repository diff validation pass without changing API/native boundaries."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:30:45.07Z",
+        "description": "Đối chiếu giao diện ứng dụng desktop hiện tại với project_platform_ui_prototype.html và triển khai các phần còn thiếu để đạt bố cục, nội dung, trạng thái tương tác và phong cách hiển thị theo prototype.",
+        "id": "l0g5hy",
+        "implementationNotes": "Done: replaced the minimal web shell with a React implementation matching project_platform_ui_prototype.html across DATACENTER, DESIGN, OPERATE, ORGANIZE, and DASHBOARD; added design tokens/layout, sidebar/module navigation, status/table/map/timeline/chart fixtures, responsive breakpoints, theme persistence, sidebar collapse, global Ctrl/Cmd+K search focus, working camera filtering, and toast interactions. Changed only apps/web/src/App.tsx, apps/web/src/styles.css, and apps/web/index.html; no API, server, Tauri, or native boundaries changed. Verification: web typecheck passed; web production build passed (Vite); web test script passed with 0 tests; git diff --check passed. Automated browser screenshot was unavailable because no Playwright/Chrome runtime is installed; responsive behavior is covered by the CSS breakpoints and build validation. System Decision Impact: none — this task implements the supplied UI prototype and introduces no durable architecture, API, storage, or workflow guidance.",
+        "implementationPlan": "## Implementation Plan\n\n1. Chuyển cấu trúc prototype thành React UI trong `apps/web/src/App.tsx`: top bar/project switcher/global search, module tabs DATACENTER/DESIGN/OPERATE/ORGANIZE/DASHBOARD, sidebar động theo module, và các view/panel/kpi/table/map mockup tương ứng. Dữ liệu hiển thị giữ dạng fixture giống prototype; health check API hiện có vẫn được giữ và thể hiện trạng thái kết nối.\n2. Port hệ design token và layout desktop từ `project_platform_ui_prototype.html` vào `apps/web/src/styles.css`: light/dark theme, grid/sidebar/topbar, cards/tables/status badges, map placeholder, timeline/charts, responsive breakpoint cho cửa sổ hẹp; không thêm dependency UI bên ngoài.\n3. Bổ sung hành vi tương tác bằng state/effect React: chuyển module và active sidebar, thu gọn sidebar, đổi theme và lưu localStorage, toast cho action buttons, Ctrl/Cmd+K focus global search; dùng button/label/aria phù hợp và không dùng `innerHTML`.\n4. Cập nhật metadata locale/title trong `apps/web/index.html` để khớp prototype và kiểm tra giao diện ở kích thước desktop Tauri 1280×800 cùng breakpoint hẹp.\n5. Xác minh bằng `pnpm --filter @project/web typecheck`, `pnpm --filter @project/web build`, test script hiện có nếu không phát sinh lỗi môi trường, và `git diff --check`; ghi nhận rõ phần API/MapLibre/backend tiếp tục thuộc task `trbw1k`.\n\n## Assumptions\n\n- “Window desktop app” là frontend React được Tauri load qua `apps/desktop/src-tauri/tauri.conf.json`; không cần thay đổi Rust/Tauri window configuration.\n- Các số liệu/panel trong prototype là fixture cho UI parity; việc nối toàn bộ dashboard/map vào API thật nằm ngoài task này.\n- Không có System Decision hay template liên quan cần áp dụng.",
+        "labels": [
+          "normal",
+          "ui",
+          "desktop"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Hoàn thiện giao diện desktop app theo prototype HTML",
+        "updatedAt": "2026-08-09T09:50:43.4980872Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "l0g5hy",
+      "version": 5,
+      "timestamp": "2026-08-09T09:50:53.3897546Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 1200
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Frontend matches the prototype shell, module navigation, sidebar, five module views, and key visual states."
+          },
+          {
+            "completed": true,
+            "text": "Theme, sidebar collapse, search shortcut, module/sidebar selection, and toast interactions work in the web app."
+          },
+          {
+            "completed": true,
+            "text": "Web typecheck/build and repository diff validation pass without changing API/native boundaries."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:30:45.07Z",
+        "description": "Đối chiếu giao diện ứng dụng desktop hiện tại với project_platform_ui_prototype.html và triển khai các phần còn thiếu để đạt bố cục, nội dung, trạng thái tương tác và phong cách hiển thị theo prototype.",
+        "id": "l0g5hy",
+        "implementationNotes": "Done: replaced the minimal web shell with a React implementation matching project_platform_ui_prototype.html across DATACENTER, DESIGN, OPERATE, ORGANIZE, and DASHBOARD; added design tokens/layout, sidebar/module navigation, status/table/map/timeline/chart fixtures, responsive breakpoints, theme persistence, sidebar collapse, global Ctrl/Cmd+K search focus, working camera filtering, and toast interactions. Changed only apps/web/src/App.tsx, apps/web/src/styles.css, and apps/web/index.html; no API, server, Tauri, or native boundaries changed. Verification: web typecheck passed; web production build passed (Vite); web test script passed with 0 tests; git diff --check passed. Automated browser screenshot was unavailable because no Playwright/Chrome runtime is installed; responsive behavior is covered by the CSS breakpoints and build validation. System Decision Impact: none — this task implements the supplied UI prototype and introduces no durable architecture, API, storage, or workflow guidance.",
+        "implementationPlan": "## Implementation Plan\n\n1. Chuyển cấu trúc prototype thành React UI trong `apps/web/src/App.tsx`: top bar/project switcher/global search, module tabs DATACENTER/DESIGN/OPERATE/ORGANIZE/DASHBOARD, sidebar động theo module, và các view/panel/kpi/table/map mockup tương ứng. Dữ liệu hiển thị giữ dạng fixture giống prototype; health check API hiện có vẫn được giữ và thể hiện trạng thái kết nối.\n2. Port hệ design token và layout desktop từ `project_platform_ui_prototype.html` vào `apps/web/src/styles.css`: light/dark theme, grid/sidebar/topbar, cards/tables/status badges, map placeholder, timeline/charts, responsive breakpoint cho cửa sổ hẹp; không thêm dependency UI bên ngoài.\n3. Bổ sung hành vi tương tác bằng state/effect React: chuyển module và active sidebar, thu gọn sidebar, đổi theme và lưu localStorage, toast cho action buttons, Ctrl/Cmd+K focus global search; dùng button/label/aria phù hợp và không dùng `innerHTML`.\n4. Cập nhật metadata locale/title trong `apps/web/index.html` để khớp prototype và kiểm tra giao diện ở kích thước desktop Tauri 1280×800 cùng breakpoint hẹp.\n5. Xác minh bằng `pnpm --filter @project/web typecheck`, `pnpm --filter @project/web build`, test script hiện có nếu không phát sinh lỗi môi trường, và `git diff --check`; ghi nhận rõ phần API/MapLibre/backend tiếp tục thuộc task `trbw1k`.\n\n## Assumptions\n\n- “Window desktop app” là frontend React được Tauri load qua `apps/desktop/src-tauri/tauri.conf.json`; không cần thay đổi Rust/Tauri window configuration.\n- Các số liệu/panel trong prototype là fixture cho UI parity; việc nối toàn bộ dashboard/map vào API thật nằm ngoài task này.\n- Không có System Decision hay template liên quan cần áp dụng.",
+        "labels": [
+          "normal",
+          "ui",
+          "desktop"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 1200,
+        "title": "Hoàn thiện giao diện desktop app theo prototype HTML",
+        "updatedAt": "2026-08-09T09:50:53.3897546Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "l0g5hy",
+      "version": 6,
+      "timestamp": "2026-08-09T09:50:56.3972671Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T09:50:56.3972671Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Frontend matches the prototype shell, module navigation, sidebar, five module views, and key visual states.",
+            "completed": true
+          },
+          {
+            "text": "Theme, sidebar collapse, search shortcut, module/sidebar selection, and toast interactions work in the web app.",
+            "completed": true
+          },
+          {
+            "text": "Web typecheck/build and repository diff validation pass without changing API/native boundaries.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T09:50:56.3972671Z",
+        "createdAt": "2026-08-09T09:30:45.07Z",
+        "description": "Đối chiếu giao diện ứng dụng desktop hiện tại với project_platform_ui_prototype.html và triển khai các phần còn thiếu để đạt bố cục, nội dung, trạng thái tương tác và phong cách hiển thị theo prototype.",
+        "id": "l0g5hy",
+        "implementationNotes": "Done: replaced the minimal web shell with a React implementation matching project_platform_ui_prototype.html across DATACENTER, DESIGN, OPERATE, ORGANIZE, and DASHBOARD; added design tokens/layout, sidebar/module navigation, status/table/map/timeline/chart fixtures, responsive breakpoints, theme persistence, sidebar collapse, global Ctrl/Cmd+K search focus, working camera filtering, and toast interactions. Changed only apps/web/src/App.tsx, apps/web/src/styles.css, and apps/web/index.html; no API, server, Tauri, or native boundaries changed. Verification: web typecheck passed; web production build passed (Vite); web test script passed with 0 tests; git diff --check passed. Automated browser screenshot was unavailable because no Playwright/Chrome runtime is installed; responsive behavior is covered by the CSS breakpoints and build validation. System Decision Impact: none — this task implements the supplied UI prototype and introduces no durable architecture, API, storage, or workflow guidance.",
+        "implementationPlan": "## Implementation Plan\n\n1. Chuyển cấu trúc prototype thành React UI trong `apps/web/src/App.tsx`: top bar/project switcher/global search, module tabs DATACENTER/DESIGN/OPERATE/ORGANIZE/DASHBOARD, sidebar động theo module, và các view/panel/kpi/table/map mockup tương ứng. Dữ liệu hiển thị giữ dạng fixture giống prototype; health check API hiện có vẫn được giữ và thể hiện trạng thái kết nối.\n2. Port hệ design token và layout desktop từ `project_platform_ui_prototype.html` vào `apps/web/src/styles.css`: light/dark theme, grid/sidebar/topbar, cards/tables/status badges, map placeholder, timeline/charts, responsive breakpoint cho cửa sổ hẹp; không thêm dependency UI bên ngoài.\n3. Bổ sung hành vi tương tác bằng state/effect React: chuyển module và active sidebar, thu gọn sidebar, đổi theme và lưu localStorage, toast cho action buttons, Ctrl/Cmd+K focus global search; dùng button/label/aria phù hợp và không dùng `innerHTML`.\n4. Cập nhật metadata locale/title trong `apps/web/index.html` để khớp prototype và kiểm tra giao diện ở kích thước desktop Tauri 1280×800 cùng breakpoint hẹp.\n5. Xác minh bằng `pnpm --filter @project/web typecheck`, `pnpm --filter @project/web build`, test script hiện có nếu không phát sinh lỗi môi trường, và `git diff --check`; ghi nhận rõ phần API/MapLibre/backend tiếp tục thuộc task `trbw1k`.\n\n## Assumptions\n\n- “Window desktop app” là frontend React được Tauri load qua `apps/desktop/src-tauri/tauri.conf.json`; không cần thay đổi Rust/Tauri window configuration.\n- Các số liệu/panel trong prototype là fixture cho UI parity; việc nối toàn bộ dashboard/map vào API thật nằm ngoài task này.\n- Không có System Decision hay template liên quan cần áp dụng.",
+        "labels": [
+          "normal",
+          "ui",
+          "desktop"
+        ],
+        "priority": "medium",
+        "status": "done",
+        "timeSpent": 1200,
+        "title": "Hoàn thiện giao diện desktop app theo prototype HTML",
+        "updatedAt": "2026-08-09T09:50:56.3972671Z"
+      }
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+---
+id: swito3
+title: Implement Project Platform baseline and Camera Vertical Slice
+status: in-progress
+priority: high
+labels:
+  - implementation
+  - camera-vertical-slice
+  - architecture
+createdAt: '2026-08-09T09:04:06.554Z'
+updatedAt: '2026-08-09T09:25:56.645Z'
+timeSpent: 1302
+assignee: '@me'
+spec: specs/2026-08-09/phase-0b-architecture-decision-records
+fulfills:
+  - FR-1
+  - FR-2
+  - FR-3
+  - FR-4
+  - FR-5
+  - FR-6
+  - FR-7
+  - FR-8
+  - FR-9
+  - FR-10
+  - FR-11
+  - FR-12
+  - FR-13
+  - FR-14
+  - FR-15
+  - FR-16
+  - FR-17
+  - FR-18
+  - FR-19
+  - FR-20
+  - FR-21
+  - NFR-1
+  - NFR-2
+  - NFR-3
+  - NFR-4
+  - NFR-5
+---
+# Implement Project Platform baseline and Camera Vertical Slice
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Implement the approved Project Platform execution plan from the documentation-only repository. Begin with the eight Phase 0B ADR contracts, then establish the React/Vite + Tauri/Rust + FastAPI + PostgreSQL/PostGIS + SQLite baseline and the first complete Camera foundation slice. Preserve immutable identity, provenance, versioned revisions, explicit ChangeSets/conflicts, deterministic idempotent sync, rebuildable projections, and reversible file operations.
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [x] #1 Eight accepted ADR files exist with required sections, dependencies, scenarios, traceability, and migration handling.
+- [x] #2 React/Vite, Tauri/Rust, FastAPI, PostgreSQL/PostGIS migration, SQLite manifest, CI, and Docker development baseline are present.
+- [x] #3 Camera import, provenance, identity/revisions, geometry conflict behavior, assignment, FieldPackage, idempotent observations, approval, AS_BUILT, sync events, dashboard, and write-job boundaries are covered by tests.
+- [x] #4 Managed workbook write-back verifies source hash, preserves unmanaged content in round-trip fixtures, creates a backup, and rejects stale files.
+<!-- AC:END -->
+
+## Implementation Plan
+
+<!-- SECTION:PLAN:BEGIN -->
+1. Establish a versioned application baseline and shared contracts.
+2. Create the eight accepted Phase 0B ADR documents.
+3. Scaffold the React/Vite, Tauri/Rust, FastAPI, PostgreSQL/PostGIS, and SQLite workspace.
+4. Implement Project, Entity, Revision, Camera, Intersection, file registry, and managed-import foundations.
+5. Add tests and run Knowns, lint, type, Rust, and server validation.
+<!-- SECTION:PLAN:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Started implementation using the Knowns kn-implement-equivalent workflow; no existing application code was found, so new baseline files will be created.
+Completed: eight accepted Phase 0B ADRs, target architecture, pnpm/Cargo workspace, React/Vite web shell, Tauri 2 shell, Rust desktop-core hashing/safe-write primitives, SQLite manifest schema, PostgreSQL/PostGIS migration, FastAPI Camera import/geometry/assignment/FieldPackage/observation/approval/sync/dashboard/write-job endpoints, server authorization boundary, managed workbook writer, Docker PostGIS service, and CI workflow. Validation: Knowns strict validation passed; TypeScript typecheck/test/build passed; Python pytest 7 passed; cargo fmt/check/test passed; git diff --check passed. Remaining production work is tracked as subtasks: PostgreSQL adapter, real desktop watcher/local sync execution, MapLibre UI, authentication integration, deployment/observability, and pilot-scale performance.
+<!-- SECTION:NOTES:END -->
+
