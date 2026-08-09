@@ -1,11 +1,13 @@
 from fastapi.testclient import TestClient
 from uuid import UUID
 
+from app.domain import Camera
 from app.main import app, store
 
 
 def setup_function() -> None:
     store.projects.clear()
+    store.project_roots.clear()
     store.cameras.clear()
     store.camera_codes.clear()
     store.revisions.clear()
@@ -27,11 +29,126 @@ def setup_function() -> None:
     store._changeset_idempotency.clear()
 
 
-def test_import_and_geometry_revision_flow() -> None:
+def create_project(client: TestClient, tmp_path, name: str) -> dict:
+    root = tmp_path / name.lower().replace(" ", "-")
+    root.mkdir()
+    response = client.post(
+        "/api/v1/projects",
+        json={"name": name, "root_path": str(root)},
+    )
+    assert response.status_code == 201, response.text
+    return response.json()
+
+
+def test_project_lifecycle_validates_roots_and_preserves_data(tmp_path) -> None:
     client = TestClient(app)
-    project_response = client.post("/api/v1/projects", json={"code": "P-001", "name": "Pilot"})
-    assert project_response.status_code == 201
-    project_id = project_response.json()["id"]
+    root = tmp_path / "project-root"
+    root.mkdir()
+    marker = root / "source.txt"
+    marker.write_text("do not delete", encoding="utf-8")
+
+    created = client.post(
+        "/api/v1/projects",
+        json={"name": "  Pilot  ", "root_path": str(root)},
+    )
+    assert created.status_code == 201
+    project = created.json()
+    project_id = UUID(project["id"])
+    assert project["name"] == "Pilot"
+    assert project["code"] == "P-001"
+    assert project["status"] == "ACTIVE"
+
+    blank_name = client.post(
+        "/api/v1/projects",
+        json={"name": "   ", "root_path": str(tmp_path / "blank-name")},
+    )
+    assert blank_name.status_code == 422
+
+    duplicate_root = client.post(
+        "/api/v1/projects",
+        json={"name": "Duplicate", "root_path": str(root)},
+    )
+    assert duplicate_root.status_code == 409
+
+    second_root = tmp_path / "second-root"
+    second_root.mkdir()
+    second = client.post(
+        "/api/v1/projects",
+        json={"name": "Second", "root_path": str(second_root)},
+    )
+    assert second.status_code == 201
+    assert [item["id"] for item in client.get("/api/v1/projects").json()] == [
+        project["id"],
+        second.json()["id"],
+    ]
+
+    archived = client.post(f"/api/v1/projects/{project['id']}/archive")
+    assert archived.status_code == 200
+    assert archived.json()["status"] == "ARCHIVED"
+    archived_second = client.post(f"/api/v1/projects/{second.json()['id']}/archive")
+    assert archived_second.status_code == 200
+    assert client.get("/api/v1/projects").json() == []
+    assert client.get("/api/v1/projects?status=archived").json()[0]["id"] == project["id"]
+
+    restored = client.post(f"/api/v1/projects/{project['id']}/restore")
+    assert restored.status_code == 200
+    assert restored.json()["status"] == "ACTIVE"
+
+    camera_id = UUID("aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa")
+    store.cameras[camera_id] = Camera(entity_id=camera_id, project_id=project_id, code="CAM-001")
+    before = marker.read_bytes()
+    deleted = client.request(
+        "DELETE",
+        f"/api/v1/projects/{project['id']}",
+        json={"name": "Pilot"},
+    )
+    assert deleted.status_code == 200
+    assert deleted.json()["status"] == "DELETED"
+    assert store.cameras[camera_id].project_id == project_id
+    assert marker.read_bytes() == before
+    assert client.get("/api/v1/projects").json() == []
+    assert client.get("/api/v1/projects?status=deleted").json()[0]["id"] == project["id"]
+
+
+def test_project_delete_requires_exact_name_and_allows_new_identity_from_root(tmp_path) -> None:
+    client = TestClient(app)
+    root = tmp_path / "reusable-root"
+    root.mkdir()
+    marker = root / "source.txt"
+    marker.write_text("keep", encoding="utf-8")
+    created = client.post(
+        "/api/v1/projects",
+        json={"name": "Reusable", "root_path": str(root)},
+    ).json()
+
+    wrong_name = client.request(
+        "DELETE",
+        f"/api/v1/projects/{created['id']}",
+        json={"name": "Other"},
+    )
+    assert wrong_name.status_code == 409
+    assert client.get(f"/api/v1/projects/{created['id']}").json()["status"] == "ACTIVE"
+
+    deleted = client.request(
+        "DELETE",
+        f"/api/v1/projects/{created['id']}",
+        json={"name": "Reusable"},
+    )
+    assert deleted.status_code == 200
+
+    recreated = client.post(
+        "/api/v1/projects",
+        json={"name": "Recreated", "root_path": str(root)},
+    )
+    assert recreated.status_code == 201
+    assert recreated.json()["id"] != created["id"]
+    assert recreated.json()["code"] == "P-002"
+    assert marker.read_text(encoding="utf-8") == "keep"
+
+
+def test_import_and_geometry_revision_flow(tmp_path) -> None:
+    client = TestClient(app)
+    project_id = create_project(client, tmp_path, "Pilot")["id"]
 
     import_response = client.post(
         f"/api/v1/projects/{project_id}/cameras/import",
@@ -59,9 +176,9 @@ def test_import_and_geometry_revision_flow() -> None:
     assert conflict_response.json()["detail"]["code"] == "CONFLICT"
 
 
-def test_assignment_field_sync_approval_dashboard_and_write_job() -> None:
+def test_assignment_field_sync_approval_dashboard_and_write_job(tmp_path) -> None:
     client = TestClient(app)
-    project = client.post("/api/v1/projects", json={"code": "P-002", "name": "Field Pilot"}).json()
+    project = create_project(client, tmp_path, "Field Pilot")
     project_id = project["id"]
     imported = client.post(
         f"/api/v1/projects/{project_id}/cameras/import",
@@ -147,9 +264,9 @@ def test_assignment_field_sync_approval_dashboard_and_write_job() -> None:
     assert write_job.json()["status"] == "PENDING"
 
 
-def test_file_import_creates_changeset_before_apply_and_is_idempotent() -> None:
+def test_file_import_creates_changeset_before_apply_and_is_idempotent(tmp_path) -> None:
     client = TestClient(app)
-    project_id = client.post("/api/v1/projects", json={"code": "P-003", "name": "Import Pilot"}).json()["id"]
+    project_id = create_project(client, tmp_path, "Import Pilot")["id"]
     request = {
         "file_id": "33333333-3333-3333-3333-333333333333",
         "file_revision": 4,
@@ -179,9 +296,9 @@ def test_file_import_creates_changeset_before_apply_and_is_idempotent() -> None:
     assert len(client.get(f"/api/v1/projects/{project_id}/cameras").json()) == 1
 
 
-def test_file_import_reports_field_conflict_without_mutation() -> None:
+def test_file_import_reports_field_conflict_without_mutation(tmp_path) -> None:
     client = TestClient(app)
-    project_id = client.post("/api/v1/projects", json={"code": "P-004", "name": "Conflict Pilot"}).json()["id"]
+    project_id = create_project(client, tmp_path, "Conflict Pilot")["id"]
     first = client.post(
         f"/api/v1/projects/{project_id}/file-imports",
         json={
@@ -223,9 +340,9 @@ def test_file_import_reports_field_conflict_without_mutation() -> None:
     assert store.current_revision(UUID(camera_id), "DESIGNED").revision == server_revision
 
 
-def test_file_write_registers_version_self_write_and_restore_job() -> None:
+def test_file_write_registers_version_self_write_and_restore_job(tmp_path) -> None:
     client = TestClient(app)
-    project_id = client.post("/api/v1/projects", json={"code": "P-005", "name": "Write Pilot"}).json()["id"]
+    project_id = create_project(client, tmp_path, "Write Pilot")["id"]
     file_id = "55555555-5555-5555-5555-555555555555"
     entity_revision = "66666666-6666-6666-6666-666666666666"
     source_hash = "a" * 64
@@ -292,7 +409,7 @@ def test_file_write_registers_version_self_write_and_restore_job() -> None:
 
 def test_document_import_creates_read_only_changeset_with_evidence(tmp_path) -> None:
     client = TestClient(app)
-    project_id = client.post("/api/v1/projects", json={"code": "P-006", "name": "Document Pilot"}).json()["id"]
+    project_id = create_project(client, tmp_path, "Document Pilot")["id"]
     source = tmp_path / "wiki.md"
     source.write_text("# Notes\nSee [[CAM-001]]\n", encoding="utf-8")
     response = client.post(
@@ -318,9 +435,9 @@ def test_document_import_creates_read_only_changeset_with_evidence(tmp_path) -> 
     assert client.get(f"/api/v1/projects/{project_id}/cameras").json() == []
 
 
-def test_audit_is_project_scoped_filterable_exportable_and_permissioned() -> None:
+def test_audit_is_project_scoped_filterable_exportable_and_permissioned(tmp_path) -> None:
     client = TestClient(app)
-    project_id = client.post("/api/v1/projects", json={"code": "P-007", "name": "Audit Pilot"}).json()["id"]
+    project_id = create_project(client, tmp_path, "Audit Pilot")["id"]
     request = {
         "file_id": "88888888-8888-8888-8888-888888888888",
         "file_revision": 1,

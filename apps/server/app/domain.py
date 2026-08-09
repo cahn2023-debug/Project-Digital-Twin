@@ -5,6 +5,7 @@ import json
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from ipaddress import ip_address
+from pathlib import Path
 from typing import Any
 from uuid import UUID, uuid4
 
@@ -65,6 +66,8 @@ class Project:
     id: UUID
     code: str
     name: str
+    root_path: str
+    status: str = "ACTIVE"
     schema_version: int = 1
     created_at: datetime = field(default_factory=utc_now)
     updated_at: datetime = field(default_factory=utc_now)
@@ -256,11 +259,20 @@ class FileWriteConflict(Exception):
     pass
 
 
+class ProjectValidationError(ValueError):
+    pass
+
+
+class ProjectConflictError(ValueError):
+    pass
+
+
 class CameraStore:
     """In-memory canonical repository used until the PostgreSQL adapter is added."""
 
     def __init__(self) -> None:
         self.projects: dict[UUID, Project] = {}
+        self.project_roots: dict[str, UUID] = {}
         self.cameras: dict[UUID, Camera] = {}
         self.camera_codes: dict[tuple[UUID, str], UUID] = {}
         self.revisions: dict[tuple[UUID, str], list[EntityRevision]] = {}
@@ -282,15 +294,92 @@ class CameraStore:
         self._correlation_by_aggregate: dict[UUID, UUID] = {}
         self._last_event_by_aggregate: dict[UUID, UUID] = {}
 
-    def create_project(self, code: str, name: str) -> Project:
-        if any(project.code == code for project in self.projects.values()):
-            raise ValueError(f"Project code already exists: {code}")
-        project = Project(id=uuid4(), code=code, name=name)
+    @staticmethod
+    def _normalize_root_path(root_path: str) -> str:
+        candidate = root_path.strip()
+        if not candidate:
+            raise ProjectValidationError("Project root directory is required")
+        try:
+            resolved = Path(candidate).expanduser().resolve(strict=True)
+        except (OSError, RuntimeError) as exc:
+            raise ProjectValidationError("Project root directory does not exist") from exc
+        if not resolved.is_dir():
+            raise ProjectValidationError("Project root path must be a directory")
+        return str(resolved)
+
+    @staticmethod
+    def _root_key(root_path: str) -> str:
+        return root_path.casefold()
+
+    def _next_project_code(self) -> str:
+        used_codes = {project.code for project in self.projects.values()}
+        sequence = 1
+        while f"P-{sequence:03d}" in used_codes:
+            sequence += 1
+        return f"P-{sequence:03d}"
+
+    def create_project(self, name: str, root_path: str) -> Project:
+        project_name = name.strip()
+        if not project_name:
+            raise ProjectValidationError("Project name is required")
+        normalized_root = self._normalize_root_path(root_path)
+        root_key = self._root_key(normalized_root)
+        if root_key in self.project_roots:
+            raise ProjectConflictError("Project root directory is already in use")
+        project = Project(
+            id=uuid4(),
+            code=self._next_project_code(),
+            name=project_name,
+            root_path=normalized_root,
+        )
         self.projects[project.id] = project
+        self.project_roots[root_key] = project.id
         return project
 
     def get_project(self, project_id: UUID) -> Project | None:
         return self.projects.get(project_id)
+
+    def list_projects(self, status: str = "ACTIVE") -> list[Project]:
+        normalized_status = status.strip().upper()
+        if normalized_status not in {"ACTIVE", "ARCHIVED", "DELETED"}:
+            raise ProjectValidationError(f"Unsupported project status: {status}")
+        return sorted(
+            (project for project in self.projects.values() if project.status == normalized_status),
+            key=lambda project: (project.created_at, str(project.id)),
+        )
+
+    def archive_project(self, project_id: UUID) -> Project:
+        project = self.get_project(project_id)
+        if project is None:
+            raise KeyError("Project not found")
+        if project.status != "ACTIVE":
+            raise ProjectConflictError(f"Project cannot be archived from {project.status}")
+        project.status = "ARCHIVED"
+        project.updated_at = utc_now()
+        return project
+
+    def restore_project(self, project_id: UUID) -> Project:
+        project = self.get_project(project_id)
+        if project is None:
+            raise KeyError("Project not found")
+        if project.status != "ARCHIVED":
+            raise ProjectConflictError(f"Project cannot be restored from {project.status}")
+        project.status = "ACTIVE"
+        project.updated_at = utc_now()
+        return project
+
+    def delete_project(self, project_id: UUID, name_confirmation: str) -> Project:
+        project = self.get_project(project_id)
+        if project is None:
+            raise KeyError("Project not found")
+        if project.status == "DELETED":
+            raise ProjectConflictError("Project is already deleted")
+        if project.name != name_confirmation.strip():
+            raise ProjectConflictError("Project name confirmation does not match")
+        project.status = "DELETED"
+        project.updated_at = utc_now()
+        self.project_roots.pop(self._root_key(project.root_path), None)
+        return project
 
     def list_cameras(self, project_id: UUID) -> list[Camera]:
         return sorted(

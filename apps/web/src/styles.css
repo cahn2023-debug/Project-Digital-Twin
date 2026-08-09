@@ -120,15 +120,21 @@ svg { display: block; }
 .brand-title { font-weight: 720; letter-spacing: -.02em; }
 .brand-sub { color: var(--muted); font-size: 11px; margin-top: -1px; }
 
+.project-switcher-shell {
+  position: relative;
+  min-width: 290px;
+}
 .project-switcher {
   display: flex;
   align-items: center;
   gap: 9px;
   padding: 7px 10px;
-  min-width: 290px;
+  width: 100%;
   border: 1px solid var(--border);
   background: var(--surface-2);
   border-radius: 10px;
+  text-align: left;
+  appearance: none;
 }
 .project-code {
   width: 30px;
@@ -166,6 +172,55 @@ svg { display: block; }
 }
 .sync-dot.warning { background: var(--warning); }
 .sync-dot.danger { background: var(--danger); }
+.project-chevron { display: grid; place-items: center; color: var(--muted); }
+.project-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 1100;
+  width: min(390px, calc(100vw - 24px));
+  max-height: min(620px, calc(100vh - 84px));
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-md);
+}
+.project-menu-head, .project-modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.project-menu-tabs { display: flex; gap: 4px; margin: 12px 0 8px; padding: 3px; border-radius: 9px; background: var(--surface-2); }
+.project-menu-tabs button { flex: 1; padding: 7px 8px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font-size: 11px; }
+.project-menu-tabs button.active { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); font-weight: 700; }
+.project-menu-item { display: flex; align-items: center; gap: 8px; padding: 8px; border: 1px solid transparent; border-radius: 10px; }
+.project-menu-item:hover, .project-menu-item.selected { border-color: var(--border); background: var(--surface-2); }
+.project-menu-main { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; padding: 0; border: 0; background: transparent; text-align: left; }
+.project-menu-main:disabled { cursor: default; opacity: .72; }
+.project-menu-code { display: grid; flex: 0 0 34px; place-items: center; height: 28px; border-radius: 7px; background: var(--accent-soft); color: var(--accent-strong); font-size: 10px; font-weight: 760; }
+.project-menu-copy { display: grid; min-width: 0; gap: 2px; }
+.project-menu-copy strong, .project-menu-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.project-menu-copy strong { font-size: 12px; }
+.project-menu-copy small { color: var(--muted); font-size: 10px; }
+.project-menu-item-actions { display: flex; flex: 0 0 auto; gap: 5px; }
+.text-button { padding: 4px 5px; border: 0; background: transparent; color: var(--accent-strong); font-size: 10px; font-weight: 680; }
+.text-button:hover { text-decoration: underline; }
+.text-button:disabled { cursor: not-allowed; opacity: .5; }
+.danger-text { color: var(--danger); }
+.project-menu-empty, .project-menu-error { padding: 16px 10px; color: var(--muted); font-size: 11px; text-align: center; }
+.project-menu-error, .project-form-error { color: var(--danger); }
+.project-modal-backdrop { position: fixed; inset: 0; z-index: 1200; display: grid; place-items: center; padding: 18px; background: rgba(9, 24, 34, .42); }
+.project-modal { width: min(460px, 100%); padding: 18px; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-md); }
+.project-field { display: grid; gap: 6px; margin-top: 16px; color: var(--muted); font-size: 11px; font-weight: 680; }
+.project-field input { width: 100%; height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface-2); }
+.project-field small { color: var(--muted); font-size: 10px; font-weight: 400; }
+.project-danger-note { margin-top: 16px; padding: 10px; border: 1px solid color-mix(in srgb, var(--danger) 30%, var(--border)); border-radius: 9px; background: color-mix(in srgb, var(--danger) 8%, var(--surface)); color: var(--text); font-size: 11px; line-height: 1.45; }
+.project-form-error { margin-top: 12px; font-size: 11px; }
+.project-modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 0 11px; border: 1px solid transparent; border-radius: 8px; font-size: 11px; font-weight: 700; }
+.button.small { min-height: 27px; padding: 0 8px; font-size: 10px; }
+.button.primary { background: var(--accent); color: white; }
+.button.secondary { border-color: var(--border); background: var(--surface-2); color: var(--text); }
+.button.danger { background: var(--danger); color: white; }
+.button:disabled { cursor: not-allowed; opacity: .55; }
 .topbar-spacer { flex: 1; }
 
 .quick-search {

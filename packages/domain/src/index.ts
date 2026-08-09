@@ -3,6 +3,7 @@ export type ProjectId = string;
 export type RevisionNumber = number;
 export type SourceFileId = string;
 
+export type ProjectStatus = "ACTIVE" | "ARCHIVED" | "DELETED";
 export type Representation = "DESIGNED" | "AS_BUILT";
 
 export interface SourceLocator {
@@ -62,6 +63,8 @@ export interface Project {
   id: ProjectId;
   code: string;
   name: string;
+  rootPath: string;
+  status: ProjectStatus;
   schemaVersion: number;
   createdAt: string;
   updatedAt: string;

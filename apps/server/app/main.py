@@ -16,12 +16,24 @@ from pydantic import BaseModel, Field
 
 from .authorization import AuthorizationError, Principal, Role, authorize
 from .documents import parse_document
-from .domain import CameraStore, FileImportConflict, FileWriteConflict, RevisionConflict, normalize_coordinate
+from .domain import (
+    CameraStore,
+    FileImportConflict,
+    FileWriteConflict,
+    ProjectConflictError,
+    ProjectValidationError,
+    RevisionConflict,
+    normalize_coordinate,
+)
 from .importer import parse_camera_rows
 
 
 class ProjectCreate(BaseModel):
-    code: str = Field(min_length=1, max_length=100)
+    name: str = Field(min_length=1, max_length=200)
+    root_path: str = Field(min_length=1)
+
+
+class ProjectDelete(BaseModel):
     name: str = Field(min_length=1, max_length=200)
 
 
@@ -128,13 +140,53 @@ def ready() -> dict[str, str]:
     return {"status": "ok", "canonical_store": "in-memory-foundation"}
 
 
+@app.get("/api/v1/projects")
+def list_projects(status: str = "ACTIVE") -> list[dict[str, Any]]:
+    try:
+        return jsonable_encoder(store.list_projects(status))
+    except ProjectValidationError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
 @app.post("/api/v1/projects", status_code=201)
 def create_project(request: ProjectCreate) -> dict[str, Any]:
     try:
-        project = store.create_project(request.code.strip(), request.name.strip())
-    except ValueError as exc:
+        project = store.create_project(request.name, request.root_path)
+    except ProjectValidationError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except ProjectConflictError as exc:
         raise HTTPException(status_code=409, detail=str(exc)) from exc
-    return project.__dict__
+    return jsonable_encoder(project)
+
+
+@app.post("/api/v1/projects/{project_id}/archive")
+def archive_project(project_id: UUID) -> dict[str, Any]:
+    try:
+        return jsonable_encoder(store.archive_project(project_id))
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ProjectConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@app.post("/api/v1/projects/{project_id}/restore")
+def restore_project(project_id: UUID) -> dict[str, Any]:
+    try:
+        return jsonable_encoder(store.restore_project(project_id))
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ProjectConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@app.delete("/api/v1/projects/{project_id}")
+def delete_project(project_id: UUID, request: ProjectDelete) -> dict[str, Any]:
+    try:
+        return jsonable_encoder(store.delete_project(project_id, request.name))
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ProjectConflictError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
 
 
 @app.get("/api/v1/projects/{project_id}")

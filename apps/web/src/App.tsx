@@ -3,13 +3,52 @@ import {
   useMemo,
   useRef,
   useState,
+  type FormEvent,
   type ReactNode,
 } from "react";
 import * as maplibregl from "maplibre-gl";
 import type { Map as MapLibreMap } from "maplibre-gl";
+import type { Project, ProjectStatus } from "@project/domain";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const apiBase = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
+
+type ApiProject = {
+  id: string;
+  code: string;
+  name: string;
+  root_path: string;
+  status: ProjectStatus;
+  schema_version: number;
+  created_at: string;
+  updated_at: string;
+};
+
+function toProject(project: ApiProject): Project {
+  return {
+    id: project.id,
+    code: project.code,
+    name: project.name,
+    rootPath: project.root_path,
+    status: project.status,
+    schemaVersion: project.schema_version,
+    createdAt: project.created_at,
+    updatedAt: project.updated_at,
+  };
+}
+
+async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
+  const response = await fetch(apiBase + path, {
+    ...init,
+    headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
+  });
+  const body = await response.json().catch(() => null);
+  if (!response.ok) {
+    const detail = body && typeof body.detail === "string" ? body.detail : `HTTP ${response.status}`;
+    throw new Error(detail);
+  }
+  return body as T;
+}
 
 type ModuleKey =
   | "datacenter"
@@ -663,6 +702,81 @@ function Icon({ name, size = 16 }: { name: IconName; size?: number }) {
 
 function StatusBadge({ tone, children }: { tone: Tone; children: ReactNode }) {
   return <span className={"status " + tone}>{children}</span>;
+}
+
+function ProjectDialog({
+  busy,
+  error,
+  mode,
+  name,
+  onClose,
+  onNameChange,
+  onRootPathChange,
+  onSubmit,
+  project,
+  rootPath,
+}: {
+  busy: boolean;
+  error: string;
+  mode: "create" | "delete";
+  name: string;
+  onClose: () => void;
+  onNameChange: (value: string) => void;
+  onRootPathChange: (value: string) => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  project: Project | null;
+  rootPath: string;
+}) {
+  const deleting = mode === "delete";
+  return (
+    <div className="project-modal-backdrop" role="presentation" onMouseDown={busy ? undefined : onClose}>
+      <form className="project-modal" onSubmit={onSubmit} onMouseDown={(event) => event.stopPropagation()}>
+        <div className="project-modal-head">
+          <div>
+            <div className="panel-title">{deleting ? "Xóa project vĩnh viễn" : "Tạo project mới"}</div>
+            <div className="panel-sub">
+              {deleting ? "Dữ liệu hệ thống vẫn được giữ dưới dạng tombstone." : "Chọn một thư mục gốc đã tồn tại trên máy."}
+            </div>
+          </div>
+          <button className="icon-btn" type="button" aria-label="Đóng" onClick={onClose}>×</button>
+        </div>
+        {deleting ? (
+          <div className="project-danger-note">
+            Project <strong>{project?.name}</strong> sẽ bị loại khỏi workspace active. Thư mục gốc không bị xóa hoặc thay đổi.
+          </div>
+        ) : null}
+        <label className="project-field">
+          <span>{deleting ? "Nhập lại chính xác tên project" : "Tên project"}</span>
+          <input
+            autoFocus
+            value={name}
+            onChange={(event) => onNameChange(event.target.value)}
+            placeholder={deleting ? project?.name : "Ví dụ: Tuyến giao thông trung tâm"}
+            aria-label={deleting ? "Xác nhận tên project" : "Tên project"}
+          />
+        </label>
+        {!deleting ? (
+          <label className="project-field">
+            <span>Đường dẫn thư mục gốc</span>
+            <input
+              value={rootPath}
+              onChange={(event) => onRootPathChange(event.target.value)}
+              placeholder="Ví dụ: C:\\Projects\\DigitalTwin"
+              aria-label="Đường dẫn thư mục gốc"
+            />
+            <small>Thư mục phải tồn tại và chưa được gắn với project khác.</small>
+          </label>
+        ) : null}
+        {error ? <div className="project-form-error" role="alert">{error}</div> : null}
+        <div className="project-modal-actions">
+          <button className="button secondary" type="button" onClick={onClose} disabled={busy}>Hủy</button>
+          <button className={"button " + (deleting ? "danger" : "primary")} type="submit" disabled={busy || !name.trim() || (!deleting && !rootPath.trim())}>
+            {busy ? "Đang xử lý…" : deleting ? "Xóa vĩnh viễn" : "Tạo project"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
 function Panel({
@@ -1412,7 +1526,48 @@ export default function App() {
     return saved === "dark" ? "dark" : "light";
   });
   const [toast, setToast] = useState("");
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [archivedProjects, setArchivedProjects] = useState<Project[]>([]);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [projectMenuOpen, setProjectMenuOpen] = useState(false);
+  const [projectFilter, setProjectFilter] = useState<"active" | "archived">("active");
+  const [projectLoading, setProjectLoading] = useState(false);
+  const [projectDialog, setProjectDialog] = useState<"create" | "delete" | null>(null);
+  const [projectDialogTarget, setProjectDialogTarget] = useState<Project | null>(null);
+  const [projectDraftName, setProjectDraftName] = useState("");
+  const [projectDraftRoot, setProjectDraftRoot] = useState("");
+  const [projectError, setProjectError] = useState("");
+  const [projectBusy, setProjectBusy] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
+
+  const currentProject = projects.find((project) => project.id === selectedProjectId) ?? projects[0] ?? null;
+
+  const refreshProjects = async (preferredId?: string): Promise<boolean> => {
+    setProjectLoading(true);
+    try {
+      const [active, archived] = await Promise.all([
+        requestJson<ApiProject[]>("/api/v1/projects?status=ACTIVE"),
+        requestJson<ApiProject[]>("/api/v1/projects?status=ARCHIVED"),
+      ]);
+      const nextProjects = active.map(toProject);
+      setProjects(nextProjects);
+      setArchivedProjects(archived.map(toProject));
+      setSelectedProjectId((previous) => {
+        if (preferredId && nextProjects.some((project) => project.id === preferredId)) return preferredId;
+        if (previous && nextProjects.some((project) => project.id === previous)) return previous;
+        return nextProjects[0]?.id ?? null;
+      });
+      setProjectError("");
+      return true;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Không thể tải danh sách project";
+      setProjectError(message);
+      setConnection({ label: "Projects offline", tone: "danger" });
+      return false;
+    } finally {
+      setProjectLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetch(apiBase + "/health/live")
@@ -1422,6 +1577,10 @@ export default function App() {
       })
       .then((health) => setConnection({ label: "API " + health.status, tone: "success" }))
       .catch(() => setConnection({ label: "API offline", tone: "danger" }));
+  }, []);
+
+  useEffect(() => {
+    void refreshProjects();
   }, []);
 
   useEffect(() => {
@@ -1452,6 +1611,102 @@ export default function App() {
   const sidePrimary = currentModule.sections.slice(0, 6);
   const sideSecondary = currentModule.sections.slice(6);
 
+  const closeProjectDialog = () => {
+    setProjectDialog(null);
+    setProjectDialogTarget(null);
+    setProjectDraftName("");
+    setProjectDraftRoot("");
+    setProjectError("");
+  };
+
+  const openCreateProject = () => {
+    setProjectMenuOpen(false);
+    setProjectDialog("create");
+    setProjectDraftName("");
+    setProjectDraftRoot("");
+    setProjectError("");
+  };
+
+  const openDeleteProject = (project: Project) => {
+    setProjectMenuOpen(false);
+    setProjectDialog("delete");
+    setProjectDialogTarget(project);
+    setProjectDraftName("");
+    setProjectError("");
+  };
+
+  const handleCreateProject = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setProjectBusy(true);
+    setProjectError("");
+    try {
+      const created = await requestJson<ApiProject>("/api/v1/projects", {
+        method: "POST",
+        body: JSON.stringify({ name: projectDraftName.trim(), root_path: projectDraftRoot.trim() }),
+      });
+      if (!await refreshProjects(created.id)) throw new Error("Project đã tạo nhưng không thể tải lại danh sách");
+      closeProjectDialog();
+      showToast("Đã tạo và chọn project mới");
+    } catch (error) {
+      setProjectError(error instanceof Error ? error.message : "Không thể tạo project");
+    } finally {
+      setProjectBusy(false);
+    }
+  };
+
+  const archiveProject = async (project: Project) => {
+    setProjectBusy(true);
+    setProjectError("");
+    try {
+      await requestJson<ApiProject>(`/api/v1/projects/${project.id}/archive`, { method: "POST" });
+      if (!await refreshProjects()) throw new Error("Đã archive nhưng không thể tải lại danh sách project");
+      showToast(`Đã archive ${project.name}`);
+    } catch (error) {
+      setProjectError(error instanceof Error ? error.message : "Không thể archive project");
+    } finally {
+      setProjectBusy(false);
+    }
+  };
+
+  const restoreProject = async (project: Project) => {
+    setProjectBusy(true);
+    setProjectError("");
+    try {
+      const restored = await requestJson<ApiProject>(`/api/v1/projects/${project.id}/restore`, { method: "POST" });
+      if (!await refreshProjects(restored.id)) throw new Error("Đã khôi phục nhưng không thể tải lại danh sách project");
+      setProjectFilter("active");
+      showToast(`Đã khôi phục ${project.name}`);
+    } catch (error) {
+      setProjectError(error instanceof Error ? error.message : "Không thể khôi phục project");
+    } finally {
+      setProjectBusy(false);
+    }
+  };
+
+  const handleDeleteProject = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!projectDialogTarget) return;
+    if (projectDraftName.trim() !== projectDialogTarget.name) {
+      setProjectError("Tên xác nhận không khớp.");
+      return;
+    }
+    setProjectBusy(true);
+    setProjectError("");
+    try {
+      await requestJson<ApiProject>(`/api/v1/projects/${projectDialogTarget.id}`, {
+        method: "DELETE",
+        body: JSON.stringify({ name: projectDraftName.trim() }),
+      });
+      if (!await refreshProjects()) throw new Error("Đã xóa nhưng không thể tải lại danh sách project");
+      closeProjectDialog();
+      showToast("Project đã được đánh dấu đã xóa; thư mục gốc được giữ nguyên");
+    } catch (error) {
+      setProjectError(error instanceof Error ? error.message : "Không thể xóa project");
+    } finally {
+      setProjectBusy(false);
+    }
+  };
+
   const activateModule = (module: ModuleKey) => {
     setActiveModule(module);
     setActiveSideItem(modules[module].sections[0].key);
@@ -1475,13 +1730,65 @@ export default function App() {
           <div className="brand-mark"><Icon name="grid" size={19} /></div>
           <div><div className="brand-title">Project Platform</div><div className="brand-sub">Digital Twin Workspace</div></div>
         </div>
-        <div className="project-switcher">
-          <div className="project-code">269</div>
-          <div className="project-meta">
-            <div className="project-name">Hệ thống giao thông thông minh — 269 nút</div>
-            <div className="project-line"><span><i className={"sync-dot " + connection.tone} />{connection.label}</span><span>Revision 134</span></div>
-          </div>
-          <button className="icon-btn" type="button" aria-label="Đổi dự án" onClick={() => showToast("Project switcher sẵn sàng")}><Icon name="chevron" size={16} /></button>
+        <div className="project-switcher-shell">
+          <button
+            className="project-switcher"
+            type="button"
+            aria-expanded={projectMenuOpen}
+            aria-haspopup="dialog"
+            aria-label="Đổi project"
+            onClick={() => setProjectMenuOpen(!projectMenuOpen)}
+          >
+            <div className="project-code">{currentProject?.code ?? "—"}</div>
+            <div className="project-meta">
+              <div className="project-name">{currentProject?.name ?? "Chưa có project active"}</div>
+              <div className="project-line">
+                <span><i className={"sync-dot " + connection.tone} />{connection.label}</span>
+                <span>{currentProject ? currentProject.rootPath : "Tạo project để bắt đầu"}</span>
+              </div>
+            </div>
+            <span className="project-chevron"><Icon name="chevron" size={16} /></span>
+          </button>
+          {projectMenuOpen ? (
+            <div className="project-menu" role="dialog" aria-label="Project switcher">
+              <div className="project-menu-head">
+                <div><div className="panel-title">Projects</div><div className="panel-sub">Chọn workspace đang làm việc</div></div>
+                <button className="button primary small" type="button" onClick={openCreateProject}><Icon name="plus" size={13} />Tạo</button>
+              </div>
+              <div className="project-menu-tabs" role="tablist" aria-label="Project filter">
+                <button className={projectFilter === "active" ? "active" : ""} type="button" role="tab" aria-selected={projectFilter === "active"} onClick={() => setProjectFilter("active")}>Đang dùng ({projects.length})</button>
+                <button className={projectFilter === "archived" ? "active" : ""} type="button" role="tab" aria-selected={projectFilter === "archived"} onClick={() => setProjectFilter("archived")}>Archived ({archivedProjects.length})</button>
+              </div>
+              {projectError ? <div className="project-menu-error" role="alert">{projectError}</div> : null}
+              {projectLoading ? <div className="project-menu-empty">Đang tải project…</div> : null}
+              {!projectLoading && (projectFilter === "active" ? projects : archivedProjects).length === 0 ? (
+                <div className="project-menu-empty">{projectFilter === "active" ? "Chưa có project active." : "Không có project archived."}</div>
+              ) : null}
+              {!projectLoading ? (projectFilter === "active" ? projects : archivedProjects).map((project) => (
+                <div className={"project-menu-item" + (project.id === currentProject?.id ? " selected" : "")} key={project.id}>
+                  <button
+                    className="project-menu-main"
+                    type="button"
+                    disabled={project.status !== "ACTIVE"}
+                    onClick={() => { setSelectedProjectId(project.id); setProjectMenuOpen(false); }}
+                  >
+                    <span className="project-menu-code">{project.code}</span>
+                    <span className="project-menu-copy"><strong>{project.name}</strong><small>{project.rootPath}</small></span>
+                  </button>
+                  <div className="project-menu-item-actions">
+                    {project.status === "ACTIVE" ? (
+                      <>
+                        <button className="text-button" type="button" onClick={() => void archiveProject(project)} disabled={projectBusy}>Archive</button>
+                        <button className="text-button danger-text" type="button" onClick={() => openDeleteProject(project)} disabled={projectBusy}>Xóa</button>
+                      </>
+                    ) : (
+                      <button className="text-button" type="button" onClick={() => void restoreProject(project)} disabled={projectBusy}>Khôi phục</button>
+                    )}
+                  </div>
+                </div>
+              )) : null}
+            </div>
+          ) : null}
         </div>
         <div className="topbar-spacer" />
         <label className="quick-search">
@@ -1512,6 +1819,20 @@ export default function App() {
 
       <main>{renderView()}</main>
       {toast ? <div className="toast show" role="status"><Icon name="check" size={15} /><span>{toast}</span></div> : null}
+      {projectDialog ? (
+        <ProjectDialog
+          busy={projectBusy}
+          error={projectError}
+          mode={projectDialog}
+          name={projectDraftName}
+          onClose={closeProjectDialog}
+          onNameChange={setProjectDraftName}
+          onRootPathChange={setProjectDraftRoot}
+          onSubmit={projectDialog === "create" ? handleCreateProject : handleDeleteProject}
+          project={projectDialogTarget}
+          rootPath={projectDraftRoot}
+        />
+      ) : null}
     </div>
   );
 }

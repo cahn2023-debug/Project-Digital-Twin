@@ -1,0 +1,562 @@
+{
+  "taskId": "alcq89",
+  "currentVersion": 9,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "alcq89",
+      "version": 1,
+      "timestamp": "2026-08-09T13:58:26.5610289Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T13:58:26.559518Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T13:58:26.559518Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "alcq89",
+      "version": 2,
+      "timestamp": "2026-08-09T13:58:37.3591534Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+            },
+            {
+              "completed": false,
+              "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+            },
+            {
+              "completed": false,
+              "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+          },
+          {
+            "completed": false,
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+          },
+          {
+            "completed": false,
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T13:58:37.3591534Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "alcq89",
+      "version": 3,
+      "timestamp": "2026-08-09T14:12:24.1905528Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+          },
+          {
+            "completed": false,
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+          },
+          {
+            "completed": false,
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T14:12:24.1905528Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "alcq89",
+      "version": 4,
+      "timestamp": "2026-08-09T14:22:47.6336188Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+            },
+            {
+              "completed": false,
+              "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+            },
+            {
+              "completed": false,
+              "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+            },
+            {
+              "completed": true,
+              "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+            },
+            {
+              "completed": true,
+              "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+          },
+          {
+            "completed": true,
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+          },
+          {
+            "completed": true,
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "implementationNotes": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T14:22:47.6336188Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "alcq89",
+      "version": 5,
+      "timestamp": "2026-08-09T14:22:55.5304808Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 628
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+          },
+          {
+            "completed": true,
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+          },
+          {
+            "completed": true,
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "implementationNotes": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "in-progress",
+        "timeSpent": 628,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T14:22:55.5304808Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "alcq89",
+      "version": 6,
+      "timestamp": "2026-08-09T14:22:57.4895849Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T14:22:57.4895849Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+          },
+          {
+            "completed": true,
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+          },
+          {
+            "completed": true,
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:22:57.4895849Z",
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "implementationNotes": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "done",
+        "timeSpent": 628,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T14:22:57.4895849Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "alcq89",
+      "version": 7,
+      "timestamp": "2026-08-09T14:25:29.65012Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.",
+          "newValue": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+          },
+          {
+            "completed": true,
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+          },
+          {
+            "completed": true,
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:22:57.489Z",
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "implementationNotes": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "done",
+        "timeSpent": 628,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T14:25:29.65012Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "alcq89",
+      "version": 8,
+      "timestamp": "2026-08-09T14:26:17.134596Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.",
+          "newValue": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D10=pass, D11=pass, D12=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state."
+          },
+          {
+            "completed": true,
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success."
+          },
+          {
+            "completed": true,
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:22:57.489Z",
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "implementationNotes": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D10=pass, D11=pass, D12=pass.",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "done",
+        "timeSpent": 628,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T14:26:17.134596Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "alcq89",
+      "version": 9,
+      "timestamp": "2026-08-09T14:26:53.3859204Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D10=pass, D11=pass, D12=pass.",
+          "newValue": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D10=pass, D11=pass, D12=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Project switcher loads active/archived data and supports switching with stable selection state.",
+            "completed": true
+          },
+          {
+            "text": "Create flow validates name/folder and reports API errors without optimistic false success.",
+            "completed": true
+          },
+          {
+            "text": "Archive, restore and exact-name permanent-delete interactions are wired to the API with empty-state fallback.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:22:57.489Z",
+        "createdAt": "2026-08-09T13:58:26.559Z",
+        "description": "Connect the project switcher to the lifecycle API and implement active/archived lists, folder selection, create flow, archive/restore, exact-name permanent-delete confirmation, empty state, and selection fallback.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-5",
+          "AC-6",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "alcq89",
+        "implementationNotes": "Done: Connected the project switcher to active/archived project APIs; added create flow with trimmed name and existing root-path validation, stable selection/fallback, archive/restore actions, exact-name permanent-delete modal, empty states and API error handling. Updated shared Project/ProjectStatus types and added matching project menu/modal styles. Verification: web typecheck passed; web production build passed (existing large-chunk warning); web test passed with 0 tests; domain typecheck passed; git diff --check passed with repository line-ending warnings. Review: PASS, no P1/P2 findings; delegated reviewer timed out and was closed without changes. System Decision Impact: none — UI wires the approved project lifecycle contract without adding new durable guidance. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D10=pass, D11=pass, D12=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D10=pass, D11=pass, D12=pass",
+        "labels": [
+          "from-spec",
+          "spec:project-create-and-delete-lifecycle",
+          "spec-date:2026-08-09"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-09/project-create-and-delete-lifecycle",
+        "status": "done",
+        "timeSpent": 628,
+        "title": "[project-create-and-delete-lifecycle-02] Implement desktop project management UI",
+        "updatedAt": "2026-08-09T14:26:53.3859204Z"
+      }
+    }
+  ]
+}
