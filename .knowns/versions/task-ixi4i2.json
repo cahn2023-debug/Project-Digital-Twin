@@ -1,0 +1,615 @@
+{
+  "taskId": "ixi4i2",
+  "currentVersion": 10,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "ixi4i2",
+      "version": 1,
+      "timestamp": "2026-08-09T14:22:01.8765622Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.8730394Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T14:22:01.8730394Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "ixi4i2",
+      "version": 2,
+      "timestamp": "2026-08-09T14:22:40.9548737Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+            },
+            {
+              "completed": false,
+              "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+            },
+            {
+              "completed": false,
+              "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": false,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": false,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T14:22:40.9548737Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "ixi4i2",
+      "version": 3,
+      "timestamp": "2026-08-09T14:54:05.1964898Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": false,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": false,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T14:54:05.1964898Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "ixi4i2",
+      "version": 4,
+      "timestamp": "2026-08-09T14:54:07.6930878Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": false,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": false,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "implementationPlan": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T14:54:07.6930878Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "ixi4i2",
+      "version": 5,
+      "timestamp": "2026-08-09T15:05:52.4861441Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+            },
+            {
+              "completed": false,
+              "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+            },
+            {
+              "completed": false,
+              "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+            },
+            {
+              "completed": true,
+              "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+            },
+            {
+              "completed": true,
+              "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": true,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": true,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "implementationNotes": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T15:05:52.4861441Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "ixi4i2",
+      "version": 6,
+      "timestamp": "2026-08-09T15:05:55.2059302Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 707
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": true,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": true,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "implementationNotes": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 707,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T15:05:55.2059302Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "ixi4i2",
+      "version": 7,
+      "timestamp": "2026-08-09T15:05:57.8615831Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T15:05:57.8615831Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": true,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": true,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:05:57.8615831Z",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "implementationNotes": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 707,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T15:05:57.8615831Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "ixi4i2",
+      "version": 8,
+      "timestamp": "2026-08-09T15:25:17.8705915Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+          "newValue": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": true,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": true,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:05:57.861Z",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "implementationNotes": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 707,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T15:25:17.8705915Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "ixi4i2",
+      "version": 9,
+      "timestamp": "2026-08-09T15:25:54.8888492Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+          "newValue": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel."
+          },
+          {
+            "completed": true,
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results."
+          },
+          {
+            "completed": true,
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:05:57.861Z",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "implementationNotes": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+        "implementationPlan": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 707,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T15:25:54.8888492Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "ixi4i2",
+      "version": 10,
+      "timestamp": "2026-08-09T15:26:28.6465921Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+          "newValue": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Render Organize from the real API/state boundary with tree, unified list and detail panel.",
+            "completed": true
+          },
+          {
+            "text": "Implement search/filter, single/bulk group/tag/archive/restore actions with visible per-item results.",
+            "completed": true
+          },
+          {
+            "text": "Add loading/error/empty/accessibility coverage and run web typecheck/build.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:05:57.861Z",
+        "createdAt": "2026-08-09T14:22:01.873Z",
+        "description": "Replace Organize fixture-only rendering with the real API/state boundary. Implement group tree, unified object/file/import list, detail panel, search/filter, single and bulk group/tag/lifecycle actions, loading/error/empty states and semantic desktop controls.",
+        "fulfills": [
+          "AC-1",
+          "AC-4",
+          "AC-5"
+        ],
+        "id": "ixi4i2",
+        "implementationNotes": "Done: Replaced fixture Organize view with project-scoped API-backed groups, unified ENTITY/SOURCE_FILE/IMPORT list, detail panel, filters, loading/error/empty states and accessible controls.\nDone: Added single/bulk membership and lifecycle mutations, group/tag creation, group deletion confirmation, and visible per-item action results.\nVerification: web typecheck/build/test pass; uv run pytest -q = 30 passed, 1 warning; Knowns validation = 0 errors, 0 warnings.\nReview: PASS, P1=0. P2 deferred: no browser-test harness exists in apps/web; static typecheck/build and API regression cover the available test boundary.\nSystem Decision Impact: none — UI implements existing approved Organize API/spec contracts without adding new durable project guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Inspect the existing Organize fixture, shared API types, and project selection flow in apps/web/src/App.tsx.\n2. Replace OrganizeView with API-backed group tree, unified entity/source/import list, detail panel, search/filter, and loading/error/empty states.\n3. Wire single and bulk group/tag/archive/restore mutations with per-item feedback and accessible controls; keep write-back confirmation outside this task.\n4. Add Organize-specific styles in apps/web/src/styles.css without changing unrelated module styling.\n5. Run web typecheck/build, validate task/spec references, review the diff, and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "ui",
+          "react",
+          "bulk-actions"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 707,
+        "title": "[organize-03] Connect Organize UI to real data and bulk management",
+        "updatedAt": "2026-08-09T15:26:28.6465921Z"
+      }
+    }
+  ]
+}

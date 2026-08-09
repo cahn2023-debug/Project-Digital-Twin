@@ -3,18 +3,22 @@ from __future__ import annotations
 import csv
 import io
 import json
+import logging
+import os
+from contextvars import ContextVar
 from time import perf_counter
 from datetime import datetime
 from typing import Any
-from uuid import UUID
+from uuid import UUID, uuid4
 
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.encoders import jsonable_encoder
-from fastapi.responses import Response
+from fastapi.responses import JSONResponse, Response
 from pydantic import BaseModel, Field
 
 from .authorization import AuthorizationError, Principal, Role, authorize
+from .auth import AuthenticationError, authenticate_bearer
 from .documents import parse_document
 from .domain import (
     CameraStore,
@@ -28,6 +32,16 @@ from .domain import (
     normalize_coordinate,
 )
 from .importer import parse_camera_rows
+from .persistence import PostgresCameraStore
+
+
+logger = logging.getLogger("project_digital_twin.api")
+request_metrics = {
+    "requests_total": 0,
+    "requests_errors_total": 0,
+    "request_duration_seconds_total": 0.0,
+}
+current_principal: ContextVar[Principal | None] = ContextVar("current_principal", default=None)
 
 
 class ProjectCreate(BaseModel):
@@ -174,15 +188,102 @@ class OrganizeWriteBackExecuteRequest(BaseModel):
 class WriteJobFailureRequest(BaseModel):
     reason: str = Field(min_length=1, max_length=500)
 
-store = CameraStore()
+
+def _build_store() -> CameraStore:
+    database_url = os.getenv("DATABASE_URL")
+    is_production = os.getenv("APP_ENV", "development").casefold() == "production"
+    if is_production and os.getenv("AUTH_MODE", "oidc").casefold() != "oidc":
+        raise RuntimeError("AUTH_MODE=oidc is required when APP_ENV=production")
+    if database_url:
+        return PostgresCameraStore(database_url)
+    if is_production:
+        raise RuntimeError("DATABASE_URL is required when APP_ENV=production")
+    return CameraStore()
+
+
+store = _build_store()
 app = FastAPI(title="Project Digital Twin API", version="0.1.0")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        origin.strip()
+        for origin in os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173").split(",")
+        if origin.strip()
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.middleware("http")
+async def request_observability_and_transaction(request: Request, call_next: Any) -> Any:
+    request_id = request.headers.get("X-Request-ID") or str(uuid4())
+    started = perf_counter()
+    request_metrics["requests_total"] += 1
+    response = None
+    principal_token = None
+    try:
+        if os.getenv("APP_ENV", "development").casefold() == "production" and request.url.path.startswith("/api"):
+            try:
+                principal_token = current_principal.set(authenticate_bearer(request.headers.get("Authorization")))
+            except AuthenticationError as exc:
+                request_metrics["requests_errors_total"] += 1
+                logger.info(
+                    json.dumps(
+                        {
+                            "event": "request_unauthenticated",
+                            "request_id": request_id,
+                            "method": request.method,
+                            "path": request.url.path,
+                        },
+                        ensure_ascii=False,
+                    )
+                )
+                return JSONResponse(
+                    status_code=401,
+                    content={"detail": "Authentication required"},
+                    headers={"X-Request-ID": request_id},
+                )
+        use_transaction = isinstance(store, PostgresCameraStore) and not request.url.path.startswith("/health")
+        if use_transaction:
+            with store.request_context():
+                response = await call_next(request)
+        else:
+            response = await call_next(request)
+    except Exception:
+        request_metrics["requests_errors_total"] += 1
+        logger.exception(
+            json.dumps(
+                {
+                    "event": "request_failed",
+                    "request_id": request_id,
+                    "method": request.method,
+                    "path": request.url.path,
+                },
+                ensure_ascii=False,
+            )
+        )
+        raise
+    finally:
+        if principal_token is not None:
+            current_principal.reset(principal_token)
+        request_metrics["request_duration_seconds_total"] += perf_counter() - started
+    response.headers["X-Request-ID"] = request_id
+    logger.info(
+        json.dumps(
+            {
+                "event": "request_completed",
+                "request_id": request_id,
+                "method": request.method,
+                "path": request.url.path,
+                "status_code": response.status_code,
+                "duration_ms": round((perf_counter() - started) * 1000, 3),
+            },
+            ensure_ascii=False,
+        )
+    )
+    return response
 
 
 @app.get("/health/live")
@@ -191,8 +292,26 @@ def live() -> dict[str, str]:
 
 
 @app.get("/health/ready")
-def ready() -> dict[str, str]:
-    return {"status": "ok", "canonical_store": "in-memory-foundation"}
+def ready() -> dict[str, Any]:
+    if isinstance(store, PostgresCameraStore):
+        try:
+            return store.health()
+        except Exception as exc:
+            raise HTTPException(status_code=503, detail="Canonical store is unavailable") from exc
+    return {"status": "ok", "canonical_store": "in-memory-development"}
+
+
+@app.get("/metrics")
+def metrics() -> Response:
+    lines = [
+        "# TYPE project_digital_twin_requests_total counter",
+        f"project_digital_twin_requests_total {request_metrics['requests_total']}",
+        "# TYPE project_digital_twin_requests_errors_total counter",
+        f"project_digital_twin_requests_errors_total {request_metrics['requests_errors_total']}",
+        "# TYPE project_digital_twin_request_duration_seconds_total counter",
+        f"project_digital_twin_request_duration_seconds_total {request_metrics['request_duration_seconds_total']}",
+    ]
+    return Response("\n".join(lines) + "\n", media_type="text/plain; version=0.0.4")
 
 
 @app.get("/api/v1/projects")
@@ -684,7 +803,9 @@ def create_document_import_changeset(project_id: UUID, request: DocumentImportRe
 
 def _authorize_header(project_id: UUID, action: str, actor: str, role: str) -> None:
     try:
-        principal = Principal(actor, frozenset({Role(role)}), frozenset({project_id}))
+        principal = current_principal.get()
+        if principal is None:
+            principal = Principal(actor, frozenset({Role(role)}), frozenset({project_id}))
         authorize(principal, action, project_id)
     except (AuthorizationError, ValueError) as exc:
         raise HTTPException(status_code=403, detail=str(exc)) from exc
@@ -872,7 +993,14 @@ def submit_observation(project_id: UUID, request: ObservationCreate) -> dict[str
 
 
 @app.post("/api/v1/projects/{project_id}/changesets/{changeset_id}/approve")
-def approve_changeset(project_id: UUID, changeset_id: UUID, request: ApprovalRequest) -> dict[str, Any]:
+def approve_changeset(
+    project_id: UUID,
+    changeset_id: UUID,
+    request: ApprovalRequest,
+    x_actor: str = Header(default="changeset-approver"),
+    x_role: str = Header(default=Role.PROJECT_ADMIN.value),
+) -> dict[str, Any]:
+    _authorize_header(project_id, "approval.apply", x_actor, x_role)
     try:
         changeset, revision = store.approve_changeset(project_id, changeset_id, request.approved_by)
         return jsonable_encoder({"changeset": changeset, "revision": revision})
@@ -982,3 +1110,5 @@ def create_file_restore_job(
         ))
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except FileWriteConflict as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc

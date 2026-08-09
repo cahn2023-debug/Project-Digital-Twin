@@ -63,6 +63,19 @@ pub struct ScanFailure {
     pub error: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct PendingJob {
+    pub job_id: String,
+    pub job_type: String,
+    pub payload: String,
+    pub status: String,
+    pub idempotency_key: Option<String>,
+    pub created_at: String,
+    pub attempts: i64,
+    pub next_retry_at: i64,
+    pub last_error: Option<String>,
+}
+
 pub struct ManifestDb {
     connection: Connection,
 }
@@ -275,6 +288,85 @@ impl ManifestDb {
                 |row| Ok((row.get(0)?, row.get(1)?)),
             )
             .optional()
+    }
+
+    pub fn claim_next_job(&self, now: i64) -> SqlResult<Option<PendingJob>> {
+        self.connection.execute_batch("BEGIN IMMEDIATE")?;
+        let result = (|| {
+            let pending: Option<String> = self
+                .connection
+                .query_row(
+                    "SELECT pending_jobs.job_id
+                     FROM pending_jobs
+                     LEFT JOIN job_attempts ON job_attempts.job_id = pending_jobs.job_id
+                     WHERE pending_jobs.status IN ('PENDING', 'RETRY')
+                       AND COALESCE(job_attempts.next_retry_at, 0) <= ?1
+                     ORDER BY pending_jobs.created_at, pending_jobs.job_id
+                     LIMIT 1",
+                    params![now],
+                    |row| row.get(0),
+                )
+                .optional()?;
+            let Some(job_id) = pending else {
+                return Ok(None);
+            };
+            self.connection.execute(
+                "UPDATE pending_jobs SET status = 'PROCESSING' WHERE job_id = ?1",
+                params![job_id],
+            )?;
+            self.connection
+                .query_row(
+                    "SELECT pending_jobs.job_id, pending_jobs.job_type, pending_jobs.payload,
+                            pending_jobs.status, pending_jobs.idempotency_key, pending_jobs.created_at,
+                            COALESCE(job_attempts.attempts, 0), COALESCE(job_attempts.next_retry_at, 0),
+                            job_attempts.last_error
+                     FROM pending_jobs
+                     LEFT JOIN job_attempts ON job_attempts.job_id = pending_jobs.job_id
+                     WHERE pending_jobs.job_id = ?1",
+                    params![job_id],
+                    |row| {
+                        Ok(PendingJob {
+                            job_id: row.get(0)?,
+                            job_type: row.get(1)?,
+                            payload: row.get(2)?,
+                            status: row.get(3)?,
+                            idempotency_key: row.get(4)?,
+                            created_at: row.get(5)?,
+                            attempts: row.get(6)?,
+                            next_retry_at: row.get(7)?,
+                            last_error: row.get(8)?,
+                        })
+                    },
+                )
+                .map(Some)
+        })();
+        match result {
+            Ok(value) => {
+                self.connection.execute_batch("COMMIT")?;
+                Ok(value)
+            }
+            Err(error) => {
+                let _ = self.connection.execute_batch("ROLLBACK");
+                Err(error)
+            }
+        }
+    }
+
+    pub fn complete_job(&self, job_id: &str) -> SqlResult<bool> {
+        Ok(self.connection.execute(
+            "UPDATE pending_jobs SET status = 'DONE' WHERE job_id = ?1 AND status = 'PROCESSING'",
+            params![job_id],
+        )? == 1)
+    }
+
+    pub fn retry_job(
+        &self,
+        job_id: &str,
+        error: &str,
+        next_retry_at: i64,
+        max_attempts: i64,
+    ) -> SqlResult<bool> {
+        self.record_job_failure(job_id, error, next_retry_at, max_attempts)
     }
 
     pub fn register_file_version(
@@ -920,6 +1012,33 @@ mod tests {
                 .expect("job"),
             ("FAILED".to_owned(), 2)
         );
+    }
+
+    #[test]
+    fn pending_jobs_are_claimed_once_and_can_complete_or_retry() {
+        let database = ManifestDb::open_in_memory().expect("manifest");
+        database
+            .enqueue_job("job-1", "FILE_SCAN", "payload", "key-1", "now")
+            .expect("enqueue");
+
+        let claimed = database.claim_next_job(0).expect("claim").expect("job");
+        assert_eq!(claimed.job_id, "job-1");
+        assert_eq!(claimed.status, "PROCESSING");
+        assert!(database.claim_next_job(0).expect("second claim").is_none());
+        assert!(database
+            .retry_job("job-1", "temporary", 10, 3)
+            .expect("retry"));
+        assert!(database.claim_next_job(5).expect("before retry").is_none());
+        assert_eq!(
+            database
+                .claim_next_job(10)
+                .expect("reclaim")
+                .expect("job")
+                .job_id,
+            "job-1"
+        );
+        assert!(database.complete_job("job-1").expect("complete"));
+        assert!(!database.complete_job("job-1").expect("duplicate complete"));
     }
 
     #[test]

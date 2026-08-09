@@ -6,7 +6,7 @@ use std::sync::{
 use std::thread;
 use std::time::Duration;
 
-use desktop_core::{scan_directory_best_effort, ManifestDb};
+use desktop_core::{scan_directory_best_effort, ManifestDb, PendingJob};
 use tauri::State;
 
 #[derive(Default)]
@@ -112,15 +112,61 @@ fn stop_local_watcher(state: State<'_, WatcherState>) -> Result<(), String> {
     Ok(())
 }
 
+#[tauri::command]
+fn claim_pending_jobs(
+    manifest_path: String,
+    now: i64,
+    max_jobs: usize,
+) -> Result<Vec<PendingJob>, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    let mut jobs = Vec::new();
+    for _ in 0..max_jobs {
+        let Some(job) = database
+            .claim_next_job(now)
+            .map_err(|error| error.to_string())?
+        else {
+            break;
+        };
+        jobs.push(job);
+    }
+    Ok(jobs)
+}
+
+#[tauri::command]
+fn complete_pending_job(manifest_path: String, job_id: String) -> Result<bool, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .complete_job(&job_id)
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+fn retry_pending_job(
+    manifest_path: String,
+    job_id: String,
+    error: String,
+    next_retry_at: i64,
+    max_attempts: i64,
+) -> Result<bool, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .retry_job(&job_id, &error, next_retry_at, max_attempts)
+        .map_err(|error| error.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .manage(WatcherState::default())
         .invoke_handler(tauri::generate_handler![
             health,
             scan_local_directory,
             start_local_watcher,
-            stop_local_watcher
+            stop_local_watcher,
+            claim_pending_jobs,
+            complete_pending_job,
+            retry_pending_job
         ])
         .run(tauri::generate_context!())
         .expect("error while running Project Digital Twin desktop");

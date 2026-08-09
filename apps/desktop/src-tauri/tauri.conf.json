@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "identifier": "com.projectdigitaltwin.desktop",
   "build": {
-    "beforeDevCommand": "corepack pnpm --filter @project/web dev",
+    "beforeDevCommand": "corepack pnpm --parallel --filter @project/web --filter @project/server dev",
     "devUrl": "http://localhost:5173",
     "frontendDist": "../../web/dist"
   },
@@ -12,5 +12,10 @@
     "windows": [{ "title": "Project Digital Twin", "width": 1280, "height": 800 }],
     "security": { "csp": null }
   },
-  "bundle": { "active": false, "icon": ["icons/icon.svg"] }
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "icon": ["icons/icon.ico", "icons/icon.svg"],
+    "windows": { "nsis": { "installMode": "currentUser" } }
+  }
 }

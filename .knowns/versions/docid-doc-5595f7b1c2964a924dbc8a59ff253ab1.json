@@ -1,0 +1,104 @@
+{
+  "docId": "doc-5595f7b1c2964a924dbc8a59ff253ab1",
+  "docPath": "specs/2026-08-09/maplibre-basemap-for-design",
+  "currentPath": "specs/2026-08-09/maplibre-basemap-for-design",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "docId": "doc-5595f7b1c2964a924dbc8a59ff253ab1",
+      "docPath": "specs/2026-08-09/maplibre-basemap-for-design",
+      "currentPath": "specs/2026-08-09/maplibre-basemap-for-design",
+      "version": 1,
+      "timestamp": "2026-08-09T12:10:13.1302994Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "newHash": "dc26b7345f825707d553c1e608519b765d37b0af504bd969aab743e2eb847d1a",
+      "checkpoint": true,
+      "changes": [
+        {
+          "field": "path",
+          "oldValue": null,
+          "newValue": "specs/2026-08-09/maplibre-basemap-for-design"
+        },
+        {
+          "field": "title",
+          "oldValue": null,
+          "newValue": "MapLibre basemap for DESIGN"
+        },
+        {
+          "field": "description",
+          "oldValue": null,
+          "newValue": "Specification for the DESIGN tab MapLibre basemap modes and independently toggled map layers."
+        },
+        {
+          "field": "content",
+          "oldValue": null,
+          "newValue": "## Overview\n\nThay thế bản đồ giả lập trong thẻ DESIGN bằng bản đồ MapLibre tập trung khu vực Việt Nam. Người dùng có thể chuyển đổi ba nền Street, Hybrid và Vector, điều khiển các nhóm layer bản đồ nền, ghi nhớ lựa chọn gần nhất và mở vị trí hiện tại trên Google Maps public.\n\n## Locked Decisions\n\n- D1: MapLibre là renderer chính. Street và Hybrid dùng Google public tile URL như lựa chọn thử nghiệm trực tuyến; Vector dùng style vector công khai OSM/OpenFreeMap. Không triển khai tải/lưu tile Google offline.\n- D2: Ghi nhớ chế độ nền bản đồ gần nhất trong local storage; khi chưa có lựa chọn trước, dùng Vector.\n- D3: Khi tile Google lỗi, giữ nguyên chế độ đang chọn và hiển thị cảnh báo để người dùng tự đổi nền.\n- D4: Layer map là layer của bản đồ nền, không phải dữ liệu dự án. Các nhóm layer có thể bật/tắt gồm đường \u0026 giao thông, tên đường, địa giới \u0026 hành chính, địa điểm công cộng, tên địa danh, đất/nước \u0026 công trình.\n- D5: Có link mở Google Maps tại tâm và mức zoom hiện tại của MapLibre trong tab mới.\n\n## System Decision Impact\n\n- Impact: none\n- Decision: Không tạo System Decision; phạm vi là hành vi UI của feature này, không thay đổi kiến trúc/API/storage dùng chung.\n- Acceptance gate: Review đặc tả và xác nhận nguồn Google public trước khi dùng production.\n\n## Requirements\n\n### Functional Requirements\n\n- FR-1: DESIGN hiển thị bản đồ MapLibre thay cho MapMockup CSS và tập trung mặc định tại Việt Nam.\n- FR-2: Người dùng chuyển đổi được Street, Hybrid và Vector bằng nút chọn nền.\n- FR-3: Nền Street dùng `https://mt1.google.com/vt/lyrs=m\u0026x={x}\u0026y={y}\u0026z={z}`; Hybrid dùng biến thể Google satellite/hybrid; Vector dùng style vector công khai.\n- FR-4: Người dùng bật/tắt thủ công từng nhóm layer nền qua bảng Lớp bản đồ.\n- FR-5: Lựa chọn nền và trạng thái layer được giữ lại giữa các lần mở DESIGN.\n- FR-6: Link Google Maps mở theo viewport hiện tại.\n- FR-7: Lỗi tải tile hiển thị trạng thái cảnh báo mà không tự ý chuyển nền.\n- FR-8: Không trộn các layer Camera/Intersection/Fiber của dữ liệu dự án vào layer nền bản đồ.\n\n### Non-Functional Requirements\n\n- NFR-1: MapLibre map được khởi tạo và huỷ đúng vòng đời React.\n- NFR-2: Các layer được điều khiển bằng visibility của style layer, không mô phỏng bằng CSS.\n- NFR-3: Hiển thị attribution cho nguồn bản đồ và ghi rõ Google public tiles là experimental.\n\n## Acceptance Criteria\n\n- [ ] AC-1: Mở DESIGN thấy bản đồ MapLibre và khu vực Việt Nam, không còn bản đồ CSS giả lập.\n- [ ] AC-2: Chọn Street/Hybrid/Vector đổi nền đang hiển thị và nút đang chọn có trạng thái active.\n- [ ] AC-3: Tắt một nhóm layer làm các style layers tương ứng chuyển sang visibility `none`; bật lại khôi phục hiển thị.\n- [ ] AC-4: Reload ứng dụng giữ lại nền và các layer đã chọn trước đó.\n- [ ] AC-5: Link Google Maps mở đúng tâm/zoom hiện tại trong tab mới.\n- [ ] AC-6: Lỗi tile hiển thị cảnh báo và không tự động đổi mode.\n- [ ] AC-7: Typecheck, build, test script và `git diff --check` pass.\n\n## Scenarios\n\n### Scenario 1: Chuyển nền bản đồ\n\n**Given** người dùng đang ở DESIGN với Vector\n**When** chọn Hybrid\n**Then** raster Hybrid hiện lên, Vector base background tắt, layer panel vẫn giữ các lựa chọn layer.\n\n### Scenario 2: Bật/tắt layer nền\n\n**Given** nhóm “Tên đường” đang bật\n**When** người dùng bỏ chọn nhóm này\n**Then** các style layer tên đường được MapLibre đặt visibility là `none` mà không ảnh hưởng các nhóm khác.\n\n### Scenario 3: Ghi nhớ lựa chọn\n\n**Given** người dùng chọn Street và tắt “Địa điểm công cộng”\n**When** rời DESIGN rồi mở lại\n**Then** Street vẫn là mode hiện tại và “Địa điểm công cộng” vẫn tắt.\n\n### Scenario 4: Tile lỗi và link Google Maps\n\n**Given** Google public tile không tải được\n**When** lỗi được MapLibre phát hiện\n**Then** mode không tự chuyển, cảnh báo được hiển thị và người dùng vẫn có thể mở link Google Maps theo viewport hiện tại.\n\n## Technical Notes\n\n- Vector style hiện dùng `https://tiles.openfreemap.org/styles/bright` và nhóm layer theo id/source-layer của style OpenMapTiles.\n- Google Street/Hybrid là raster source MapLibre; layer groups là style layers vector độc lập được điều khiển cùng bảng layer.\n- Endpoint Google public là lựa chọn thử nghiệm, không phải Google Maps Platform Map Tiles API chính thức. Cần review quyền sử dụng, attribution và độ ổn định trước khi production.\n\n## Task Links\n\nChưa tạo task Knowns riêng; implementation hiện nằm trong thay đổi frontend của feature.\n\n## Open Questions\n\n- [ ] Có thay Google public endpoint bằng Google Maps Platform Map Tiles API hoặc nhà cung cấp có SLA trước production không?\n- [ ] Có cần thêm các nhóm layer nền khác ngoài sáu nhóm hiện tại không?\n"
+        },
+        {
+          "field": "tags",
+          "oldValue": null,
+          "newValue": [
+            "spec",
+            "draft",
+            "maplibre",
+            "design",
+            "basemap"
+          ]
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "path",
+          "field": "path",
+          "summary": "path",
+          "newBytes": 46,
+          "deltaBytes": 46
+        },
+        {
+          "type": "field",
+          "field": "title",
+          "summary": "title",
+          "newBytes": 29,
+          "deltaBytes": 29
+        },
+        {
+          "type": "field",
+          "field": "description",
+          "summary": "description",
+          "newBytes": 95,
+          "deltaBytes": 95
+        },
+        {
+          "type": "whole_doc",
+          "field": "content",
+          "summary": "Whole document content",
+          "newBytes": 5517,
+          "deltaBytes": 5517
+        },
+        {
+          "type": "field",
+          "field": "tags",
+          "summary": "tags",
+          "newBytes": 46,
+          "deltaBytes": 46
+        }
+      ],
+      "snapshot": {
+        "content": "## Overview\n\nThay thế bản đồ giả lập trong thẻ DESIGN bằng bản đồ MapLibre tập trung khu vực Việt Nam. Người dùng có thể chuyển đổi ba nền Street, Hybrid và Vector, điều khiển các nhóm layer bản đồ nền, ghi nhớ lựa chọn gần nhất và mở vị trí hiện tại trên Google Maps public.\n\n## Locked Decisions\n\n- D1: MapLibre là renderer chính. Street và Hybrid dùng Google public tile URL như lựa chọn thử nghiệm trực tuyến; Vector dùng style vector công khai OSM/OpenFreeMap. Không triển khai tải/lưu tile Google offline.\n- D2: Ghi nhớ chế độ nền bản đồ gần nhất trong local storage; khi chưa có lựa chọn trước, dùng Vector.\n- D3: Khi tile Google lỗi, giữ nguyên chế độ đang chọn và hiển thị cảnh báo để người dùng tự đổi nền.\n- D4: Layer map là layer của bản đồ nền, không phải dữ liệu dự án. Các nhóm layer có thể bật/tắt gồm đường \u0026 giao thông, tên đường, địa giới \u0026 hành chính, địa điểm công cộng, tên địa danh, đất/nước \u0026 công trình.\n- D5: Có link mở Google Maps tại tâm và mức zoom hiện tại của MapLibre trong tab mới.\n\n## System Decision Impact\n\n- Impact: none\n- Decision: Không tạo System Decision; phạm vi là hành vi UI của feature này, không thay đổi kiến trúc/API/storage dùng chung.\n- Acceptance gate: Review đặc tả và xác nhận nguồn Google public trước khi dùng production.\n\n## Requirements\n\n### Functional Requirements\n\n- FR-1: DESIGN hiển thị bản đồ MapLibre thay cho MapMockup CSS và tập trung mặc định tại Việt Nam.\n- FR-2: Người dùng chuyển đổi được Street, Hybrid và Vector bằng nút chọn nền.\n- FR-3: Nền Street dùng `https://mt1.google.com/vt/lyrs=m\u0026x={x}\u0026y={y}\u0026z={z}`; Hybrid dùng biến thể Google satellite/hybrid; Vector dùng style vector công khai.\n- FR-4: Người dùng bật/tắt thủ công từng nhóm layer nền qua bảng Lớp bản đồ.\n- FR-5: Lựa chọn nền và trạng thái layer được giữ lại giữa các lần mở DESIGN.\n- FR-6: Link Google Maps mở theo viewport hiện tại.\n- FR-7: Lỗi tải tile hiển thị trạng thái cảnh báo mà không tự ý chuyển nền.\n- FR-8: Không trộn các layer Camera/Intersection/Fiber của dữ liệu dự án vào layer nền bản đồ.\n\n### Non-Functional Requirements\n\n- NFR-1: MapLibre map được khởi tạo và huỷ đúng vòng đời React.\n- NFR-2: Các layer được điều khiển bằng visibility của style layer, không mô phỏng bằng CSS.\n- NFR-3: Hiển thị attribution cho nguồn bản đồ và ghi rõ Google public tiles là experimental.\n\n## Acceptance Criteria\n\n- [ ] AC-1: Mở DESIGN thấy bản đồ MapLibre và khu vực Việt Nam, không còn bản đồ CSS giả lập.\n- [ ] AC-2: Chọn Street/Hybrid/Vector đổi nền đang hiển thị và nút đang chọn có trạng thái active.\n- [ ] AC-3: Tắt một nhóm layer làm các style layers tương ứng chuyển sang visibility `none`; bật lại khôi phục hiển thị.\n- [ ] AC-4: Reload ứng dụng giữ lại nền và các layer đã chọn trước đó.\n- [ ] AC-5: Link Google Maps mở đúng tâm/zoom hiện tại trong tab mới.\n- [ ] AC-6: Lỗi tile hiển thị cảnh báo và không tự động đổi mode.\n- [ ] AC-7: Typecheck, build, test script và `git diff --check` pass.\n\n## Scenarios\n\n### Scenario 1: Chuyển nền bản đồ\n\n**Given** người dùng đang ở DESIGN với Vector\n**When** chọn Hybrid\n**Then** raster Hybrid hiện lên, Vector base background tắt, layer panel vẫn giữ các lựa chọn layer.\n\n### Scenario 2: Bật/tắt layer nền\n\n**Given** nhóm “Tên đường” đang bật\n**When** người dùng bỏ chọn nhóm này\n**Then** các style layer tên đường được MapLibre đặt visibility là `none` mà không ảnh hưởng các nhóm khác.\n\n### Scenario 3: Ghi nhớ lựa chọn\n\n**Given** người dùng chọn Street và tắt “Địa điểm công cộng”\n**When** rời DESIGN rồi mở lại\n**Then** Street vẫn là mode hiện tại và “Địa điểm công cộng” vẫn tắt.\n\n### Scenario 4: Tile lỗi và link Google Maps\n\n**Given** Google public tile không tải được\n**When** lỗi được MapLibre phát hiện\n**Then** mode không tự chuyển, cảnh báo được hiển thị và người dùng vẫn có thể mở link Google Maps theo viewport hiện tại.\n\n## Technical Notes\n\n- Vector style hiện dùng `https://tiles.openfreemap.org/styles/bright` và nhóm layer theo id/source-layer của style OpenMapTiles.\n- Google Street/Hybrid là raster source MapLibre; layer groups là style layers vector độc lập được điều khiển cùng bảng layer.\n- Endpoint Google public là lựa chọn thử nghiệm, không phải Google Maps Platform Map Tiles API chính thức. Cần review quyền sử dụng, attribution và độ ổn định trước khi production.\n\n## Task Links\n\nChưa tạo task Knowns riêng; implementation hiện nằm trong thay đổi frontend của feature.\n\n## Open Questions\n\n- [ ] Có thay Google public endpoint bằng Google Maps Platform Map Tiles API hoặc nhà cung cấp có SLA trước production không?\n- [ ] Có cần thêm các nhóm layer nền khác ngoài sáu nhóm hiện tại không?\n",
+        "description": "Specification for the DESIGN tab MapLibre basemap modes and independently toggled map layers.",
+        "path": "specs/2026-08-09/maplibre-basemap-for-design",
+        "tags": [
+          "spec",
+          "draft",
+          "maplibre",
+          "design",
+          "basemap"
+        ],
+        "title": "MapLibre basemap for DESIGN"
+      }
+    }
+  ]
+}

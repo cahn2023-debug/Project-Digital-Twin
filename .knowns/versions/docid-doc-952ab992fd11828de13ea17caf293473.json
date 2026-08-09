@@ -1,0 +1,257 @@
+{
+  "docId": "doc-952ab992fd11828de13ea17caf293473",
+  "docPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+  "currentPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+  "currentVersion": 4,
+  "versions": [
+    {
+      "id": "v1",
+      "docId": "doc-952ab992fd11828de13ea17caf293473",
+      "docPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "currentPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "version": 1,
+      "timestamp": "2026-08-09T14:17:30.0363227Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "newHash": "e0ae253b4abd3a1f00db3d55c92a85062b5d80b6833e2ec7c695d370ce6fe614",
+      "checkpoint": true,
+      "changes": [
+        {
+          "field": "path",
+          "oldValue": null,
+          "newValue": "specs/2026-08-09/organize-data-classification-grouping-and-source-management"
+        },
+        {
+          "field": "title",
+          "oldValue": null,
+          "newValue": "Organize data classification, grouping and source management"
+        },
+        {
+          "field": "description",
+          "oldValue": null,
+          "newValue": "Specification for connecting the Organize tab to existing project data and managing groups, tags, lifecycle and controlled cross-format source write-back."
+        },
+        {
+          "field": "content",
+          "oldValue": null,
+          "newValue": "## Overview\n\nOrganize là tab quản lý dữ liệu thật của Project Digital Twin. Tab này kết nối dữ liệu nghiệp vụ đã chuẩn hóa với file/import liên quan, cho phép người dùng phân loại bằng cây nhóm và tag, xem quan hệ nguồn, thực hiện thao tác đơn/hàng loạt, archive/khôi phục dữ liệu, và chuẩn bị hoặc thực hiện write-back có kiểm soát vào file nguồn.\n\nPhạm vi write-back của Organize là một mở rộng có chủ đích đối với boundary ingestion hiện tại: hỗ trợ Excel, Markdown, TXT và Word sau preview/diff và xác nhận rõ ràng của người dùng có quyền chỉnh sửa project. Các nguyên tắc provenance, Raw/source locator, ChangeSet, version, conflict evidence, self-write suppression và audit vẫn được giữ nguyên.\n\nTham chiếu nền:\n- @doc/specs/2026-08-09/local-file-ingestion-and-synchronization\n- @doc/specs/2026-08-09/project-create-and-delete-lifecycle\n- @doc/learnings/learning-desktop-ui-prototype-implementation\n\n## Locked Decisions\n\n- D1: Organize quản lý cả dữ liệu nghiệp vụ và file/import liên quan.\n- D2: Phân loại dùng kết hợp cây nhóm phân cấp và tag.\n- D3: Một mục dữ liệu có thể liên kết với nhiều nhóm.\n- D4: Cây nhóm hỗ trợ nhiều cấp và nhiều nhóm cha, nhưng không cho phép vòng lặp.\n- D5: Xóa nhóm chỉ xóa liên kết nhóm; dữ liệu và nhóm con vẫn được giữ lại.\n- D6: Hỗ trợ thao tác từng mục và thao tác hàng loạt.\n- D7: UI gồm cây nhóm, danh sách hợp nhất object/file-import và panel chi tiết.\n- D8: Dữ liệu dùng soft-delete/thùng rác; hard-delete chỉ qua luồng quản trị riêng.\n- D9: Người dùng có quyền chỉnh sửa project được phép xác nhận write-back.\n- D10: Phân loại, nhóm, archive và write-back đều lưu audit chi tiết gồm actor, thời gian, before/after, file nguồn và kết quả.\n- D11: Với nhiều file, người dùng chọn chiến lược xử lý theo từng lần write-back.\n- D12: Write-back hỗ trợ Excel, Markdown, TXT và Word.\n- D13: Người dùng chọn cập nhật file tại chỗ có backup/version/restore hoặc tạo file mới.\n- D14: Với Markdown/TXT/Word, dùng cấu trúc hiện có; nếu không nhận diện an toàn thì yêu cầu mapping thủ công qua preview.\n- D15: Write-back có thể cập nhật metadata và tái cấu trúc nội dung.\n- D16: Mọi write-back bắt buộc preview diff và xác nhận; xung đột sẽ chặn ghi.\n- D17: Phân loại/nhóm cập nhật canonical metadata và liên kết file/import; chỉ ghi vào file nguồn sau preview và xác nhận.\n- D18: Organize supersede rõ ràng các boundary cũ D39 và D47 của spec ingestion cho riêng workflow Organize: editor project được xác nhận write-back cả bốn định dạng; các nguyên tắc provenance, ChangeSet, version, conflict và audit vẫn được giữ.\n\n## System Decision Impact\n\n- Impact: draft new / replacement boundary.\n- Decision: @decision/20260809-2116-organize-extends-source-write-back-boundary-with-explicit-preview-and-confirmation\n- Governing context: @doc/specs/2026-08-09/local-file-ingestion-and-synchronization\n- Acceptance gate: System Decision draft phải được review/accept; implementation phải chứng minh write-back của Organize không làm mất Raw/source locator, không sửa lịch sử bất biến, chặn stale/locked/conflict và không tạo import lặp do self-write.\n\n## Requirements\n\n### Functional Requirements\n\n- FR-1: Khi mở Organize trong một project active, hệ thống tải dữ liệu nghiệp vụ, file/import, trạng thái xử lý và liên kết nguồn từ boundary dữ liệu hiện có; fixture chỉ được dùng làm empty/loading fallback, không phải nguồn dữ liệu chính.\n- FR-2: Hiển thị cây nhóm nhiều cấp và danh sách hợp nhất cho object/file/import; panel chi tiết hiển thị metadata, nhóm, tag, trạng thái lifecycle, source file/version và source locator khi có.\n- FR-3: Người dùng tạo, đổi tên, di chuyển và archive nhóm; hệ thống từ chối liên kết tạo vòng và giữ nguyên các nhóm/data khác khi thao tác thất bại.\n- FR-4: Một object, file hoặc import có thể được gán nhiều nhóm và nhiều tag; tag có thể dùng xuyên qua nhiều nhánh nhóm.\n- FR-5: Hỗ trợ tìm kiếm/lọc theo text, loại dữ liệu, nhóm, tag, trạng thái lifecycle, trạng thái import và file nguồn; lựa chọn lọc phải thể hiện rõ trong UI.\n- FR-6: Hỗ trợ thao tác đơn và hàng loạt để gán/bỏ nhóm, thêm/bỏ tag, di chuyển, archive và khôi phục; kết quả thành công/thất bại phải hiển thị theo mục.\n- FR-7: Xóa nhóm chỉ xóa các membership links của nhóm đó; dữ liệu, tag, file/import và nhóm con không bị xóa. Xóa dữ liệu dùng soft-delete/thùng rác và có thể khôi phục; hard-delete nằm ngoài luồng Organize thông thường.\n- FR-8: Thay đổi nhóm/tag/metadata trong Organize cập nhật canonical state và liên kết file/import thông qua ChangeSet hoặc boundary mutation hiện có; trước khi write-back, nội dung file nguồn không bị sửa.\n- FR-9: Từ một hoặc nhiều mục đã chọn, người dùng tạo write-back operation và chọn từng file đích, chế độ cập nhật tại chỗ hoặc tạo file mới, cùng chiến lược xử lý nhiều file.\n- FR-10: Write-back hỗ trợ Excel, Markdown, TXT và Word. Adapter phải giữ nội dung không quản lý, source locator và liên kết object; metadata quản lý và cấu trúc nội dung được cập nhật theo format.\n- FR-11: Với format có cấu trúc nhận diện được, hệ thống tạo kế hoạch tái cấu trúc theo cấu trúc hiện có. Với format/đoạn nội dung không nhận diện an toàn, hệ thống dừng ở preview và yêu cầu mapping thủ công trước khi cho xác nhận.\n- FR-12: Preview write-back hiển thị file đích, version/hash hiện tại, thay đổi metadata/nội dung, thêm/xóa/di chuyển theo group, backup/destination và cảnh báo rủi ro; không có thao tác ghi thật trước xác nhận.\n- FR-13: Chỉ project editor mới có thể xác nhận write-back. Mọi thao tác ghi phải kiểm tra hash/version kỳ vọng, file lock và thay đổi unmanaged; stale, locked hoặc conflict chưa giải quyết phải bị chặn.\n- FR-14: Người dùng chọn chiến lược cho batch nhiều file: tiếp tục độc lập theo từng file hoặc all-or-nothing. Kết quả từng file, backup, version mới và lỗi phải được ghi nhận rõ.\n- FR-15: Sau write-back thành công, hệ thống tạo backup/version bất biến, ghi audit và liên kết version mới với object/import. Restore phải tạo write job/ChangeSet mới và không mutate version lịch sử.\n- FR-16: Watcher/self-write provenance nhận diện thay đổi do Organize tạo ra và không enqueue import trùng; thay đổi vẫn được version hóa và audit.\n- FR-17: Audit append-only cho create/update membership, tag, archive/restore, write-back, conflict, backup, restore và failure; lưu actor, timestamp, operation, before/after, source file/version, correlation và kết quả.\n- FR-18: Các thay đổi không làm mất dữ liệu nguồn: nội dung phải được giữ dưới dạng mapped, unmapped, invalid, skipped hoặc Raw cùng source locator theo contract ingestion hiện có.\n\n### Non-Functional Requirements\n\n- NFR-1: Không được có đường tắt ghi file nguồn ngoài preview + explicit confirmation + safety checks.\n- NFR-2: Quan hệ nhóm là đồ thị có hướng không chu kỳ; thao tác tạo/sửa membership phải được kiểm tra trước khi commit.\n- NFR-3: Canonical mutation, file version, ChangeSet và audit phải tuân theo project authorization và tính bất biến của các workflow hiện có.\n- NFR-4: UI phải dùng semantic controls, trạng thái loading/error/empty rõ ràng, keyboard/focus behavior phù hợp với desktop UI hiện có.\n- NFR-5: Hệ thống phải hiển thị trạng thái queue, processing, conflict, failed và write-back result; chưa đặt ngưỡng hiệu năng cố định, cần ghi baseline trong verification.\n- NFR-6: Write-back phải có khả năng khôi phục từ backup/version và không làm mất nội dung unmanaged do thay thế không nguyên tử hoặc lỗi giữa chừng.\n\n## Acceptance Criteria\n\n- [ ] AC-1: Mở Organize trong project có dữ liệu thật hiển thị object và file/import từ API/storage hiện có; khi API lỗi, UI giữ trạng thái trước đó và hiển thị lỗi, không hiển thị thành công giả.\n- [ ] AC-2: Tạo được nhóm chính, nhóm con nhiều cấp và membership tới nhiều nhóm cha; hệ thống từ chối thao tác tạo vòng mà không thay đổi dữ liệu.\n- [ ] AC-3: Gán nhiều group/tag cho một mục và nhiều mục cùng lúc; sau reload, membership/tag vẫn được giữ và audit event tương ứng tồn tại.\n- [ ] AC-4: Cây nhóm, danh sách hợp nhất và panel chi tiết đồng bộ selection; filter theo loại dữ liệu, group, tag, lifecycle, import state và source file trả đúng tập kết quả.\n- [ ] AC-5: Xóa một nhóm chỉ bỏ membership links; dữ liệu và nhóm con vẫn xuất hiện. Archive một object/file/import đưa vào thùng rác và restore đưa nó trở lại danh sách active.\n- [ ] AC-6: Write-back Excel, Markdown, TXT và Word đều tạo preview diff; nội dung file không đổi trước xác nhận.\n- [ ] AC-7: Với source structure nhận diện được, preview thể hiện thay đổi metadata và tái cấu trúc theo group; với structure không nhận diện được, hệ thống yêu cầu mapping thủ công và không cho confirm khi mapping thiếu.\n- [ ] AC-8: Chỉ editor của project xác nhận được write-back; thao tác từ user không có quyền bị từ chối và không sửa file/canonical state.\n- [ ] AC-9: Stale hash, file bị khóa, unmanaged content conflict hoặc mapping conflict làm write-back dừng trước replace; UI hiển thị nguyên nhân và diff cần xử lý.\n- [ ] AC-10: Người dùng chọn được in-place hoặc new-file và chiến lược batch; mỗi file thành công có backup/version/audit, mỗi file lỗi có kết quả lỗi độc lập hoặc toàn batch rollback theo lựa chọn.\n- [ ] AC-11: Restore tạo version/write job mới; file history cũ còn nguyên; watcher không tạo import lặp cho hash do Organize vừa ghi.\n- [ ] AC-12: Audit truy vết được thao tác group/tag/archive/restore/write-back từ actor đến before/after, source locator, file version và kết quả.\n- [ ] AC-13: Test/typecheck/build/validation của các package bị ảnh hưởng và Knowns SDD validation pass; diff không chứa lỗi whitespace.\n\n## Scenarios\n\n### Scenario 1: Phân loại object và file nguồn\n\n**Given** project active có canonical objects, file registry và import records\n**When** người dùng mở Organize, tạo nhóm “Khu vực A”, gán object cùng file liên quan vào nhóm và thêm tag “ưu tiên”\n**Then** cây nhóm, danh sách hợp nhất và panel chi tiết hiển thị liên kết mới; canonical metadata, source link và audit được cập nhật; file gốc chưa bị sửa.\n\n### Scenario 2: Membership nhiều nhóm và chống vòng\n\n**Given** nhóm “Hạ tầng” có nhóm con “Camera” và “Mạng”\n**When** người dùng gán một object vào “Camera” và một nhóm con khác, sau đó thử đặt “Hạ tầng” làm con của chính descendant của nó\n**Then** memberships hợp lệ được lưu; thao tác tạo vòng bị từ chối mà không làm thay đổi đồ thị.\n\n### Scenario 3: Bulk management và thùng rác\n\n**Given** danh sách đang lọc theo một file nguồn\n**When** người dùng chọn nhiều object/file, thêm tag, gán hai nhóm và archive một phần selection\n**Then** từng kết quả được hiển thị; audit lưu membership/tag/archive; mục archived biến mất khỏi active view và có thể restore.\n\n### Scenario 4: Write-back có preview và xác nhận\n\n**Given** object đã được gán lại group và file nguồn có version/hash đã biết\n**When** editor chọn write-back, chọn tạo file mới, xem preview diff và xác nhận\n**Then** file mới được tạo theo format, version/backup/audit được đăng ký, canonical/source links trỏ đúng kết quả, và file gốc vẫn còn nguyên.\n\n### Scenario 5: Cấu trúc nguồn không chắc chắn\n\n**Given** TXT hoặc Word có nội dung không có heading/record boundary nhận diện được\n**When** người dùng yêu cầu tái cấu trúc theo group\n**Then** hệ thống hiển thị vùng không chắc chắn và yêu cầu mapping thủ công; không có write job được confirm nếu mapping chưa đủ.\n\n### Scenario 6: Conflict và stale source\n\n**Given** file nguồn đã thay đổi ngoài Organize sau khi preview được tạo\n**When** editor xác nhận write-back\n**Then** hash/version check phát hiện stale/conflict, write bị chặn trước khi thay file, diff mới và lựa chọn xử lý được hiển thị; canonical state không bị ghi đè âm thầm.\n\n### Scenario 7: Restore và self-write suppression\n\n**Given** một write-back trước đó đã tạo file version mới\n**When** editor restore version cũ thông qua Organize\n**Then** restore tạo write job/ChangeSet và version mới, audit liên kết được nguyên nhân; watcher nhận diện self-write và không tạo import trùng.\n\n## Technical Notes\n\n- Tái sử dụng contract hiện có cho Raw, source locator, immutable file version, ChangeSet, sync queue, audit và self-write markers.\n- Frontend prototype hiện nằm trong `apps/web/src/App.tsx` và `apps/web/src/styles.css`; cần thay fixture Organize bằng adapter/state thật sau khi API contract được xác nhận.\n- Cần giữ project root-directory safety: Organize không được tự ý xóa, di chuyển hoặc đổi tên thư mục gốc; chế độ tạo file mới phải có destination rõ ràng.\n- Write-back Markdown/TXT/Word là capability mới của riêng Organize và phải có format adapter, backup/version và verification riêng; không được sửa behavior của các flow ingestion không đi qua Organize.\n- Chi tiết serializer/marker cho từng format, API endpoint cụ thể và phân rã task là công việc của planning, không phải quyết định sản phẩm trong spec này.\n\n## Task Links\n\nChưa tạo task Knowns; tạo sau khi spec được review/approve.\n\n## Open Questions\n\n- [ ] Metadata quản lý trong Markdown/TXT/Word sẽ dùng marker/frontmatter/section nào cho từng format?\n- [ ] Batch all-or-nothing cần transaction coordinator chung hay chỉ dùng compensation/restore giữa các adapter?\n- [ ] Panel audit và panel restore nằm trong Organize hay deep-link sang audit workflow hiện có?\n- [ ] Cần bổ sung browser-based smoke/e2e harness để kiểm tra layout desktop 1280×800 và thao tác hàng loạt hay chưa?\n"
+        },
+        {
+          "field": "tags",
+          "oldValue": null,
+          "newValue": [
+            "spec",
+            "draft",
+            "organize",
+            "groups",
+            "tags",
+            "write-back",
+            "source-files"
+          ]
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "path",
+          "field": "path",
+          "summary": "path",
+          "newBytes": 78,
+          "deltaBytes": 78
+        },
+        {
+          "type": "field",
+          "field": "title",
+          "summary": "title",
+          "newBytes": 62,
+          "deltaBytes": 62
+        },
+        {
+          "type": "field",
+          "field": "description",
+          "summary": "description",
+          "newBytes": 156,
+          "deltaBytes": 156
+        },
+        {
+          "type": "whole_doc",
+          "field": "content",
+          "summary": "Whole document content",
+          "newBytes": 15627,
+          "deltaBytes": 15627
+        },
+        {
+          "type": "field",
+          "field": "tags",
+          "summary": "tags",
+          "newBytes": 71,
+          "deltaBytes": 71
+        }
+      ],
+      "snapshot": {
+        "content": "## Overview\n\nOrganize là tab quản lý dữ liệu thật của Project Digital Twin. Tab này kết nối dữ liệu nghiệp vụ đã chuẩn hóa với file/import liên quan, cho phép người dùng phân loại bằng cây nhóm và tag, xem quan hệ nguồn, thực hiện thao tác đơn/hàng loạt, archive/khôi phục dữ liệu, và chuẩn bị hoặc thực hiện write-back có kiểm soát vào file nguồn.\n\nPhạm vi write-back của Organize là một mở rộng có chủ đích đối với boundary ingestion hiện tại: hỗ trợ Excel, Markdown, TXT và Word sau preview/diff và xác nhận rõ ràng của người dùng có quyền chỉnh sửa project. Các nguyên tắc provenance, Raw/source locator, ChangeSet, version, conflict evidence, self-write suppression và audit vẫn được giữ nguyên.\n\nTham chiếu nền:\n- @doc/specs/2026-08-09/local-file-ingestion-and-synchronization\n- @doc/specs/2026-08-09/project-create-and-delete-lifecycle\n- @doc/learnings/learning-desktop-ui-prototype-implementation\n\n## Locked Decisions\n\n- D1: Organize quản lý cả dữ liệu nghiệp vụ và file/import liên quan.\n- D2: Phân loại dùng kết hợp cây nhóm phân cấp và tag.\n- D3: Một mục dữ liệu có thể liên kết với nhiều nhóm.\n- D4: Cây nhóm hỗ trợ nhiều cấp và nhiều nhóm cha, nhưng không cho phép vòng lặp.\n- D5: Xóa nhóm chỉ xóa liên kết nhóm; dữ liệu và nhóm con vẫn được giữ lại.\n- D6: Hỗ trợ thao tác từng mục và thao tác hàng loạt.\n- D7: UI gồm cây nhóm, danh sách hợp nhất object/file-import và panel chi tiết.\n- D8: Dữ liệu dùng soft-delete/thùng rác; hard-delete chỉ qua luồng quản trị riêng.\n- D9: Người dùng có quyền chỉnh sửa project được phép xác nhận write-back.\n- D10: Phân loại, nhóm, archive và write-back đều lưu audit chi tiết gồm actor, thời gian, before/after, file nguồn và kết quả.\n- D11: Với nhiều file, người dùng chọn chiến lược xử lý theo từng lần write-back.\n- D12: Write-back hỗ trợ Excel, Markdown, TXT và Word.\n- D13: Người dùng chọn cập nhật file tại chỗ có backup/version/restore hoặc tạo file mới.\n- D14: Với Markdown/TXT/Word, dùng cấu trúc hiện có; nếu không nhận diện an toàn thì yêu cầu mapping thủ công qua preview.\n- D15: Write-back có thể cập nhật metadata và tái cấu trúc nội dung.\n- D16: Mọi write-back bắt buộc preview diff và xác nhận; xung đột sẽ chặn ghi.\n- D17: Phân loại/nhóm cập nhật canonical metadata và liên kết file/import; chỉ ghi vào file nguồn sau preview và xác nhận.\n- D18: Organize supersede rõ ràng các boundary cũ D39 và D47 của spec ingestion cho riêng workflow Organize: editor project được xác nhận write-back cả bốn định dạng; các nguyên tắc provenance, ChangeSet, version, conflict và audit vẫn được giữ.\n\n## System Decision Impact\n\n- Impact: draft new / replacement boundary.\n- Decision: @decision/20260809-2116-organize-extends-source-write-back-boundary-with-explicit-preview-and-confirmation\n- Governing context: @doc/specs/2026-08-09/local-file-ingestion-and-synchronization\n- Acceptance gate: System Decision draft phải được review/accept; implementation phải chứng minh write-back của Organize không làm mất Raw/source locator, không sửa lịch sử bất biến, chặn stale/locked/conflict và không tạo import lặp do self-write.\n\n## Requirements\n\n### Functional Requirements\n\n- FR-1: Khi mở Organize trong một project active, hệ thống tải dữ liệu nghiệp vụ, file/import, trạng thái xử lý và liên kết nguồn từ boundary dữ liệu hiện có; fixture chỉ được dùng làm empty/loading fallback, không phải nguồn dữ liệu chính.\n- FR-2: Hiển thị cây nhóm nhiều cấp và danh sách hợp nhất cho object/file/import; panel chi tiết hiển thị metadata, nhóm, tag, trạng thái lifecycle, source file/version và source locator khi có.\n- FR-3: Người dùng tạo, đổi tên, di chuyển và archive nhóm; hệ thống từ chối liên kết tạo vòng và giữ nguyên các nhóm/data khác khi thao tác thất bại.\n- FR-4: Một object, file hoặc import có thể được gán nhiều nhóm và nhiều tag; tag có thể dùng xuyên qua nhiều nhánh nhóm.\n- FR-5: Hỗ trợ tìm kiếm/lọc theo text, loại dữ liệu, nhóm, tag, trạng thái lifecycle, trạng thái import và file nguồn; lựa chọn lọc phải thể hiện rõ trong UI.\n- FR-6: Hỗ trợ thao tác đơn và hàng loạt để gán/bỏ nhóm, thêm/bỏ tag, di chuyển, archive và khôi phục; kết quả thành công/thất bại phải hiển thị theo mục.\n- FR-7: Xóa nhóm chỉ xóa các membership links của nhóm đó; dữ liệu, tag, file/import và nhóm con không bị xóa. Xóa dữ liệu dùng soft-delete/thùng rác và có thể khôi phục; hard-delete nằm ngoài luồng Organize thông thường.\n- FR-8: Thay đổi nhóm/tag/metadata trong Organize cập nhật canonical state và liên kết file/import thông qua ChangeSet hoặc boundary mutation hiện có; trước khi write-back, nội dung file nguồn không bị sửa.\n- FR-9: Từ một hoặc nhiều mục đã chọn, người dùng tạo write-back operation và chọn từng file đích, chế độ cập nhật tại chỗ hoặc tạo file mới, cùng chiến lược xử lý nhiều file.\n- FR-10: Write-back hỗ trợ Excel, Markdown, TXT và Word. Adapter phải giữ nội dung không quản lý, source locator và liên kết object; metadata quản lý và cấu trúc nội dung được cập nhật theo format.\n- FR-11: Với format có cấu trúc nhận diện được, hệ thống tạo kế hoạch tái cấu trúc theo cấu trúc hiện có. Với format/đoạn nội dung không nhận diện an toàn, hệ thống dừng ở preview và yêu cầu mapping thủ công trước khi cho xác nhận.\n- FR-12: Preview write-back hiển thị file đích, version/hash hiện tại, thay đổi metadata/nội dung, thêm/xóa/di chuyển theo group, backup/destination và cảnh báo rủi ro; không có thao tác ghi thật trước xác nhận.\n- FR-13: Chỉ project editor mới có thể xác nhận write-back. Mọi thao tác ghi phải kiểm tra hash/version kỳ vọng, file lock và thay đổi unmanaged; stale, locked hoặc conflict chưa giải quyết phải bị chặn.\n- FR-14: Người dùng chọn chiến lược cho batch nhiều file: tiếp tục độc lập theo từng file hoặc all-or-nothing. Kết quả từng file, backup, version mới và lỗi phải được ghi nhận rõ.\n- FR-15: Sau write-back thành công, hệ thống tạo backup/version bất biến, ghi audit và liên kết version mới với object/import. Restore phải tạo write job/ChangeSet mới và không mutate version lịch sử.\n- FR-16: Watcher/self-write provenance nhận diện thay đổi do Organize tạo ra và không enqueue import trùng; thay đổi vẫn được version hóa và audit.\n- FR-17: Audit append-only cho create/update membership, tag, archive/restore, write-back, conflict, backup, restore và failure; lưu actor, timestamp, operation, before/after, source file/version, correlation và kết quả.\n- FR-18: Các thay đổi không làm mất dữ liệu nguồn: nội dung phải được giữ dưới dạng mapped, unmapped, invalid, skipped hoặc Raw cùng source locator theo contract ingestion hiện có.\n\n### Non-Functional Requirements\n\n- NFR-1: Không được có đường tắt ghi file nguồn ngoài preview + explicit confirmation + safety checks.\n- NFR-2: Quan hệ nhóm là đồ thị có hướng không chu kỳ; thao tác tạo/sửa membership phải được kiểm tra trước khi commit.\n- NFR-3: Canonical mutation, file version, ChangeSet và audit phải tuân theo project authorization và tính bất biến của các workflow hiện có.\n- NFR-4: UI phải dùng semantic controls, trạng thái loading/error/empty rõ ràng, keyboard/focus behavior phù hợp với desktop UI hiện có.\n- NFR-5: Hệ thống phải hiển thị trạng thái queue, processing, conflict, failed và write-back result; chưa đặt ngưỡng hiệu năng cố định, cần ghi baseline trong verification.\n- NFR-6: Write-back phải có khả năng khôi phục từ backup/version và không làm mất nội dung unmanaged do thay thế không nguyên tử hoặc lỗi giữa chừng.\n\n## Acceptance Criteria\n\n- [ ] AC-1: Mở Organize trong project có dữ liệu thật hiển thị object và file/import từ API/storage hiện có; khi API lỗi, UI giữ trạng thái trước đó và hiển thị lỗi, không hiển thị thành công giả.\n- [ ] AC-2: Tạo được nhóm chính, nhóm con nhiều cấp và membership tới nhiều nhóm cha; hệ thống từ chối thao tác tạo vòng mà không thay đổi dữ liệu.\n- [ ] AC-3: Gán nhiều group/tag cho một mục và nhiều mục cùng lúc; sau reload, membership/tag vẫn được giữ và audit event tương ứng tồn tại.\n- [ ] AC-4: Cây nhóm, danh sách hợp nhất và panel chi tiết đồng bộ selection; filter theo loại dữ liệu, group, tag, lifecycle, import state và source file trả đúng tập kết quả.\n- [ ] AC-5: Xóa một nhóm chỉ bỏ membership links; dữ liệu và nhóm con vẫn xuất hiện. Archive một object/file/import đưa vào thùng rác và restore đưa nó trở lại danh sách active.\n- [ ] AC-6: Write-back Excel, Markdown, TXT và Word đều tạo preview diff; nội dung file không đổi trước xác nhận.\n- [ ] AC-7: Với source structure nhận diện được, preview thể hiện thay đổi metadata và tái cấu trúc theo group; với structure không nhận diện được, hệ thống yêu cầu mapping thủ công và không cho confirm khi mapping thiếu.\n- [ ] AC-8: Chỉ editor của project xác nhận được write-back; thao tác từ user không có quyền bị từ chối và không sửa file/canonical state.\n- [ ] AC-9: Stale hash, file bị khóa, unmanaged content conflict hoặc mapping conflict làm write-back dừng trước replace; UI hiển thị nguyên nhân và diff cần xử lý.\n- [ ] AC-10: Người dùng chọn được in-place hoặc new-file và chiến lược batch; mỗi file thành công có backup/version/audit, mỗi file lỗi có kết quả lỗi độc lập hoặc toàn batch rollback theo lựa chọn.\n- [ ] AC-11: Restore tạo version/write job mới; file history cũ còn nguyên; watcher không tạo import lặp cho hash do Organize vừa ghi.\n- [ ] AC-12: Audit truy vết được thao tác group/tag/archive/restore/write-back từ actor đến before/after, source locator, file version và kết quả.\n- [ ] AC-13: Test/typecheck/build/validation của các package bị ảnh hưởng và Knowns SDD validation pass; diff không chứa lỗi whitespace.\n\n## Scenarios\n\n### Scenario 1: Phân loại object và file nguồn\n\n**Given** project active có canonical objects, file registry và import records\n**When** người dùng mở Organize, tạo nhóm “Khu vực A”, gán object cùng file liên quan vào nhóm và thêm tag “ưu tiên”\n**Then** cây nhóm, danh sách hợp nhất và panel chi tiết hiển thị liên kết mới; canonical metadata, source link và audit được cập nhật; file gốc chưa bị sửa.\n\n### Scenario 2: Membership nhiều nhóm và chống vòng\n\n**Given** nhóm “Hạ tầng” có nhóm con “Camera” và “Mạng”\n**When** người dùng gán một object vào “Camera” và một nhóm con khác, sau đó thử đặt “Hạ tầng” làm con của chính descendant của nó\n**Then** memberships hợp lệ được lưu; thao tác tạo vòng bị từ chối mà không làm thay đổi đồ thị.\n\n### Scenario 3: Bulk management và thùng rác\n\n**Given** danh sách đang lọc theo một file nguồn\n**When** người dùng chọn nhiều object/file, thêm tag, gán hai nhóm và archive một phần selection\n**Then** từng kết quả được hiển thị; audit lưu membership/tag/archive; mục archived biến mất khỏi active view và có thể restore.\n\n### Scenario 4: Write-back có preview và xác nhận\n\n**Given** object đã được gán lại group và file nguồn có version/hash đã biết\n**When** editor chọn write-back, chọn tạo file mới, xem preview diff và xác nhận\n**Then** file mới được tạo theo format, version/backup/audit được đăng ký, canonical/source links trỏ đúng kết quả, và file gốc vẫn còn nguyên.\n\n### Scenario 5: Cấu trúc nguồn không chắc chắn\n\n**Given** TXT hoặc Word có nội dung không có heading/record boundary nhận diện được\n**When** người dùng yêu cầu tái cấu trúc theo group\n**Then** hệ thống hiển thị vùng không chắc chắn và yêu cầu mapping thủ công; không có write job được confirm nếu mapping chưa đủ.\n\n### Scenario 6: Conflict và stale source\n\n**Given** file nguồn đã thay đổi ngoài Organize sau khi preview được tạo\n**When** editor xác nhận write-back\n**Then** hash/version check phát hiện stale/conflict, write bị chặn trước khi thay file, diff mới và lựa chọn xử lý được hiển thị; canonical state không bị ghi đè âm thầm.\n\n### Scenario 7: Restore và self-write suppression\n\n**Given** một write-back trước đó đã tạo file version mới\n**When** editor restore version cũ thông qua Organize\n**Then** restore tạo write job/ChangeSet và version mới, audit liên kết được nguyên nhân; watcher nhận diện self-write và không tạo import trùng.\n\n## Technical Notes\n\n- Tái sử dụng contract hiện có cho Raw, source locator, immutable file version, ChangeSet, sync queue, audit và self-write markers.\n- Frontend prototype hiện nằm trong `apps/web/src/App.tsx` và `apps/web/src/styles.css`; cần thay fixture Organize bằng adapter/state thật sau khi API contract được xác nhận.\n- Cần giữ project root-directory safety: Organize không được tự ý xóa, di chuyển hoặc đổi tên thư mục gốc; chế độ tạo file mới phải có destination rõ ràng.\n- Write-back Markdown/TXT/Word là capability mới của riêng Organize và phải có format adapter, backup/version và verification riêng; không được sửa behavior của các flow ingestion không đi qua Organize.\n- Chi tiết serializer/marker cho từng format, API endpoint cụ thể và phân rã task là công việc của planning, không phải quyết định sản phẩm trong spec này.\n\n## Task Links\n\nChưa tạo task Knowns; tạo sau khi spec được review/approve.\n\n## Open Questions\n\n- [ ] Metadata quản lý trong Markdown/TXT/Word sẽ dùng marker/frontmatter/section nào cho từng format?\n- [ ] Batch all-or-nothing cần transaction coordinator chung hay chỉ dùng compensation/restore giữa các adapter?\n- [ ] Panel audit và panel restore nằm trong Organize hay deep-link sang audit workflow hiện có?\n- [ ] Cần bổ sung browser-based smoke/e2e harness để kiểm tra layout desktop 1280×800 và thao tác hàng loạt hay chưa?\n",
+        "description": "Specification for connecting the Organize tab to existing project data and managing groups, tags, lifecycle and controlled cross-format source write-back.",
+        "path": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "tags": [
+          "spec",
+          "draft",
+          "organize",
+          "groups",
+          "tags",
+          "write-back",
+          "source-files"
+        ],
+        "title": "Organize data classification, grouping and source management"
+      }
+    },
+    {
+      "id": "v2",
+      "docId": "doc-952ab992fd11828de13ea17caf293473",
+      "docPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "currentPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "version": 2,
+      "timestamp": "2026-08-09T14:20:34.0743637Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "baseHash": "1b699e8bd9269192ff6a34abbd36294303c777a92cbaa8cd16b281d0efd7a2b7",
+      "newHash": "6e47bc27c5f537991cd073cd8784327f172b01e0be56bbbb2d5cf057d4ea9d46",
+      "changes": [
+        {
+          "field": "tags",
+          "oldValue": [
+            "spec",
+            "draft",
+            "organize",
+            "groups",
+            "tags",
+            "write-back",
+            "source-files"
+          ],
+          "newValue": [
+            "spec",
+            "approved",
+            "organize",
+            "groups",
+            "tags",
+            "write-back",
+            "source-files"
+          ]
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "field",
+          "field": "tags",
+          "summary": "tags",
+          "oldBytes": 71,
+          "newBytes": 74,
+          "deltaBytes": 3
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for connecting the Organize tab to existing project data and managing groups, tags, lifecycle and controlled cross-format source write-back.",
+        "path": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "tags": [
+          "spec",
+          "approved",
+          "organize",
+          "groups",
+          "tags",
+          "write-back",
+          "source-files"
+        ],
+        "title": "Organize data classification, grouping and source management"
+      }
+    },
+    {
+      "id": "v3",
+      "docId": "doc-952ab992fd11828de13ea17caf293473",
+      "docPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "currentPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "version": 3,
+      "timestamp": "2026-08-09T14:23:10.5200466Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "baseHash": "6e47bc27c5f537991cd073cd8784327f172b01e0be56bbbb2d5cf057d4ea9d46",
+      "newHash": "f8fd53f00fb08300166b3014892db483aed0930964c5cc08e51c1b5dc84eea1a",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Task Links\n\nChưa tạo task Knowns; tạo sau khi spec được review/approve.",
+          "newValue": "## Task Links\n\n- @task-00yzz4 [organize-01] Implement Organize domain graph, groups, tags and lifecycle — todo\n- @task-uo3utj [organize-02] Connect Organize API to canonical data, sources, ChangeSets and audit — todo\n- @task-ixi4i2 [organize-03] Connect Organize UI to real data and bulk management — todo\n- @task-ffh54s [organize-04] Implement Excel write-back planning and preview — todo\n- @task-mtb31t [organize-05] Implement Markdown TXT and Word write-back adapters — todo\n- @task-bl6p7t [organize-06] Implement write-back safety batch restore and self-write handling — todo\n- @task-j95djb [organize-07] Verify Organize integration audit trace and SDD coverage — todo"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Task Links",
+          "summary": "Section: Task Links",
+          "oldBytes": 83,
+          "newBytes": 686,
+          "deltaBytes": 603
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for connecting the Organize tab to existing project data and managing groups, tags, lifecycle and controlled cross-format source write-back.",
+        "path": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "tags": [
+          "spec",
+          "approved",
+          "organize",
+          "groups",
+          "tags",
+          "write-back",
+          "source-files"
+        ],
+        "title": "Organize data classification, grouping and source management"
+      }
+    },
+    {
+      "id": "v4",
+      "docId": "doc-952ab992fd11828de13ea17caf293473",
+      "docPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "currentPath": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+      "version": 4,
+      "timestamp": "2026-08-09T16:51:16.0025868Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "baseHash": "f8fd53f00fb08300166b3014892db483aed0930964c5cc08e51c1b5dc84eea1a",
+      "newHash": "97660df2ca6d254a612a2a498b1e5e9fa42ec8b07b4f15d8c70cc73a9d974418",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Acceptance Criteria\n\n- [ ] AC-1: Mở Organize trong project có dữ liệu thật hiển thị object và file/import từ API/storage hiện có; khi API lỗi, UI giữ trạng thái trước đó và hiển thị lỗi, không hiển thị thành công giả.\n- [ ] AC-2: Tạo được nhóm chính, nhóm con nhiều cấp và membership tới nhiều nhóm cha; hệ thống từ chối thao tác tạo vòng mà không thay đổi dữ liệu.\n- [ ] AC-3: Gán nhiều group/tag cho một mục và nhiều mục cùng lúc; sau reload, membership/tag vẫn được giữ và audit event tương ứng tồn tại.\n- [ ] AC-4: Cây nhóm, danh sách hợp nhất và panel chi tiết đồng bộ selection; filter theo loại dữ liệu, group, tag, lifecycle, import state và source file trả đúng tập kết quả.\n- [ ] AC-5: Xóa một nhóm chỉ bỏ membership links; dữ liệu và nhóm con vẫn xuất hiện. Archive một object/file/import đưa vào thùng rác và restore đưa nó trở lại danh sách active.\n- [ ] AC-6: Write-back Excel, Markdown, TXT và Word đều tạo preview diff; nội dung file không đổi trước xác nhận.\n- [ ] AC-7: Với source structure nhận diện được, preview thể hiện thay đổi metadata và tái cấu trúc theo group; với structure không nhận diện được, hệ thống yêu cầu mapping thủ công và không cho confirm khi mapping thiếu.\n- [ ] AC-8: Chỉ editor của project xác nhận được write-back; thao tác từ user không có quyền bị từ chối và không sửa file/canonical state.\n- [ ] AC-9: Stale hash, file bị khóa, unmanaged content conflict hoặc mapping conflict làm write-back dừng trước replace; UI hiển thị nguyên nhân và diff cần xử lý.\n- [ ] AC-10: Người dùng chọn được in-place hoặc new-file và chiến lược batch; mỗi file thành công có backup/version/audit, mỗi file lỗi có kết quả lỗi độc lập hoặc toàn batch rollback theo lựa chọn.\n- [ ] AC-11: Restore tạo version/write job mới; file history cũ còn nguyên; watcher không tạo import lặp cho hash do Organize vừa ghi.\n- [ ] AC-12: Audit truy vết được thao tác group/tag/archive/restore/write-back từ actor đến before/after, source locator, file version và kết quả.\n- [ ] AC-13: Test/typecheck/build/validation của các package bị ảnh hưởng và Knowns SDD validation pass; diff không chứa lỗi whitespace.",
+          "newValue": "## Acceptance Criteria\n\n- [x] AC-1: Mở Organize trong project có dữ liệu thật hiển thị object và file/import từ API/storage hiện có; khi API lỗi, UI giữ trạng thái trước đó và hiển thị lỗi, không hiển thị thành công giả.\n- [x] AC-2: Tạo được nhóm chính, nhóm con nhiều cấp và membership tới nhiều nhóm cha; hệ thống từ chối thao tác tạo vòng mà không thay đổi dữ liệu.\n- [x] AC-3: Gán nhiều group/tag cho một mục và nhiều mục cùng lúc; sau reload, membership/tag vẫn được giữ và audit event tương ứng tồn tại.\n- [x] AC-4: Cây nhóm, danh sách hợp nhất và panel chi tiết đồng bộ selection; filter theo loại dữ liệu, group, tag, lifecycle, import state và source file trả đúng tập kết quả.\n- [x] AC-5: Xóa một nhóm chỉ bỏ membership links; dữ liệu và nhóm con vẫn xuất hiện. Archive một object/file/import đưa vào thùng rác và restore đưa nó trở lại danh sách active.\n- [x] AC-6: Write-back Excel, Markdown, TXT và Word đều tạo preview diff; nội dung file không đổi trước xác nhận.\n- [x] AC-7: Với source structure nhận diện được, preview thể hiện thay đổi metadata và tái cấu trúc theo group; với structure không nhận diện được, hệ thống yêu cầu mapping thủ công và không cho confirm khi mapping thiếu.\n- [x] AC-8: Chỉ editor của project xác nhận được write-back; thao tác từ user không có quyền bị từ chối và không sửa file/canonical state.\n- [x] AC-9: Stale hash, file bị khóa, unmanaged content conflict hoặc mapping conflict làm write-back dừng trước replace; UI hiển thị nguyên nhân và diff cần xử lý.\n- [x] AC-10: Người dùng chọn được in-place hoặc new-file và chiến lược batch; mỗi file thành công có backup/version/audit, mỗi file lỗi có kết quả lỗi độc lập hoặc toàn batch rollback theo lựa chọn.\n- [x] AC-11: Restore tạo version/write job mới; file history cũ còn nguyên; watcher không tạo import lặp cho hash do Organize vừa ghi.\n- [x] AC-12: Audit truy vết được thao tác group/tag/archive/restore/write-back từ actor đến before/after, source locator, file version và kết quả.\n- [x] AC-13: Test/typecheck/build/validation của các package bị ảnh hưởng và Knowns SDD validation pass; diff không chứa lỗi whitespace."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Acceptance Criteria",
+          "summary": "Section: Acceptance Criteria",
+          "oldBytes": 2517,
+          "newBytes": 2517
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for connecting the Organize tab to existing project data and managing groups, tags, lifecycle and controlled cross-format source write-back.",
+        "path": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "tags": [
+          "spec",
+          "approved",
+          "organize",
+          "groups",
+          "tags",
+          "write-back",
+          "source-files"
+        ],
+        "title": "Organize data classification, grouping and source management"
+      }
+    }
+  ]
+}

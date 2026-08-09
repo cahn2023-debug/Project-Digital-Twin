@@ -219,3 +219,15 @@ CREATE TABLE file_write_jobs (
     entity_revision UUID NOT NULL,
     status TEXT NOT NULL
 );
+
+-- Transitional persistence boundary for the executable vertical slice. The
+-- application adapter serializes the complete domain state here while the
+-- relational tables above remain the canonical migration target for the next
+-- decomposition wave. The row is versioned and locked per request so a
+-- process restart cannot silently fall back to in-memory canonical state.
+CREATE TABLE runtime_store_snapshots (
+    store_key TEXT PRIMARY KEY,
+    state JSONB NOT NULL DEFAULT '{}'::jsonb,
+    revision BIGINT NOT NULL DEFAULT 0,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);

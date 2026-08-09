@@ -1,0 +1,635 @@
+{
+  "taskId": "bl6p7t",
+  "currentVersion": 10,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "bl6p7t",
+      "version": 1,
+      "timestamp": "2026-08-09T14:22:01.9842025Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.9826487Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T14:22:01.9826487Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "bl6p7t",
+      "version": 2,
+      "timestamp": "2026-08-09T14:22:46.8156404Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+            },
+            {
+              "completed": false,
+              "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+            },
+            {
+              "completed": false,
+              "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": false,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": false,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T14:22:46.8156404Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "bl6p7t",
+      "version": 3,
+      "timestamp": "2026-08-09T15:17:37.6582231Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": false,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": false,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:17:37.6582231Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "bl6p7t",
+      "version": 4,
+      "timestamp": "2026-08-09T15:17:39.3864712Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": false,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": false,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "implementationPlan": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:17:39.3864712Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "bl6p7t",
+      "version": 5,
+      "timestamp": "2026-08-09T15:23:56.4071375Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+            },
+            {
+              "completed": false,
+              "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+            },
+            {
+              "completed": false,
+              "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+            },
+            {
+              "completed": true,
+              "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+            },
+            {
+              "completed": true,
+              "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": true,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": true,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "implementationNotes": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:23:56.4071375Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "bl6p7t",
+      "version": 6,
+      "timestamp": "2026-08-09T15:23:58.9141734Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 379
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": true,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": true,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "implementationNotes": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 379,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:23:58.9141734Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "bl6p7t",
+      "version": 7,
+      "timestamp": "2026-08-09T15:24:01.2762878Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T15:24:01.2762878Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": true,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": true,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:24:01.2762878Z",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "implementationNotes": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 379,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:24:01.2762878Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "bl6p7t",
+      "version": 8,
+      "timestamp": "2026-08-09T15:25:24.644629Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+          "newValue": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": true,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": true,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:24:01.276Z",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "implementationNotes": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 379,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:25:24.644629Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "bl6p7t",
+      "version": 9,
+      "timestamp": "2026-08-09T15:26:06.2178125Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+          "newValue": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode."
+          },
+          {
+            "completed": true,
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version."
+          },
+          {
+            "completed": true,
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:24:01.276Z",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "implementationNotes": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+        "implementationPlan": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 379,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:26:06.2178125Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "bl6p7t",
+      "version": 10,
+      "timestamp": "2026-08-09T15:26:38.3900643Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+          "newValue": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Enforce editor authorization, explicit confirmation, stale/lock/conflict checks and selected destination mode.",
+            "completed": true
+          },
+          {
+            "text": "Implement per-file or all-or-nothing batch execution with backup/version/audit and restore as a new job/version.",
+            "completed": true
+          },
+          {
+            "text": "Integrate self-write provenance so watcher does not enqueue duplicate imports; add failure/rollback tests.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:24:01.276Z",
+        "createdAt": "2026-08-09T14:22:01.982Z",
+        "description": "Execute confirmed write-back for all supported formats with editor authorization, in-place/new-file choice, per-file or all-or-nothing batch strategy, stale/lock/conflict blocking, backup/version/restore, audit and self-write suppression.",
+        "fulfills": [
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "bl6p7t",
+        "implementationNotes": "Done: Added editor-only Organize write-back execute endpoint with explicit confirmation, plan status gate, current revision/hash/source recheck, project file ownership and active lock validation.\nDone: Added safety-enforced per-file jobs carrying plan/destination/batch metadata; ALL_OR_NOTHING preflight creates no jobs when any file is stale/locked/conflicted.\nDone: Completion requires in-place backup, registers immutable result version, releases locks, updates plan status and records audit/self-write provenance; restore now creates a safety-enforced RESTORE job/ChangeSet and self-write hashes suppress duplicate imports.\nDone: Added failure endpoint with lock release and batch failure handling, plus API coverage for authorization, confirmation, stale/lock blocking, completion, backup/version, restore and self-write suppression.\nVerification: uv run pytest -q = 36 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; targeted git diff --check passed. Repository-wide diff check still reports pre-existing trailing whitespace in an unrelated .knowns task document.\nReview: PASS, P1=0, P2=0. Production repository/worker replacement remains outside this in-memory implementation task.\nSystem Decision Impact: candidate @decision/20260809-2223-organize-execution-queues-confirmed-plans-with-rechecked-locks-versions-backup-and-self-write-provenance (added) — defines confirmed execution, lock/version/backup, restore and self-write boundaries.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Extend write-back job state with preview-plan linkage, destination mode/path, confirmation, batch strategy and project-scoped file locks.\n2. Add an editor-only Organize execute endpoint that confirms a valid preview, rechecks revision/hash/source evidence and queues per-file jobs with PER_FILE or ALL_OR_NOTHING preflight semantics.\n3. Harden completion/restore with lock release, backup/version requirements, stale/conflict blocking, immutable version registration and audit/self-write provenance.\n4. Suppress watcher/import re-enqueue for hashes produced by Organize write-back and add failure/rollback helpers without mutating canonical history.\n5. Add API tests for authorization, confirmation, stale/lock/conflict blocking, batch behavior, backup/version/restore and self-write suppression; run full server verification.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "write-back",
+          "safety",
+          "restore",
+          "sync"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 379,
+        "title": "[organize-06] Implement write-back safety batch restore and self-write handling",
+        "updatedAt": "2026-08-09T15:26:38.3900643Z"
+      }
+    }
+  ]
+}

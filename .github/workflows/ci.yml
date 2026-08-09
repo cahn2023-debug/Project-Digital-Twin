@@ -40,3 +40,9 @@ jobs:
       - run: cargo fmt --all -- --check
       - run: cargo test -p desktop-core
       - run: cargo check -p project-digital-twin-desktop
+
+  release-config:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker compose --env-file .env.example -f deploy/compose.production.yml config

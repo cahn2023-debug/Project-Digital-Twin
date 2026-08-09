@@ -1,6 +1,6 @@
 {
   "taskId": "ngvcdd",
-  "currentVersion": 1,
+  "currentVersion": 2,
   "versions": [
     {
       "id": "v1",
@@ -36,6 +36,82 @@
         "timeSpent": 0,
         "title": "Connect canonical service to PostgreSQL/PostGIS",
         "updatedAt": "2026-08-09T09:23:54.7037027Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "ngvcdd",
+      "version": 2,
+      "timestamp": "2026-08-09T15:37:12.662496Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "text": "Production API uses a PostgreSQL/PostGIS-backed canonical persistence boundary and never silently falls back to in-memory state.",
+              "completed": false
+            },
+            {
+              "text": "Clean/upgrade migration and integration tests verify restart persistence, transaction/idempotency, project isolation, revision conflicts, approvals, outbox events and sync cursor.",
+              "completed": false
+            },
+            {
+              "text": "Readiness, CI and deployment checks document the database contract and fail clearly when PostGIS is unavailable.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Keep the current CameraStore service contract and wire PostgresCameraStore behind DATABASE_URL with APP_ENV=production refusing in-memory startup.\n2. Apply migrations/0001_initial.sql including the versioned runtime snapshot boundary and add Postgres integration tests for restart persistence, idempotency, project isolation, revision conflict and outbox cursor.\n3. Run clean/upgrade migration checks, API tests, readiness checks and CI release-config validation; replace the transitional snapshot with relational mappings in a follow-up when all domain tables are exercised."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implementation started under parent swito3: PostgresCameraStore, runtime snapshot migration and production DB guard are implemented. PostGIS integration remains pending because Docker daemon is unavailable."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Production API uses a PostgreSQL/PostGIS-backed canonical persistence boundary and never silently falls back to in-memory state.",
+            "completed": false
+          },
+          {
+            "text": "Clean/upgrade migration and integration tests verify restart persistence, transaction/idempotency, project isolation, revision conflicts, approvals, outbox events and sync cursor.",
+            "completed": false
+          },
+          {
+            "text": "Readiness, CI and deployment checks document the database contract and fail clearly when PostGIS is unavailable.",
+            "completed": false
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:23:54.703Z",
+        "description": "Replace the in-memory CameraStore behind the existing service boundary with a PostgreSQL/PostGIS adapter using migrations/0001_initial.sql. Preserve transactionally applied revisions, ChangeSets, approvals, outbox events, and cursor-based sync.",
+        "id": "ngvcdd",
+        "implementationNotes": "Implementation started under parent swito3: PostgresCameraStore, runtime snapshot migration and production DB guard are implemented. PostGIS integration remains pending because Docker daemon is unavailable.",
+        "implementationPlan": "1. Keep the current CameraStore service contract and wire PostgresCameraStore behind DATABASE_URL with APP_ENV=production refusing in-memory startup.\n2. Apply migrations/0001_initial.sql including the versioned runtime snapshot boundary and add Postgres integration tests for restart persistence, idempotency, project isolation, revision conflict and outbox cursor.\n3. Run clean/upgrade migration checks, API tests, readiness checks and CI release-config validation; replace the transitional snapshot with relational mappings in a follow-up when all domain tables are exercised.",
+        "labels": [
+          "implementation",
+          "persistence",
+          "camera-vertical-slice"
+        ],
+        "parent": "swito3",
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Connect canonical service to PostgreSQL/PostGIS",
+        "updatedAt": "2026-08-09T15:37:12.662496Z"
       }
     }
   ]

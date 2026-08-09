@@ -1,0 +1,605 @@
+{
+  "taskId": "ffh54s",
+  "currentVersion": 10,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "ffh54s",
+      "version": 1,
+      "timestamp": "2026-08-09T14:22:01.9163035Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.9147579Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T14:22:01.9147579Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "ffh54s",
+      "version": 2,
+      "timestamp": "2026-08-09T14:22:42.8146375Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+            },
+            {
+              "completed": false,
+              "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+            },
+            {
+              "completed": false,
+              "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": false,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": false,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T14:22:42.8146375Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "ffh54s",
+      "version": 3,
+      "timestamp": "2026-08-09T15:07:57.3155975Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": false,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": false,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:07:57.3155975Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "ffh54s",
+      "version": 4,
+      "timestamp": "2026-08-09T15:07:59.6631054Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": false,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": false,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "implementationPlan": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:07:59.6631054Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "ffh54s",
+      "version": 5,
+      "timestamp": "2026-08-09T15:12:31.4751666Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+            },
+            {
+              "completed": false,
+              "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+            },
+            {
+              "completed": false,
+              "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+            },
+            {
+              "completed": true,
+              "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+            },
+            {
+              "completed": true,
+              "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": true,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": true,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "implementationNotes": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:12:31.4751666Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "ffh54s",
+      "version": 6,
+      "timestamp": "2026-08-09T15:12:34.3050392Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 274
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": true,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": true,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "implementationNotes": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 274,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:12:34.3050392Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "ffh54s",
+      "version": 7,
+      "timestamp": "2026-08-09T15:12:37.0335507Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T15:12:37.0335507Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": true,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": true,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:12:37.0335507Z",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "implementationNotes": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 274,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:12:37.0335507Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "ffh54s",
+      "version": 8,
+      "timestamp": "2026-08-09T15:25:19.9862138Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+          "newValue": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": true,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": true,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:12:37.033Z",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "implementationNotes": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 274,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:25:19.9862138Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "ffh54s",
+      "version": 9,
+      "timestamp": "2026-08-09T15:25:59.1024949Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+          "newValue": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring."
+          },
+          {
+            "completed": true,
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation."
+          },
+          {
+            "completed": true,
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:12:37.033Z",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "implementationNotes": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+        "implementationPlan": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 274,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:25:59.1024949Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "ffh54s",
+      "version": 10,
+      "timestamp": "2026-08-09T15:26:33.119473Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+          "newValue": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Create Excel write-back plan and preview diff for metadata and group-driven restructuring.",
+            "completed": true
+          },
+          {
+            "text": "Reuse expected-hash, backup/version and unmanaged-content safety contracts without writing before confirmation.",
+            "completed": true
+          },
+          {
+            "text": "Add Excel planner/preview tests for in-place/new-file destinations and stale source evidence.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:12:37.033Z",
+        "createdAt": "2026-08-09T14:22:01.914Z",
+        "description": "Build the Organize write-back plan/preview contract for Excel, reusing safe existing version/hash/backup behavior. Show metadata/content restructuring diffs, destination choice and explicit confirmation without writing before approval.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "ffh54s",
+        "implementationNotes": "Done: Added project-scoped Excel WriteBackPreviewPlan and POST /api/v1/projects/{id}/organize/write-back/preview.\nDone: Preview resolves selected Organize items to source files, current/expected revision/hash, in-place/new-file destination, PER_FILE/ALL_OR_NOTHING strategy, metadata/content changes, source locators, unmanaged-content preservation and warnings; it never creates or completes a write job.\nDone: Added editor authorization, cross-project target validation, explicit new-file destination requirement and stale/unsupported target blocking.\nVerification: uv run pytest -q = 32 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Execution/confirmation/restore remain explicitly out of scope for later write-back tasks.\nSystem Decision Impact: candidate @decision/20260809-2212-organize-write-back-uses-non-mutating-excel-preview-plans-with-explicit-destination-and-version-gates (added) — defines the non-mutating preview, destination and version/hash safety boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Extend the existing server write-back boundary with an in-memory preview plan contract for Excel only; keep execution/confirmation/restore in later tasks.\n2. Resolve selected Organize items to source files and current revision/hash evidence, derive in-place/new-file destinations and per-file/all-or-nothing batch strategy.\n3. Produce metadata/content restructuring diffs, source locators, unmanaged-content preservation and safety warnings without touching source files; audit preview creation.\n4. Add API/domain tests for in-place/new-file previews, batch strategy, unsupported/stale source evidence and the no-write guarantee.\n5. Run server tests, Python compile, Knowns validation/review and record D1-D18 compliance plus System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "preview"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 274,
+        "title": "[organize-04] Implement Excel write-back planning and preview",
+        "updatedAt": "2026-08-09T15:26:33.119473Z"
+      }
+    }
+  ]
+}

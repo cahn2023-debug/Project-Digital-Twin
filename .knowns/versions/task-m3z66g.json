@@ -1,6 +1,6 @@
 {
   "taskId": "m3z66g",
-  "currentVersion": 1,
+  "currentVersion": 2,
   "versions": [
     {
       "id": "v1",
@@ -37,6 +37,91 @@
         "timeSpent": 0,
         "title": "Add production auth, observability, deployment, and pilot gates",
         "updatedAt": "2026-08-09T09:23:55.1583403Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "m3z66g",
+      "version": 2,
+      "timestamp": "2026-08-09T15:37:15.4127666Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "text": "Production API requests require OIDC/JWT bearer authentication and project-scoped authorization; development header auth is not accepted in production.",
+              "completed": false
+            },
+            {
+              "text": "Health/readiness, request IDs, structured request logs, metrics, CORS environment configuration, production compose and release-readiness documentation are present.",
+              "completed": false
+            },
+            {
+              "text": "Windows NSIS packaging and CI release configuration are enabled, with 1k/10k/50k performance baseline and pilot evidence recorded.",
+              "completed": false
+            },
+            {
+              "text": "Production smoke tests cover IdP, PostGIS, deployment, backup/restore and representative pilot flows before completion.",
+              "completed": false
+            }
+          ]
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Enforce OIDC/JWT bearer authentication for production API requests and project-scoped roles while keeping header auth development-only.\n2. Ship request IDs, structured logs, health/readiness, metrics, environment CORS, production Docker Compose, server/web images and release-readiness runbook.\n3. Enable Windows NSIS bundling and add release CI/configuration checks.\n4. Run 1k/10k/50k baseline measurements and record pilot go/no-go evidence; leave task open until PostGIS/IdP/deployment smoke tests pass."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implementation started under parent swito3: OIDC/JWT middleware, request metrics/IDs, readiness, production Docker artifacts, release config check, benchmark harness and NSIS bundling are implemented. IdP/PostGIS/deployment smoke tests remain pending."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Production API requests require OIDC/JWT bearer authentication and project-scoped authorization; development header auth is not accepted in production.",
+            "completed": false
+          },
+          {
+            "text": "Health/readiness, request IDs, structured request logs, metrics, CORS environment configuration, production compose and release-readiness documentation are present.",
+            "completed": false
+          },
+          {
+            "text": "Windows NSIS packaging and CI release configuration are enabled, with 1k/10k/50k performance baseline and pilot evidence recorded.",
+            "completed": false
+          },
+          {
+            "text": "Production smoke tests cover IdP, PostGIS, deployment, backup/restore and representative pilot flows before completion.",
+            "completed": false
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T09:23:55.158Z",
+        "description": "Integrate real authentication and project authorization, metrics/log correlation/health, deployment environments, Windows release packaging, 1k/10k/50k performance tests, and real-project pilot acceptance metrics.",
+        "id": "m3z66g",
+        "implementationNotes": "Implementation started under parent swito3: OIDC/JWT middleware, request metrics/IDs, readiness, production Docker artifacts, release config check, benchmark harness and NSIS bundling are implemented. IdP/PostGIS/deployment smoke tests remain pending.",
+        "implementationPlan": "1. Enforce OIDC/JWT bearer authentication for production API requests and project-scoped roles while keeping header auth development-only.\n2. Ship request IDs, structured logs, health/readiness, metrics, environment CORS, production Docker Compose, server/web images and release-readiness runbook.\n3. Enable Windows NSIS bundling and add release CI/configuration checks.\n4. Run 1k/10k/50k baseline measurements and record pilot go/no-go evidence; leave task open until PostGIS/IdP/deployment smoke tests pass.",
+        "labels": [
+          "implementation",
+          "security",
+          "observability",
+          "pilot"
+        ],
+        "parent": "swito3",
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Add production auth, observability, deployment, and pilot gates",
+        "updatedAt": "2026-08-09T15:37:15.4127666Z"
       }
     }
   ]

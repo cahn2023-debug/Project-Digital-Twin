@@ -1,0 +1,544 @@
+{
+  "taskId": "mtb31t",
+  "currentVersion": 9,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "mtb31t",
+      "version": 1,
+      "timestamp": "2026-08-09T14:22:01.951314Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.9503158Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T14:22:01.9503158Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "mtb31t",
+      "version": 2,
+      "timestamp": "2026-08-09T14:22:45.1012631Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+            },
+            {
+              "completed": false,
+              "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+            },
+            {
+              "completed": false,
+              "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+          },
+          {
+            "completed": false,
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+          },
+          {
+            "completed": false,
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T14:22:45.1012631Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "mtb31t",
+      "version": 3,
+      "timestamp": "2026-08-09T15:16:26.843279Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+            },
+            {
+              "completed": false,
+              "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+            },
+            {
+              "completed": false,
+              "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+            },
+            {
+              "completed": true,
+              "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+            },
+            {
+              "completed": true,
+              "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+          },
+          {
+            "completed": true,
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+          },
+          {
+            "completed": true,
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "implementationNotes": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T15:16:26.843279Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "mtb31t",
+      "version": 4,
+      "timestamp": "2026-08-09T15:16:28.8889915Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T15:16:28.8889915Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+          },
+          {
+            "completed": true,
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+          },
+          {
+            "completed": true,
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T15:16:28.8889915Z",
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "implementationNotes": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T15:16:28.8889915Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "mtb31t",
+      "version": 5,
+      "timestamp": "2026-08-09T15:16:40.8075945Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 300
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+          },
+          {
+            "completed": true,
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+          },
+          {
+            "completed": true,
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T15:16:28.888Z",
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "implementationNotes": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 300,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T15:16:40.8075945Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "mtb31t",
+      "version": 6,
+      "timestamp": "2026-08-09T15:16:43.0308889Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+          "newValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+          },
+          {
+            "completed": true,
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+          },
+          {
+            "completed": true,
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T15:16:28.888Z",
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "implementationNotes": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 300,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T15:16:43.0308889Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "mtb31t",
+      "version": 7,
+      "timestamp": "2026-08-09T15:25:22.3656769Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.",
+          "newValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+          },
+          {
+            "completed": true,
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+          },
+          {
+            "completed": true,
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T15:16:28.888Z",
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "implementationNotes": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 300,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T15:25:22.3656769Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "mtb31t",
+      "version": 8,
+      "timestamp": "2026-08-09T15:26:02.6875146Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+          "newValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators."
+          },
+          {
+            "completed": true,
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely."
+          },
+          {
+            "completed": true,
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T15:16:28.888Z",
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "implementationNotes": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 300,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T15:26:02.6875146Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "mtb31t",
+      "version": 9,
+      "timestamp": "2026-08-09T15:26:35.8368947Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+          "newValue": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Implement format-aware Markdown/TXT/Word planners and serializers that preserve unmanaged content and locators.",
+            "completed": true
+          },
+          {
+            "text": "Require manual mapping and block confirmation when structure cannot be detected safely.",
+            "completed": true
+          },
+          {
+            "text": "Add representative fixtures/tests for detectable and ambiguous structures plus preview diffs.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T15:16:28.888Z",
+        "createdAt": "2026-08-09T14:22:01.95Z",
+        "description": "Add format-aware Organize write-back adapters for Markdown, TXT and Word. Preserve unmanaged content and source locators, use detectable existing structure, require manual mapping for uncertain structure, and expose preview diffs before confirmation.",
+        "fulfills": [
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "mtb31t",
+        "implementationNotes": "Done: Extended the Organize write-back preview boundary with Markdown, TXT and Word format adapters/serializer metadata.\nDone: Read-only adapters preserve unmanaged-content/source-locator semantics, report detected structure and source summary, and require per-file manual_mapping for ambiguous TXT/Word/Markdown structure.\nDone: Added representative API fixtures/tests for detectable Markdown, ambiguous TXT with/without mapping, Word structure, format mismatch/stale evidence and no-write behavior.\nVerification: uv run pytest -q = 34 passed, 1 warning; Python compileall passed; Knowns validation = 0 errors, 0 warnings; git diff --check passed with repository line-ending warnings only.\nReview: PASS, P1=0, P2=0. Actual format execution remains scoped to later safety/execute tasks.\nSystem Decision Impact: candidate @decision/20260809-2216-organize-document-previews-use-format-adapters-and-require-mapping-for-uncertain-structure (added) — records format adapter, unmanaged preservation and manual mapping boundary.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nWorkflow recovery: task was completed and validated before timer start; added a 5m manual entry to preserve execution tracking.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "markdown",
+          "txt",
+          "word",
+          "write-back"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 300,
+        "title": "[organize-05] Implement Markdown TXT and Word write-back adapters",
+        "updatedAt": "2026-08-09T15:26:35.8368947Z"
+      }
+    }
+  ]
+}

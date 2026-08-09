@@ -1,0 +1,602 @@
+{
+  "taskId": "j95djb",
+  "currentVersion": 10,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "j95djb",
+      "version": 1,
+      "timestamp": "2026-08-09T14:22:02.0252198Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:02.0227432Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T14:22:02.0227432Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "j95djb",
+      "version": 2,
+      "timestamp": "2026-08-09T14:22:49.0277851Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+            },
+            {
+              "completed": false,
+              "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+            },
+            {
+              "completed": false,
+              "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": false,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T14:22:49.0277851Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "j95djb",
+      "version": 3,
+      "timestamp": "2026-08-09T15:24:24.2191529Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": false,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:24:24.2191529Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "j95djb",
+      "version": 4,
+      "timestamp": "2026-08-09T15:24:26.089766Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": false,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "implementationPlan": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:24:26.089766Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "j95djb",
+      "version": 5,
+      "timestamp": "2026-08-09T15:25:27.1714074Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": false,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "implementationNotes": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:25:27.1714074Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "j95djb",
+      "version": 6,
+      "timestamp": "2026-08-09T15:26:09.5373587Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+          "newValue": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": false,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "implementationNotes": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+        "implementationPlan": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:26:09.5373587Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "j95djb",
+      "version": 7,
+      "timestamp": "2026-08-09T15:26:42.7995114Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+          "newValue": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": false,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "implementationNotes": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:26:42.7995114Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "j95djb",
+      "version": 8,
+      "timestamp": "2026-08-09T15:27:44.6546326Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+            },
+            {
+              "completed": false,
+              "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+            },
+            {
+              "completed": false,
+              "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+            },
+            {
+              "completed": true,
+              "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+            },
+            {
+              "completed": true,
+              "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+          "newValue": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nDone: Integrated verification covers domain contracts, API snapshot/mutations, Organize UI build boundary, all four preview adapters, confirmed execution, restore/version history, conflict/lock blocking and self-write suppression.\nDone: Audit assertions verify preview/confirm/apply/suppression event chain, actor/project/file trace, correlation IDs and before/after field changes.\nVerification: server uv run pytest -q = 36 passed, 1 warning; web typecheck/build/test pass (web test suite has 0 test cases); domain typecheck/test pass (2 tests); Python compileall pass; targeted diff check pass; Knowns SDD validation valid=true with 0 errors and 1 unrelated warning on swito3.\nReview: PASS, P1=0, P2=0 for Organize scope. SDD coverage reports all 18 Organize decisions compliant for all linked tasks.\nSystem Decision Impact: none — this task records verification evidence for existing Organize contracts and adds no new durable guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": true,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": true,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "implementationNotes": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nDone: Integrated verification covers domain contracts, API snapshot/mutations, Organize UI build boundary, all four preview adapters, confirmed execution, restore/version history, conflict/lock blocking and self-write suppression.\nDone: Audit assertions verify preview/confirm/apply/suppression event chain, actor/project/file trace, correlation IDs and before/after field changes.\nVerification: server uv run pytest -q = 36 passed, 1 warning; web typecheck/build/test pass (web test suite has 0 test cases); domain typecheck/test pass (2 tests); Python compileall pass; targeted diff check pass; Knowns SDD validation valid=true with 0 errors and 1 unrelated warning on swito3.\nReview: PASS, P1=0, P2=0 for Organize scope. SDD coverage reports all 18 Organize decisions compliant for all linked tasks.\nSystem Decision Impact: none — this task records verification evidence for existing Organize contracts and adds no new durable guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:27:44.6546326Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "j95djb",
+      "version": 9,
+      "timestamp": "2026-08-09T15:27:48.2625382Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 202
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability."
+          },
+          {
+            "completed": true,
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff."
+          },
+          {
+            "completed": true,
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "implementationNotes": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nDone: Integrated verification covers domain contracts, API snapshot/mutations, Organize UI build boundary, all four preview adapters, confirmed execution, restore/version history, conflict/lock blocking and self-write suppression.\nDone: Audit assertions verify preview/confirm/apply/suppression event chain, actor/project/file trace, correlation IDs and before/after field changes.\nVerification: server uv run pytest -q = 36 passed, 1 warning; web typecheck/build/test pass (web test suite has 0 test cases); domain typecheck/test pass (2 tests); Python compileall pass; targeted diff check pass; Knowns SDD validation valid=true with 0 errors and 1 unrelated warning on swito3.\nReview: PASS, P1=0, P2=0 for Organize scope. SDD coverage reports all 18 Organize decisions compliant for all linked tasks.\nSystem Decision Impact: none — this task records verification evidence for existing Organize contracts and adds no new durable guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 202,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:27:48.2625382Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "j95djb",
+      "version": 10,
+      "timestamp": "2026-08-09T15:27:51.6100481Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T15:27:51.6100481Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Run integrated domain/API/UI/write-back tests covering Organize acceptance criteria and source traceability.",
+            "completed": true
+          },
+          {
+            "text": "Verify audit before/after/correlation, conflict blocking, restore and self-write suppression across the integrated diff.",
+            "completed": true
+          },
+          {
+            "text": "Run SDD/task validation, complete decision compliance markers and document verification results.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T15:27:51.6100481Z",
+        "createdAt": "2026-08-09T14:22:02.022Z",
+        "description": "Run integrated tests and verification across domain/API/UI/write-back, including audit/source traceability, conflict safety, restore and no duplicate self-import. Validate the spec/task set and complete SDD coverage.",
+        "fulfills": [
+          "AC-12",
+          "AC-13"
+        ],
+        "id": "j95djb",
+        "implementationNotes": "SDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nDone: Integrated verification covers domain contracts, API snapshot/mutations, Organize UI build boundary, all four preview adapters, confirmed execution, restore/version history, conflict/lock blocking and self-write suppression.\nDone: Audit assertions verify preview/confirm/apply/suppression event chain, actor/project/file trace, correlation IDs and before/after field changes.\nVerification: server uv run pytest -q = 36 passed, 1 warning; web typecheck/build/test pass (web test suite has 0 test cases); domain typecheck/test pass (2 tests); Python compileall pass; targeted diff check pass; Knowns SDD validation valid=true with 0 errors and 1 unrelated warning on swito3.\nReview: PASS, P1=0, P2=0 for Organize scope. SDD coverage reports all 18 Organize decisions compliant for all linked tasks.\nSystem Decision Impact: none — this task records verification evidence for existing Organize contracts and adds no new durable guidance.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "1. Run full server, web and domain verification across Organize domain/API/UI/write-back changes.\n2. Add/extend integrated checks for source locator/version/audit correlation, lifecycle restore, conflict blocking, batch behavior and self-write suppression.\n3. Run Knowns task/spec and SDD validation; resolve only verification-scope issues without changing product scope.\n4. Review final diff for P1/P2 and record coverage, test baselines, D1-D18 compliance and System Decision impact.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "verification",
+          "audit",
+          "e2e"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 202,
+        "title": "[organize-07] Verify Organize integration audit trace and SDD coverage",
+        "updatedAt": "2026-08-09T15:27:51.6100481Z"
+      }
+    }
+  ]
+}

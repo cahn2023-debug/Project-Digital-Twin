@@ -1,0 +1,625 @@
+{
+  "taskId": "00yzz4",
+  "currentVersion": 10,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "00yzz4",
+      "version": 1,
+      "timestamp": "2026-08-09T14:22:01.814087Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.8125868Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T14:22:01.8125868Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "00yzz4",
+      "version": 2,
+      "timestamp": "2026-08-09T14:22:37.2767783Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+            },
+            {
+              "completed": false,
+              "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+            },
+            {
+              "completed": false,
+              "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": false,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": false,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T14:22:37.2767783Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "00yzz4",
+      "version": 3,
+      "timestamp": "2026-08-09T14:23:43.171556Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": false,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": false,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T14:23:43.171556Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "00yzz4",
+      "version": 4,
+      "timestamp": "2026-08-09T14:25:54.719864Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": false,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": false,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T14:25:54.719864Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "00yzz4",
+      "version": 5,
+      "timestamp": "2026-08-09T14:33:35.4623347Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+            },
+            {
+              "completed": false,
+              "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+            },
+            {
+              "completed": false,
+              "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+            },
+            {
+              "completed": true,
+              "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+            },
+            {
+              "completed": true,
+              "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": true,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": true,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "implementationNotes": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T14:33:35.4623347Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "00yzz4",
+      "version": 6,
+      "timestamp": "2026-08-09T14:33:43.2606232Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 592
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": true,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": true,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "implementationNotes": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "in-progress",
+        "timeSpent": 592,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T14:33:43.2606232Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "00yzz4",
+      "version": 7,
+      "timestamp": "2026-08-09T14:33:52.1307358Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T14:33:52.1307358Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": true,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": true,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:33:52.1307358Z",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "implementationNotes": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 592,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T14:33:52.1307358Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "00yzz4",
+      "version": 8,
+      "timestamp": "2026-08-09T15:25:12.8767155Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.",
+          "newValue": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": true,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": true,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:33:52.13Z",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "implementationNotes": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 592,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T15:25:12.8767155Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "00yzz4",
+      "version": 9,
+      "timestamp": "2026-08-09T15:25:48.5264904Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+          "newValue": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation."
+          },
+          {
+            "completed": true,
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data."
+          },
+          {
+            "completed": true,
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:33:52.13Z",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "implementationNotes": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 592,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T15:25:48.5264904Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "00yzz4",
+      "version": 10,
+      "timestamp": "2026-08-09T15:26:19.8339372Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass",
+          "newValue": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Persist typed group, tag and membership state for object/file/import records with multi-parent DAG validation.",
+            "completed": true
+          },
+          {
+            "text": "Implement group link deletion, multi-membership operations, soft-delete/trash and restore without deleting underlying data.",
+            "completed": true
+          },
+          {
+            "text": "Add domain/storage tests for nesting, cycle rejection, bulk membership and lifecycle retention.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T14:33:52.13Z",
+        "createdAt": "2026-08-09T14:22:01.812Z",
+        "description": "Define and persist Organize group/tag membership and lifecycle contracts for canonical objects and file/import records. Support multi-parent acyclic nested groups, bulk membership operations, group unlink deletion, soft-delete/trash and restore without hard-deleting data.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-5"
+        ],
+        "id": "00yzz4",
+        "implementationNotes": "Done: added typed Organize contracts in packages/domain, project-scoped groups/tags/membership/lifecycle state and DAG validation in CameraStore, PostgreSQL schema constraints for group/tag/project isolation, bulk group/tag operations, group unlink deletion and reversible item lifecycle. Added domain and server tests.\nVerification: targeted server pytest 12 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck passed; @project/domain test 2 passed; Python py_compile passed; Knowns task validation passed; SDD validation passed with 0 errors/warnings and 2 informational notices; git diff --check passed with repository line-ending warnings only. Review: PASS, no P1/P2 findings.\nSystem Decision Impact: candidate @decision/20260809-2133-organize-uses-project-scoped-multi-parent-group-memberships-and-reversible-item-lifecycle (added) — records the project-scoped multi-parent DAG, tag membership and reversible lifecycle boundary. Candidate remains draft and needs evidence because two local ADR source refs are not registered Knowns docs.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass.\nSDD verification marker normalization: Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass\nSpec Decision Compliance: D18=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend `packages/domain/src/index.ts` with typed Organize item references, group/tag/membership contracts and lifecycle statuses, preserving existing Camera/source/change-set types.\n2. Add Organize persistence tables to `migrations/0001_initial.sql` for project-scoped groups, multi-parent links, tags, item memberships and soft-deleted lifecycle state; enforce uniqueness and self-parent constraints at the schema boundary.\n3. Extend `apps/server/app/domain.py` `CameraStore` with in-memory Organize state and typed dataclasses for groups/tags/memberships/lifecycle until the existing PostgreSQL adapter task replaces the store.\n4. Implement project isolation, group create/rename/move/archive/delete semantics, DAG cycle detection, multi-item group/tag assignment/removal, and archive/soft-delete/restore operations without deleting underlying objects or source references.\n5. Add focused server tests in `apps/server/tests/test_organize.py` and shared contract assertions in `packages/domain/test/domain.test.ts` for nested multi-parent groups, cycle rejection, bulk memberships, group unlink deletion, lifecycle retention and cross-project rejection.\n6. Verify with targeted pytest, domain typecheck/test, migration/schema inspection, Knowns task validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: task AC-1 is covered by steps 1–3; task AC-2 by step 4; task AC-3 by step 5.\n- Scope: no Organize API routes, UI, write-back, ChangeSet approval or audit endpoint changes; those belong to later tasks.\n- Dependency: task 01 is the first wave and has no Organize sibling dependency. Task 02 consumes these contracts.\n- Risk: migration and shared domain changes have cross-module blast radius; tests and existing package checks are mandatory.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass. D9–D16 and D18 are preserved as later write-back constraints; this task does not implement or weaken them.",
+        "labels": [
+          "from-spec",
+          "spec:organize-data-classification-grouping-and-source-management",
+          "spec-date:2026-08-09",
+          "domain",
+          "groups",
+          "tags",
+          "lifecycle"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/organize-data-classification-grouping-and-source-management",
+        "status": "done",
+        "timeSpent": 592,
+        "title": "[organize-01] Implement Organize domain graph, groups, tags and lifecycle",
+        "updatedAt": "2026-08-09T15:26:19.8339372Z"
+      }
+    }
+  ]
+}

@@ -3,12 +3,14 @@ import {
   useMemo,
   useRef,
   useState,
+  type ChangeEvent,
   type FormEvent,
   type ReactNode,
 } from "react";
 import * as maplibregl from "maplibre-gl";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import type { Project, ProjectStatus } from "@project/domain";
+import { open as openDirectoryDialog } from "@tauri-apps/plugin-dialog";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 const apiBase = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
@@ -38,10 +40,18 @@ function toProject(project: ApiProject): Project {
 }
 
 async function requestJson<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(apiBase + path, {
-    ...init,
-    headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
-  });
+  let response: Response;
+  try {
+    response = await fetch(apiBase + path, {
+      ...init,
+      headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
+    });
+  } catch (error) {
+    if (error instanceof TypeError) {
+      throw new Error("Không thể kết nối API. Hãy chạy corepack pnpm dev để khởi động ứng dụng.");
+    }
+    throw error;
+  }
   const body = await response.json().catch(() => null);
   if (!response.ok) {
     const detail = body && typeof body.detail === "string" ? body.detail : `HTTP ${response.status}`;
@@ -772,6 +782,114 @@ function ProjectDialog({
           <button className="button secondary" type="button" onClick={onClose} disabled={busy}>Hủy</button>
           <button className={"button " + (deleting ? "danger" : "primary")} type="submit" disabled={busy || !name.trim() || (!deleting && !rootPath.trim())}>
             {busy ? "Đang xử lý…" : deleting ? "Xóa vĩnh viễn" : "Tạo project"}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function ProjectCreateDialog({
+  busy,
+  error,
+  name,
+  onClose,
+  onError,
+  onNameChange,
+  onRootPathChange,
+  onSubmit,
+  projectOptions,
+  rootPath,
+}: {
+  busy: boolean;
+  error: string;
+  name: string;
+  onClose: () => void;
+  onError: (message: string) => void;
+  onNameChange: (value: string) => void;
+  onRootPathChange: (value: string) => void;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  projectOptions: Project[];
+  rootPath: string;
+}) {
+  const browserFolderInputRef = useRef<HTMLInputElement>(null);
+  const existingProject = projectOptions.find((project) => project.name.toLocaleLowerCase() === name.trim().toLocaleLowerCase()) ?? null;
+  const selectedPath = existingProject?.rootPath ?? rootPath;
+
+  useEffect(() => {
+    const input = browserFolderInputRef.current;
+    input?.setAttribute("webkitdirectory", "");
+    input?.setAttribute("directory", "");
+  }, []);
+
+  const pickDirectory = async () => {
+    onError("");
+    const tauriWindow = window as Window & { __TAURI_INTERNALS__?: unknown };
+    if (tauriWindow.__TAURI_INTERNALS__) {
+      try {
+        const selected = await openDirectoryDialog({
+          directory: true,
+          multiple: false,
+          title: "Chọn thư mục project",
+        });
+        if (typeof selected === "string") onRootPathChange(selected);
+      } catch (pickerError) {
+        onError(pickerError instanceof Error ? pickerError.message : "Không thể mở cửa sổ chọn thư mục.");
+      }
+      return;
+    }
+    browserFolderInputRef.current?.click();
+  };
+
+  const handleBrowserDirectory = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] as (File & { path?: string }) | undefined;
+    event.target.value = "";
+    if (file?.path) {
+      onRootPathChange(file.path);
+      return;
+    }
+    onError("Trình duyệt không trả về đường dẫn tuyệt đối. Hãy mở ứng dụng Windows để chọn thư mục.");
+  };
+
+  return (
+    <div className="project-modal-backdrop" role="presentation" onMouseDown={busy ? undefined : onClose}>
+      <form className="project-modal project-create-modal" onSubmit={onSubmit} onMouseDown={(event) => event.stopPropagation()}>
+        <div className="project-modal-head">
+          <div>
+            <div className="panel-title">Mở hoặc tạo project</div>
+            <div className="panel-sub">Viết tên project mới hoặc chọn project cũ để mở.</div>
+          </div>
+          <button className="icon-btn" type="button" aria-label="Đóng" onClick={onClose}>×</button>
+        </div>
+        <div className="project-create-line">
+          <label className="project-field project-name-inline">
+            <span>Tên project mới hoặc project cũ</span>
+            <input
+              autoFocus
+              list="project-options"
+              value={name}
+              onChange={(event) => onNameChange(event.target.value)}
+              placeholder="Nhập tên project"
+              aria-label="Tên project mới hoặc project cũ"
+            />
+            <datalist id="project-options">
+              {projectOptions.map((project) => <option key={project.id} value={project.name} label={`${project.status === "ACTIVE" ? "Đang dùng" : "Archived"} · ${project.rootPath}`} />)}
+            </datalist>
+          </label>
+          <button className="button secondary folder-picker-button" type="button" onClick={() => void pickDirectory()} disabled={busy} title={selectedPath || "Chọn thư mục project"}>
+            Chọn thư mục
+          </button>
+        </div>
+        <div className="project-folder-selection" title={selectedPath}>
+          {selectedPath || "Chưa chọn thư mục"}
+        </div>
+        <input ref={browserFolderInputRef} type="file" hidden onChange={handleBrowserDirectory} />
+        {existingProject ? <div className="project-form-hint">Project cũ sẽ được mở{existingProject.status === "ARCHIVED" ? " và khôi phục" : ""}.</div> : null}
+        {error ? <div className="project-form-error" role="alert">{error}</div> : null}
+        <div className="project-modal-actions">
+          <button className="button secondary" type="button" onClick={onClose} disabled={busy}>Hủy</button>
+          <button className="button primary" type="submit" disabled={busy || !name.trim() || (!existingProject && !rootPath.trim())}>
+            {busy ? "Đang xử lý…" : existingProject ? "Mở project" : "Tạo project"}
           </button>
         </div>
       </form>
@@ -1789,6 +1907,7 @@ export default function App() {
   const searchRef = useRef<HTMLInputElement>(null);
 
   const currentProject = projects.find((project) => project.id === selectedProjectId) ?? projects[0] ?? null;
+  const projectOptions = [...projects, ...archivedProjects];
 
   const refreshProjects = async (preferredId?: string): Promise<boolean> => {
     setProjectLoading(true);
@@ -1885,8 +2004,28 @@ export default function App() {
 
   const handleCreateProject = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setProjectBusy(true);
     setProjectError("");
+    const existingProject = projectOptions.find((project) => project.name.toLocaleLowerCase() === projectDraftName.trim().toLocaleLowerCase());
+    if (existingProject) {
+      setProjectBusy(true);
+      try {
+        if (existingProject.status === "ARCHIVED") {
+          const restored = await requestJson<ApiProject>(`/api/v1/projects/${existingProject.id}/restore`, { method: "POST" });
+          if (!await refreshProjects(restored.id)) throw new Error("Project đã khôi phục nhưng không thể tải lại danh sách");
+          setProjectFilter("active");
+        } else {
+          setSelectedProjectId(existingProject.id);
+        }
+        closeProjectDialog();
+        showToast(`Đã mở project ${existingProject.name}`);
+      } catch (error) {
+        setProjectError(error instanceof Error ? error.message : "Không thể mở project");
+      } finally {
+        setProjectBusy(false);
+      }
+      return;
+    }
+    setProjectBusy(true);
     try {
       const created = await requestJson<ApiProject>("/api/v1/projects", {
         method: "POST",
@@ -2067,16 +2206,29 @@ export default function App() {
 
       <main>{renderView()}</main>
       {toast ? <div className="toast show" role="status"><Icon name="check" size={15} /><span>{toast}</span></div> : null}
-      {projectDialog ? (
+      {projectDialog === "create" ? (
+        <ProjectCreateDialog
+          busy={projectBusy}
+          error={projectError}
+          name={projectDraftName}
+          onClose={closeProjectDialog}
+          onError={setProjectError}
+          onNameChange={setProjectDraftName}
+          onRootPathChange={setProjectDraftRoot}
+          onSubmit={handleCreateProject}
+          projectOptions={projectOptions}
+          rootPath={projectDraftRoot}
+        />
+      ) : projectDialog === "delete" ? (
         <ProjectDialog
           busy={projectBusy}
           error={projectError}
-          mode={projectDialog}
+          mode="delete"
           name={projectDraftName}
           onClose={closeProjectDialog}
           onNameChange={setProjectDraftName}
           onRootPathChange={setProjectDraftRoot}
-          onSubmit={projectDialog === "create" ? handleCreateProject : handleDeleteProject}
+          onSubmit={handleDeleteProject}
           project={projectDialogTarget}
           rootPath={projectDraftRoot}
         />
