@@ -1,7 +1,7 @@
 ---
 id: tgowk5
 title: "[local-file-ingestion-07] Implement Markdown, TXT and Word parsing, assets and relations"
-status: todo
+status: done
 priority: high
 labels:
   - from-spec
@@ -10,8 +10,9 @@ labels:
   - documents
   - relationships
 createdAt: '2026-08-09T10:50:29.540Z'
-updatedAt: '2026-08-09T11:25:23.133Z'
-timeSpent: 0
+updatedAt: '2026-08-09T12:27:58.194Z'
+completedAt: '2026-08-09T12:17:40.873Z'
+timeSpent: 314
 spec: specs/2026-08-09/local-file-ingestion-and-synchronization
 fulfills:
   - AC-17
@@ -28,9 +29,9 @@ Parse Markdown-like text and Word content including structure, tables, images an
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Parse Markdown-like TXT/Markdown/Word structure, tables, images and attachments without modifying source originals.
-- [ ] #2 Register image/attachment assets with hash/version and source-location links.
-- [ ] #3 Create relationship proposals with evidence and require confirmation before canonical apply.
+- [x] #1 Parse Markdown-like TXT/Markdown/Word structure, tables, images and attachments without modifying source originals.
+- [x] #2 Register image/attachment assets with hash/version and source-location links.
+- [x] #3 Create relationship proposals with evidence and require confirmation before canonical apply.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -56,5 +57,13 @@ Parse Markdown-like text and Word content including structure, tables, images an
 <!-- SECTION:NOTES:BEGIN -->
 Task created from approved spec; implementation plan and verification will be added before execution.
 Full-wave planning pass: plan saved before implementation and baseline commit.
+Started Task 07 from the approved plan; selected a stdlib-only read-only parser boundary because python-docx/markdown dependencies are not installed.
+Done: added stdlib-only read-only Markdown/TXT/.docx parser with headings, paragraphs, lists, metadata, links, wiki references, tables, Word OOXML headings/tables/hyperlinks/images/embeddings and source locators. Recognizable document tables flow through the existing camera row-mapping contract; unrecognized tables remain Raw. Images/attachments are registered as source assets with SHA-256, version, file/version/location and immutable source paths. Added DOCUMENT_IMPORT ChangeSet API with Raw nodes/tables, mapped table output, asset registry and evidence-backed PENDING_CONFIRMATION relationship proposals; canonical cameras remain unchanged. Verification: apps/server pytest 21 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; Knowns validation pending final transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1917-document-sources-remain-read-only-and-produce-evidence-backed-relationship-proposals (added) — establishes read-only document parsing, asset provenance and relation confirmation boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.
+
+Spec Decision Compliance: D52=pass
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass
 <!-- SECTION:NOTES:END -->
 

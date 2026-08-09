@@ -1,6 +1,6 @@
 {
   "taskId": "c6dq6m",
-  "currentVersion": 3,
+  "currentVersion": 10,
   "versions": [
     {
       "id": "v1",
@@ -140,16 +140,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links.",
-            "completed": false
+            "completed": false,
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
           },
           {
-            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions.",
-            "completed": false
+            "completed": false,
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
           },
           {
-            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior.",
-            "completed": false
+            "completed": false,
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
           }
         ],
         "archived": false,
@@ -178,6 +178,443 @@
         "timeSpent": 0,
         "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
         "updatedAt": "2026-08-09T11:25:25.5945919Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "c6dq6m",
+      "version": 4,
+      "timestamp": "2026-08-09T12:18:31.9958731Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+          },
+          {
+            "completed": false,
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+          },
+          {
+            "completed": false,
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.576Z",
+        "description": "Implement append-only lifecycle audit, correlation chain, field before/after values, Project-scoped audit search/export, independent permissions, local cleanup and representative/real-file verification.",
+        "fulfills": [
+          "AC-19",
+          "AC-20",
+          "AC-21",
+          "AC-22"
+        ],
+        "id": "c6dq6m",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add append-only audit records and lifecycle event links across file detection, parsing, Profile/mapping, preview, ChangeSet, canonical apply, conflict, sync and write-back; include actor, time, before/after fields, event_id, correlation_id and causation_id.\n2. Expose Project-scoped audit query/export and independent authorization checks for view, export, ChangeSet approval and file restore; wire the relevant view into apps/web/src/App.tsx without disturbing existing prototype modules.\n3. Implement local cleanup after server acknowledgement while keeping server file/version/Raw history queryable and reproducible; verify retention classifications against the existing migration/ADR boundary.\n4. Build representative fixtures and selected real Project-file verification covering Excel, Markdown/TXT/Word, offline restart, duplicate detection, conflict, write-back safety, audit filters/export and processing-duration capture.\n5. Run full repository validation: pytest, TypeScript typecheck/test/build, cargo fmt/check/test, SDD/Knows validation and git diff --check; record unresolved environment limits without weakening ACs.\n\n## Dependencies and scope\n\n- Depends on tasks 01–07 and existing authorization/API boundaries.\n- This is the final integrated verification task; it does not silently add a fixed performance target.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "audit",
+          "verification"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
+        "updatedAt": "2026-08-09T12:18:31.9958731Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "c6dq6m",
+      "version": 5,
+      "timestamp": "2026-08-09T12:26:10.3371091Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+            },
+            {
+              "completed": false,
+              "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+            },
+            {
+              "completed": false,
+              "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+            },
+            {
+              "completed": true,
+              "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+            },
+            {
+              "completed": true,
+              "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+          },
+          {
+            "completed": true,
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+          },
+          {
+            "completed": true,
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.576Z",
+        "description": "Implement append-only lifecycle audit, correlation chain, field before/after values, Project-scoped audit search/export, independent permissions, local cleanup and representative/real-file verification.",
+        "fulfills": [
+          "AC-19",
+          "AC-20",
+          "AC-21",
+          "AC-22"
+        ],
+        "id": "c6dq6m",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add append-only audit records and lifecycle event links across file detection, parsing, Profile/mapping, preview, ChangeSet, canonical apply, conflict, sync and write-back; include actor, time, before/after fields, event_id, correlation_id and causation_id.\n2. Expose Project-scoped audit query/export and independent authorization checks for view, export, ChangeSet approval and file restore; wire the relevant view into apps/web/src/App.tsx without disturbing existing prototype modules.\n3. Implement local cleanup after server acknowledgement while keeping server file/version/Raw history queryable and reproducible; verify retention classifications against the existing migration/ADR boundary.\n4. Build representative fixtures and selected real Project-file verification covering Excel, Markdown/TXT/Word, offline restart, duplicate detection, conflict, write-back safety, audit filters/export and processing-duration capture.\n5. Run full repository validation: pytest, TypeScript typecheck/test/build, cargo fmt/check/test, SDD/Knows validation and git diff --check; record unresolved environment limits without weakening ACs.\n\n## Dependencies and scope\n\n- Depends on tasks 01–07 and existing authorization/API boundaries.\n- This is the final integrated verification task; it does not silently add a fixed performance target.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "audit",
+          "verification"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
+        "updatedAt": "2026-08-09T12:26:10.3371091Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "c6dq6m",
+      "version": 6,
+      "timestamp": "2026-08-09T12:26:12.3000169Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 458
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+          },
+          {
+            "completed": true,
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+          },
+          {
+            "completed": true,
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.576Z",
+        "description": "Implement append-only lifecycle audit, correlation chain, field before/after values, Project-scoped audit search/export, independent permissions, local cleanup and representative/real-file verification.",
+        "fulfills": [
+          "AC-19",
+          "AC-20",
+          "AC-21",
+          "AC-22"
+        ],
+        "id": "c6dq6m",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add append-only audit records and lifecycle event links across file detection, parsing, Profile/mapping, preview, ChangeSet, canonical apply, conflict, sync and write-back; include actor, time, before/after fields, event_id, correlation_id and causation_id.\n2. Expose Project-scoped audit query/export and independent authorization checks for view, export, ChangeSet approval and file restore; wire the relevant view into apps/web/src/App.tsx without disturbing existing prototype modules.\n3. Implement local cleanup after server acknowledgement while keeping server file/version/Raw history queryable and reproducible; verify retention classifications against the existing migration/ADR boundary.\n4. Build representative fixtures and selected real Project-file verification covering Excel, Markdown/TXT/Word, offline restart, duplicate detection, conflict, write-back safety, audit filters/export and processing-duration capture.\n5. Run full repository validation: pytest, TypeScript typecheck/test/build, cargo fmt/check/test, SDD/Knows validation and git diff --check; record unresolved environment limits without weakening ACs.\n\n## Dependencies and scope\n\n- Depends on tasks 01–07 and existing authorization/API boundaries.\n- This is the final integrated verification task; it does not silently add a fixed performance target.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "audit",
+          "verification"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "in-progress",
+        "timeSpent": 458,
+        "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
+        "updatedAt": "2026-08-09T12:26:12.3000169Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "c6dq6m",
+      "version": 7,
+      "timestamp": "2026-08-09T12:26:14.3247376Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T12:26:14.3247376Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+          },
+          {
+            "completed": true,
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+          },
+          {
+            "completed": true,
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:26:14.3247376Z",
+        "createdAt": "2026-08-09T10:50:29.576Z",
+        "description": "Implement append-only lifecycle audit, correlation chain, field before/after values, Project-scoped audit search/export, independent permissions, local cleanup and representative/real-file verification.",
+        "fulfills": [
+          "AC-19",
+          "AC-20",
+          "AC-21",
+          "AC-22"
+        ],
+        "id": "c6dq6m",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add append-only audit records and lifecycle event links across file detection, parsing, Profile/mapping, preview, ChangeSet, canonical apply, conflict, sync and write-back; include actor, time, before/after fields, event_id, correlation_id and causation_id.\n2. Expose Project-scoped audit query/export and independent authorization checks for view, export, ChangeSet approval and file restore; wire the relevant view into apps/web/src/App.tsx without disturbing existing prototype modules.\n3. Implement local cleanup after server acknowledgement while keeping server file/version/Raw history queryable and reproducible; verify retention classifications against the existing migration/ADR boundary.\n4. Build representative fixtures and selected real Project-file verification covering Excel, Markdown/TXT/Word, offline restart, duplicate detection, conflict, write-back safety, audit filters/export and processing-duration capture.\n5. Run full repository validation: pytest, TypeScript typecheck/test/build, cargo fmt/check/test, SDD/Knows validation and git diff --check; record unresolved environment limits without weakening ACs.\n\n## Dependencies and scope\n\n- Depends on tasks 01–07 and existing authorization/API boundaries.\n- This is the final integrated verification task; it does not silently add a fixed performance target.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "audit",
+          "verification"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 458,
+        "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
+        "updatedAt": "2026-08-09T12:26:14.3247376Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "c6dq6m",
+      "version": 8,
+      "timestamp": "2026-08-09T12:27:05.5581228Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+          },
+          {
+            "completed": true,
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+          },
+          {
+            "completed": true,
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:26:14.324Z",
+        "createdAt": "2026-08-09T10:50:29.576Z",
+        "description": "Implement append-only lifecycle audit, correlation chain, field before/after values, Project-scoped audit search/export, independent permissions, local cleanup and representative/real-file verification.",
+        "fulfills": [
+          "AC-19",
+          "AC-20",
+          "AC-21",
+          "AC-22"
+        ],
+        "id": "c6dq6m",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add append-only audit records and lifecycle event links across file detection, parsing, Profile/mapping, preview, ChangeSet, canonical apply, conflict, sync and write-back; include actor, time, before/after fields, event_id, correlation_id and causation_id.\n2. Expose Project-scoped audit query/export and independent authorization checks for view, export, ChangeSet approval and file restore; wire the relevant view into apps/web/src/App.tsx without disturbing existing prototype modules.\n3. Implement local cleanup after server acknowledgement while keeping server file/version/Raw history queryable and reproducible; verify retention classifications against the existing migration/ADR boundary.\n4. Build representative fixtures and selected real Project-file verification covering Excel, Markdown/TXT/Word, offline restart, duplicate detection, conflict, write-back safety, audit filters/export and processing-duration capture.\n5. Run full repository validation: pytest, TypeScript typecheck/test/build, cargo fmt/check/test, SDD/Knows validation and git diff --check; record unresolved environment limits without weakening ACs.\n\n## Dependencies and scope\n\n- Depends on tasks 01–07 and existing authorization/API boundaries.\n- This is the final integrated verification task; it does not silently add a fixed performance target.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "audit",
+          "verification"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 458,
+        "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
+        "updatedAt": "2026-08-09T12:27:05.5581228Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "c6dq6m",
+      "version": 9,
+      "timestamp": "2026-08-09T12:27:31.2748767Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links."
+          },
+          {
+            "completed": true,
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions."
+          },
+          {
+            "completed": true,
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:26:14.324Z",
+        "createdAt": "2026-08-09T10:50:29.576Z",
+        "description": "Implement append-only lifecycle audit, correlation chain, field before/after values, Project-scoped audit search/export, independent permissions, local cleanup and representative/real-file verification.",
+        "fulfills": [
+          "AC-19",
+          "AC-20",
+          "AC-21",
+          "AC-22"
+        ],
+        "id": "c6dq6m",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Add append-only audit records and lifecycle event links across file detection, parsing, Profile/mapping, preview, ChangeSet, canonical apply, conflict, sync and write-back; include actor, time, before/after fields, event_id, correlation_id and causation_id.\n2. Expose Project-scoped audit query/export and independent authorization checks for view, export, ChangeSet approval and file restore; wire the relevant view into apps/web/src/App.tsx without disturbing existing prototype modules.\n3. Implement local cleanup after server acknowledgement while keeping server file/version/Raw history queryable and reproducible; verify retention classifications against the existing migration/ADR boundary.\n4. Build representative fixtures and selected real Project-file verification covering Excel, Markdown/TXT/Word, offline restart, duplicate detection, conflict, write-back safety, audit filters/export and processing-duration capture.\n5. Run full repository validation: pytest, TypeScript typecheck/test/build, cargo fmt/check/test, SDD/Knows validation and git diff --check; record unresolved environment limits without weakening ACs.\n\n## Dependencies and scope\n\n- Depends on tasks 01–07 and existing authorization/API boundaries.\n- This is the final integrated verification task; it does not silently add a fixed performance target.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "audit",
+          "verification"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 458,
+        "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
+        "updatedAt": "2026-08-09T12:27:31.2748767Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "c6dq6m",
+      "version": 10,
+      "timestamp": "2026-08-09T12:28:00.3647821Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Record append-only lifecycle audit with actor, time, before/after fields and event/correlation/causation links.",
+            "completed": true
+          },
+          {
+            "text": "Provide Project-scoped audit filtering/export and separate view/export/approval/restore permissions.",
+            "completed": true
+          },
+          {
+            "text": "Run representative fixture and real Project-file verification, record processing duration and validate local/server retention behavior.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:26:14.324Z",
+        "createdAt": "2026-08-09T10:50:29.576Z",
+        "description": "Implement append-only lifecycle audit, correlation chain, field before/after values, Project-scoped audit search/export, independent permissions, local cleanup and representative/real-file verification.",
+        "fulfills": [
+          "AC-19",
+          "AC-20",
+          "AC-21",
+          "AC-22"
+        ],
+        "id": "c6dq6m",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 08 from the approved plan; existing outbox events and authorization roles will be extended into append-only audit/query/export boundaries.\nDone: added append-only AuditEvent records for outbox lifecycle events with actor, operation, time, file/object/Profile/ChangeSet links, status, field before/after, correlation/causation IDs and processing duration. Added Project-scoped audit query and CSV/JSON export API; added independent audit.view, audit.export, changeset.approve and file.restore permissions and a wired Audit Trail UI with filters and export action. Added server-acknowledged local cleanup guard in desktop-core and integrated representative API/parser/workbook/audit/permission tests. Server history remains available in file versions, Raw, ChangeSets and audit events. Verification: apps/server pytest 23 passed (1 existing Starlette/httpx deprecation warning); Python compileall passed; web build/typecheck passed (one existing chunk-size warning), web test passed with 0 tests; domain typecheck/test passed; desktop typecheck passed; cargo fmt/check/test passed; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1925-audit-is-append-only-project-scoped-and-independently-permissioned (added) — establishes audit, permission and retention boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Add append-only audit records and lifecycle event links across file detection, parsing, Profile/mapping, preview, ChangeSet, canonical apply, conflict, sync and write-back; include actor, time, before/after fields, event_id, correlation_id and causation_id.\n2. Expose Project-scoped audit query/export and independent authorization checks for view, export, ChangeSet approval and file restore; wire the relevant view into apps/web/src/App.tsx without disturbing existing prototype modules.\n3. Implement local cleanup after server acknowledgement while keeping server file/version/Raw history queryable and reproducible; verify retention classifications against the existing migration/ADR boundary.\n4. Build representative fixtures and selected real Project-file verification covering Excel, Markdown/TXT/Word, offline restart, duplicate detection, conflict, write-back safety, audit filters/export and processing-duration capture.\n5. Run full repository validation: pytest, TypeScript typecheck/test/build, cargo fmt/check/test, SDD/Knows validation and git diff --check; record unresolved environment limits without weakening ACs.\n\n## Dependencies and scope\n\n- Depends on tasks 01–07 and existing authorization/API boundaries.\n- This is the final integrated verification task; it does not silently add a fixed performance target.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "audit",
+          "verification"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 458,
+        "title": "[local-file-ingestion-08] Implement audit UI, permissions, retention and end-to-end verification",
+        "updatedAt": "2026-08-09T12:28:00.3647821Z"
       }
     }
   ]

@@ -5,6 +5,9 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import * as maplibregl from "maplibre-gl";
+import type { Map as MapLibreMap } from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 const apiBase = import.meta.env.VITE_API_BASE ?? "http://localhost:8000";
 
@@ -40,6 +43,87 @@ type IconName =
   | "users";
 type Tone = "danger" | "info" | "neutral" | "success" | "warning";
 
+type BasemapKey = "street" | "hybrid" | "vector";
+type MapLayerKey =
+  | "transport"
+  | "roadLabels"
+  | "administrative"
+  | "places"
+  | "placeLabels"
+  | "landWater";
+
+type LayerVisibility = Record<MapLayerKey, boolean>;
+
+const basemapModes: Array<{ key: BasemapKey; label: string; detail: string }> = [
+  { key: "street", label: "Street", detail: "Google public roads" },
+  { key: "hybrid", label: "Hybrid", detail: "Google public imagery" },
+  { key: "vector", label: "Vector", detail: "OpenStreetMap vector" },
+];
+
+const mapLayerGroups: Array<{
+  key: MapLayerKey;
+  label: string;
+  detail: string;
+  color: string;
+  matches: (layerId: string) => boolean;
+}> = [
+  {
+    key: "transport",
+    label: "Đường & giao thông",
+    detail: "Đường bộ, cầu, đường sắt",
+    color: "#3b82f6",
+    matches: (layerId) => /^(highway|road_|tunnel-|bridge-|railway|ferry|cablecar|aeroway)/.test(layerId),
+  },
+  {
+    key: "roadLabels",
+    label: "Tên đường",
+    detail: "Tên và mã tuyến đường",
+    color: "#0f766e",
+    matches: (layerId) => /highway-name|road_shield|highway-shield/.test(layerId),
+  },
+  {
+    key: "administrative",
+    label: "Địa giới & hành chính",
+    detail: "Biên giới, tỉnh/thành, quốc gia",
+    color: "#a855f7",
+    matches: (layerId) => layerId.startsWith("boundary") || /^(label_state|label_country)/.test(layerId),
+  },
+  {
+    key: "places",
+    label: "Địa điểm công cộng",
+    detail: "POI, sân bay, điểm công cộng",
+    color: "#f97316",
+    matches: (layerId) => layerId.startsWith("poi") || layerId === "airport",
+  },
+  {
+    key: "placeLabels",
+    label: "Tên địa danh",
+    detail: "Thành phố, thị trấn, địa danh",
+    color: "#be123c",
+    matches: (layerId) => layerId.startsWith("label_") && !/^(label_state|label_country)/.test(layerId),
+  },
+  {
+    key: "landWater",
+    label: "Đất, nước & công trình",
+    detail: "Sông, hồ, đất phủ, tòa nhà",
+    color: "#64748b",
+    matches: (layerId) => /^(landcover|landuse|park|water|waterway|building|road_area|road_pier|highway-area)/.test(layerId),
+  },
+];
+
+const defaultLayerVisibility: LayerVisibility = {
+  transport: true,
+  roadLabels: true,
+  administrative: true,
+  places: true,
+  placeLabels: true,
+  landWater: true,
+};
+
+const googleStreetTiles = "https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}";
+const googleHybridTiles = "https://mt1.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}";
+const vectorStyleUrl = "https://tiles.openfreemap.org/styles/bright";
+
 type SideItem = {
   label: string;
   icon: IconName;
@@ -67,6 +151,7 @@ const modules: Record<ModuleKey, ModuleConfig> = {
       { label: "Change Inbox", icon: "git", key: "changes", count: "17" },
       { label: "Data Quality", icon: "alert", key: "quality", count: "24" },
       { label: "File Versions", icon: "refresh", key: "versions" },
+      { label: "Audit Trail", icon: "file", key: "audit" },
       { label: "Đồng bộ", icon: "refresh", key: "sync" },
     ],
   },
@@ -546,6 +631,22 @@ const sourceRows = [
 
 const moduleTabs: ModuleKey[] = ["datacenter", "design", "operate", "organize", "dashboard"];
 
+function readBasemapPreference(): BasemapKey {
+  const saved = window.localStorage.getItem("pp-design-basemap");
+  return saved === "street" || saved === "hybrid" || saved === "vector" ? saved : "vector";
+}
+
+function readLayerPreferences(): LayerVisibility {
+  const saved = window.localStorage.getItem("pp-design-map-layers");
+  if (!saved) return defaultLayerVisibility;
+  try {
+    const parsed = JSON.parse(saved) as Partial<LayerVisibility>;
+    return { ...defaultLayerVisibility, ...parsed };
+  } catch {
+    return defaultLayerVisibility;
+  }
+}
+
 function Icon({ name, size = 16 }: { name: IconName; size?: number }) {
   return (
     <svg
@@ -688,57 +789,155 @@ function AlertList({
   );
 }
 
-function MapMockup() {
+function MapLibreMapView({
+  layerVisibility,
+  mode,
+  onLayerToggle,
+  onModeChange,
+}: {
+  layerVisibility: LayerVisibility;
+  mode: BasemapKey;
+  onLayerToggle: (key: MapLayerKey) => void;
+  onModeChange: (mode: BasemapKey) => void;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<MapLibreMap | null>(null);
+  const [mapReady, setMapReady] = useState(false);
+  const [mapError, setMapError] = useState("");
+  const [googleMapUrl, setGoogleMapUrl] = useState("https://www.google.com/maps/@21.0285,105.8542,12z");
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const map = new maplibregl.Map({
+      container: containerRef.current,
+      style: vectorStyleUrl,
+      center: [105.8542, 21.0285],
+      zoom: 11,
+      attributionControl: false,
+    });
+    mapRef.current = map;
+    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
+
+    const updateGoogleMapUrl = () => {
+      const center = map.getCenter();
+      const zoom = Math.max(1, Math.round(map.getZoom()));
+      setGoogleMapUrl(`https://www.google.com/maps/@${center.lat.toFixed(6)},${center.lng.toFixed(6)},${zoom}z`);
+    };
+    const handleMapError = (event: { error?: Error; sourceId?: string }) => {
+      if (event.error) setMapError("Không tải được một phần nền bản đồ. Bạn có thể đổi chế độ nền.");
+    };
+
+    map.on("error", handleMapError);
+    map.on("moveend", updateGoogleMapUrl);
+    map.on("load", () => {
+      const firstDataLayer = map.getStyle().layers?.find((layer: { id: string }) => layer.id !== "background")?.id;
+      map.addSource("google-street", {
+        type: "raster",
+        tiles: [googleStreetTiles],
+        tileSize: 256,
+        attribution: "Google Maps",
+      });
+      map.addSource("google-hybrid", {
+        type: "raster",
+        tiles: [googleHybridTiles],
+        tileSize: 256,
+        attribution: "Google Maps",
+      });
+      map.addLayer(
+        {
+          id: "google-street-layer",
+          type: "raster",
+          source: "google-street",
+          layout: { visibility: "none" },
+          paint: { "raster-fade-duration": 0 },
+        },
+        firstDataLayer,
+      );
+      map.addLayer(
+        {
+          id: "google-hybrid-layer",
+          type: "raster",
+          source: "google-hybrid",
+          layout: { visibility: "none" },
+          paint: { "raster-fade-duration": 0 },
+        },
+        firstDataLayer,
+      );
+      setMapReady(true);
+      updateGoogleMapUrl();
+    });
+
+    return () => {
+      map.off("error", handleMapError);
+      map.off("moveend", updateGoogleMapUrl);
+      map.remove();
+      mapRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady) return;
+
+    const setVisibility = (layerId: string, visibility: "visible" | "none") => {
+      if (map.getLayer(layerId)) map.setLayoutProperty(layerId, "visibility", visibility);
+    };
+
+    setVisibility("google-street-layer", mode === "street" ? "visible" : "none");
+    setVisibility("google-hybrid-layer", mode === "hybrid" ? "visible" : "none");
+    setVisibility("background", mode === "vector" ? "visible" : "none");
+
+    for (const layer of map.getStyle().layers ?? []) {
+      const group = mapLayerGroups.find((candidate) => candidate.matches(layer.id));
+      if (group) setVisibility(layer.id, layerVisibility[group.key] ? "visible" : "none");
+    }
+  }, [layerVisibility, mapReady, mode]);
+
   return (
-    <div className="map-panel">
-      <div className="map-grid" />
-      <div className="road r1" />
-      <div className="road r2" />
-      <div className="road r3" />
-      <div className="fiber-line" />
-      <div className="camera-pin p1" />
-      <div className="camera-pin p2" />
-      <div className="camera-pin p3" />
-      <div className="camera-pin p4" />
-      <div className="node-pin n1" />
-      <div className="map-popup">
-        <div className="map-popup-title">CAM-114</div>
-        <div className="map-popup-line">
-          <span>Nút giao</span>
-          <b>NG-044</b>
+    <div className="map-panel maplibre-panel">
+      <div ref={containerRef} className="map-canvas" aria-label="Bản đồ nền MapLibre của Việt Nam" />
+      <div className="map-basemap-card">
+        <div className="map-overlay-title">Nền bản đồ</div>
+        <div className="map-basemap-options" role="group" aria-label="Chọn nền bản đồ">
+          {basemapModes.map((basemap) => (
+            <button
+              className={"map-basemap-option" + (mode === basemap.key ? " active" : "")}
+              key={basemap.key}
+              onClick={() => onModeChange(basemap.key)}
+              type="button"
+              aria-pressed={mode === basemap.key}
+            >
+              <b>{basemap.label}</b>
+              <span>{basemap.detail}</span>
+            </button>
+          ))}
         </div>
-        <div className="map-popup-line">
-          <span>Representation</span>
-          <b className="text-success">DESIGNED</b>
-        </div>
-        <div className="map-popup-line">
-          <span>Model</span>
-          <b>XNV-8080</b>
-        </div>
-      </div>
-      <div className="map-controls">
-        <button className="map-control" type="button" aria-label="Phóng to">+</button>
-        <button className="map-control" type="button" aria-label="Thu nhỏ">−</button>
-        <button className="map-control" type="button" aria-label="Đặt lại bản đồ">⌗</button>
       </div>
       <div className="map-layer-card">
-        <b className="map-layer-title">Layers</b>
-        <div className="layer-row">
-          <span className="layer-swatch" />
-          <span>Camera — Designed</span>
-          <span className="layer-count">1,230</span>
+        <div className="map-layer-head">
+          <b className="map-layer-title">Lớp bản đồ</b>
+          <span>{mode === "vector" ? "Vector" : "Overlay"}</span>
         </div>
-        <div className="layer-row">
-          <span className="layer-swatch intersection" />
-          <span>Intersection</span>
-          <span className="layer-count">269</span>
-        </div>
-        <div className="layer-row">
-          <span className="layer-swatch fiber" />
-          <span>Fiber draft</span>
-          <span className="layer-count">Off</span>
-        </div>
+        {mapLayerGroups.map((layer) => (
+          <label className="layer-row" key={layer.key}>
+            <span className="layer-swatch" style={{ background: layer.color }} />
+            <span className="layer-copy"><b>{layer.label}</b><small>{layer.detail}</small></span>
+            <input
+              checked={layerVisibility[layer.key]}
+              onChange={() => onLayerToggle(layer.key)}
+              type="checkbox"
+              aria-label={`Bật tắt ${layer.label}`}
+            />
+          </label>
+        ))}
+        <div className="map-layer-note">Layer được điều khiển trực tiếp bằng MapLibre.</div>
       </div>
+      <a className="map-google-link" href={googleMapUrl} rel="noreferrer" target="_blank">
+        Mở vị trí hiện tại trên Google Maps ↗
+      </a>
+      <div className="map-attribution">© OpenStreetMap contributors · Google Maps tiles (experimental) · MapLibre</div>
+      {mapError ? <div className="map-error" role="status">{mapError}</div> : null}
     </div>
   );
 }
@@ -920,6 +1119,26 @@ function DatacenterView({
 }
 
 function DesignView({ onAction }: { onAction: (message: string) => void }) {
+  const [basemap, setBasemap] = useState<BasemapKey>(readBasemapPreference);
+  const [layerVisibility, setLayerVisibility] = useState<LayerVisibility>(readLayerPreferences);
+
+  useEffect(() => {
+    window.localStorage.setItem("pp-design-basemap", basemap);
+  }, [basemap]);
+
+  useEffect(() => {
+    window.localStorage.setItem("pp-design-map-layers", JSON.stringify(layerVisibility));
+  }, [layerVisibility]);
+
+  const changeBasemap = (next: BasemapKey) => {
+    setBasemap(next);
+    onAction(`Đã chuyển nền bản đồ sang ${basemapModes.find((item) => item.key === next)?.label}`);
+  };
+
+  const toggleLayer = (key: MapLayerKey) => {
+    setLayerVisibility((current) => ({ ...current, [key]: !current[key] }));
+  };
+
   return (
     <div className="page">
       <PageHeader
@@ -935,8 +1154,13 @@ function DesignView({ onAction }: { onAction: (message: string) => void }) {
         }
       />
       <div className="grid-12">
-        <Panel className="col-8" title="Bản đồ thiết kế" subtitle="EPSG:4326 • 1,230 Camera • 269 Intersection" action={<div className="panel-actions"><Button onClick={() => onAction("Chế độ chỉnh sửa bản đồ đã bật")}><Icon name="edit" size={13} />Chỉnh sửa</Button><Button onClick={() => onAction("Đang mở layer selector")}>Layers</Button></div>}>
-          <MapMockup />
+        <Panel className="col-8" title="Bản đồ thiết kế" subtitle="EPSG:4326 • Nền MapLibre • Địa giới và địa danh Việt Nam" action={<div className="panel-actions"><Button onClick={() => onAction("Chế độ chỉnh sửa bản đồ đã bật")}><Icon name="edit" size={13} />Chỉnh sửa</Button><Button onClick={() => onAction("Layer nền bản đồ đang được điều khiển trực tiếp")}>Layers</Button></div>}>
+          <MapLibreMapView
+            layerVisibility={layerVisibility}
+            mode={basemap}
+            onLayerToggle={toggleLayer}
+            onModeChange={changeBasemap}
+          />
         </Panel>
         <Panel className="col-4" title="Inspector — CAM-114" subtitle="Canonical ID • 7ae9…91f2" action={<button className="icon-btn" type="button" aria-label="Chỉnh sửa CAM-114" onClick={() => onAction("Đang chỉnh sửa CAM-114")}><Icon name="edit" size={15} /></button>}>
           <div className="panel-body flush">
@@ -1123,6 +1347,60 @@ function DashboardView({ onAction }: { onAction: (message: string) => void }) {
   );
 }
 
+type AuditRow = {
+  time: string;
+  actor: string;
+  operation: string;
+  source: string;
+  status: string;
+  change: string;
+};
+
+const auditRows: AuditRow[] = [
+  { time: "12:18:42", actor: "approver-1", operation: "FileImportApplied", source: "Camera.xlsx / CAMERA / 18", status: "APPLIED", change: "name: Base -> Main" },
+  { time: "12:18:39", actor: "importer-1", operation: "FileImportSubmitted", source: "Camera.xlsx / CAMERA / 18", status: "PENDING_APPROVAL", change: "1 row + Raw" },
+  { time: "12:16:04", actor: "software", operation: "FileWriteApplied", source: "Camera.xlsx / version 4", status: "APPLIED", change: "Status: DESIGNED -> AS_BUILT" },
+  { time: "12:11:07", actor: "viewer-1", operation: "FileImportConflict", source: "Progress.xlsx / Sheet2 / 42", status: "CONFLICT", change: "name: base/server/local" },
+];
+
+function AuditView({ onAction }: { onAction: (message: string) => void }) {
+  const [status, setStatus] = useState("all");
+  const [actor, setActor] = useState("all");
+  const filteredRows = useMemo(
+    () => auditRows.filter((row) => (status === "all" || row.status === status) && (actor === "all" || row.actor === actor)),
+    [actor, status],
+  );
+  return (
+    <div className="page">
+      <PageHeader
+        status="Append-only"
+        subtitle="Project-scoped lifecycle events with correlation chain and field before/after values."
+        title="AUDIT TRAIL"
+        tone="success"
+        actions={<><Button onClick={() => onAction("Audit CSV export queued")}>Export CSV</Button><Button primary onClick={() => onAction("Audit filters refreshed")}>Refresh</Button></>}
+      />
+      <Panel title="Audit search" subtitle="Project 269 - detection to import to approval to write-back">
+        <div className="panel-body">
+          <div className="filter-row">
+            <input className="filter-input" placeholder="Project / file / object / ChangeSet" aria-label="Search audit" />
+            <select className="select" value={actor} onChange={(event) => setActor(event.target.value)} aria-label="Filter actor">
+              <option value="all">All actors</option><option value="approver-1">approver-1</option><option value="importer-1">importer-1</option><option value="software">software</option><option value="viewer-1">viewer-1</option>
+            </select>
+            <select className="select" value={status} onChange={(event) => setStatus(event.target.value)} aria-label="Filter status">
+              <option value="all">All statuses</option><option value="APPLIED">APPLIED</option><option value="PENDING_APPROVAL">PENDING_APPROVAL</option><option value="CONFLICT">CONFLICT</option>
+            </select>
+          </div>
+        </div>
+        <div className="panel-body flush table-wrap">
+          <table className="data-table"><thead><tr><th>Time</th><th>Actor</th><th>Operation</th><th>Source locator</th><th>Field before {"->"} after</th><th>Status</th></tr></thead><tbody>
+            {filteredRows.map((row) => <tr key={row.time + row.operation}><td className="mono">{row.time}</td><td>{row.actor}</td><td className="mono">{row.operation}</td><td>{row.source}</td><td>{row.change}</td><td><StatusBadge tone={row.status === "CONFLICT" ? "danger" : row.status === "APPLIED" ? "success" : "warning"}>{row.status}</StatusBadge></td></tr>)}
+          </tbody></table>
+        </div>
+      </Panel>
+    </div>
+  );
+}
+
 export default function App() {
   const [activeModule, setActiveModule] = useState<ModuleKey>("datacenter");
   const [activeSideItem, setActiveSideItem] = useState("overview");
@@ -1181,6 +1459,7 @@ export default function App() {
 
   const renderView = () => {
     if (activeModule === "datacenter") {
+      if (activeSideItem === "audit") return <AuditView onAction={showToast} />;
       return <DatacenterView cameras={cameraRows} onAction={showToast} onSearchChange={setSearchQuery} searchQuery={searchQuery} />;
     }
     if (activeModule === "design") return <DesignView onAction={showToast} />;

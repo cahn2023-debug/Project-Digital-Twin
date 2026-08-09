@@ -1,6 +1,6 @@
 {
   "taskId": "qzkm2k",
-  "currentVersion": 6,
+  "currentVersion": 11,
   "versions": [
     {
       "id": "v1",
@@ -355,16 +355,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions.",
-            "completed": false
+            "completed": false,
+            "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions."
           },
           {
-            "text": "Persist Raw and source locators for mapped, unmapped and invalid source values.",
-            "completed": false
+            "completed": false,
+            "text": "Persist Raw and source locators for mapped, unmapped and invalid source values."
           },
           {
-            "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification.",
-            "completed": false
+            "completed": false,
+            "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification."
           }
         ],
         "archived": false,
@@ -392,6 +392,326 @@
         "timeSpent": 2031,
         "title": "[local-file-ingestion-01] Establish local file registry, versions, Raw and source locators",
         "updatedAt": "2026-08-09T11:25:41.0944024Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "qzkm2k",
+      "version": 7,
+      "timestamp": "2026-08-09T11:37:20.4073124Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": 2031,
+          "newValue": 2042
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions."
+          },
+          {
+            "completed": false,
+            "text": "Persist Raw and source locators for mapped, unmapped and invalid source values."
+          },
+          {
+            "completed": false,
+            "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T10:50:29.361Z",
+        "description": "Implement logical file registration, physical locations, immutable file versions, SHA-256/metadata detection, Raw retention and source locators for local-first ingestion.",
+        "fulfills": [
+          "AC-1",
+          "AC-12"
+        ],
+        "id": "qzkm2k",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.",
+        "implementationPlan": "## Implementation Plan\n\n1. Define the source provenance contract in packages/domain/src/index.ts: immutable file version metadata, Raw record/source-locator types, file-version status and deduplication identity. Preserve the existing SourceLocator and ImportResult contracts.\n2. Align the local manifest schema in apps/desktop/manifest.sql and the desktop-core bootstrap in crates/desktop-core/src/lib.rs for logical files, immutable file versions, Raw records and source locators. Keep existing sync_state and pending_jobs behavior.\n3. Extend ManifestDb with explicit operations to register/update a logical file location, record a new version only when hash/metadata changes, reject duplicate hashes, persist Raw/source-locator payloads, and clean local history only after an acknowledged server sync.\n4. Preserve the existing SHA-256 helpers and safe-write boundary; make version registration reusable by later watcher, parser and write-back tasks without implementing Excel parsing or ChangeSet application here.\n5. Add focused Rust tests for logical identity versus moved paths, immutable/deduplicated versions, Raw/source-locator persistence, local cleanup, restart persistence and existing hash behavior. Add domain typecheck/tests and migration/diff checks where applicable.\n6. Validate with cargo fmt/check/test, pnpm --filter @project/domain typecheck/test, Knowns task/spec validation and git diff --check.\n\n## Scope and assumptions\n\n- PostgreSQL source_files/file_versions tables already exist in migrations/0001_initial.sql; this task preserves that server-history boundary and does not duplicate the pending canonical PostgreSQL adapter task.\n- Server-side full history verification is integrated in local-file-ingestion-08; this task provides the local manifest and provenance primitives it consumes.\n- No Excel parser, Profile engine, watcher, ChangeSet approval, UI or Word parser changes belong in this task.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "foundation",
+          "provenance"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "in-progress",
+        "timeSpent": 2042,
+        "title": "[local-file-ingestion-01] Establish local file registry, versions, Raw and source locators",
+        "updatedAt": "2026-08-09T11:37:20.4073124Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "qzkm2k",
+      "version": 8,
+      "timestamp": "2026-08-09T11:37:22.9949799Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions."
+            },
+            {
+              "completed": false,
+              "text": "Persist Raw and source locators for mapped, unmapped and invalid source values."
+            },
+            {
+              "completed": false,
+              "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions."
+            },
+            {
+              "completed": true,
+              "text": "Persist Raw and source locators for mapped, unmapped and invalid source values."
+            },
+            {
+              "completed": true,
+              "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T11:37:22.9949799Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions."
+          },
+          {
+            "completed": true,
+            "text": "Persist Raw and source locators for mapped, unmapped and invalid source values."
+          },
+          {
+            "completed": true,
+            "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T11:37:22.9949799Z",
+        "createdAt": "2026-08-09T10:50:29.361Z",
+        "description": "Implement logical file registration, physical locations, immutable file versions, SHA-256/metadata detection, Raw retention and source locators for local-first ingestion.",
+        "fulfills": [
+          "AC-1",
+          "AC-12"
+        ],
+        "id": "qzkm2k",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Define the source provenance contract in packages/domain/src/index.ts: immutable file version metadata, Raw record/source-locator types, file-version status and deduplication identity. Preserve the existing SourceLocator and ImportResult contracts.\n2. Align the local manifest schema in apps/desktop/manifest.sql and the desktop-core bootstrap in crates/desktop-core/src/lib.rs for logical files, immutable file versions, Raw records and source locators. Keep existing sync_state and pending_jobs behavior.\n3. Extend ManifestDb with explicit operations to register/update a logical file location, record a new version only when hash/metadata changes, reject duplicate hashes, persist Raw/source-locator payloads, and clean local history only after an acknowledged server sync.\n4. Preserve the existing SHA-256 helpers and safe-write boundary; make version registration reusable by later watcher, parser and write-back tasks without implementing Excel parsing or ChangeSet application here.\n5. Add focused Rust tests for logical identity versus moved paths, immutable/deduplicated versions, Raw/source-locator persistence, local cleanup, restart persistence and existing hash behavior. Add domain typecheck/tests and migration/diff checks where applicable.\n6. Validate with cargo fmt/check/test, pnpm --filter @project/domain typecheck/test, Knowns task/spec validation and git diff --check.\n\n## Scope and assumptions\n\n- PostgreSQL source_files/file_versions tables already exist in migrations/0001_initial.sql; this task preserves that server-history boundary and does not duplicate the pending canonical PostgreSQL adapter task.\n- Server-side full history verification is integrated in local-file-ingestion-08; this task provides the local manifest and provenance primitives it consumes.\n- No Excel parser, Profile engine, watcher, ChangeSet approval, UI or Word parser changes belong in this task.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "foundation",
+          "provenance"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 2042,
+        "title": "[local-file-ingestion-01] Establish local file registry, versions, Raw and source locators",
+        "updatedAt": "2026-08-09T11:37:22.9949799Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "qzkm2k",
+      "version": 9,
+      "timestamp": "2026-08-09T12:26:49.5642233Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions."
+          },
+          {
+            "completed": true,
+            "text": "Persist Raw and source locators for mapped, unmapped and invalid source values."
+          },
+          {
+            "completed": true,
+            "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T11:37:22.994Z",
+        "createdAt": "2026-08-09T10:50:29.361Z",
+        "description": "Implement logical file registration, physical locations, immutable file versions, SHA-256/metadata detection, Raw retention and source locators for local-first ingestion.",
+        "fulfills": [
+          "AC-1",
+          "AC-12"
+        ],
+        "id": "qzkm2k",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Define the source provenance contract in packages/domain/src/index.ts: immutable file version metadata, Raw record/source-locator types, file-version status and deduplication identity. Preserve the existing SourceLocator and ImportResult contracts.\n2. Align the local manifest schema in apps/desktop/manifest.sql and the desktop-core bootstrap in crates/desktop-core/src/lib.rs for logical files, immutable file versions, Raw records and source locators. Keep existing sync_state and pending_jobs behavior.\n3. Extend ManifestDb with explicit operations to register/update a logical file location, record a new version only when hash/metadata changes, reject duplicate hashes, persist Raw/source-locator payloads, and clean local history only after an acknowledged server sync.\n4. Preserve the existing SHA-256 helpers and safe-write boundary; make version registration reusable by later watcher, parser and write-back tasks without implementing Excel parsing or ChangeSet application here.\n5. Add focused Rust tests for logical identity versus moved paths, immutable/deduplicated versions, Raw/source-locator persistence, local cleanup, restart persistence and existing hash behavior. Add domain typecheck/tests and migration/diff checks where applicable.\n6. Validate with cargo fmt/check/test, pnpm --filter @project/domain typecheck/test, Knowns task/spec validation and git diff --check.\n\n## Scope and assumptions\n\n- PostgreSQL source_files/file_versions tables already exist in migrations/0001_initial.sql; this task preserves that server-history boundary and does not duplicate the pending canonical PostgreSQL adapter task.\n- Server-side full history verification is integrated in local-file-ingestion-08; this task provides the local manifest and provenance primitives it consumes.\n- No Excel parser, Profile engine, watcher, ChangeSet approval, UI or Word parser changes belong in this task.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "foundation",
+          "provenance"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 2042,
+        "title": "[local-file-ingestion-01] Establish local file registry, versions, Raw and source locators",
+        "updatedAt": "2026-08-09T12:26:49.5642233Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "qzkm2k",
+      "version": 10,
+      "timestamp": "2026-08-09T12:27:16.500386Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions."
+          },
+          {
+            "completed": true,
+            "text": "Persist Raw and source locators for mapped, unmapped and invalid source values."
+          },
+          {
+            "completed": true,
+            "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T11:37:22.994Z",
+        "createdAt": "2026-08-09T10:50:29.361Z",
+        "description": "Implement logical file registration, physical locations, immutable file versions, SHA-256/metadata detection, Raw retention and source locators for local-first ingestion.",
+        "fulfills": [
+          "AC-1",
+          "AC-12"
+        ],
+        "id": "qzkm2k",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Define the source provenance contract in packages/domain/src/index.ts: immutable file version metadata, Raw record/source-locator types, file-version status and deduplication identity. Preserve the existing SourceLocator and ImportResult contracts.\n2. Align the local manifest schema in apps/desktop/manifest.sql and the desktop-core bootstrap in crates/desktop-core/src/lib.rs for logical files, immutable file versions, Raw records and source locators. Keep existing sync_state and pending_jobs behavior.\n3. Extend ManifestDb with explicit operations to register/update a logical file location, record a new version only when hash/metadata changes, reject duplicate hashes, persist Raw/source-locator payloads, and clean local history only after an acknowledged server sync.\n4. Preserve the existing SHA-256 helpers and safe-write boundary; make version registration reusable by later watcher, parser and write-back tasks without implementing Excel parsing or ChangeSet application here.\n5. Add focused Rust tests for logical identity versus moved paths, immutable/deduplicated versions, Raw/source-locator persistence, local cleanup, restart persistence and existing hash behavior. Add domain typecheck/tests and migration/diff checks where applicable.\n6. Validate with cargo fmt/check/test, pnpm --filter @project/domain typecheck/test, Knowns task/spec validation and git diff --check.\n\n## Scope and assumptions\n\n- PostgreSQL source_files/file_versions tables already exist in migrations/0001_initial.sql; this task preserves that server-history boundary and does not duplicate the pending canonical PostgreSQL adapter task.\n- Server-side full history verification is integrated in local-file-ingestion-08; this task provides the local manifest and provenance primitives it consumes.\n- No Excel parser, Profile engine, watcher, ChangeSet approval, UI or Word parser changes belong in this task.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "foundation",
+          "provenance"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 2042,
+        "title": "[local-file-ingestion-01] Establish local file registry, versions, Raw and source locators",
+        "updatedAt": "2026-08-09T12:27:16.500386Z"
+      }
+    },
+    {
+      "id": "v11",
+      "taskId": "qzkm2k",
+      "version": 11,
+      "timestamp": "2026-08-09T12:27:45.4647668Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions.",
+            "completed": true
+          },
+          {
+            "text": "Persist Raw and source locators for mapped, unmapped and invalid source values.",
+            "completed": true
+          },
+          {
+            "text": "After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T11:37:22.994Z",
+        "createdAt": "2026-08-09T10:50:29.361Z",
+        "description": "Implement logical file registration, physical locations, immutable file versions, SHA-256/metadata detection, Raw retention and source locators for local-first ingestion.",
+        "fulfills": [
+          "AC-1",
+          "AC-12"
+        ],
+        "id": "qzkm2k",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nPlanning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.\nPlan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.\nImplementation plan saved after AC ownership and dependency check.\nDone: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Define the source provenance contract in packages/domain/src/index.ts: immutable file version metadata, Raw record/source-locator types, file-version status and deduplication identity. Preserve the existing SourceLocator and ImportResult contracts.\n2. Align the local manifest schema in apps/desktop/manifest.sql and the desktop-core bootstrap in crates/desktop-core/src/lib.rs for logical files, immutable file versions, Raw records and source locators. Keep existing sync_state and pending_jobs behavior.\n3. Extend ManifestDb with explicit operations to register/update a logical file location, record a new version only when hash/metadata changes, reject duplicate hashes, persist Raw/source-locator payloads, and clean local history only after an acknowledged server sync.\n4. Preserve the existing SHA-256 helpers and safe-write boundary; make version registration reusable by later watcher, parser and write-back tasks without implementing Excel parsing or ChangeSet application here.\n5. Add focused Rust tests for logical identity versus moved paths, immutable/deduplicated versions, Raw/source-locator persistence, local cleanup, restart persistence and existing hash behavior. Add domain typecheck/tests and migration/diff checks where applicable.\n6. Validate with cargo fmt/check/test, pnpm --filter @project/domain typecheck/test, Knowns task/spec validation and git diff --check.\n\n## Scope and assumptions\n\n- PostgreSQL source_files/file_versions tables already exist in migrations/0001_initial.sql; this task preserves that server-history boundary and does not duplicate the pending canonical PostgreSQL adapter task.\n- Server-side full history verification is integrated in local-file-ingestion-08; this task provides the local manifest and provenance primitives it consumes.\n- No Excel parser, Profile engine, watcher, ChangeSet approval, UI or Word parser changes belong in this task.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "foundation",
+          "provenance"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 2042,
+        "title": "[local-file-ingestion-01] Establish local file registry, versions, Raw and source locators",
+        "updatedAt": "2026-08-09T12:27:45.4647668Z"
       }
     }
   ]

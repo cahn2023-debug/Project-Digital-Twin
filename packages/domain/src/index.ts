@@ -13,6 +13,51 @@ export interface SourceLocator {
   column: string;
 }
 
+export type FileVersionStatus = "DISCOVERED" | "SYNCED" | "SUPERSEDED";
+
+export interface FileVersion {
+  id: string;
+  fileId: SourceFileId;
+  revision: number;
+  sha256: string;
+  size: number;
+  modifiedAt: string | null;
+  createdAt: string;
+  status: FileVersionStatus;
+}
+
+export interface RawRecord {
+  id: string;
+  fileVersionId: string;
+  rowKey: string;
+  payload: Record<string, unknown>;
+  source?: SourceLocator;
+}
+
+export type FieldDataType = "text" | "number" | "boolean" | "date" | "json";
+
+export interface SchemaField {
+  id: string;
+  name: string;
+  dataType: FieldDataType;
+  group: string | null;
+  unit: string | null;
+  required: boolean;
+}
+
+export interface FieldMapping {
+  sourceColumn: string;
+  fieldId: string;
+  rules: Record<string, unknown>[];
+}
+
+export interface IdentityCandidate {
+  entityId: EntityId;
+  score: number;
+  reasons: string[];
+  requiresConfirmation: boolean;
+}
+
 export interface Project {
   id: ProjectId;
   code: string;

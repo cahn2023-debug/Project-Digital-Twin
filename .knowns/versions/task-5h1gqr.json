@@ -1,6 +1,6 @@
 {
   "taskId": "5h1gqr",
-  "currentVersion": 3,
+  "currentVersion": 10,
   "versions": [
     {
       "id": "v1",
@@ -138,16 +138,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content.",
-            "completed": false
+            "completed": false,
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
           },
           {
-            "text": "Validate and atomically replace the workbook, registering a new file version and audit event.",
-            "completed": false
+            "completed": false,
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
           },
           {
-            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes.",
-            "completed": false
+            "completed": false,
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
           }
         ],
         "archived": false,
@@ -175,6 +175,436 @@
         "timeSpent": 0,
         "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
         "updatedAt": "2026-08-09T11:25:20.6401815Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "5h1gqr",
+      "version": 4,
+      "timestamp": "2026-08-09T12:02:21.1037074Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+          },
+          {
+            "completed": false,
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+          },
+          {
+            "completed": false,
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.504Z",
+        "description": "Implement confirmed Excel column additions, hash/lock checks, backup, atomic replacement, unmanaged-content preservation, restore jobs and watcher suppression for software-generated writes.",
+        "fulfills": [
+          "AC-15",
+          "AC-16"
+        ],
+        "id": "5h1gqr",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend apps/server/app/workbook.py and the write-job boundary to support confirmed managed column additions, Profile/schema field values, expected file revision/hash and audit metadata while retaining existing Camera write-back behavior.\n2. Reuse crates/desktop-core safe_replace for backup, stale hash rejection, lock/error handling, temporary validation and atomic replacement; preserve unmanaged sheets, columns and values.\n3. Implement restore as a new write job/ChangeSet referencing an immutable prior file version, and register the resulting version without mutating history.\n4. Add self-write provenance so the watcher recognizes software-generated hashes and does not enqueue a duplicate import.\n5. Expand round-trip/stale/locked/restore tests in apps/server/tests/test_workbook.py and desktop-core tests; run pytest, cargo tests, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01, 04 and 05.\n- Write-back applies only to Excel; Markdown/TXT/Word originals remain read-only.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "safety"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
+        "updatedAt": "2026-08-09T12:02:21.1037074Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "5h1gqr",
+      "version": 5,
+      "timestamp": "2026-08-09T12:11:31.8235263Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+            },
+            {
+              "completed": false,
+              "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+            },
+            {
+              "completed": false,
+              "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+            },
+            {
+              "completed": true,
+              "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+            },
+            {
+              "completed": true,
+              "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+          },
+          {
+            "completed": true,
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+          },
+          {
+            "completed": true,
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.504Z",
+        "description": "Implement confirmed Excel column additions, hash/lock checks, backup, atomic replacement, unmanaged-content preservation, restore jobs and watcher suppression for software-generated writes.",
+        "fulfills": [
+          "AC-15",
+          "AC-16"
+        ],
+        "id": "5h1gqr",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend apps/server/app/workbook.py and the write-job boundary to support confirmed managed column additions, Profile/schema field values, expected file revision/hash and audit metadata while retaining existing Camera write-back behavior.\n2. Reuse crates/desktop-core safe_replace for backup, stale hash rejection, lock/error handling, temporary validation and atomic replacement; preserve unmanaged sheets, columns and values.\n3. Implement restore as a new write job/ChangeSet referencing an immutable prior file version, and register the resulting version without mutating history.\n4. Add self-write provenance so the watcher recognizes software-generated hashes and does not enqueue a duplicate import.\n5. Expand round-trip/stale/locked/restore tests in apps/server/tests/test_workbook.py and desktop-core tests; run pytest, cargo tests, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01, 04 and 05.\n- Write-back applies only to Excel; Markdown/TXT/Word originals remain read-only.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "safety"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
+        "updatedAt": "2026-08-09T12:11:31.8235263Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "5h1gqr",
+      "version": 6,
+      "timestamp": "2026-08-09T12:11:34.4073882Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 551
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+          },
+          {
+            "completed": true,
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+          },
+          {
+            "completed": true,
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-09T10:50:29.504Z",
+        "description": "Implement confirmed Excel column additions, hash/lock checks, backup, atomic replacement, unmanaged-content preservation, restore jobs and watcher suppression for software-generated writes.",
+        "fulfills": [
+          "AC-15",
+          "AC-16"
+        ],
+        "id": "5h1gqr",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend apps/server/app/workbook.py and the write-job boundary to support confirmed managed column additions, Profile/schema field values, expected file revision/hash and audit metadata while retaining existing Camera write-back behavior.\n2. Reuse crates/desktop-core safe_replace for backup, stale hash rejection, lock/error handling, temporary validation and atomic replacement; preserve unmanaged sheets, columns and values.\n3. Implement restore as a new write job/ChangeSet referencing an immutable prior file version, and register the resulting version without mutating history.\n4. Add self-write provenance so the watcher recognizes software-generated hashes and does not enqueue a duplicate import.\n5. Expand round-trip/stale/locked/restore tests in apps/server/tests/test_workbook.py and desktop-core tests; run pytest, cargo tests, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01, 04 and 05.\n- Write-back applies only to Excel; Markdown/TXT/Word originals remain read-only.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "safety"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "in-progress",
+        "timeSpent": 551,
+        "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
+        "updatedAt": "2026-08-09T12:11:34.4073882Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "5h1gqr",
+      "version": 7,
+      "timestamp": "2026-08-09T12:11:37.1013569Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T12:11:37.1013569Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+          },
+          {
+            "completed": true,
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+          },
+          {
+            "completed": true,
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:11:37.1013569Z",
+        "createdAt": "2026-08-09T10:50:29.504Z",
+        "description": "Implement confirmed Excel column additions, hash/lock checks, backup, atomic replacement, unmanaged-content preservation, restore jobs and watcher suppression for software-generated writes.",
+        "fulfills": [
+          "AC-15",
+          "AC-16"
+        ],
+        "id": "5h1gqr",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend apps/server/app/workbook.py and the write-job boundary to support confirmed managed column additions, Profile/schema field values, expected file revision/hash and audit metadata while retaining existing Camera write-back behavior.\n2. Reuse crates/desktop-core safe_replace for backup, stale hash rejection, lock/error handling, temporary validation and atomic replacement; preserve unmanaged sheets, columns and values.\n3. Implement restore as a new write job/ChangeSet referencing an immutable prior file version, and register the resulting version without mutating history.\n4. Add self-write provenance so the watcher recognizes software-generated hashes and does not enqueue a duplicate import.\n5. Expand round-trip/stale/locked/restore tests in apps/server/tests/test_workbook.py and desktop-core tests; run pytest, cargo tests, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01, 04 and 05.\n- Write-back applies only to Excel; Markdown/TXT/Word originals remain read-only.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "safety"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 551,
+        "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
+        "updatedAt": "2026-08-09T12:11:37.1013569Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "5h1gqr",
+      "version": 8,
+      "timestamp": "2026-08-09T12:27:00.8975614Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+          },
+          {
+            "completed": true,
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+          },
+          {
+            "completed": true,
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:11:37.101Z",
+        "createdAt": "2026-08-09T10:50:29.504Z",
+        "description": "Implement confirmed Excel column additions, hash/lock checks, backup, atomic replacement, unmanaged-content preservation, restore jobs and watcher suppression for software-generated writes.",
+        "fulfills": [
+          "AC-15",
+          "AC-16"
+        ],
+        "id": "5h1gqr",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend apps/server/app/workbook.py and the write-job boundary to support confirmed managed column additions, Profile/schema field values, expected file revision/hash and audit metadata while retaining existing Camera write-back behavior.\n2. Reuse crates/desktop-core safe_replace for backup, stale hash rejection, lock/error handling, temporary validation and atomic replacement; preserve unmanaged sheets, columns and values.\n3. Implement restore as a new write job/ChangeSet referencing an immutable prior file version, and register the resulting version without mutating history.\n4. Add self-write provenance so the watcher recognizes software-generated hashes and does not enqueue a duplicate import.\n5. Expand round-trip/stale/locked/restore tests in apps/server/tests/test_workbook.py and desktop-core tests; run pytest, cargo tests, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01, 04 and 05.\n- Write-back applies only to Excel; Markdown/TXT/Word originals remain read-only.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "safety"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 551,
+        "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
+        "updatedAt": "2026-08-09T12:27:00.8975614Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "5h1gqr",
+      "version": 9,
+      "timestamp": "2026-08-09T12:27:26.8970458Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content."
+          },
+          {
+            "completed": true,
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event."
+          },
+          {
+            "completed": true,
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:11:37.101Z",
+        "createdAt": "2026-08-09T10:50:29.504Z",
+        "description": "Implement confirmed Excel column additions, hash/lock checks, backup, atomic replacement, unmanaged-content preservation, restore jobs and watcher suppression for software-generated writes.",
+        "fulfills": [
+          "AC-15",
+          "AC-16"
+        ],
+        "id": "5h1gqr",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend apps/server/app/workbook.py and the write-job boundary to support confirmed managed column additions, Profile/schema field values, expected file revision/hash and audit metadata while retaining existing Camera write-back behavior.\n2. Reuse crates/desktop-core safe_replace for backup, stale hash rejection, lock/error handling, temporary validation and atomic replacement; preserve unmanaged sheets, columns and values.\n3. Implement restore as a new write job/ChangeSet referencing an immutable prior file version, and register the resulting version without mutating history.\n4. Add self-write provenance so the watcher recognizes software-generated hashes and does not enqueue a duplicate import.\n5. Expand round-trip/stale/locked/restore tests in apps/server/tests/test_workbook.py and desktop-core tests; run pytest, cargo tests, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01, 04 and 05.\n- Write-back applies only to Excel; Markdown/TXT/Word originals remain read-only.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "safety"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 551,
+        "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
+        "updatedAt": "2026-08-09T12:27:26.8970458Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "5h1gqr",
+      "version": 10,
+      "timestamp": "2026-08-09T12:27:55.8810783Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass",
+          "newValue": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Write only after explicit confirmation and expected-hash/lock checks; create backup and preserve unmanaged workbook content.",
+            "completed": true
+          },
+          {
+            "text": "Validate and atomically replace the workbook, registering a new file version and audit event.",
+            "completed": true
+          },
+          {
+            "text": "Restore a prior version through a new write job/ChangeSet and suppress duplicate re-import from self-generated writes.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-09T12:11:37.101Z",
+        "createdAt": "2026-08-09T10:50:29.504Z",
+        "description": "Implement confirmed Excel column additions, hash/lock checks, backup, atomic replacement, unmanaged-content preservation, restore jobs and watcher suppression for software-generated writes.",
+        "fulfills": [
+          "AC-15",
+          "AC-16"
+        ],
+        "id": "5h1gqr",
+        "implementationNotes": "Task created from approved spec; implementation plan and verification will be added before execution.\nFull-wave planning pass: plan saved before implementation and baseline commit.\nStarted Task 06 from the approved plan; preflight confirmed existing workbook writer, Rust safe_replace and manifest version contracts.\nDone: added confirmed Excel write-back with expected SHA-256/lock checks, managed-column additions, backup, same-directory temporary validation, atomic replace path and unmanaged-content preservation. Added immutable server file-version registration, write-job completion with source-hash conflict handling, RESTORE ChangeSet/write jobs targeting prior versions, backup/audit event metadata and self-write hash tracking. Added desktop-core self_write_markers persistence and watcher enqueue suppression; safe_replace uses Windows ReplaceFileW write-through with guarded provider fallback after atomic API failure. Verification: apps/server pytest 17 passed (1 existing Starlette/httpx deprecation warning); cargo test -p desktop-core 9 passed; cargo check -p project-digital-twin-desktop passed; cargo fmt check passed; Knowns validation pending final task transition; git diff --check passed with repository line-ending warnings only. Review: manual diff review completed; delegated reviewer was unavailable before timeout and made no changes. System Decision Impact: candidate @decision/20260809-1911-excel-write-back-uses-confirmed-atomic-jobs-with-immutable-versions-and-self-write-provenance (added) — establishes confirmed safe write-back, immutable version, restore and self-write provenance boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.\n\nSpec Decision Compliance: D52=pass\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend apps/server/app/workbook.py and the write-job boundary to support confirmed managed column additions, Profile/schema field values, expected file revision/hash and audit metadata while retaining existing Camera write-back behavior.\n2. Reuse crates/desktop-core safe_replace for backup, stale hash rejection, lock/error handling, temporary validation and atomic replacement; preserve unmanaged sheets, columns and values.\n3. Implement restore as a new write job/ChangeSet referencing an immutable prior file version, and register the resulting version without mutating history.\n4. Add self-write provenance so the watcher recognizes software-generated hashes and does not enqueue a duplicate import.\n5. Expand round-trip/stale/locked/restore tests in apps/server/tests/test_workbook.py and desktop-core tests; run pytest, cargo tests, Knowns validation and git diff --check.\n\n## Dependencies and scope\n\n- Depends on tasks 01, 04 and 05.\n- Write-back applies only to Excel; Markdown/TXT/Word originals remain read-only.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.",
+        "labels": [
+          "from-spec",
+          "spec:local-file-ingestion-and-synchronization",
+          "spec-date:2026-08-09",
+          "excel",
+          "write-back",
+          "safety"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-09/local-file-ingestion-and-synchronization",
+        "status": "done",
+        "timeSpent": 551,
+        "title": "[local-file-ingestion-06] Implement Excel write-back, restore and self-write detection",
+        "updatedAt": "2026-08-09T12:27:55.8810783Z"
       }
     }
   ]

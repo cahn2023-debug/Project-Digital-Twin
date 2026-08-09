@@ -1,7 +1,7 @@
 ---
 id: epi5h5
 title: "[local-file-ingestion-03] Implement schema mapping, transformations, identity and validation"
-status: todo
+status: done
 priority: high
 labels:
   - from-spec
@@ -10,8 +10,9 @@ labels:
   - mapping
   - schema
 createdAt: '2026-08-09T10:50:29.427Z'
-updatedAt: '2026-08-09T11:25:13.095Z'
-timeSpent: 0
+updatedAt: '2026-08-09T12:27:49.619Z'
+completedAt: '2026-08-09T11:46:31.616Z'
+timeSpent: 10
 spec: specs/2026-08-09/local-file-ingestion-and-synchronization
 fulfills:
   - AC-6
@@ -30,9 +31,9 @@ Implement object/field mapping, schema field UUIDs, inferred custom fields, basi
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Map standard/custom fields and object types with stable schema field UUIDs and inferred custom field types.
-- [ ] #2 Run preview transformations and reusable Profile transformation rules deterministically.
-- [ ] #3 Generate row UUIDs, show cross-file identity candidates and report row/field validation results without discarding Raw.
+- [x] #1 Map standard/custom fields and object types with stable schema field UUIDs and inferred custom field types.
+- [x] #2 Run preview transformations and reusable Profile transformation rules deterministically.
+- [x] #3 Generate row UUIDs, show cross-file identity candidates and report row/field validation results without discarding Raw.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -58,5 +59,12 @@ Implement object/field mapping, schema field UUIDs, inferred custom fields, basi
 <!-- SECTION:NOTES:BEGIN -->
 Task created from approved spec; implementation plan and verification will be added before execution.
 Full-wave planning pass: plan saved before implementation and baseline commit.
+Done: added typed schema/mapping contracts, deterministic transforms, inferred custom field types, per-field validation, Raw/unmapped preservation and ranked identity candidates requiring confirmation. Verification: apps/server .venv pytest 13 passed (1 existing httpx/Starlette deprecation warning); corepack pnpm domain typecheck passed; domain test 1 passed; Knowns validation passed; git diff check clean aside line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1846-schema-fields-and-mapping-transforms-are-explicit-and-reviewable (added) — establishes explicit typed mapping and identity review boundaries. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.
+
+Spec Decision Compliance: D52=pass
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass
 <!-- SECTION:NOTES:END -->
 

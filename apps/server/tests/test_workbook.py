@@ -4,7 +4,12 @@ import pytest
 from openpyxl import Workbook, load_workbook
 
 from app.importer import parse_camera_workbook
-from app.workbook import FileConflictError, file_sha256, write_camera_workbook
+from app.workbook import (
+    FileConflictError,
+    WriteConfirmationError,
+    file_sha256,
+    write_camera_workbook,
+)
 
 
 def test_managed_workbook_round_trip_preserves_unmanaged_sheet_and_column(tmp_path) -> None:
@@ -23,6 +28,7 @@ def test_managed_workbook_round_trip_preserves_unmanaged_sheet_and_column(tmp_pa
         path,
         expected_sha256=original_hash,
         updates={"CAM-001": {"name": "Main Updated", "status": "AS_BUILT"}},
+        confirmed=True,
     )
 
     cameras, issues = parse_camera_workbook(path, file_revision=2)
@@ -46,6 +52,38 @@ def test_managed_workbook_rejects_stale_hash_without_mutation(tmp_path) -> None:
     original_bytes = path.read_bytes()
 
     with pytest.raises(FileConflictError):
-        write_camera_workbook(path, expected_sha256=sha256(b"stale").hexdigest(), updates={"CAM-001": {"name": "Changed"}})
+        write_camera_workbook(
+            path,
+            expected_sha256=sha256(b"stale").hexdigest(),
+            updates={"CAM-001": {"name": "Changed"}},
+            confirmed=True,
+        )
 
     assert path.read_bytes() == original_bytes
+
+
+def test_workbook_write_requires_confirmation_and_adds_confirmed_managed_column(tmp_path) -> None:
+    path = tmp_path / "camera.xlsx"
+    workbook = Workbook()
+    workbook.active.title = "CAMERA"
+    workbook.active.append(["CameraCode", "Name"])
+    workbook.active.append(["CAM-001", "Main"])
+    workbook.save(path)
+    original_hash = file_sha256(path)
+
+    with pytest.raises(WriteConfirmationError):
+        write_camera_workbook(
+            path,
+            expected_sha256=original_hash,
+            updates={"CAM-001": {"status": "AS_BUILT"}},
+        )
+
+    write_camera_workbook(
+        path,
+        expected_sha256=original_hash,
+        updates={"CAM-001": {"status": "AS_BUILT"}},
+        confirmed=True,
+    )
+    rewritten = load_workbook(path, data_only=False)
+    assert rewritten["CAMERA"]["C1"].value == "Status"
+    assert rewritten["CAMERA"]["C2"].value == "AS_BUILT"

@@ -1,7 +1,7 @@
 ---
 id: qzkm2k
 title: "[local-file-ingestion-01] Establish local file registry, versions, Raw and source locators"
-status: in-progress
+status: done
 priority: high
 labels:
   - from-spec
@@ -10,8 +10,9 @@ labels:
   - foundation
   - provenance
 createdAt: '2026-08-09T10:50:29.361Z'
-updatedAt: '2026-08-09T11:25:41.094Z'
-timeSpent: 2031
+updatedAt: '2026-08-09T12:27:45.464Z'
+completedAt: '2026-08-09T11:37:22.994Z'
+timeSpent: 2042
 assignee: '@me'
 spec: specs/2026-08-09/local-file-ingestion-and-synchronization
 fulfills:
@@ -29,9 +30,9 @@ Implement logical file registration, physical locations, immutable file versions
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions.
-- [ ] #2 Persist Raw and source locators for mapped, unmapped and invalid source values.
-- [ ] #3 After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification.
+- [x] #1 Register logical file identity separately from physical paths and store current hash, size, metadata and immutable revisions.
+- [x] #2 Persist Raw and source locators for mapped, unmapped and invalid source values.
+- [x] #3 After server acknowledgement, local cleanup keeps only the latest local file version while leaving the server-history contract available for integrated verification.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -61,5 +62,12 @@ Task created from approved spec; implementation plan and verification will be ad
 Planning started from approved spec; existing baseline is desktop-core ManifestDb + manifest.sql plus server source-file/version migration tables.
 Plan check refinement: AC-21 verification remains owned by local-file-ingestion-08; this task owns local cleanup behavior.
 Implementation plan saved after AC ownership and dependency check.
+Done: added FileVersion/RawRecord domain contracts, local file_versions/raw_records schemas, ManifestDb registration/dedup/latest/raw/cleanup APIs, and restart/moved-path/Raw persistence tests. Verification: cargo fmt --all; cargo test -p desktop-core (5 passed); corepack pnpm --filter @project/domain typecheck (passed); corepack pnpm --filter @project/domain test (1 passed); Knowns validation passed; git diff --check passed with only line-ending warnings. Review: PASS, no P1/P2/P3 findings. System Decision Impact: candidate @decision/20260809-1837-local-manifest-stores-immutable-file-versions-and-raw-records (added) — establishes the local file-version and Raw provenance storage contract. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass.
+
+Spec Decision Compliance: D52=pass
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass, D32=pass, D33=pass, D34=pass, D35=pass, D36=pass, D37=pass, D38=pass, D39=pass, D40=pass, D41=pass, D42=pass, D43=pass, D44=pass, D45=pass, D46=pass, D47=pass, D48=pass, D49=pass, D50=pass, D51=pass, D52=pass
 <!-- SECTION:NOTES:END -->
 
