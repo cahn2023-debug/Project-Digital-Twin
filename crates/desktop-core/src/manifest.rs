@@ -1,5 +1,6 @@
 use rusqlite::{params, Connection, OptionalExtension, Result as SqlResult};
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 use std::path::Path;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -43,6 +44,28 @@ pub struct DiscoveredFile {
 pub struct ScanFailure {
     pub path: String,
     pub error: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct SourceRegistration {
+    pub source_id: String,
+    pub project_id: String,
+    pub directory: String,
+    pub status: String,
+    pub watcher_enabled: bool,
+    pub debounce_seconds: i64,
+    pub registered_at: String,
+    pub updated_at: String,
+    pub last_scan_at: Option<String>,
+    pub last_error: Option<String>,
+}
+
+pub fn source_id_for_directory(project_id: &str, directory: &str) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(project_id.as_bytes());
+    hasher.update([0]);
+    hasher.update(directory.as_bytes());
+    format!("source-{:x}", hasher.finalize())
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -92,6 +115,115 @@ impl ManifestDb {
             params![file_id, logical_role, path, last_seen_at],
         )?;
         Ok(())
+    }
+
+    pub fn register_source(
+        &self,
+        project_id: &str,
+        directory: &str,
+        debounce_seconds: i64,
+        registered_at: &str,
+    ) -> SqlResult<SourceRegistration> {
+        let source_id = source_id_for_directory(project_id, directory);
+        self.connection.execute(
+            "INSERT INTO source_registrations(
+               source_id, project_id, directory, status, watcher_enabled,
+               debounce_seconds, registered_at, updated_at
+             ) VALUES (?1, ?2, ?3, 'REGISTERED', 0, ?4, ?5, ?5)
+             ON CONFLICT(project_id, directory) DO UPDATE SET
+               status='REGISTERED', debounce_seconds=excluded.debounce_seconds,
+               updated_at=excluded.updated_at, last_error=NULL",
+            params![
+                source_id,
+                project_id,
+                directory,
+                debounce_seconds.max(1),
+                registered_at
+            ],
+        )?;
+        self.source_registration(&source_id)?
+            .ok_or(rusqlite::Error::QueryReturnedNoRows)
+    }
+
+    pub fn source_registration(&self, source_id: &str) -> SqlResult<Option<SourceRegistration>> {
+        self.connection
+            .query_row(
+                "SELECT source_id, project_id, directory, status, watcher_enabled,
+                        debounce_seconds, registered_at, updated_at, last_scan_at, last_error
+                 FROM source_registrations WHERE source_id = ?1",
+                params![source_id],
+                source_registration_from_row,
+            )
+            .optional()
+    }
+
+    pub fn list_sources(&self, project_id: &str) -> SqlResult<Vec<SourceRegistration>> {
+        let mut statement = self.connection.prepare(
+            "SELECT source_id, project_id, directory, status, watcher_enabled,
+                    debounce_seconds, registered_at, updated_at, last_scan_at, last_error
+             FROM source_registrations WHERE project_id = ?1 ORDER BY directory",
+        )?;
+        let rows = statement.query_map(params![project_id], source_registration_from_row)?;
+        rows.collect()
+    }
+
+    pub fn set_source_watcher_enabled(
+        &self,
+        source_id: &str,
+        enabled: bool,
+        updated_at: &str,
+    ) -> SqlResult<bool> {
+        Ok(self.connection.execute(
+            "UPDATE source_registrations
+             SET watcher_enabled = ?2, updated_at = ?3
+             WHERE source_id = ?1",
+            params![source_id, i64::from(enabled), updated_at],
+        )? == 1)
+    }
+
+    pub fn record_source_scan(
+        &self,
+        source_id: &str,
+        scan_at: &str,
+        error: Option<&str>,
+    ) -> SqlResult<bool> {
+        let status = if error.is_some() {
+            "FAILED"
+        } else {
+            "REGISTERED"
+        };
+        Ok(self.connection.execute(
+            "UPDATE source_registrations
+             SET status = ?2, last_scan_at = ?3, last_error = ?4, updated_at = ?3
+             WHERE source_id = ?1",
+            params![source_id, status, scan_at, error],
+        )? == 1)
+    }
+
+    pub fn enqueue_file_scan_for_source(
+        &self,
+        source_id: &str,
+        file: &DiscoveredFile,
+        created_at: &str,
+    ) -> SqlResult<bool> {
+        if self.is_self_write(&file.path, &file.sha256)? {
+            return Ok(false);
+        }
+        let idempotency_key = format!("FILE_SCAN:{}:{}:{}", source_id, file.sha256, file.path);
+        let payload = serde_json::json!({
+            "source_id": source_id,
+            "path": file.path,
+            "sha256": file.sha256,
+            "size": file.size,
+            "modified_at": file.modified_at,
+        })
+        .to_string();
+        let inserted = self.connection.execute(
+            "INSERT OR IGNORE INTO pending_jobs(job_id, job_type, payload, status, idempotency_key, created_at)
+             VALUES (?1, 'FILE_SCAN', ?2, 'PENDING', ?1, ?3)",
+            params![idempotency_key, payload, created_at],
+        )?;
+        Ok(inserted == 1)
     }
 
     pub fn set_sync_cursor(&self, project_id: &str, cursor: i64) -> SqlResult<()> {
@@ -476,6 +608,15 @@ impl ManifestDb {
     fn initialize(&self) -> SqlResult<()> {
         self.connection.execute_batch(
             "PRAGMA foreign_keys = ON;
+             CREATE TABLE IF NOT EXISTS source_registrations (
+               source_id TEXT PRIMARY KEY, project_id TEXT NOT NULL,
+               directory TEXT NOT NULL, status TEXT NOT NULL,
+               watcher_enabled INTEGER NOT NULL DEFAULT 0,
+               debounce_seconds INTEGER NOT NULL DEFAULT 5,
+               registered_at TEXT NOT NULL, updated_at TEXT NOT NULL,
+               last_scan_at TEXT, last_error TEXT,
+               UNIQUE(project_id, directory)
+             );
              CREATE TABLE IF NOT EXISTS local_files (
                file_id TEXT PRIMARY KEY, logical_role TEXT NOT NULL,
                absolute_path TEXT NOT NULL, last_seen_at TEXT NOT NULL
@@ -514,4 +655,19 @@ impl ManifestDb {
              );",
         )
     }
+}
+
+fn source_registration_from_row(row: &rusqlite::Row<'_>) -> rusqlite::Result<SourceRegistration> {
+    Ok(SourceRegistration {
+        source_id: row.get(0)?,
+        project_id: row.get(1)?,
+        directory: row.get(2)?,
+        status: row.get(3)?,
+        watcher_enabled: row.get::<_, i64>(4)? != 0,
+        debounce_seconds: row.get(5)?,
+        registered_at: row.get(6)?,
+        updated_at: row.get(7)?,
+        last_scan_at: row.get(8)?,
+        last_error: row.get(9)?,
+    })
 }

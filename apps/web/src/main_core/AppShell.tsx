@@ -84,7 +84,7 @@ export default function App() {
   const renderView = () => {
     if (activeModule === "datacenter") {
       if (activeSideItem === "audit") return <AuditView onAction={showToast} />;
-      return <DatacenterView onAction={showToast} onSearchChange={setSearchQuery} searchQuery={searchQuery} />;
+      return <DatacenterView onAction={showToast} onSearchChange={setSearchQuery} projectId={currentProject?.id ?? null} searchQuery={searchQuery} />;
     }
     if (activeModule === "design") return <DesignView onAction={showToast} />;
     if (activeModule === "operate") return <OperateView onAction={showToast} />;

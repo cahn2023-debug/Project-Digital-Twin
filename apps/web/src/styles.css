@@ -611,6 +611,19 @@ tbody tr:hover { background: var(--surface-2); }
 .file-name { overflow: hidden; font-size: 11px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
 .meta-line { color: var(--muted); font-size: 9px; }
 
+.source-management-panel { display: grid; gap: 8px; }
+.source-management-list { display: grid; gap: 4px; }
+.source-management-row { display: flex; align-items: flex-start; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.source-management-row:last-child { border-bottom: 0; }
+.source-management-row .file-icon { width: 30px; height: 30px; }
+.source-management-row .file-name { font-size: 10px; }
+.source-management-row .meta-line { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.source-management-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+.source-management-actions { display: flex; gap: 4px; margin-left: auto; }
+.source-action { min-height: 26px; padding: 4px 6px; font-size: 9px; }
+.source-management-empty { padding: 12px 0; color: var(--muted); font-size: 10px; }
+.source-management-error { margin-top: 4px; color: var(--danger); font-size: 10px; }
+
 .alert-list { display: grid; gap: 13px; }
 .alert-item { display: flex; align-items: flex-start; gap: 9px; }
 .alert-icon {

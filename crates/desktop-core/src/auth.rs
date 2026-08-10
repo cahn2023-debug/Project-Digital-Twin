@@ -98,8 +98,9 @@ mod tests {
         assert_eq!(res_bad, AuthResult::InvalidCredentials);
 
         // Test expired token
-        let res_exp = validate_offline_login(&db, "u-100", "secret_pass_123", "2031-01-01T00:00:00Z")
-            .expect("validate");
+        let res_exp =
+            validate_offline_login(&db, "u-100", "secret_pass_123", "2031-01-01T00:00:00Z")
+                .expect("validate");
         assert_eq!(res_exp, AuthResult::TokenExpired);
     }
 }

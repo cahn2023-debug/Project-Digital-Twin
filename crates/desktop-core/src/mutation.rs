@@ -61,8 +61,15 @@ mod tests {
 
         let e1 = enqueue_mutation(&db, "PROJECT", "p-1", "CREATE", r#"{"name":"P1"}"#, 1000)
             .expect("enqueue 1");
-        let e2 = enqueue_mutation(&db, "PROJECT", "p-1", "UPDATE", r#"{"name":"P1-edited"}"#, 1001)
-            .expect("enqueue 2");
+        let e2 = enqueue_mutation(
+            &db,
+            "PROJECT",
+            "p-1",
+            "UPDATE",
+            r#"{"name":"P1-edited"}"#,
+            1001,
+        )
+        .expect("enqueue 2");
 
         assert_eq!(pending_mutations_count(&db).expect("count"), 2);
 

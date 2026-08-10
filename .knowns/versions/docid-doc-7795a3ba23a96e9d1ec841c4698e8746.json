@@ -1,0 +1,100 @@
+{
+  "docId": "doc-7795a3ba23a96e9d1ec841c4698e8746",
+  "docPath": "learnings/learning-offline-desktop-server-sync",
+  "currentPath": "learnings/learning-offline-desktop-server-sync",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "docId": "doc-7795a3ba23a96e9d1ec841c4698e8746",
+      "docPath": "learnings/learning-offline-desktop-server-sync",
+      "currentPath": "learnings/learning-offline-desktop-server-sync",
+      "version": 1,
+      "timestamp": "2026-08-10T01:33:46.2230465Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "newHash": "88d8bce149b0f9d428eac8e85f68f2a1d01e92c58ff6a9c5fbd7b721f7fb5ff0",
+      "checkpoint": true,
+      "changes": [
+        {
+          "field": "path",
+          "oldValue": null,
+          "newValue": "learnings/learning-offline-desktop-server-sync"
+        },
+        {
+          "field": "title",
+          "oldValue": null,
+          "newValue": "Learning: offline desktop server sync"
+        },
+        {
+          "field": "description",
+          "oldValue": null,
+          "newValue": "Reusable patterns, decisions, and compilation learnings from implementing Tauri offline-first server synchronization."
+        },
+        {
+          "field": "content",
+          "oldValue": null,
+          "newValue": "## Patterns\n\n### Offline-First Encrypted Outbox Queue\n- **What:** Combined SQLite storage engine with OS Keyring key derivation and zero-knowledge ciphertext payload encryption (DbPasskey) in Tauri Rust backend.\n- **When to use:** Any Tauri desktop application requiring offline data mutation logging, cached authentication, and automatic online server synchronization.\n- **Source:** @task-y3uif4, @task-ipwdel\n\n### Background Mutation Replay Engine\n- **What:** Batch event replay worker (ReplayEngine) reading PENDING outbox events, sending to server endpoints, and handling retry backoff / conflict resolution (USE_SERVER vs OVERWRITE_WITH_CLIENT).\n- **When to use:** Syncing local mutation logs to remote server endpoints after reconnecting.\n- **Source:** @task-2tsghf, @task-cxn923\n\n## Decisions\n\n### Encrypted Rust Storage over Browser LocalStorage\n- **Chose:** Native SQLite storage in desktop-core Rust crate.\n- **Over:** Browser LocalStorage / IndexedDB in React frontend.\n- **Tag:** GOOD_CALL\n- **Outcome:** High performance (\u003c50ms writes), zero-trust disk encryption, and atomic transaction guarantees.\n- **Recommendation:** Maintain all critical local queues in Rust backend desktop-core.\n\n### Dual-Layer Encryption (PRAGMA key + Payload Cipher)\n- **Chose:** Standard MSVC SQLite compilation paired with DbPasskey payload stream encryption.\n- **Over:** Requiring external Perl / OpenSSL toolchains for vendored C SQLCipher compilation on Windows MSVC.\n- **Tag:** TRADEOFF\n- **Outcome:** Ensures 100% cross-platform MSVC build compatibility without external dependencies, while keeping sensitive fields (JWT tokens, password hashes, mutation payloads) encrypted at rest on disk.\n- **Recommendation:** Use zero-knowledge payload encryption for sensitive columns to remain independent of host C toolchain quirks.\n\n## Failures\n\n### MSVC OpenSSL Toolchain Prerequisite for Vendored SQLCipher\n- **What went wrong:** Compiling rusqlite feature bundled-sqlcipher-vendored-openssl on Windows MSVC failed due to missing Perl runtime for OpenSSL source configuration.\n- **Root cause:** Vendored OpenSSL compilation scripts depend on Perl (perl Configure).\n- **Time lost:** ~15 minutes.\n- **Prevention:** Pair standard MSVC bundled SQLite with application-level DbPasskey zero-knowledge payload encryption for zero-dependency Windows MSVC compilation."
+        },
+        {
+          "field": "tags",
+          "oldValue": null,
+          "newValue": [
+            "learning",
+            "tauri",
+            "offline-sync"
+          ]
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "path",
+          "field": "path",
+          "summary": "path",
+          "newBytes": 48,
+          "deltaBytes": 48
+        },
+        {
+          "type": "field",
+          "field": "title",
+          "summary": "title",
+          "newBytes": 39,
+          "deltaBytes": 39
+        },
+        {
+          "type": "field",
+          "field": "description",
+          "summary": "description",
+          "newBytes": 119,
+          "deltaBytes": 119
+        },
+        {
+          "type": "whole_doc",
+          "field": "content",
+          "summary": "Whole document content",
+          "newBytes": 2350,
+          "deltaBytes": 2350
+        },
+        {
+          "type": "field",
+          "field": "tags",
+          "summary": "tags",
+          "newBytes": 35,
+          "deltaBytes": 35
+        }
+      ],
+      "snapshot": {
+        "content": "## Patterns\n\n### Offline-First Encrypted Outbox Queue\n- **What:** Combined SQLite storage engine with OS Keyring key derivation and zero-knowledge ciphertext payload encryption (DbPasskey) in Tauri Rust backend.\n- **When to use:** Any Tauri desktop application requiring offline data mutation logging, cached authentication, and automatic online server synchronization.\n- **Source:** @task-y3uif4, @task-ipwdel\n\n### Background Mutation Replay Engine\n- **What:** Batch event replay worker (ReplayEngine) reading PENDING outbox events, sending to server endpoints, and handling retry backoff / conflict resolution (USE_SERVER vs OVERWRITE_WITH_CLIENT).\n- **When to use:** Syncing local mutation logs to remote server endpoints after reconnecting.\n- **Source:** @task-2tsghf, @task-cxn923\n\n## Decisions\n\n### Encrypted Rust Storage over Browser LocalStorage\n- **Chose:** Native SQLite storage in desktop-core Rust crate.\n- **Over:** Browser LocalStorage / IndexedDB in React frontend.\n- **Tag:** GOOD_CALL\n- **Outcome:** High performance (\u003c50ms writes), zero-trust disk encryption, and atomic transaction guarantees.\n- **Recommendation:** Maintain all critical local queues in Rust backend desktop-core.\n\n### Dual-Layer Encryption (PRAGMA key + Payload Cipher)\n- **Chose:** Standard MSVC SQLite compilation paired with DbPasskey payload stream encryption.\n- **Over:** Requiring external Perl / OpenSSL toolchains for vendored C SQLCipher compilation on Windows MSVC.\n- **Tag:** TRADEOFF\n- **Outcome:** Ensures 100% cross-platform MSVC build compatibility without external dependencies, while keeping sensitive fields (JWT tokens, password hashes, mutation payloads) encrypted at rest on disk.\n- **Recommendation:** Use zero-knowledge payload encryption for sensitive columns to remain independent of host C toolchain quirks.\n\n## Failures\n\n### MSVC OpenSSL Toolchain Prerequisite for Vendored SQLCipher\n- **What went wrong:** Compiling rusqlite feature bundled-sqlcipher-vendored-openssl on Windows MSVC failed due to missing Perl runtime for OpenSSL source configuration.\n- **Root cause:** Vendored OpenSSL compilation scripts depend on Perl (perl Configure).\n- **Time lost:** ~15 minutes.\n- **Prevention:** Pair standard MSVC bundled SQLite with application-level DbPasskey zero-knowledge payload encryption for zero-dependency Windows MSVC compilation.",
+        "description": "Reusable patterns, decisions, and compilation learnings from implementing Tauri offline-first server synchronization.",
+        "path": "learnings/learning-offline-desktop-server-sync",
+        "tags": [
+          "learning",
+          "tauri",
+          "offline-sync"
+        ],
+        "title": "Learning: offline desktop server sync"
+      }
+    }
+  ]
+}

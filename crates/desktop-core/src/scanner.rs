@@ -61,6 +61,13 @@ pub fn scan_directory_best_effort(
 fn collect_files(root: &Path, extensions: &[&str], output: &mut Vec<PathBuf>) -> io::Result<()> {
     for entry in fs::read_dir(root)? {
         let path = entry?.path();
+        let file_name = path
+            .file_name()
+            .and_then(|value| value.to_str())
+            .unwrap_or("");
+        if is_hidden_or_temporary_name(file_name) || is_hidden_path(&path) {
+            continue;
+        }
         if path.is_dir() {
             collect_files(&path, extensions, output)?;
             continue;
@@ -77,6 +84,30 @@ fn collect_files(root: &Path, extensions: &[&str], output: &mut Vec<PathBuf>) ->
         }
     }
     Ok(())
+}
+
+fn is_hidden_or_temporary_name(name: &str) -> bool {
+    let lower_name = name.to_ascii_lowercase();
+    lower_name.starts_with('.')
+        || lower_name.starts_with("~$")
+        || lower_name.ends_with(".tmp")
+        || lower_name.ends_with(".temp")
+        || lower_name.ends_with(".part")
+        || lower_name.ends_with(".crdownload")
+}
+
+#[cfg(windows)]
+fn is_hidden_path(path: &Path) -> bool {
+    use std::os::windows::fs::MetadataExt;
+
+    fs::metadata(path)
+        .map(|metadata| metadata.file_attributes() & 0x2 != 0)
+        .unwrap_or(false)
+}
+
+#[cfg(not(windows))]
+fn is_hidden_path(_path: &Path) -> bool {
+    false
 }
 
 pub(crate) fn file_version_from_row(row: &Row<'_>) -> rusqlite::Result<FileVersion> {

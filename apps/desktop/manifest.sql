@@ -1,5 +1,19 @@
 PRAGMA foreign_keys = ON;
 
+CREATE TABLE IF NOT EXISTS source_registrations (
+    source_id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    directory TEXT NOT NULL,
+    status TEXT NOT NULL,
+    watcher_enabled INTEGER NOT NULL DEFAULT 0,
+    debounce_seconds INTEGER NOT NULL DEFAULT 5,
+    registered_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    last_scan_at TEXT,
+    last_error TEXT,
+    UNIQUE(project_id, directory)
+);
+
 CREATE TABLE IF NOT EXISTS local_files (
     file_id TEXT PRIMARY KEY,
     logical_role TEXT NOT NULL,

@@ -22,7 +22,13 @@ pub fn cache_user_session(
     if let Some(ref db) = *guard {
         let now_iso = "2026-08-10T08:00:00Z";
         cache_session(
-            db, &user_id, &username, &password, &jwt_token, &expires_at, now_iso,
+            db,
+            &user_id,
+            &username,
+            &password,
+            &jwt_token,
+            &expires_at,
+            now_iso,
         )
         .map_err(|e| format!("Failed to cache session: {:?}", e))?;
 

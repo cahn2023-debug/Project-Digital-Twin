@@ -1,17 +1,21 @@
 import { useMemo } from "react";
-import { cameraRows, sourceRows } from "./data";
+import { cameraRows } from "./data";
+import { SourceManagementPanel, useSourceManagement } from "./SourceManagement";
 import { Button, Icon, KpiCard, PageHeader, Panel, StatusBadge, AlertList } from "../../shared/ui";
 
 export function DatacenterView({
   onAction,
   onSearchChange,
+  projectId,
   searchQuery,
 }: {
   onAction: (message: string) => void;
   onSearchChange: (value: string) => void;
+  projectId: string | null;
   searchQuery: string;
 }) {
   const cameras = cameraRows;
+  const sourceManagement = useSourceManagement(projectId, onAction);
   const filteredCameras = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
     if (!query) return cameras;
@@ -31,7 +35,7 @@ export function DatacenterView({
               <Icon name="refresh" size={14} />
               Quét thay đổi
             </Button>
-            <Button primary onClick={() => onAction("Mở hộp thoại đăng ký nguồn dữ liệu")}>
+            <Button primary onClick={() => void sourceManagement.addSource()}>
               <Icon name="plus" size={14} />
               Thêm nguồn dữ liệu
             </Button>
@@ -105,25 +109,7 @@ export function DatacenterView({
             </table>
           </div>
         </Panel>
-        <Panel
-          className="col-4"
-          title="Nguồn dữ liệu gần đây"
-          subtitle="File Registry"
-          action={<button className="icon-btn" type="button" aria-label="Mở File Registry" onClick={() => onAction("Đang mở File Registry")}><Icon name="file" size={15} /></button>}
-        >
-          <div className="panel-body">
-            {sourceRows.map((source) => (
-              <div className="source-row" key={source.name}>
-                <div className={"file-icon " + source.type.toLowerCase()}>{source.type}</div>
-                <div className="file-meta">
-                  <div className="file-name">{source.name}</div>
-                  <div className="meta-line">{source.meta}</div>
-                </div>
-                <StatusBadge tone={source.tone}>{source.state}</StatusBadge>
-              </div>
-            ))}
-          </div>
-        </Panel>
+        <SourceManagementPanel model={sourceManagement} />
       </div>
       <div className="grid-12">
         <Panel

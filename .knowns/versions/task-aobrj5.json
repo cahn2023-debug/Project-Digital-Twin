@@ -1,0 +1,115 @@
+{
+  "taskId": "aobrj5",
+  "currentVersion": 2,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "aobrj5",
+      "version": 1,
+      "timestamp": "2026-08-10T01:50:21.7936737Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T01:50:21.7915597Z",
+        "description": "Expose unknown/mismatched structures through preview and mapping, allow Profile confirmation, and surface per-file/row/field validation results while continuing independent valid work. Connect preview/status data to the source UI and preserve Raw for unmapped, invalid and skipped values.",
+        "fulfills": [
+          "AC-5",
+          "AC-8"
+        ],
+        "id": "aobrj5",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "preview",
+          "mapping",
+          "validation"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow",
+        "updatedAt": "2026-08-10T01:50:21.7915597Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "aobrj5",
+      "version": 2,
+      "timestamp": "2026-08-10T01:50:41.7560378Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version.",
+              "completed": false
+            },
+            {
+              "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw.",
+              "completed": false
+            },
+            {
+              "text": "Source UI renders per-file status and error details without blocking independent files.",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version.",
+            "completed": false
+          },
+          {
+            "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw.",
+            "completed": false
+          },
+          {
+            "text": "Source UI renders per-file status and error details without blocking independent files.",
+            "completed": false
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T01:50:21.791Z",
+        "description": "Expose unknown/mismatched structures through preview and mapping, allow Profile confirmation, and surface per-file/row/field validation results while continuing independent valid work. Connect preview/status data to the source UI and preserve Raw for unmapped, invalid and skipped values.",
+        "fulfills": [
+          "AC-5",
+          "AC-8"
+        ],
+        "id": "aobrj5",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "preview",
+          "mapping",
+          "validation"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow",
+        "updatedAt": "2026-08-10T01:50:41.7560378Z"
+      }
+    }
+  ]
+}

@@ -1,3 +1,18 @@
 {
-  "active": []
+  "active": [
+    {
+      "taskId": "p0zoqt",
+      "taskTitle": "[desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI",
+      "startedAt": "2026-08-10T02:06:41.775Z",
+      "pausedAt": null,
+      "totalPausedMs": 0
+    },
+    {
+      "taskId": "1xqatp",
+      "taskTitle": "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint",
+      "startedAt": "2026-08-10T02:07:30.638Z",
+      "pausedAt": null,
+      "totalPausedMs": 0
+    }
+  ]
 }

@@ -75,11 +75,8 @@ impl EncryptedDb {
         let pragma_sql = format!("PRAGMA key = '{}';", passkey.as_pragma_key());
         conn.execute_batch(&pragma_sql)?;
 
-        let test_query: SqlResult<i64> = conn.query_row(
-            "SELECT count(*) FROM sqlite_master;",
-            [],
-            |row| row.get(0),
-        );
+        let test_query: SqlResult<i64> =
+            conn.query_row("SELECT count(*) FROM sqlite_master;", [], |row| row.get(0));
 
         if test_query.is_err() {
             return Err(DbError::EncryptionVerificationFailed);
@@ -137,12 +134,10 @@ impl EncryptedDb {
         );
 
         match existing {
-            Ok(cipher_sentinel) => {
-                match self.passkey.decrypt(&cipher_sentinel) {
-                    Ok(plain) if plain == "SENTINEL_OK" => Ok(()),
-                    _ => Err(DbError::EncryptionVerificationFailed),
-                }
-            }
+            Ok(cipher_sentinel) => match self.passkey.decrypt(&cipher_sentinel) {
+                Ok(plain) if plain == "SENTINEL_OK" => Ok(()),
+                _ => Err(DbError::EncryptionVerificationFailed),
+            },
             Err(_) => {
                 let cipher_sentinel = self.passkey.encrypt("SENTINEL_OK");
                 self.conn.execute(

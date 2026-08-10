@@ -1,0 +1,434 @@
+{
+  "taskId": "i3beyy",
+  "currentVersion": 7,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "i3beyy",
+      "version": 1,
+      "timestamp": "2026-08-10T01:50:21.6813548Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T01:50:21.679956Z",
+        "description": "Close the desktop-core/Tauri gap for registering multiple Project source directories, persisting source state locally, scanning recursively, and running independent manual/watcher scans. Reuse existing file identity/version, hash, debounce, queue and self-write primitives; do not reimplement prior ingestion contracts.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-11"
+        ],
+        "id": "i3beyy",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "desktop-core",
+          "watcher"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence",
+        "updatedAt": "2026-08-10T01:50:21.679956Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "i3beyy",
+      "version": 2,
+      "timestamp": "2026-08-10T01:50:35.8120257Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+            },
+            {
+              "completed": false,
+              "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+            },
+            {
+              "completed": false,
+              "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+          },
+          {
+            "completed": false,
+            "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+          },
+          {
+            "completed": false,
+            "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T01:50:21.679Z",
+        "description": "Close the desktop-core/Tauri gap for registering multiple Project source directories, persisting source state locally, scanning recursively, and running independent manual/watcher scans. Reuse existing file identity/version, hash, debounce, queue and self-write primitives; do not reimplement prior ingestion contracts.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-11"
+        ],
+        "id": "i3beyy",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "desktop-core",
+          "watcher"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence",
+        "updatedAt": "2026-08-10T01:50:35.8120257Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "i3beyy",
+      "version": 3,
+      "timestamp": "2026-08-10T01:50:55.5767116Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+          },
+          {
+            "completed": false,
+            "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+          },
+          {
+            "completed": false,
+            "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.679Z",
+        "description": "Close the desktop-core/Tauri gap for registering multiple Project source directories, persisting source state locally, scanning recursively, and running independent manual/watcher scans. Reuse existing file identity/version, hash, debounce, queue and self-write primitives; do not reimplement prior ingestion contracts.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-11"
+        ],
+        "id": "i3beyy",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "desktop-core",
+          "watcher"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence",
+        "updatedAt": "2026-08-10T01:50:55.5767116Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "i3beyy",
+      "version": 4,
+      "timestamp": "2026-08-10T01:51:44.3610126Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Extend the desktop-core manifest schema and `ManifestDb` with normalized Project source registrations: stable source ID, directory path, active state, watcher/debounce configuration and last scan metadata. Reject duplicate registrations without losing existing file/version/Raw records.\n2. Update the recursive scanner to ignore hidden/temp entries and carry source identity through observations and FILE_SCAN idempotency keys while preserving SHA-256, stable-file debounce, failure recording and self-write suppression.\n3. Replace the single Tauri watcher slot with independently controllable watcher state keyed by source ID; add register/list/scan/start/stop commands and register them in `apps/desktop/src-tauri/src/lib.rs`.\n4. Expose the new source-management invoke wrappers in `apps/desktop/src/features/local-files.ts` and keep current scan/watcher APIs backward-compatible where existing callers depend on them.\n5. Add focused Rust/desktop-core tests for multiple source registrations, duplicate paths, recursive filtering, scan failures, restart persistence and independent watcher lifecycle; run cargo format/check/test, desktop typecheck, Knowns validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: AC-2 → steps 1–2; AC-3 → steps 1–2 and tests; AC-11 → steps 3–5.\n- Scope: bounded desktop-core/Tauri/IPC change; no new dependency, parser rewrite or UI work.\n- Dependency: task 01 is the first runnable wave; tasks 02–05 depend on its source command contract.\n- Risk: watcher concurrency and migration compatibility; covered by keyed state tests, idempotent schema initialization and restart tests.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+          },
+          {
+            "completed": false,
+            "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+          },
+          {
+            "completed": false,
+            "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.679Z",
+        "description": "Close the desktop-core/Tauri gap for registering multiple Project source directories, persisting source state locally, scanning recursively, and running independent manual/watcher scans. Reuse existing file identity/version, hash, debounce, queue and self-write primitives; do not reimplement prior ingestion contracts.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-11"
+        ],
+        "id": "i3beyy",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop-core manifest schema and `ManifestDb` with normalized Project source registrations: stable source ID, directory path, active state, watcher/debounce configuration and last scan metadata. Reject duplicate registrations without losing existing file/version/Raw records.\n2. Update the recursive scanner to ignore hidden/temp entries and carry source identity through observations and FILE_SCAN idempotency keys while preserving SHA-256, stable-file debounce, failure recording and self-write suppression.\n3. Replace the single Tauri watcher slot with independently controllable watcher state keyed by source ID; add register/list/scan/start/stop commands and register them in `apps/desktop/src-tauri/src/lib.rs`.\n4. Expose the new source-management invoke wrappers in `apps/desktop/src/features/local-files.ts` and keep current scan/watcher APIs backward-compatible where existing callers depend on them.\n5. Add focused Rust/desktop-core tests for multiple source registrations, duplicate paths, recursive filtering, scan failures, restart persistence and independent watcher lifecycle; run cargo format/check/test, desktop typecheck, Knowns validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: AC-2 → steps 1–2; AC-3 → steps 1–2 and tests; AC-11 → steps 3–5.\n- Scope: bounded desktop-core/Tauri/IPC change; no new dependency, parser rewrite or UI work.\n- Dependency: task 01 is the first runnable wave; tasks 02–05 depend on its source command contract.\n- Risk: watcher concurrency and migration compatibility; covered by keyed state tests, idempotent schema initialization and restart tests.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "desktop-core",
+          "watcher"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence",
+        "updatedAt": "2026-08-10T01:51:44.3610126Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "i3beyy",
+      "version": 5,
+      "timestamp": "2026-08-10T02:06:13.3250219Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+            },
+            {
+              "completed": false,
+              "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+            },
+            {
+              "completed": false,
+              "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+            },
+            {
+              "completed": true,
+              "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+            },
+            {
+              "completed": true,
+              "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: Added persistent source_registrations with project-scoped stable IDs, normalized directory registration, watcher state and source scan metadata; added source-aware FILE_SCAN JSON payload/idempotency keys. Added recursive hidden/temp filtering, source registration/list/scan/start/stop Tauri commands, keyed independent watcher flags, and TypeScript IPC wrappers while preserving legacy commands.\nVerification: cargo fmt --all; cargo test -p desktop-core = 21 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; corepack pnpm --filter @project/desktop typecheck passed; targeted git diff --check passed with only CRLF normalization warnings.\nReview: PASS, P1=0, P2=0, P3=0. Manual four-perspective review completed after delegated reviewer timed out; no blocking findings.\nSystem Decision Impact: candidate @decision/20260810-0906-desktop-sources-use-stable-registrations-with-independent-watchers (added) — stable project-scoped source registration and independent watcher contract; draft review-gated.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+          },
+          {
+            "completed": true,
+            "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+          },
+          {
+            "completed": true,
+            "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.679Z",
+        "description": "Close the desktop-core/Tauri gap for registering multiple Project source directories, persisting source state locally, scanning recursively, and running independent manual/watcher scans. Reuse existing file identity/version, hash, debounce, queue and self-write primitives; do not reimplement prior ingestion contracts.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-11"
+        ],
+        "id": "i3beyy",
+        "implementationNotes": "Done: Added persistent source_registrations with project-scoped stable IDs, normalized directory registration, watcher state and source scan metadata; added source-aware FILE_SCAN JSON payload/idempotency keys. Added recursive hidden/temp filtering, source registration/list/scan/start/stop Tauri commands, keyed independent watcher flags, and TypeScript IPC wrappers while preserving legacy commands.\nVerification: cargo fmt --all; cargo test -p desktop-core = 21 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; corepack pnpm --filter @project/desktop typecheck passed; targeted git diff --check passed with only CRLF normalization warnings.\nReview: PASS, P1=0, P2=0, P3=0. Manual four-perspective review completed after delegated reviewer timed out; no blocking findings.\nSystem Decision Impact: candidate @decision/20260810-0906-desktop-sources-use-stable-registrations-with-independent-watchers (added) — stable project-scoped source registration and independent watcher contract; draft review-gated.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop-core manifest schema and `ManifestDb` with normalized Project source registrations: stable source ID, directory path, active state, watcher/debounce configuration and last scan metadata. Reject duplicate registrations without losing existing file/version/Raw records.\n2. Update the recursive scanner to ignore hidden/temp entries and carry source identity through observations and FILE_SCAN idempotency keys while preserving SHA-256, stable-file debounce, failure recording and self-write suppression.\n3. Replace the single Tauri watcher slot with independently controllable watcher state keyed by source ID; add register/list/scan/start/stop commands and register them in `apps/desktop/src-tauri/src/lib.rs`.\n4. Expose the new source-management invoke wrappers in `apps/desktop/src/features/local-files.ts` and keep current scan/watcher APIs backward-compatible where existing callers depend on them.\n5. Add focused Rust/desktop-core tests for multiple source registrations, duplicate paths, recursive filtering, scan failures, restart persistence and independent watcher lifecycle; run cargo format/check/test, desktop typecheck, Knowns validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: AC-2 → steps 1–2; AC-3 → steps 1–2 and tests; AC-11 → steps 3–5.\n- Scope: bounded desktop-core/Tauri/IPC change; no new dependency, parser rewrite or UI work.\n- Dependency: task 01 is the first runnable wave; tasks 02–05 depend on its source command contract.\n- Risk: watcher concurrency and migration compatibility; covered by keyed state tests, idempotent schema initialization and restart tests.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "desktop-core",
+          "watcher"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence",
+        "updatedAt": "2026-08-10T02:06:13.3250219Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "i3beyy",
+      "version": 6,
+      "timestamp": "2026-08-10T02:06:22.4552041Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 920
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources."
+          },
+          {
+            "completed": true,
+            "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior."
+          },
+          {
+            "completed": true,
+            "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.679Z",
+        "description": "Close the desktop-core/Tauri gap for registering multiple Project source directories, persisting source state locally, scanning recursively, and running independent manual/watcher scans. Reuse existing file identity/version, hash, debounce, queue and self-write primitives; do not reimplement prior ingestion contracts.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-11"
+        ],
+        "id": "i3beyy",
+        "implementationNotes": "Done: Added persistent source_registrations with project-scoped stable IDs, normalized directory registration, watcher state and source scan metadata; added source-aware FILE_SCAN JSON payload/idempotency keys. Added recursive hidden/temp filtering, source registration/list/scan/start/stop Tauri commands, keyed independent watcher flags, and TypeScript IPC wrappers while preserving legacy commands.\nVerification: cargo fmt --all; cargo test -p desktop-core = 21 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; corepack pnpm --filter @project/desktop typecheck passed; targeted git diff --check passed with only CRLF normalization warnings.\nReview: PASS, P1=0, P2=0, P3=0. Manual four-perspective review completed after delegated reviewer timed out; no blocking findings.\nSystem Decision Impact: candidate @decision/20260810-0906-desktop-sources-use-stable-registrations-with-independent-watchers (added) — stable project-scoped source registration and independent watcher contract; draft review-gated.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop-core manifest schema and `ManifestDb` with normalized Project source registrations: stable source ID, directory path, active state, watcher/debounce configuration and last scan metadata. Reject duplicate registrations without losing existing file/version/Raw records.\n2. Update the recursive scanner to ignore hidden/temp entries and carry source identity through observations and FILE_SCAN idempotency keys while preserving SHA-256, stable-file debounce, failure recording and self-write suppression.\n3. Replace the single Tauri watcher slot with independently controllable watcher state keyed by source ID; add register/list/scan/start/stop commands and register them in `apps/desktop/src-tauri/src/lib.rs`.\n4. Expose the new source-management invoke wrappers in `apps/desktop/src/features/local-files.ts` and keep current scan/watcher APIs backward-compatible where existing callers depend on them.\n5. Add focused Rust/desktop-core tests for multiple source registrations, duplicate paths, recursive filtering, scan failures, restart persistence and independent watcher lifecycle; run cargo format/check/test, desktop typecheck, Knowns validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: AC-2 → steps 1–2; AC-3 → steps 1–2 and tests; AC-11 → steps 3–5.\n- Scope: bounded desktop-core/Tauri/IPC change; no new dependency, parser rewrite or UI work.\n- Dependency: task 01 is the first runnable wave; tasks 02–05 depend on its source command contract.\n- Risk: watcher concurrency and migration compatibility; covered by keyed state tests, idempotent schema initialization and restart tests.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "desktop-core",
+          "watcher"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 920,
+        "title": "[desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence",
+        "updatedAt": "2026-08-10T02:06:22.4552041Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "i3beyy",
+      "version": 7,
+      "timestamp": "2026-08-10T02:06:24.2189089Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T02:06:24.2189089Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Source registration persists normalized directory identity, active state and independent watcher configuration for multiple sources.",
+            "completed": true
+          },
+          {
+            "text": "Manual and watcher scans recurse only supported extensions, skip hidden/temp files, debounce unstable files and preserve existing hash/idempotency/self-write behavior.",
+            "completed": true
+          },
+          {
+            "text": "Rust and desktop-core tests cover multiple sources, duplicate registration, scan failures, restart persistence and independent watcher state.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:06:24.2189089Z",
+        "createdAt": "2026-08-10T01:50:21.679Z",
+        "description": "Close the desktop-core/Tauri gap for registering multiple Project source directories, persisting source state locally, scanning recursively, and running independent manual/watcher scans. Reuse existing file identity/version, hash, debounce, queue and self-write primitives; do not reimplement prior ingestion contracts.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-11"
+        ],
+        "id": "i3beyy",
+        "implementationNotes": "Done: Added persistent source_registrations with project-scoped stable IDs, normalized directory registration, watcher state and source scan metadata; added source-aware FILE_SCAN JSON payload/idempotency keys. Added recursive hidden/temp filtering, source registration/list/scan/start/stop Tauri commands, keyed independent watcher flags, and TypeScript IPC wrappers while preserving legacy commands.\nVerification: cargo fmt --all; cargo test -p desktop-core = 21 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; corepack pnpm --filter @project/desktop typecheck passed; targeted git diff --check passed with only CRLF normalization warnings.\nReview: PASS, P1=0, P2=0, P3=0. Manual four-perspective review completed after delegated reviewer timed out; no blocking findings.\nSystem Decision Impact: candidate @decision/20260810-0906-desktop-sources-use-stable-registrations-with-independent-watchers (added) — stable project-scoped source registration and independent watcher contract; draft review-gated.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop-core manifest schema and `ManifestDb` with normalized Project source registrations: stable source ID, directory path, active state, watcher/debounce configuration and last scan metadata. Reject duplicate registrations without losing existing file/version/Raw records.\n2. Update the recursive scanner to ignore hidden/temp entries and carry source identity through observations and FILE_SCAN idempotency keys while preserving SHA-256, stable-file debounce, failure recording and self-write suppression.\n3. Replace the single Tauri watcher slot with independently controllable watcher state keyed by source ID; add register/list/scan/start/stop commands and register them in `apps/desktop/src-tauri/src/lib.rs`.\n4. Expose the new source-management invoke wrappers in `apps/desktop/src/features/local-files.ts` and keep current scan/watcher APIs backward-compatible where existing callers depend on them.\n5. Add focused Rust/desktop-core tests for multiple source registrations, duplicate paths, recursive filtering, scan failures, restart persistence and independent watcher lifecycle; run cargo format/check/test, desktop typecheck, Knowns validation and `git diff --check`.\n\n### Plan check\n\n- AC coverage: AC-2 → steps 1–2; AC-3 → steps 1–2 and tests; AC-11 → steps 3–5.\n- Scope: bounded desktop-core/Tauri/IPC change; no new dependency, parser rewrite or UI work.\n- Dependency: task 01 is the first runnable wave; tasks 02–05 depend on its source command contract.\n- Risk: watcher concurrency and migration compatibility; covered by keyed state tests, idempotent schema initialization and restart tests.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "desktop-core",
+          "watcher"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 920,
+        "title": "[desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence",
+        "updatedAt": "2026-08-10T02:06:24.2189089Z"
+      }
+    }
+  ]
+}

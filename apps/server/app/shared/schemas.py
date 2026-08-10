@@ -1,7 +1,8 @@
-from typing import Any
+from datetime import datetime
+from typing import Any, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 class ProjectCreate(BaseModel):
     name: str = Field(min_length=1, max_length=200)
@@ -146,5 +147,78 @@ class OrganizeWriteBackExecuteRequest(BaseModel):
 
 class WriteJobFailureRequest(BaseModel):
     reason: str = Field(min_length=1, max_length=500)
+
+
+class BasemapSource(BaseModel):
+    kind: Literal["raster", "style"]
+    tiles: list[str] = Field(default_factory=list)
+    styleUrl: str | None = None
+
+    @model_validator(mode="after")
+    def validate_source(self) -> "BasemapSource":
+        if self.kind == "raster" and not self.tiles:
+            raise ValueError("Raster basemap sources require at least one tile template")
+        if self.kind == "style" and not self.styleUrl:
+            raise ValueError("Style basemap sources require a styleUrl")
+        return self
+
+
+class BasemapMode(BaseModel):
+    key: Literal["street", "hybrid", "vector"]
+    label: str = Field(min_length=1, max_length=80)
+    detail: str = Field(min_length=1, max_length=200)
+    source: BasemapSource
+
+
+class BasemapLayerGroup(BaseModel):
+    key: str = Field(min_length=1, max_length=80)
+    label: str = Field(min_length=1, max_length=120)
+    detail: str = Field(min_length=1, max_length=240)
+    color: str = Field(pattern=r"^#[0-9A-Fa-f]{6}$")
+    layerPrefixes: list[str] = Field(min_length=1)
+    excludePrefixes: list[str] = Field(default_factory=list)
+    defaultVisibility: bool = True
+
+
+class TilePackageCapabilities(BaseModel):
+    supported: bool
+    selection: Literal["boundingBox"]
+    minZoom: int = Field(ge=0, le=24)
+    maxZoom: int = Field(ge=0, le=24)
+    storage: Literal["desktop-local"]
+
+    @model_validator(mode="after")
+    def validate_zoom_range(self) -> "TilePackageCapabilities":
+        if self.maxZoom < self.minZoom:
+            raise ValueError("maxZoom must be greater than or equal to minZoom")
+        return self
+
+
+class BasemapManifest(BaseModel):
+    schemaVersion: int = Field(ge=1)
+    manifestVersion: str = Field(min_length=1, max_length=80)
+    generatedAt: str = Field(min_length=1, max_length=80)
+    defaultMode: Literal["street", "hybrid", "vector"]
+    modes: dict[str, BasemapMode]
+    layers: list[BasemapLayerGroup] = Field(min_length=1)
+    attribution: list[str] = Field(min_length=1)
+    tilePackages: TilePackageCapabilities
+
+    @model_validator(mode="after")
+    def validate_modes(self) -> "BasemapManifest":
+        expected = {"street", "hybrid", "vector"}
+        if set(self.modes) != expected:
+            raise ValueError("Basemap manifest must define exactly street, hybrid, and vector modes")
+        if any(mode.key != key for key, mode in self.modes.items()):
+            raise ValueError("Basemap mode keys must match their manifest keys")
+        return self
+
+    @model_validator(mode="after")
+    def validate_generated_at(self) -> "BasemapManifest":
+        try:
+            datetime.fromisoformat(self.generatedAt.replace("Z", "+00:00"))
+        except ValueError as exc:
+            raise ValueError("generatedAt must be an ISO-8601 timestamp") from exc
+        return self
 
 

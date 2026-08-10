@@ -47,7 +47,10 @@ pub fn init_encrypted_database(
                 message: "SQLCipher database initialized successfully".to_string(),
             })
         }
-        Err(err) => Err(format!("Failed to initialize encrypted database: {:?}", err)),
+        Err(err) => Err(format!(
+            "Failed to initialize encrypted database: {:?}",
+            err
+        )),
     }
 }
 

@@ -50,9 +50,29 @@ from ...shared.schemas import (
     WriteJobCreate,
     WriteJobFailureRequest,
 )
+from ...shared.basemap_manifest import get_basemap_manifest as load_basemap_manifest
+from ...shared.basemap_manifest import manifest_etag, manifest_json, manifest_last_modified
 
 
 router = APIRouter()
+
+
+@router.get("/api/v1/basemap/manifest")
+def basemap_manifest(
+    if_none_match: str | None = Header(default=None, alias="If-None-Match"),
+    if_modified_since: str | None = Header(default=None, alias="If-Modified-Since"),
+) -> Response:
+    manifest = load_basemap_manifest()
+    etag = manifest_etag(manifest)
+    last_modified = manifest_last_modified(manifest)
+    headers = {
+        "Cache-Control": "no-cache",
+        "ETag": etag,
+        "Last-Modified": last_modified,
+    }
+    if if_none_match == etag or (if_none_match is None and if_modified_since == last_modified):
+        return Response(status_code=304, headers=headers)
+    return Response(content=manifest_json(manifest), media_type="application/json", headers=headers)
 
 
 class _StoreProxy:

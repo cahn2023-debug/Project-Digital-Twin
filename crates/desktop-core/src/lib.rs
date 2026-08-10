@@ -13,18 +13,19 @@ pub mod server_sync;
 pub use auth::{cache_session, hash_password, validate_offline_login, AuthResult};
 pub use crypto::DbPasskey;
 pub use db_encrypted::{CachedCredential, DbError, DbResult, EncryptedDb, MutationEvent};
+pub use hash::{sha256_file, sha256_reader};
+pub use manifest::{
+    source_id_for_directory, DiscoveredFile, FileVersion, ManifestDb, ManifestEntry, PendingJob,
+    RawRecord, ScanFailure, SourceRegistration,
+};
 pub use mutation::{
     enqueue_mutation, fetch_pending_mutations, is_network_online, mark_mutation_status,
     pending_mutations_count, set_network_online,
 };
 pub use replay::{ReplayEngine, SyncBatchResult};
-pub use server_sync::{ConflictChoice, ConflictItem, ServerSyncHandler};
-pub use hash::{sha256_file, sha256_reader};
-pub use manifest::{
-    DiscoveredFile, FileVersion, ManifestDb, ManifestEntry, PendingJob, RawRecord, ScanFailure,
-};
 pub use safe_write::{safe_replace, SafeWriteError};
 pub use scanner::{scan_directory, scan_directory_best_effort};
+pub use server_sync::{ConflictChoice, ConflictItem, ServerSyncHandler};
 
 #[cfg(test)]
 mod tests {
@@ -204,9 +205,15 @@ mod tests {
     fn scanner_debounces_files_and_enqueues_idempotently() {
         let directory = tempfile::tempdir().expect("tempdir");
         let nested = directory.path().join("nested");
+        let hidden = directory.path().join(".hidden");
         std::fs::create_dir_all(&nested).expect("nested");
+        std::fs::create_dir_all(&hidden).expect("hidden");
         let path = nested.join("camera.xlsx");
+        let temporary = nested.join("~$camera.xlsx");
+        let hidden_file = hidden.join("hidden.xlsx");
         std::fs::write(&path, b"camera").expect("file");
+        std::fs::write(&temporary, b"temporary").expect("temporary");
+        std::fs::write(&hidden_file, b"hidden").expect("hidden file");
 
         let files = scan_directory(directory.path(), &["xlsx"]).expect("scan");
         assert_eq!(files.len(), 1);
@@ -303,5 +310,58 @@ mod tests {
                 .expect("job"),
             ("RETRY".to_owned(), 1)
         );
+    }
+
+    #[test]
+    fn source_registrations_are_project_scoped_and_survive_restart() {
+        let directory = tempfile::tempdir().expect("tempdir");
+        let database_path = directory.path().join("manifest.sqlite");
+        let source_id = {
+            let database = ManifestDb::open(&database_path).expect("manifest");
+            let source = database
+                .register_source("project-1", "C:/Data/Source", 5, "now")
+                .expect("source");
+            let same_source = database
+                .register_source("project-1", "C:/Data/Source", 8, "later")
+                .expect("idempotent source");
+            assert_eq!(source.source_id, same_source.source_id);
+            assert_eq!(database.list_sources("project-1").expect("list").len(), 1);
+            assert_eq!(
+                database
+                    .list_sources("project-2")
+                    .expect("other list")
+                    .len(),
+                0
+            );
+            source.source_id
+        };
+
+        let reopened = ManifestDb::open(&database_path).expect("reopen");
+        let source = reopened
+            .source_registration(&source_id)
+            .expect("lookup")
+            .expect("registered source");
+        assert_eq!(source.project_id, "project-1");
+        assert_eq!(source.debounce_seconds, 8);
+    }
+
+    #[test]
+    fn source_scan_payload_contains_source_identity_and_is_idempotent() {
+        let database = ManifestDb::open_in_memory().expect("manifest");
+        let file = DiscoveredFile {
+            path: "C:/Data/Camera.xlsx".to_owned(),
+            sha256: "hash".to_owned(),
+            size: 10,
+            modified_at: Some("1".to_owned()),
+        };
+        assert!(database
+            .enqueue_file_scan_for_source("source-1", &file, "now")
+            .expect("enqueue"));
+        assert!(!database
+            .enqueue_file_scan_for_source("source-1", &file, "later")
+            .expect("duplicate"));
+        let job = database.claim_next_job(0).expect("claim").expect("job");
+        assert!(job.payload.contains("source-1"));
+        assert!(job.payload.contains("Camera.xlsx"));
     }
 }

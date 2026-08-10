@@ -1,0 +1,119 @@
+{
+  "taskId": "ahh0p8",
+  "currentVersion": 2,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "ahh0p8",
+      "version": 1,
+      "timestamp": "2026-08-10T02:05:33.1829071Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T02:05:33.1761192Z",
+        "description": "Implement desktop tile-package selection and download for user-selected regions and zoom ranges, direct public tile acquisition from the manifest, local metadata/checksum/atomic persistence, fully-offline MapLibre loading, and outside-coverage empty-state guidance.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-6"
+        ],
+        "id": "ahh0p8",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "desktop",
+          "offline",
+          "tiles",
+          "package"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[serverdesktop-shared-maplibre-03] Implement regional offline tile packages",
+        "updatedAt": "2026-08-10T02:05:33.1761192Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "ahh0p8",
+      "version": 2,
+      "timestamp": "2026-08-10T02:05:48.0830258Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "text": "Select and document a tile-package format without putting project data in the package.",
+              "completed": false
+            },
+            {
+              "text": "Download and persist selected region/zoom packages with metadata, checksum, and atomic replacement.",
+              "completed": false
+            },
+            {
+              "text": "Render local coverage offline and show an explicit outside-coverage empty state.",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Select and document a tile-package format without putting project data in the package.",
+            "completed": false
+          },
+          {
+            "text": "Download and persist selected region/zoom packages with metadata, checksum, and atomic replacement.",
+            "completed": false
+          },
+          {
+            "text": "Render local coverage offline and show an explicit outside-coverage empty state.",
+            "completed": false
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T02:05:33.176Z",
+        "description": "Implement desktop tile-package selection and download for user-selected regions and zoom ranges, direct public tile acquisition from the manifest, local metadata/checksum/atomic persistence, fully-offline MapLibre loading, and outside-coverage empty-state guidance.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-6"
+        ],
+        "id": "ahh0p8",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "desktop",
+          "offline",
+          "tiles",
+          "package"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[serverdesktop-shared-maplibre-03] Implement regional offline tile packages",
+        "updatedAt": "2026-08-10T02:05:48.0830258Z"
+      }
+    }
+  ]
+}

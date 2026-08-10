@@ -1,7 +1,6 @@
 use crate::db::EncryptedDbState;
 use desktop_core::{
-    enqueue_mutation, is_network_online, pending_mutations_count, set_network_online,
-    MutationEvent,
+    enqueue_mutation, is_network_online, pending_mutations_count, set_network_online, MutationEvent,
 };
 use serde::{Deserialize, Serialize};
 

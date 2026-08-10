@@ -72,8 +72,15 @@ mod tests {
         let passkey = DbPasskey::new("secret");
         let db = EncryptedDb::open_in_memory(&passkey).expect("db");
 
-        let event = enqueue_mutation(&db, "PROJECT", "p-10", "UPDATE", r#"{"name":"Client"}"#, 1000)
-            .expect("enqueue");
+        let event = enqueue_mutation(
+            &db,
+            "PROJECT",
+            "p-10",
+            "UPDATE",
+            r#"{"name":"Client"}"#,
+            1000,
+        )
+        .expect("enqueue");
 
         // Server has newer timestamp 2000 > 1000
         let result = ServerSyncHandler::process_event_with_server_check(&event, |_, _| {
