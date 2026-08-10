@@ -1,0 +1,222 @@
+{
+  "taskId": "a7nrud",
+  "currentVersion": 3,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "a7nrud",
+      "version": 1,
+      "timestamp": "2026-08-10T04:33:12.1484168Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Render Empty State on Projects tab when empty"
+          },
+          {
+            "completed": false,
+            "text": "Render Empty State on Camera \u0026 Organize tabs when empty"
+          },
+          {
+            "completed": false,
+            "text": "Provide CTA buttons to create project / add data source"
+          },
+          {
+            "completed": false,
+            "text": "Verify user creation flow from Empty State"
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T11:33:12.1237028+07:00",
+        "description": "Implement intuitive Empty State components with Call-To-Action buttons ('Create Project', 'Add Data Source') for Projects, Cameras, Organize, and Data Sources across Web \u0026 Desktop UIs when dataset is empty.",
+        "fulfills": [
+          "AC-2",
+          "AC-3"
+        ],
+        "id": "a7nrud",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-03] Implement UI Empty States and CTA prompts in Web \u0026 Desktop",
+        "updatedAt": "2026-08-10T11:33:12.1237028+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "a7nrud",
+      "version": 2,
+      "timestamp": "2026-08-10T04:37:41.5939761Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Render Empty State on Projects tab when empty"
+            },
+            {
+              "completed": false,
+              "text": "Render Empty State on Camera \u0026 Organize tabs when empty"
+            },
+            {
+              "completed": false,
+              "text": "Provide CTA buttons to create project / add data source"
+            },
+            {
+              "completed": false,
+              "text": "Verify user creation flow from Empty State"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Render Empty State on Projects tab when empty"
+            },
+            {
+              "completed": true,
+              "text": "Render Empty State on Camera \u0026 Organize tabs when empty"
+            },
+            {
+              "completed": true,
+              "text": "Provide CTA buttons to create project / add data source"
+            },
+            {
+              "completed": true,
+              "text": "Verify user creation flow from Empty State"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Replaced hardcoded sample arrays with empty datasets by default; added Empty State containers and CTA buttons across Datacenter, Organize and Projects UI; pnpm web \u0026 desktop builds passed."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T04:37:41.5939761Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Render Empty State on Projects tab when empty"
+          },
+          {
+            "completed": true,
+            "text": "Render Empty State on Camera \u0026 Organize tabs when empty"
+          },
+          {
+            "completed": true,
+            "text": "Provide CTA buttons to create project / add data source"
+          },
+          {
+            "completed": true,
+            "text": "Verify user creation flow from Empty State"
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T04:37:41.5939761Z",
+        "createdAt": "2026-08-10T04:33:12.123Z",
+        "description": "Implement intuitive Empty State components with Call-To-Action buttons ('Create Project', 'Add Data Source') for Projects, Cameras, Organize, and Data Sources across Web \u0026 Desktop UIs when dataset is empty.",
+        "fulfills": [
+          "AC-2",
+          "AC-3"
+        ],
+        "id": "a7nrud",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Replaced hardcoded sample arrays with empty datasets by default; added Empty State containers and CTA buttons across Datacenter, Organize and Projects UI; pnpm web \u0026 desktop builds passed.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-03] Implement UI Empty States and CTA prompts in Web \u0026 Desktop",
+        "updatedAt": "2026-08-10T04:37:41.5939761Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "a7nrud",
+      "version": 3,
+      "timestamp": "2026-08-10T04:38:50.7452741Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Replaced hardcoded sample arrays with empty datasets by default; added Empty State containers and CTA buttons across Datacenter, Organize and Projects UI; pnpm web \u0026 desktop builds passed.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Replaced hardcoded sample arrays with empty datasets by default; added Empty State containers and CTA buttons across Datacenter, Organize and Projects UI; pnpm web \u0026 desktop builds passed."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Render Empty State on Projects tab when empty",
+            "completed": true
+          },
+          {
+            "text": "Render Empty State on Camera \u0026 Organize tabs when empty",
+            "completed": true
+          },
+          {
+            "text": "Provide CTA buttons to create project / add data source",
+            "completed": true
+          },
+          {
+            "text": "Verify user creation flow from Empty State",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T04:37:41.593Z",
+        "createdAt": "2026-08-10T04:33:12.123Z",
+        "description": "Implement intuitive Empty State components with Call-To-Action buttons ('Create Project', 'Add Data Source') for Projects, Cameras, Organize, and Data Sources across Web \u0026 Desktop UIs when dataset is empty.",
+        "fulfills": [
+          "AC-2",
+          "AC-3"
+        ],
+        "id": "a7nrud",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Replaced hardcoded sample arrays with empty datasets by default; added Empty State containers and CTA buttons across Datacenter, Organize and Projects UI; pnpm web \u0026 desktop builds passed.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-03] Implement UI Empty States and CTA prompts in Web \u0026 Desktop",
+        "updatedAt": "2026-08-10T04:38:50.7452741Z"
+      }
+    }
+  ]
+}

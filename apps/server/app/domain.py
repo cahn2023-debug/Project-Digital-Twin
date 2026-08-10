@@ -139,6 +139,19 @@ class CameraStore:
         self._correlation_by_aggregate: dict[UUID, UUID] = {}
         self._last_event_by_aggregate: dict[UUID, UUID] = {}
 
+    def is_empty(self) -> bool:
+        """Return True if the store contains zero domain entities (projects, cameras, packages, organize data)."""
+        return (
+            len(self.projects) == 0
+            and len(self.cameras) == 0
+            and len(self.contractors) == 0
+            and len(self.work_packages) == 0
+            and len(self.field_packages) == 0
+            and len(self.observations) == 0
+            and len(self.organize_groups) == 0
+            and len(self.organize_tags) == 0
+        )
+
     @staticmethod
     def _normalize_root_path(root_path: str) -> str:
         candidate = root_path.strip()

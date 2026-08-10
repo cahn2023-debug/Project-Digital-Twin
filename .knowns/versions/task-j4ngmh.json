@@ -1,0 +1,199 @@
+{
+  "taskId": "j4ngmh",
+  "currentVersion": 3,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "j4ngmh",
+      "version": 1,
+      "timestamp": "2026-08-10T04:33:08.089799Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Clean manifest.sql sample records"
+          },
+          {
+            "completed": false,
+            "text": "Ensure desktop_core database initializes empty"
+          },
+          {
+            "completed": false,
+            "text": "Pass desktop tests"
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T11:33:08.0677364+07:00",
+        "description": "Remove sample data scripts and default SQLite/SQLCipher manifest records in crates/desktop-core and apps/desktop/manifest.sql.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "j4ngmh",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-02] Clean desktop core \u0026 manifest pre-seeded data",
+        "updatedAt": "2026-08-10T11:33:08.0677364+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "j4ngmh",
+      "version": 2,
+      "timestamp": "2026-08-10T04:35:47.2821969Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Clean manifest.sql sample records"
+            },
+            {
+              "completed": false,
+              "text": "Ensure desktop_core database initializes empty"
+            },
+            {
+              "completed": false,
+              "text": "Pass desktop tests"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Clean manifest.sql sample records"
+            },
+            {
+              "completed": true,
+              "text": "Ensure desktop_core database initializes empty"
+            },
+            {
+              "completed": true,
+              "text": "Pass desktop tests"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified SQLite manifest.sql and desktop-core initialize clean tables with zero pre-seeded records; 24 Rust cargo tests pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T04:35:47.2821969Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Clean manifest.sql sample records"
+          },
+          {
+            "completed": true,
+            "text": "Ensure desktop_core database initializes empty"
+          },
+          {
+            "completed": true,
+            "text": "Pass desktop tests"
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T04:35:47.2821969Z",
+        "createdAt": "2026-08-10T04:33:08.067Z",
+        "description": "Remove sample data scripts and default SQLite/SQLCipher manifest records in crates/desktop-core and apps/desktop/manifest.sql.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "j4ngmh",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified SQLite manifest.sql and desktop-core initialize clean tables with zero pre-seeded records; 24 Rust cargo tests pass.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-02] Clean desktop core \u0026 manifest pre-seeded data",
+        "updatedAt": "2026-08-10T04:35:47.2821969Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "j4ngmh",
+      "version": 3,
+      "timestamp": "2026-08-10T04:38:43.3300147Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified SQLite manifest.sql and desktop-core initialize clean tables with zero pre-seeded records; 24 Rust cargo tests pass.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Verified SQLite manifest.sql and desktop-core initialize clean tables with zero pre-seeded records; 24 Rust cargo tests pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Clean manifest.sql sample records",
+            "completed": true
+          },
+          {
+            "text": "Ensure desktop_core database initializes empty",
+            "completed": true
+          },
+          {
+            "text": "Pass desktop tests",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T04:35:47.282Z",
+        "createdAt": "2026-08-10T04:33:08.067Z",
+        "description": "Remove sample data scripts and default SQLite/SQLCipher manifest records in crates/desktop-core and apps/desktop/manifest.sql.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "j4ngmh",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Verified SQLite manifest.sql and desktop-core initialize clean tables with zero pre-seeded records; 24 Rust cargo tests pass.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-02] Clean desktop core \u0026 manifest pre-seeded data",
+        "updatedAt": "2026-08-10T04:38:43.3300147Z"
+      }
+    }
+  ]
+}

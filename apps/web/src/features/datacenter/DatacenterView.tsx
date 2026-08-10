@@ -46,33 +46,33 @@ export function DatacenterView({
         <KpiCard
           icon="db"
           label="Canonical entities"
-          value="1,842"
-          foot={<><span className="delta up">+32</span><span>từ lần sync gần nhất</span></>}
+          value={cameras.length > 0 ? String(cameras.length) : "0"}
+          foot={<><span>Chưa có bản ghi</span></>}
         />
         <KpiCard
           icon="file"
           label="Nguồn được quản lý"
-          value="46"
-          foot={<><span>39 synced</span><span>•</span><span className="delta warn">7 local-only</span></>}
+          value={sourceManagement.sources.length > 0 ? String(sourceManagement.sources.length) : "0"}
+          foot={<><span>{sourceManagement.sources.length} nguồn</span></>}
         />
         <KpiCard
           icon="git"
           label="Pending changes"
-          value="17"
-          foot={<><span className="delta warn">8</span><span>từ hiện trường</span></>}
+          value="0"
+          foot={<><span>0 thay đổi</span></>}
         />
         <KpiCard
           icon="check"
           label="Data quality"
-          value="94.6%"
-          foot={<><span className="delta up">+1.8%</span><span>7 ngày</span></>}
+          value="100%"
+          foot={<><span className="delta up">Sẵn sàng</span></>}
         />
       </div>
       <div className="grid-12 mb-14">
         <Panel
           className="col-8"
           title="Camera Dataset"
-          subtitle="Canonical view • CameraMaster.xlsx • Revision 18"
+          subtitle={cameras.length > 0 ? "Canonical view" : "Chưa có dữ liệu camera"}
           action={<Button onClick={() => onAction("Đang mở Camera Dataset")}><Icon name="eye" size={13} />Mở dataset</Button>}
         >
           <div className="toolbar">
@@ -86,27 +86,43 @@ export function DatacenterView({
               <Icon name="filter" size={13} />
               Bộ lọc
             </Button>
-            <div className="muted toolbar-count">1,230 bản ghi</div>
+            <div className="muted toolbar-count">{filteredCameras.length} bản ghi</div>
           </div>
           <div className="panel-body flush table-wrap camera-table">
-            <table>
-              <thead>
-                <tr><th>Camera</th><th>Nút giao</th><th>IP</th><th>Thiết kế</th><th>As-built</th><th>Nguồn</th><th>Rev.</th></tr>
-              </thead>
-              <tbody>
-                {filteredCameras.map((row) => (
-                  <tr key={row[0]}>
-                    <td><span className="entity-code">{row[0]}</span></td>
-                    <td>{row[1]}</td>
-                    <td className="mono">{row[2]}</td>
-                    <td><StatusBadge tone="info">{row[3]}</StatusBadge></td>
-                    <td><StatusBadge tone={row[4] === "Verified" ? "success" : row[4] === "Pending" ? "warning" : row[4] === "Conflict" ? "danger" : "neutral"}>{row[4]}</StatusBadge></td>
-                    <td>{row[5]}</td>
-                    <td className="mono">{row[6]}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {filteredCameras.length === 0 ? (
+              <div style={{ padding: "32px 16px", textAlign: "center" }}>
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px", color: "var(--muted)" }}>
+                  <Icon name="db" size={36} />
+                </div>
+                <div style={{ fontWeight: 700, fontSize: "14px", marginBottom: "6px" }}>Chưa có dữ liệu camera</div>
+                <div style={{ color: "var(--muted)", fontSize: "12px", marginBottom: "16px" }}>
+                  Dự án hiện chưa có bản ghi camera nào. Bạn có thể thêm nguồn dữ liệu mới để bắt đầu.
+                </div>
+                <Button primary onClick={() => void sourceManagement.addSource()}>
+                  <Icon name="plus" size={14} />
+                  Thêm nguồn dữ liệu
+                </Button>
+              </div>
+            ) : (
+              <table>
+                <thead>
+                  <tr><th>Camera</th><th>Nút giao</th><th>IP</th><th>Thiết kế</th><th>As-built</th><th>Nguồn</th><th>Rev.</th></tr>
+                </thead>
+                <tbody>
+                  {filteredCameras.map((row) => (
+                    <tr key={row[0]}>
+                      <td><span className="entity-code">{row[0]}</span></td>
+                      <td>{row[1]}</td>
+                      <td className="mono">{row[2]}</td>
+                      <td><StatusBadge tone="info">{row[3]}</StatusBadge></td>
+                      <td><StatusBadge tone={row[4] === "Verified" ? "success" : row[4] === "Pending" ? "warning" : row[4] === "Conflict" ? "danger" : "neutral"}>{row[4]}</StatusBadge></td>
+                      <td>{row[5]}</td>
+                      <td className="mono">{row[6]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </Panel>
         <SourceManagementPanel model={sourceManagement} />
@@ -116,29 +132,20 @@ export function DatacenterView({
           className="col-7"
           title="Change Inbox"
           subtitle="Thay đổi cần xem xét trước khi cập nhật canonical state"
-          action={<StatusBadge tone="warning">17 pending</StatusBadge>}
+          action={<StatusBadge tone="neutral">0 pending</StatusBadge>}
         >
           <div className="panel-body flush table-wrap">
-            <table>
-              <thead><tr><th>ChangeSet</th><th>Entity</th><th>Nguồn</th><th>Thay đổi</th><th>Trạng thái</th></tr></thead>
-              <tbody>
-                <tr><td className="mono">#CS-0281</td><td><span className="entity-code">CAM-114</span></td><td>OPERATE / Field</td><td>Vị trí lệch 4.3 m</td><td><StatusBadge tone="danger">Conflict</StatusBadge></td></tr>
-                <tr><td className="mono">#CS-0280</td><td><span className="entity-code">CAM-002</span></td><td>OPERATE / Field</td><td>GPS + 3 ảnh</td><td><StatusBadge tone="warning">Approval</StatusBadge></td></tr>
-                <tr><td className="mono">#CS-0279</td><td><span className="entity-code">CAM-398</span></td><td>DATACENTER / Excel</td><td>IP 10.102.3.17 → .18</td><td><StatusBadge tone="info">Validating</StatusBadge></td></tr>
-              </tbody>
-            </table>
+            <div style={{ padding: "24px 16px", textAlign: "center", color: "var(--muted)", fontSize: "12px" }}>
+              Không có ChangeSet nào đang chờ xử lý.
+            </div>
           </div>
         </Panel>
         <Panel className="col-5" title="Data Quality" subtitle="Các vấn đề cần xử lý" action={<Button onClick={() => onAction("Đang mở toàn bộ cảnh báo chất lượng dữ liệu")}>Xem tất cả</Button>}>
           <AlertList items={[
-            { title: "3 Camera trùng mã định danh", meta: "Cần xử lý trước lần publish tiếp theo.", tone: "danger" },
-            { title: "21 Camera thiếu ảnh nghiệm thu", meta: "Thuộc WP-CAM-03 và WP-CAM-04.", tone: "warning" },
-            { title: "7 file đang ở chế độ local-only", meta: "Metadata đã đăng ký, binary chưa publish lên server.", tone: "info" },
+            { title: "Hệ thống dữ liệu sạch", meta: "Không phát hiện xung đột hoặc lỗi dữ liệu.", tone: "success" },
           ]} />
         </Panel>
       </div>
     </div>
   );
 }
-
-

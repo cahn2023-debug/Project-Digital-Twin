@@ -1,0 +1,421 @@
+{
+  "taskId": "75ic9j",
+  "currentVersion": 7,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "75ic9j",
+      "version": 1,
+      "timestamp": "2026-08-10T04:33:04.1289616Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Remove pre-seeded records from CameraStore initialization"
+          },
+          {
+            "completed": false,
+            "text": "Ensure runtime_store_snapshots initializes empty"
+          },
+          {
+            "completed": false,
+            "text": "Pass backend unit tests"
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T11:33:04.1016186+07:00",
+        "description": "Remove all pre-seeded default population in CameraStore (apps/server/app/domain.py), startup database initialization code, and default store snapshots so server starts completely empty.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "75ic9j",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-01] Remove backend domain and database seed data",
+        "updatedAt": "2026-08-10T11:33:04.1016186+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "75ic9j",
+      "version": 2,
+      "timestamp": "2026-08-10T04:35:41.6099653Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Remove pre-seeded records from CameraStore initialization"
+            },
+            {
+              "completed": false,
+              "text": "Ensure runtime_store_snapshots initializes empty"
+            },
+            {
+              "completed": false,
+              "text": "Pass backend unit tests"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Remove pre-seeded records from CameraStore initialization"
+            },
+            {
+              "completed": true,
+              "text": "Ensure runtime_store_snapshots initializes empty"
+            },
+            {
+              "completed": true,
+              "text": "Pass backend unit tests"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T04:35:41.6099653Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Remove pre-seeded records from CameraStore initialization"
+          },
+          {
+            "completed": true,
+            "text": "Ensure runtime_store_snapshots initializes empty"
+          },
+          {
+            "completed": true,
+            "text": "Pass backend unit tests"
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T04:35:41.6099653Z",
+        "createdAt": "2026-08-10T04:33:04.101Z",
+        "description": "Remove all pre-seeded default population in CameraStore (apps/server/app/domain.py), startup database initialization code, and default store snapshots so server starts completely empty.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "75ic9j",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-01] Remove backend domain and database seed data",
+        "updatedAt": "2026-08-10T04:35:41.6099653Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "75ic9j",
+      "version": 3,
+      "timestamp": "2026-08-10T04:35:48.6738744Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "done",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": "2026-08-10T04:35:41.609Z",
+          "newValue": null
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Remove pre-seeded records from CameraStore initialization"
+          },
+          {
+            "completed": true,
+            "text": "Ensure runtime_store_snapshots initializes empty"
+          },
+          {
+            "completed": true,
+            "text": "Pass backend unit tests"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T04:33:04.101Z",
+        "description": "Remove all pre-seeded default population in CameraStore (apps/server/app/domain.py), startup database initialization code, and default store snapshots so server starts completely empty.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "75ic9j",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-01] Remove backend domain and database seed data",
+        "updatedAt": "2026-08-10T04:35:48.6738744Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "75ic9j",
+      "version": 4,
+      "timestamp": "2026-08-10T04:36:52.1306452Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior.\nFlow review PASS: CameraStore has no default records, is_empty() returns true for a fresh store, full server suite passes 59 tests, and task validation passes 0 errors/0 warnings. No new durable guidance: System Decision Impact: none — backend empty-start verification follows the approved sample-data-removal decisions."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Remove pre-seeded records from CameraStore initialization"
+          },
+          {
+            "completed": true,
+            "text": "Ensure runtime_store_snapshots initializes empty"
+          },
+          {
+            "completed": true,
+            "text": "Pass backend unit tests"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T04:33:04.101Z",
+        "description": "Remove all pre-seeded default population in CameraStore (apps/server/app/domain.py), startup database initialization code, and default store snapshots so server starts completely empty.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "75ic9j",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior.\nFlow review PASS: CameraStore has no default records, is_empty() returns true for a fresh store, full server suite passes 59 tests, and task validation passes 0 errors/0 warnings. No new durable guidance: System Decision Impact: none — backend empty-start verification follows the approved sample-data-removal decisions.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-01] Remove backend domain and database seed data",
+        "updatedAt": "2026-08-10T04:36:52.1306452Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "75ic9j",
+      "version": 5,
+      "timestamp": "2026-08-10T04:37:00.8113893Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 48
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Remove pre-seeded records from CameraStore initialization"
+          },
+          {
+            "completed": true,
+            "text": "Ensure runtime_store_snapshots initializes empty"
+          },
+          {
+            "completed": true,
+            "text": "Pass backend unit tests"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T04:33:04.101Z",
+        "description": "Remove all pre-seeded default population in CameraStore (apps/server/app/domain.py), startup database initialization code, and default store snapshots so server starts completely empty.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "75ic9j",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior.\nFlow review PASS: CameraStore has no default records, is_empty() returns true for a fresh store, full server suite passes 59 tests, and task validation passes 0 errors/0 warnings. No new durable guidance: System Decision Impact: none — backend empty-start verification follows the approved sample-data-removal decisions.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "in-progress",
+        "timeSpent": 48,
+        "title": "[sample-data-removal-01] Remove backend domain and database seed data",
+        "updatedAt": "2026-08-10T04:37:00.8113893Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "75ic9j",
+      "version": 6,
+      "timestamp": "2026-08-10T04:37:02.5472758Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T04:37:02.5472758Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Remove pre-seeded records from CameraStore initialization"
+          },
+          {
+            "completed": true,
+            "text": "Ensure runtime_store_snapshots initializes empty"
+          },
+          {
+            "completed": true,
+            "text": "Pass backend unit tests"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T04:37:02.5472758Z",
+        "createdAt": "2026-08-10T04:33:04.101Z",
+        "description": "Remove all pre-seeded default population in CameraStore (apps/server/app/domain.py), startup database initialization code, and default store snapshots so server starts completely empty.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "75ic9j",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior.\nFlow review PASS: CameraStore has no default records, is_empty() returns true for a fresh store, full server suite passes 59 tests, and task validation passes 0 errors/0 warnings. No new durable guidance: System Decision Impact: none — backend empty-start verification follows the approved sample-data-removal decisions.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 48,
+        "title": "[sample-data-removal-01] Remove backend domain and database seed data",
+        "updatedAt": "2026-08-10T04:37:02.5472758Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "75ic9j",
+      "version": 7,
+      "timestamp": "2026-08-10T04:38:35.0023046Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.\nFlow started: auditing backend sample/default population and empty runtime snapshot behavior.\nFlow review PASS: CameraStore has no default records, is_empty() returns true for a fresh store, full server suite passes 59 tests, and task validation passes 0 errors/0 warnings. No new durable guidance: System Decision Impact: none — backend empty-start verification follows the approved sample-data-removal decisions.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Remove pre-seeded records from CameraStore initialization",
+            "completed": true
+          },
+          {
+            "text": "Ensure runtime_store_snapshots initializes empty",
+            "completed": true
+          },
+          {
+            "text": "Pass backend unit tests",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T04:37:02.547Z",
+        "createdAt": "2026-08-10T04:33:04.101Z",
+        "description": "Remove all pre-seeded default population in CameraStore (apps/server/app/domain.py), startup database initialization code, and default store snapshots so server starts completely empty.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "75ic9j",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Verified CameraStore starts empty with zero pre-seeded records and added is_empty() domain check.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 48,
+        "title": "[sample-data-removal-01] Remove backend domain and database seed data",
+        "updatedAt": "2026-08-10T04:38:35.0023046Z"
+      }
+    }
+  ]
+}

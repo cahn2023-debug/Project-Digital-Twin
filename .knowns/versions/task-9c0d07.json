@@ -1,0 +1,319 @@
+{
+  "taskId": "9c0d07",
+  "currentVersion": 5,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "9c0d07",
+      "version": 1,
+      "timestamp": "2026-08-10T04:33:17.2029581Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Provide reset / clean script for local databases"
+          },
+          {
+            "completed": false,
+            "text": "Purge existing sample data without dropping tables"
+          },
+          {
+            "completed": false,
+            "text": "Run SDD verification for spec ACs"
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T11:33:17.1729432+07:00",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T11:33:17.1729432+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "9c0d07",
+      "version": 2,
+      "timestamp": "2026-08-10T04:38:16.5818081Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Provide reset / clean script for local databases"
+          },
+          {
+            "completed": false,
+            "text": "Purge existing sample data without dropping tables"
+          },
+          {
+            "completed": false,
+            "text": "Run SDD verification for spec ACs"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:38:16.5818081Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "9c0d07",
+      "version": 3,
+      "timestamp": "2026-08-10T04:38:18.25023Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Provide reset / clean script for local databases"
+            },
+            {
+              "completed": false,
+              "text": "Purge existing sample data without dropping tables"
+            },
+            {
+              "completed": false,
+              "text": "Run SDD verification for spec ACs"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Provide reset / clean script for local databases"
+            },
+            {
+              "completed": true,
+              "text": "Purge existing sample data without dropping tables"
+            },
+            {
+              "completed": true,
+              "text": "Run SDD verification for spec ACs"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.",
+          "newValue": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T04:38:18.25023Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Provide reset / clean script for local databases"
+          },
+          {
+            "completed": true,
+            "text": "Purge existing sample data without dropping tables"
+          },
+          {
+            "completed": true,
+            "text": "Run SDD verification for spec ACs"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T04:38:18.25023Z",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:38:18.25023Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "9c0d07",
+      "version": 4,
+      "timestamp": "2026-08-10T04:38:56.7774214Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Add apps/server/app/clean_sample_data.py with explicit --yes confirmation, --dry-run reporting, PostgreSQL cleanup via TRUNCATE ... CASCADE plus runtime_store_snapshots reset, and SQLite/SQLCipher-compatible table DELETE without dropping schema.\n2. Support DATABASE_URL/DESKTOP_MANIFEST_PATH/DESKTOP_DB_PATH environment defaults and verify every selected target is empty after cleanup.\n3. Add focused tests using temporary SQLite databases for dry-run, data removal, schema preservation, and CLI validation; keep destructive PostgreSQL execution isolated behind the existing psycopg adapter.\n4. Run CLI tests, full server tests, compileall and task/SDD validation."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.",
+          "newValue": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nPlan check: AC1 maps to steps 1-2; AC2 maps to step 1; AC3 maps to step 4. Assumption: the local desktop manifest/encrypted DB files are SQLite-compatible under the current rusqlite bundled runtime; no tables are dropped."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Provide reset / clean script for local databases"
+          },
+          {
+            "completed": true,
+            "text": "Purge existing sample data without dropping tables"
+          },
+          {
+            "completed": true,
+            "text": "Run SDD verification for spec ACs"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T04:38:18.25Z",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nPlan check: AC1 maps to steps 1-2; AC2 maps to step 1; AC3 maps to step 4. Assumption: the local desktop manifest/encrypted DB files are SQLite-compatible under the current rusqlite bundled runtime; no tables are dropped.",
+        "implementationPlan": "1. Add apps/server/app/clean_sample_data.py with explicit --yes confirmation, --dry-run reporting, PostgreSQL cleanup via TRUNCATE ... CASCADE plus runtime_store_snapshots reset, and SQLite/SQLCipher-compatible table DELETE without dropping schema.\n2. Support DATABASE_URL/DESKTOP_MANIFEST_PATH/DESKTOP_DB_PATH environment defaults and verify every selected target is empty after cleanup.\n3. Add focused tests using temporary SQLite databases for dry-run, data removal, schema preservation, and CLI validation; keep destructive PostgreSQL execution isolated behind the existing psycopg adapter.\n4. Run CLI tests, full server tests, compileall and task/SDD validation.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:38:56.7774214Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "9c0d07",
+      "version": 5,
+      "timestamp": "2026-08-10T04:38:59.4056425Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Flow started: designing a guarded reset/clean CLI for backend and local desktop SQLite manifests.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nPlan check: AC1 maps to steps 1-2; AC2 maps to step 1; AC3 maps to step 4. Assumption: the local desktop manifest/encrypted DB files are SQLite-compatible under the current rusqlite bundled runtime; no tables are dropped.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Provide reset / clean script for local databases",
+            "completed": true
+          },
+          {
+            "text": "Purge existing sample data without dropping tables",
+            "completed": true
+          },
+          {
+            "text": "Run SDD verification for spec ACs",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T04:38:18.25Z",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.",
+        "implementationPlan": "1. Add apps/server/app/clean_sample_data.py with explicit --yes confirmation, --dry-run reporting, PostgreSQL cleanup via TRUNCATE ... CASCADE plus runtime_store_snapshots reset, and SQLite/SQLCipher-compatible table DELETE without dropping schema.\n2. Support DATABASE_URL/DESKTOP_MANIFEST_PATH/DESKTOP_DB_PATH environment defaults and verify every selected target is empty after cleanup.\n3. Add focused tests using temporary SQLite databases for dry-run, data removal, schema preservation, and CLI validation; keep destructive PostgreSQL execution isolated behind the existing psycopg adapter.\n4. Run CLI tests, full server tests, compileall and task/SDD validation.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:38:59.4056425Z"
+      }
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 ---
 id: nh6h0j
 title: 'Review follow-up: provider-specific MapLibre layer and Vector offline support'
-status: in-progress
+status: done
 priority: medium
 labels:
   - review-followup
@@ -9,8 +9,9 @@ labels:
   - provider-limitation
   - offline-vector
 createdAt: '2026-08-10T02:45:44.677Z'
-updatedAt: '2026-08-10T04:08:19.868Z'
-timeSpent: 442
+updatedAt: '2026-08-10T04:23:52.722Z'
+completedAt: '2026-08-10T04:23:52.722Z'
+timeSpent: 1666
 assignee: '@me'
 ---
 # Review follow-up: provider-specific MapLibre layer and Vector offline support
@@ -24,10 +25,10 @@ Deferred P2 findings from review of serverdesktop shared MapLibre basemap: Googl
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 Có capability/licensing matrix và provider/source được phê duyệt; nếu chưa có thì blocker được ghi rõ và không sửa code.
-- [ ] #2 Manifest phân biệt raster composite với style layers và khai báo đầy đủ asset offline; config không hợp lệ giữ last-known-good.
-- [ ] #3 DESIGN không hứa hẹn toggle độc lập cho nội dung raster baked; style layers được hỗ trợ toggle đúng và attribution/limitation hiển thị.
-- [ ] #4 Vector offline chỉ active khi đủ tiles/glyphs/sprites, checksum/atomic/coverage guards pass và package không chứa project data.
-- [ ] #5 Server/web/offline tests, typecheck/build, review và SDD validation pass; task ghi D1–D10 compliance cùng System Decision Impact.
+- [x] #2 Manifest phân biệt raster composite với style layers và khai báo đầy đủ asset offline; config không hợp lệ giữ last-known-good.
+- [x] #3 DESIGN không hứa hẹn toggle độc lập cho nội dung raster baked; style layers được hỗ trợ toggle đúng và attribution/limitation hiển thị.
+- [x] #4 Vector offline chỉ active khi đủ tiles/glyphs/sprites, checksum/atomic/coverage guards pass và package không chứa project data.
+- [x] #5 Server/web/offline tests, typecheck/build, review và SDD validation pass; task ghi D1–D10 compliance cùng System Decision Impact.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -58,5 +59,16 @@ Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, 
 Blocked after provider gate: no explicitly selected and licensed source permits the required offline redistribution. No code changes made.
 Reopened by user direction: Google remains online-only; OSM vector is approved for offline fallback. Implementation may proceed without Google tile download, using the existing OSM/OpenFreeMap style and OSM attribution; provider capability must still be explicit in the manifest.
 Scope decision confirmed by user: Google public Street/Hybrid is online-only; approved OSM/OpenFreeMap Vector is the offline fallback and package provider. D7 is now satisfied for the OSM source, subject to manifest asset/license metadata and implementation verification.
+Implemented provider-specific manifest v2 across domain/server/web: Google Street/Hybrid are provider=google, layerControl=baked-raster, offline.supported=false; OSM/OpenFreeMap Vector is provider=openstreetmap, layerControl=style-layer, with direct vector tiles, glyphs, sprite and tilePackages.supportedModes=[vector].
+
+Implemented offline OSM Vector package format indexeddb-vector-style-v1: downloads resolved style JSON, every vector/raster style source, glyph ranges, sprite JSON/PNG; rewrites all URLs to pp-offline, verifies SHA-256 checksum, uses staging plus atomic activation, checks bounds/zoom/coverage, cleans incomplete packages, and rejects project-data keys. Google download/restore path is removed and Google sources are created only online.
+
+DESIGN automatically switches effective basemap to OSM Vector when navigator is offline, restores the selected Street/Hybrid mode after reconnect, keeps last-known-good manifest fallback, and exposes style-layer toggles/Google baked-raster limitation/OSM attribution.
+
+Verification: server full pytest 55 passed; basemap contract 4 passed; domain typecheck/test 2 passed; workspace typecheck passed; web typecheck/build passed; web test runner completed with 0 tests; OpenFreeMap style/vector/glyph/sprite endpoint health checks returned 200; git diff --check clean for implementation scope. Review: PASS with warning that web runner has no automated tests and GUI download/cutover was validated through guards/build rather than browser automation.
+
+System Decision Impact: candidate @decision/20260810-1119-google-basemap-is-online-only-osm-vector-is-the-desktop-offline-fallback (added) — records Google online-only and OSM Vector offline package requirements; remains draft for human review.
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.
 <!-- SECTION:NOTES:END -->
 
