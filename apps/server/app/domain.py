@@ -6,345 +6,102 @@ from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from ipaddress import ip_address
 from pathlib import Path
+
+from .shared.clock import utc_now
+from .shared.errors import (
+    FileImportConflict,
+    FileWriteConflict,
+    OrganizeConflictError,
+    OrganizeValidationError,
+    ProjectConflictError,
+    ProjectValidationError,
+    RevisionConflict,
+)
+from .shared.normalization import normalize_coordinate, normalize_ip, normalize_text
+from .shared.contracts import (
+    AuditEvent,
+    ChangeSet,
+    EntityRevision,
+    FileWriteJob,
+    OutboxEvent,
+    SourceLocator,
+    WriteBackPreviewPlan,
+)
+from .modules.datacenter.domain import Camera, ImportIssue, ImportResult
+from .modules.operate.domain import Contractor, FieldPackage, Observation, WorkPackage
+from .modules.organize.domain import (
+    OrganizeGroup,
+    OrganizeGroupMembership,
+    OrganizeItemLifecycle,
+    OrganizeTag,
+    OrganizeTagMembership,
+)
+from .modules.project.domain import Project
 from typing import Any
 from uuid import UUID, uuid4
 from zipfile import BadZipFile
 
 
-def utc_now() -> datetime:
-    return datetime.now(timezone.utc)
 
 
-def normalize_text(value: Any) -> str | None:
-    if value is None:
-        return None
-    text = " ".join(str(value).strip().split())
-    return text or None
 
 
-def normalize_ip(value: Any) -> str | None:
-    text = normalize_text(value)
-    if text is None:
-        return None
-    if text.count(".") == 3:
-        parts = text.split(".")
-        try:
-            octets = [int(part, 10) for part in parts]
-        except ValueError as exc:
-            raise ValueError("Invalid IP address") from exc
-        if any(octet < 0 or octet > 255 for octet in octets):
-            raise ValueError("Invalid IP address")
-        return ".".join(str(octet) for octet in octets)
-    try:
-        return str(ip_address(text))
-    except ValueError as exc:
-        raise ValueError("Invalid IP address") from exc
 
 
-def normalize_coordinate(value: Any, minimum: float, maximum: float, name: str) -> float | None:
-    if value is None or value == "":
-        return None
-    try:
-        number = float(value)
-    except (TypeError, ValueError) as exc:
-        raise ValueError(f"Invalid {name}") from exc
-    if not minimum <= number <= maximum:
-        raise ValueError(f"Invalid {name}")
-    return number
 
 
-@dataclass(frozen=True)
-class SourceLocator:
-    file_id: UUID
-    file_revision: int
-    sheet: str
-    row: int
-    column: str
 
 
-@dataclass
-class Project:
-    id: UUID
-    code: str
-    name: str
-    root_path: str
-    status: str = "ACTIVE"
-    schema_version: int = 1
-    created_at: datetime = field(default_factory=utc_now)
-    updated_at: datetime = field(default_factory=utc_now)
 
 
-@dataclass
-class Camera:
-    entity_id: UUID
-    project_id: UUID
-    code: str
-    name: str | None = None
-    intersection_id: UUID | None = None
-    manufacturer: str | None = None
-    model: str | None = None
-    ip_address: str | None = None
-    status: str | None = None
-    properties: dict[str, Any] = field(default_factory=dict)
-    source: SourceLocator | None = None
 
 
-@dataclass
-class OrganizeGroup:
-    id: UUID
-    project_id: UUID
-    name: str
-    parent_ids: list[UUID] = field(default_factory=list)
-    status: str = "ACTIVE"
-    created_at: datetime = field(default_factory=utc_now)
-    updated_at: datetime = field(default_factory=utc_now)
 
 
-@dataclass(frozen=True)
-class OrganizeTag:
-    id: UUID
-    project_id: UUID
-    name: str
-    created_at: datetime = field(default_factory=utc_now)
 
 
-@dataclass(frozen=True)
-class OrganizeGroupMembership:
-    project_id: UUID
-    item_type: str
-    item_id: UUID
-    group_id: UUID
-    created_at: datetime = field(default_factory=utc_now)
 
 
-@dataclass(frozen=True)
-class OrganizeTagMembership:
-    project_id: UUID
-    item_type: str
-    item_id: UUID
-    tag_id: UUID
-    created_at: datetime = field(default_factory=utc_now)
 
 
-@dataclass(frozen=True)
-class OrganizeItemLifecycle:
-    project_id: UUID
-    item_type: str
-    item_id: UUID
-    status: str
-    updated_at: datetime = field(default_factory=utc_now)
 
 
-@dataclass(frozen=True)
-class EntityRevision:
-    id: UUID
-    entity_id: UUID
-    representation: str
-    revision: int
-    data: dict[str, Any]
-    geometry: dict[str, float] | None
-    created_at: datetime
-    created_by: str
-    changeset_id: UUID | None
 
 
-@dataclass(frozen=True)
-class ImportIssue:
-    code: str
-    message: str
-    row: int
-    column: str | None = None
 
 
-@dataclass
-class ImportResult:
-    inserted: list[Camera] = field(default_factory=list)
-    changed: list[Camera] = field(default_factory=list)
-    unchanged: list[Camera] = field(default_factory=list)
-    invalid: list[ImportIssue] = field(default_factory=list)
-    conflict: list[ImportIssue] = field(default_factory=list)
-    unmapped: list[ImportIssue] = field(default_factory=list)
 
 
-@dataclass
-class Contractor:
-    id: UUID
-    project_id: UUID
-    code: str
-    name: str
-    status: str = "ACTIVE"
 
 
-@dataclass
-class WorkPackage:
-    id: UUID
-    project_id: UUID
-    contractor_id: UUID
-    code: str
-    name: str
-    entity_ids: list[UUID] = field(default_factory=list)
-    status: str = "DRAFT"
 
 
-@dataclass
-class FieldPackage:
-    id: UUID
-    project_id: UUID
-    work_package_id: UUID
-    entity_ids: list[UUID]
-    status: str = "PUBLISHED"
 
 
-@dataclass
-class Observation:
-    id: UUID
-    project_id: UUID
-    field_package_id: UUID
-    entity_id: UUID
-    base_revision: int
-    observed_at: datetime
-    operator_id: str
-    gps: dict[str, Any] | None
-    form_data: dict[str, Any]
-    status: str
-    changeset_id: UUID
-    idempotency_key: str
 
 
-@dataclass
-class ChangeSet:
-    id: UUID
-    project_id: UUID
-    origin: str
-    submitted_by: str
-    submitted_at: datetime
-    status: str
-    entity_id: UUID
-    representation: str
-    base_revision: int
-    patch: dict[str, Any]
-    file_id: UUID | None = None
-    file_revision: int | None = None
-    file_hash: str | None = None
-    items: list[dict[str, Any]] = field(default_factory=list)
-    raw_rows: list[dict[str, Any]] = field(default_factory=list)
-    conflicts: list[dict[str, Any]] = field(default_factory=list)
-    document_assets: list[dict[str, Any]] = field(default_factory=list)
-    relationship_proposals: list[dict[str, Any]] = field(default_factory=list)
-    document_tables: list[dict[str, Any]] = field(default_factory=list)
-    document_mapped_tables: list[dict[str, Any]] = field(default_factory=list)
 
 
-@dataclass(frozen=True)
-class OutboxEvent:
-    cursor: int
-    event_id: UUID
-    event_type: str
-    aggregate_id: UUID
-    aggregate_version: int
-    project_id: UUID
-    payload: dict[str, Any]
-    occurred_at: datetime
 
 
-@dataclass(frozen=True)
-class AuditEvent:
-    id: UUID
-    project_id: UUID
-    event_id: UUID
-    event_type: str
-    operation: str
-    actor: str
-    occurred_at: datetime
-    file_id: UUID | None
-    object_id: UUID | None
-    profile_id: str | None
-    changeset_id: UUID | None
-    status: str | None
-    correlation_id: UUID
-    causation_id: UUID | None
-    field_changes: list[dict[str, Any]]
-    duration_ms: int | None
 
 
-@dataclass
-class FileWriteJob:
-    id: UUID
-    project_id: UUID
-    file_id: UUID
-    expected_file_revision: int
-    entity_revision: UUID
-    status: str = "PENDING"
-    operation: str = "WRITE_BACK"
-    expected_file_hash: str | None = None
-    source_path: str | None = None
-    source_file_revision: int | None = None
-    changeset_id: UUID | None = None
-    result_file_revision: int | None = None
-    result_file_hash: str | None = None
-    backup_path: str | None = None
-    plan_id: UUID | None = None
-    destination_mode: str = "IN_PLACE"
-    destination_path: str | None = None
-    batch_strategy: str = "PER_FILE"
-    confirmed: bool = False
-    safety_enforced: bool = False
 
 
-@dataclass
-class WriteBackPreviewPlan:
-    id: UUID
-    project_id: UUID
-    created_by: str
-    created_at: datetime
-    item_type: str
-    item_ids: list[UUID]
-    format: str
-    destination_mode: str
-    batch_strategy: str
-    status: str
-    confirmation_required: bool
-    can_confirm: bool
-    write_performed: bool
-    files: list[dict[str, Any]]
-    warnings: list[str]
 
 
-class RevisionConflict(Exception):
-    def __init__(self, entity_id: UUID, base_revision: int, current_revision: int):
-        self.entity_id = entity_id
-        self.base_revision = base_revision
-        self.current_revision = current_revision
-        super().__init__(
-            f"Revision conflict for {entity_id}: base={base_revision}, current={current_revision}"
-        )
 
 
-class FileImportConflict(Exception):
-    def __init__(self, changeset_id: UUID, conflicts: list[dict[str, Any]]):
-        self.changeset_id = changeset_id
-        self.conflicts = conflicts
-        super().__init__(f"File import conflict for {changeset_id}")
 
 
-class FileWriteConflict(Exception):
-    pass
 
 
-class OrganizeValidationError(ValueError):
-    pass
 
 
-class OrganizeConflictError(ValueError):
-    pass
 
 
-class ProjectValidationError(ValueError):
-    pass
 
 
-class ProjectConflictError(ValueError):
-    pass
 
 
 class CameraStore:

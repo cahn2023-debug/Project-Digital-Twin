@@ -1,0 +1,751 @@
+{
+  "taskId": "kxz78p",
+  "currentVersion": 10,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "kxz78p",
+      "version": 1,
+      "timestamp": "2026-08-09T16:54:25.750022Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-09T16:54:25.7486079Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T16:54:25.7486079Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "kxz78p",
+      "version": 2,
+      "timestamp": "2026-08-09T16:54:48.8274208Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Existing REST routes and response contracts remain unchanged."
+            },
+            {
+              "completed": false,
+              "text": "packages/domain retains backward-compatible root exports after context split."
+            },
+            {
+              "completed": false,
+              "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+            },
+            {
+              "completed": false,
+              "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+            },
+            {
+              "completed": false,
+              "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+            },
+            {
+              "completed": false,
+              "text": "Architecture docs reflect the implemented module boundaries."
+            },
+            {
+              "completed": false,
+              "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+            }
+          ]
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": false,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": false,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": false,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": false,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": false,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": false,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T16:54:48.8274208Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "kxz78p",
+      "version": 3,
+      "timestamp": "2026-08-09T17:16:08.5711909Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.",
+          "newValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": false,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": false,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": false,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": false,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": false,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": false,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:16:08.5711909Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "kxz78p",
+      "version": 4,
+      "timestamp": "2026-08-09T17:17:19.2727469Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Existing REST routes and response contracts remain unchanged."
+            },
+            {
+              "completed": false,
+              "text": "packages/domain retains backward-compatible root exports after context split."
+            },
+            {
+              "completed": false,
+              "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+            },
+            {
+              "completed": false,
+              "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+            },
+            {
+              "completed": false,
+              "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+            },
+            {
+              "completed": false,
+              "text": "Architecture docs reflect the implemented module boundaries."
+            },
+            {
+              "completed": false,
+              "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Existing REST routes and response contracts remain unchanged."
+            },
+            {
+              "completed": true,
+              "text": "packages/domain retains backward-compatible root exports after context split."
+            },
+            {
+              "completed": true,
+              "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+            },
+            {
+              "completed": true,
+              "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+            },
+            {
+              "completed": true,
+              "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+            },
+            {
+              "completed": true,
+              "text": "Architecture docs reflect the implemented module boundaries."
+            },
+            {
+              "completed": true,
+              "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.",
+          "newValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": true,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": true,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": true,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": true,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": true,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:17:19.2727469Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "kxz78p",
+      "version": 5,
+      "timestamp": "2026-08-09T17:17:37.8154647Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 1366
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": true,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": true,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": true,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": true,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": true,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 1366,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:17:37.8154647Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "kxz78p",
+      "version": 6,
+      "timestamp": "2026-08-09T17:17:40.6986882Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T17:17:40.6986882Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": true,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": true,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": true,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": true,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": true,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T17:17:40.6986882Z",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "done",
+        "timeSpent": 1366,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:17:40.6986882Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "kxz78p",
+      "version": 7,
+      "timestamp": "2026-08-09T17:18:18.683194Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "done",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.",
+          "newValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.\nReopened for completion audit: the initial implementation passed all checks, but the target layout still needs explicit desktop manifest/scanner/queue files and server file-adapter namespaces. Continuing without changing public behavior."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": "2026-08-09T17:17:40.698Z",
+          "newValue": null
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": true,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": true,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": true,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": true,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": true,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.\nReopened for completion audit: the initial implementation passed all checks, but the target layout still needs explicit desktop manifest/scanner/queue files and server file-adapter namespaces. Continuing without changing public behavior.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 1366,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:18:18.683194Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "kxz78p",
+      "version": 8,
+      "timestamp": "2026-08-09T17:24:10.2625693Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.\nReopened for completion audit: the initial implementation passed all checks, but the target layout still needs explicit desktop manifest/scanner/queue files and server file-adapter namespaces. Continuing without changing public behavior.",
+          "newValue": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.\nReopened for completion audit: the initial implementation passed all checks, but the target layout still needs explicit desktop manifest/scanner/queue files and server file-adapter namespaces. Continuing without changing public behavior.\nFinal completion wave: extracted server file adapters under adapters/files/importers and adapters/files/writers with compatibility wrappers; moved project dialogs into features/project-lifecycle; split desktop-core ManifestDb/scanner/queue/hash/safe-write modules. Final verification remains green: pnpm typecheck/test/build, uv run pytest 43 passed, cargo fmt/check/test, git diff --check. Existing warnings: web bundle \u003e500KB and Starlette/httpx deprecation only."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": true,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": true,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": true,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": true,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": true,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.\nReopened for completion audit: the initial implementation passed all checks, but the target layout still needs explicit desktop manifest/scanner/queue files and server file-adapter namespaces. Continuing without changing public behavior.\nFinal completion wave: extracted server file adapters under adapters/files/importers and adapters/files/writers with compatibility wrappers; moved project dialogs into features/project-lifecycle; split desktop-core ManifestDb/scanner/queue/hash/safe-write modules. Final verification remains green: pnpm typecheck/test/build, uv run pytest 43 passed, cargo fmt/check/test, git diff --check. Existing warnings: web bundle \u003e500KB and Starlette/httpx deprecation only.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 1366,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:24:10.2625693Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "kxz78p",
+      "version": 9,
+      "timestamp": "2026-08-09T17:24:28.0529007Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": 1366,
+          "newValue": 1725
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Existing REST routes and response contracts remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "packages/domain retains backward-compatible root exports after context split."
+          },
+          {
+            "completed": true,
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated."
+          },
+          {
+            "completed": true,
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features."
+          },
+          {
+            "completed": true,
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved."
+          },
+          {
+            "completed": true,
+            "text": "Architecture docs reflect the implemented module boundaries."
+          },
+          {
+            "completed": true,
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.\nReopened for completion audit: the initial implementation passed all checks, but the target layout still needs explicit desktop manifest/scanner/queue files and server file-adapter namespaces. Continuing without changing public behavior.\nFinal completion wave: extracted server file adapters under adapters/files/importers and adapters/files/writers with compatibility wrappers; moved project dialogs into features/project-lifecycle; split desktop-core ManifestDb/scanner/queue/hash/safe-write modules. Final verification remains green: pnpm typecheck/test/build, uv run pytest 43 passed, cargo fmt/check/test, git diff --check. Existing warnings: web bundle \u003e500KB and Starlette/httpx deprecation only.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "in-progress",
+        "timeSpent": 1725,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:24:28.0529007Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "kxz78p",
+      "version": 10,
+      "timestamp": "2026-08-09T17:24:31.1017701Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-09T17:24:31.1017701Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Existing REST routes and response contracts remain unchanged.",
+            "completed": true
+          },
+          {
+            "text": "packages/domain retains backward-compatible root exports after context split.",
+            "completed": true
+          },
+          {
+            "text": "Backend code is organized by project/datacenter/design/operate/organize/dashboard with shared platform/adapters separated.",
+            "completed": true
+          },
+          {
+            "text": "Frontend App.tsx becomes shell-oriented and tab views live under features.",
+            "completed": true
+          },
+          {
+            "text": "Desktop core is split into manifest/scanner/queue/hash/safe-write modules with existing tests preserved.",
+            "completed": true
+          },
+          {
+            "text": "Architecture docs reflect the implemented module boundaries.",
+            "completed": true
+          },
+          {
+            "text": "pnpm checks, server tests, Rust checks/tests, and Knowns validation pass.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-09T17:24:31.1017701Z",
+        "createdAt": "2026-08-09T16:54:25.748Z",
+        "description": "Refactor cấu trúc code theo DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; tách shared kernel, backend modules, frontend features và desktop runtime trong khi giữ nguyên REST/API/database behavior.",
+        "id": "kxz78p",
+        "implementationNotes": "Started implementation: task created from approved user plan; preserving REST, database and runtime behavior while extracting boundaries incrementally.\nCheckpoint: extracted FastAPI feature routers with unchanged REST paths; split shared Python contracts/errors/normalization and preserved domain.py compatibility exports; split TypeScript domain contracts, web tab views/shared UI/API/config, and Tauri/Rust scan/jobs/hash/safe-write boundaries. Verification so far: uv run pytest 43 passed; domain/web/desktop typecheck passed; cargo fmt/check/test passed. Remaining: full workspace verification, final docs/diff cleanup, and task validation.\nCompleted: REST paths/response behavior preserved; shared TypeScript and Python context contracts extracted with compatibility barrels/facades; FastAPI routers grouped by product surface; web tabs/shared UI/API/config extracted; desktop Tauri commands and Rust hash/safe-write boundaries extracted; architecture docs updated and module boundary tests added. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing bundle-size warning; uv run pytest 43 passed with one existing Starlette/httpx deprecation warning; cargo fmt --check, cargo check --workspace, cargo test --workspace passed; git diff --check passed. System Decision Impact: candidate @decision/20260810-0017-organize-project-digital-twin-code-by-product-tab-boundaries added (architecture guidance; draft reviewState=needs_evidence because local architecture docs are not Knowns-managed entities). Spec Decision Compliance: Phase 0B D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass.\nReopened for completion audit: the initial implementation passed all checks, but the target layout still needs explicit desktop manifest/scanner/queue files and server file-adapter namespaces. Continuing without changing public behavior.\nFinal completion wave: extracted server file adapters under adapters/files/importers and adapters/files/writers with compatibility wrappers; moved project dialogs into features/project-lifecycle; split desktop-core ManifestDb/scanner/queue/hash/safe-write modules. Final verification remains green: pnpm typecheck/test/build, uv run pytest 43 passed, cargo fmt/check/test, git diff --check. Existing warnings: web bundle \u003e500KB and Starlette/httpx deprecation only.",
+        "implementationPlan": "Freeze current contracts and update architecture docs to match implemented code.\nSplit shared TypeScript domain contracts by context while preserving the root barrel exports.\nSplit backend responsibilities into feature modules with compatibility facades and unchanged REST behavior.\nSplit frontend shell/features and desktop Rust capabilities without behavior changes.\nVerify all runtimes, add module-boundary coverage, and validate the Knowns task.",
+        "labels": [
+          "architecture",
+          "refactor",
+          "maintainability",
+          "module-boundaries"
+        ],
+        "priority": "high",
+        "status": "done",
+        "timeSpent": 1725,
+        "title": "Tách code theo 5 tab của Project Digital Twin",
+        "updatedAt": "2026-08-09T17:24:31.1017701Z"
+      }
+    }
+  ]
+}
