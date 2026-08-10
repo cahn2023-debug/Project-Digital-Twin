@@ -1014,6 +1014,31 @@ class CameraStore:
         )
         return changeset
 
+    def mark_changeset_conflict_review(
+        self,
+        project_id: UUID,
+        changeset_id: UUID,
+        reasons: list[dict[str, Any]],
+        actor: str,
+    ) -> ChangeSet:
+        changeset = self.changesets[changeset_id]
+        if changeset.project_id != project_id:
+            raise KeyError("ChangeSet does not belong to project")
+        changeset.status = "CONFLICT_REVIEW"
+        changeset.conflicts.extend(reasons)
+        self._add_event(
+            "DesktopImportConflictReview",
+            changeset.id,
+            project_id,
+            changeset.file_revision or 0,
+            {"reasons": reasons},
+            actor=actor,
+            file_id=changeset.file_id,
+            changeset_id=changeset.id,
+            status=changeset.status,
+        )
+        return changeset
+
     def approve_file_import_changeset(
         self,
         project_id: UUID,

@@ -1,0 +1,897 @@
+{
+  "taskId": "drpdus",
+  "currentVersion": 11,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "drpdus",
+      "version": 1,
+      "timestamp": "2026-08-10T05:23:07.3204407Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.3193439Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:23:07.3193439Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "drpdus",
+      "version": 2,
+      "timestamp": "2026-08-10T05:23:24.1499556Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+            },
+            {
+              "completed": false,
+              "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+            },
+            {
+              "completed": false,
+              "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": false,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": false,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:23:24.1499556Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "drpdus",
+      "version": 3,
+      "timestamp": "2026-08-10T05:38:41.6697278Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7."
+        },
+        {
+          "field": "order",
+          "oldValue": 30,
+          "newValue": 20
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": false,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": false,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:38:41.6697278Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "drpdus",
+      "version": 4,
+      "timestamp": "2026-08-10T05:39:54.0368817Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+            },
+            {
+              "completed": false,
+              "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+            },
+            {
+              "completed": false,
+              "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+            },
+            {
+              "completed": false,
+              "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+            },
+            {
+              "completed": false,
+              "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+            },
+            {
+              "completed": false,
+              "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+            },
+            {
+              "completed": false,
+              "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+            },
+            {
+              "completed": false,
+              "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": false,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": false,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          },
+          {
+            "completed": false,
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+          },
+          {
+            "completed": false,
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+          },
+          {
+            "completed": false,
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:39:54.0368817Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "drpdus",
+      "version": 5,
+      "timestamp": "2026-08-10T05:40:04.371166Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.",
+          "newValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": false,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": false,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          },
+          {
+            "completed": false,
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+          },
+          {
+            "completed": false,
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+          },
+          {
+            "completed": false,
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:40:04.371166Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "drpdus",
+      "version": 6,
+      "timestamp": "2026-08-10T05:40:26.1657995Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Add server request models in `apps/server/app/shared/schemas.py` for the `ijh7t3` normalized result and raw fallback envelope: file identity/revision, fingerprint, format/profile/parser metadata, parse report, normalized records, fallback reason, raw content and idempotency key.\n2. Add a normalized desktop-import route in `apps/server/app/modules/datacenter/router.py` that accepts already parsed tabular and document records, reuses existing ChangeSet/idempotency persistence, preserves source locators/unmapped data, and never reads a desktop path.\n3. Add a raw-fallback route that verifies the declared fingerprint, writes the received bytes only to a temporary file with the correct suffix, invokes the existing Excel/document parsers, and deletes the temporary artifact in a `finally` path.\n4. Map every raw-fallback outcome to an explicit per-file response: `SERVER_PARSED` with changeset/result, `FAILED` with actionable diagnostics, or `CONFLICT_REVIEW` when source hash/format/profile metadata disagrees. Conflict outcomes must not apply canonical state and must remain reviewable through the existing ChangeSet flow.\n5. Preserve idempotency across normalized and raw requests using the supplied idempotency key plus file identity/fingerprint; repeated requests return the existing outcome without creating duplicate ChangeSets.\n6. Add API/domain tests for normalized XLSX/document payloads, raw fallback success/failure, temporary-artifact cleanup, hash mismatch conflict staging, metadata mismatch, and duplicate retries.\n7. Verify with the server test suite, focused desktop-import tests, diff checks, Knowns task validation, and a review of the route contract for compatibility with the next worker task `r3nkb7`.\n\n### Plan check\n\n- Task AC-2 is covered by steps 1, 3, 4 and 6.\n- Task AC-10 is covered by steps 3, 4 and 6.\n- Task AC-11 is covered by steps 4 and 6.\n- The normalized endpoint is included because `r3nkb7` must upload the local parser result without sending a source path.\n- No circular dependency: `r3nkb7` consumes these routes after this task; `dt5dz4` owns durable report/history queries.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass (worker-owned), D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.",
+          "newValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": false,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": false,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          },
+          {
+            "completed": false,
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+          },
+          {
+            "completed": false,
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+          },
+          {
+            "completed": false,
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add server request models in `apps/server/app/shared/schemas.py` for the `ijh7t3` normalized result and raw fallback envelope: file identity/revision, fingerprint, format/profile/parser metadata, parse report, normalized records, fallback reason, raw content and idempotency key.\n2. Add a normalized desktop-import route in `apps/server/app/modules/datacenter/router.py` that accepts already parsed tabular and document records, reuses existing ChangeSet/idempotency persistence, preserves source locators/unmapped data, and never reads a desktop path.\n3. Add a raw-fallback route that verifies the declared fingerprint, writes the received bytes only to a temporary file with the correct suffix, invokes the existing Excel/document parsers, and deletes the temporary artifact in a `finally` path.\n4. Map every raw-fallback outcome to an explicit per-file response: `SERVER_PARSED` with changeset/result, `FAILED` with actionable diagnostics, or `CONFLICT_REVIEW` when source hash/format/profile metadata disagrees. Conflict outcomes must not apply canonical state and must remain reviewable through the existing ChangeSet flow.\n5. Preserve idempotency across normalized and raw requests using the supplied idempotency key plus file identity/fingerprint; repeated requests return the existing outcome without creating duplicate ChangeSets.\n6. Add API/domain tests for normalized XLSX/document payloads, raw fallback success/failure, temporary-artifact cleanup, hash mismatch conflict staging, metadata mismatch, and duplicate retries.\n7. Verify with the server test suite, focused desktop-import tests, diff checks, Knowns task validation, and a review of the route contract for compatibility with the next worker task `r3nkb7`.\n\n### Plan check\n\n- Task AC-2 is covered by steps 1, 3, 4 and 6.\n- Task AC-10 is covered by steps 3, 4 and 6.\n- Task AC-11 is covered by steps 4 and 6.\n- The normalized endpoint is included because `r3nkb7` must upload the local parser result without sending a source path.\n- No circular dependency: `r3nkb7` consumes these routes after this task; `dt5dz4` owns durable report/history queries.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass (worker-owned), D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:40:26.1657995Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "drpdus",
+      "version": 7,
+      "timestamp": "2026-08-10T05:46:37.817842Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+            },
+            {
+              "completed": false,
+              "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+            },
+            {
+              "completed": false,
+              "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+            },
+            {
+              "completed": false,
+              "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+            },
+            {
+              "completed": false,
+              "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+            },
+            {
+              "completed": false,
+              "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+            },
+            {
+              "completed": true,
+              "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+            },
+            {
+              "completed": true,
+              "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+            },
+            {
+              "completed": false,
+              "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+            },
+            {
+              "completed": false,
+              "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+            },
+            {
+              "completed": false,
+              "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.",
+          "newValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": true,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": true,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          },
+          {
+            "completed": false,
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+          },
+          {
+            "completed": false,
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+          },
+          {
+            "completed": false,
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add server request models in `apps/server/app/shared/schemas.py` for the `ijh7t3` normalized result and raw fallback envelope: file identity/revision, fingerprint, format/profile/parser metadata, parse report, normalized records, fallback reason, raw content and idempotency key.\n2. Add a normalized desktop-import route in `apps/server/app/modules/datacenter/router.py` that accepts already parsed tabular and document records, reuses existing ChangeSet/idempotency persistence, preserves source locators/unmapped data, and never reads a desktop path.\n3. Add a raw-fallback route that verifies the declared fingerprint, writes the received bytes only to a temporary file with the correct suffix, invokes the existing Excel/document parsers, and deletes the temporary artifact in a `finally` path.\n4. Map every raw-fallback outcome to an explicit per-file response: `SERVER_PARSED` with changeset/result, `FAILED` with actionable diagnostics, or `CONFLICT_REVIEW` when source hash/format/profile metadata disagrees. Conflict outcomes must not apply canonical state and must remain reviewable through the existing ChangeSet flow.\n5. Preserve idempotency across normalized and raw requests using the supplied idempotency key plus file identity/fingerprint; repeated requests return the existing outcome without creating duplicate ChangeSets.\n6. Add API/domain tests for normalized XLSX/document payloads, raw fallback success/failure, temporary-artifact cleanup, hash mismatch conflict staging, metadata mismatch, and duplicate retries.\n7. Verify with the server test suite, focused desktop-import tests, diff checks, Knowns task validation, and a review of the route contract for compatibility with the next worker task `r3nkb7`.\n\n### Plan check\n\n- Task AC-2 is covered by steps 1, 3, 4 and 6.\n- Task AC-10 is covered by steps 3, 4 and 6.\n- Task AC-11 is covered by steps 4 and 6.\n- The normalized endpoint is included because `r3nkb7` must upload the local parser result without sending a source path.\n- No circular dependency: `r3nkb7` consumes these routes after this task; `dt5dz4` owns durable report/history queries.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass (worker-owned), D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:46:37.817842Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "drpdus",
+      "version": 8,
+      "timestamp": "2026-08-10T05:46:48.5924153Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 401
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": true,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": true,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          },
+          {
+            "completed": false,
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+          },
+          {
+            "completed": false,
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+          },
+          {
+            "completed": false,
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add server request models in `apps/server/app/shared/schemas.py` for the `ijh7t3` normalized result and raw fallback envelope: file identity/revision, fingerprint, format/profile/parser metadata, parse report, normalized records, fallback reason, raw content and idempotency key.\n2. Add a normalized desktop-import route in `apps/server/app/modules/datacenter/router.py` that accepts already parsed tabular and document records, reuses existing ChangeSet/idempotency persistence, preserves source locators/unmapped data, and never reads a desktop path.\n3. Add a raw-fallback route that verifies the declared fingerprint, writes the received bytes only to a temporary file with the correct suffix, invokes the existing Excel/document parsers, and deletes the temporary artifact in a `finally` path.\n4. Map every raw-fallback outcome to an explicit per-file response: `SERVER_PARSED` with changeset/result, `FAILED` with actionable diagnostics, or `CONFLICT_REVIEW` when source hash/format/profile metadata disagrees. Conflict outcomes must not apply canonical state and must remain reviewable through the existing ChangeSet flow.\n5. Preserve idempotency across normalized and raw requests using the supplied idempotency key plus file identity/fingerprint; repeated requests return the existing outcome without creating duplicate ChangeSets.\n6. Add API/domain tests for normalized XLSX/document payloads, raw fallback success/failure, temporary-artifact cleanup, hash mismatch conflict staging, metadata mismatch, and duplicate retries.\n7. Verify with the server test suite, focused desktop-import tests, diff checks, Knowns task validation, and a review of the route contract for compatibility with the next worker task `r3nkb7`.\n\n### Plan check\n\n- Task AC-2 is covered by steps 1, 3, 4 and 6.\n- Task AC-10 is covered by steps 3, 4 and 6.\n- Task AC-11 is covered by steps 4 and 6.\n- The normalized endpoint is included because `r3nkb7` must upload the local parser result without sending a source path.\n- No circular dependency: `r3nkb7` consumes these routes after this task; `dt5dz4` owns durable report/history queries.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass (worker-owned), D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 401,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:46:48.5924153Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "drpdus",
+      "version": 9,
+      "timestamp": "2026-08-10T05:46:58.5458052Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T05:46:58.5458052Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": true,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": true,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          },
+          {
+            "completed": false,
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+          },
+          {
+            "completed": false,
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+          },
+          {
+            "completed": false,
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T05:46:58.5458052Z",
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add server request models in `apps/server/app/shared/schemas.py` for the `ijh7t3` normalized result and raw fallback envelope: file identity/revision, fingerprint, format/profile/parser metadata, parse report, normalized records, fallback reason, raw content and idempotency key.\n2. Add a normalized desktop-import route in `apps/server/app/modules/datacenter/router.py` that accepts already parsed tabular and document records, reuses existing ChangeSet/idempotency persistence, preserves source locators/unmapped data, and never reads a desktop path.\n3. Add a raw-fallback route that verifies the declared fingerprint, writes the received bytes only to a temporary file with the correct suffix, invokes the existing Excel/document parsers, and deletes the temporary artifact in a `finally` path.\n4. Map every raw-fallback outcome to an explicit per-file response: `SERVER_PARSED` with changeset/result, `FAILED` with actionable diagnostics, or `CONFLICT_REVIEW` when source hash/format/profile metadata disagrees. Conflict outcomes must not apply canonical state and must remain reviewable through the existing ChangeSet flow.\n5. Preserve idempotency across normalized and raw requests using the supplied idempotency key plus file identity/fingerprint; repeated requests return the existing outcome without creating duplicate ChangeSets.\n6. Add API/domain tests for normalized XLSX/document payloads, raw fallback success/failure, temporary-artifact cleanup, hash mismatch conflict staging, metadata mismatch, and duplicate retries.\n7. Verify with the server test suite, focused desktop-import tests, diff checks, Knowns task validation, and a review of the route contract for compatibility with the next worker task `r3nkb7`.\n\n### Plan check\n\n- Task AC-2 is covered by steps 1, 3, 4 and 6.\n- Task AC-10 is covered by steps 3, 4 and 6.\n- Task AC-11 is covered by steps 4 and 6.\n- The normalized endpoint is included because `r3nkb7` must upload the local parser result without sending a source path.\n- No circular dependency: `r3nkb7` consumes these routes after this task; `dt5dz4` owns durable report/history queries.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass (worker-owned), D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 401,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T05:46:58.5458052Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "drpdus",
+      "version": 10,
+      "timestamp": "2026-08-10T06:08:44.7285297Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": true,
+              "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+            },
+            {
+              "completed": true,
+              "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+            },
+            {
+              "completed": true,
+              "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+            },
+            {
+              "completed": false,
+              "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+            },
+            {
+              "completed": false,
+              "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+            },
+            {
+              "completed": false,
+              "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+            },
+            {
+              "completed": true,
+              "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+            },
+            {
+              "completed": true,
+              "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+            },
+            {
+              "completed": true,
+              "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+            },
+            {
+              "completed": true,
+              "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+            },
+            {
+              "completed": true,
+              "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+          "newValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: implementation AC #4 normalized endpoint, AC #5 raw-fallback/idempotency/status contract, and AC #6 temporary-storage cleanup/provenance are verified by the focused and full server suites. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics."
+          },
+          {
+            "completed": true,
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report."
+          },
+          {
+            "completed": true,
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking."
+          },
+          {
+            "completed": true,
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records."
+          },
+          {
+            "completed": true,
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes."
+          },
+          {
+            "completed": true,
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T05:46:58.545Z",
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: implementation AC #4 normalized endpoint, AC #5 raw-fallback/idempotency/status contract, and AC #6 temporary-storage cleanup/provenance are verified by the focused and full server suites. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add server request models in `apps/server/app/shared/schemas.py` for the `ijh7t3` normalized result and raw fallback envelope: file identity/revision, fingerprint, format/profile/parser metadata, parse report, normalized records, fallback reason, raw content and idempotency key.\n2. Add a normalized desktop-import route in `apps/server/app/modules/datacenter/router.py` that accepts already parsed tabular and document records, reuses existing ChangeSet/idempotency persistence, preserves source locators/unmapped data, and never reads a desktop path.\n3. Add a raw-fallback route that verifies the declared fingerprint, writes the received bytes only to a temporary file with the correct suffix, invokes the existing Excel/document parsers, and deletes the temporary artifact in a `finally` path.\n4. Map every raw-fallback outcome to an explicit per-file response: `SERVER_PARSED` with changeset/result, `FAILED` with actionable diagnostics, or `CONFLICT_REVIEW` when source hash/format/profile metadata disagrees. Conflict outcomes must not apply canonical state and must remain reviewable through the existing ChangeSet flow.\n5. Preserve idempotency across normalized and raw requests using the supplied idempotency key plus file identity/fingerprint; repeated requests return the existing outcome without creating duplicate ChangeSets.\n6. Add API/domain tests for normalized XLSX/document payloads, raw fallback success/failure, temporary-artifact cleanup, hash mismatch conflict staging, metadata mismatch, and duplicate retries.\n7. Verify with the server test suite, focused desktop-import tests, diff checks, Knowns task validation, and a review of the route contract for compatibility with the next worker task `r3nkb7`.\n\n### Plan check\n\n- Task AC-2 is covered by steps 1, 3, 4 and 6.\n- Task AC-10 is covered by steps 3, 4 and 6.\n- Task AC-11 is covered by steps 4 and 6.\n- The normalized endpoint is included because `r3nkb7` must upload the local parser result without sending a source path.\n- No circular dependency: `r3nkb7` consumes these routes after this task; `dt5dz4` owns durable report/history queries.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass (worker-owned), D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 401,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T06:08:44.7285297Z"
+      }
+    },
+    {
+      "id": "v11",
+      "taskId": "drpdus",
+      "version": 11,
+      "timestamp": "2026-08-10T06:10:33.9265733Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: implementation AC #4 normalized endpoint, AC #5 raw-fallback/idempotency/status contract, and AC #6 temporary-storage cleanup/provenance are verified by the focused and full server suites. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+          "newValue": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: implementation AC #4 normalized endpoint, AC #5 raw-fallback/idempotency/status contract, and AC #6 temporary-storage cleanup/provenance are verified by the focused and full server suites. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Implement or extend the server raw-fallback contract with per-file result states and diagnostics.",
+            "completed": true
+          },
+          {
+            "text": "Delete temporary raw artifacts after parsing while retaining metadata and parse report.",
+            "completed": true
+          },
+          {
+            "text": "Stage parser-result mismatches as CONFLICT_REVIEW and test canonical-commit blocking.",
+            "completed": true
+          },
+          {
+            "text": "Provide a normalized desktop-import endpoint that accepts the ijh7t3 result contract for tabular and document records.",
+            "completed": true
+          },
+          {
+            "text": "Provide a raw-fallback endpoint with per-file idempotency, source-hash verification and SERVER_PARSED/FAILED/CONFLICT_REVIEW outcomes.",
+            "completed": true
+          },
+          {
+            "text": "Use temporary server storage for raw bytes and delete it in all success/failure paths while retaining metadata and parse report.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T05:46:58.545Z",
+        "createdAt": "2026-08-10T05:23:07.319Z",
+        "description": "Thêm contract/server flow nhận raw fallback theo từng file, trả kết quả parsing chi tiết, xóa raw tạm sau khi có kết quả, phát hiện mismatch với metadata/kết quả dự kiến và đưa dữ liệu vào CONFLICT_REVIEW trước canonical commit.",
+        "fulfills": [
+          "AC-2",
+          "AC-10",
+          "AC-11"
+        ],
+        "id": "drpdus",
+        "implementationNotes": "Dependency refinement: define server normalized/raw fallback contract before worker integration task r3nkb7.\nUsing kn-flow: ownership taken; planning started after local parser contract ijh7t3.\nPlan saved: normalized desktop-import and raw-fallback server contracts precede worker transport integration.\nDone: Added /desktop-imports/normalized and /desktop-imports/raw-fallback contracts. Normalized imports create idempotent ChangeSets from desktop records; fallback verifies SHA-256, parses temporary raw files, deletes temp artifacts, returns SERVER_PARSED/FAILED/CONFLICT_REVIEW, and stages metadata mismatches without canonical apply. Added document source-name preservation after temp cleanup and conflict audit event. Verification: focused desktop import tests = 5 passed; full server suite = 68 passed; Python compileall passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract (added) — durable server endpoint/status/idempotency/temp-raw contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: implementation AC #4 normalized endpoint, AC #5 raw-fallback/idempotency/status contract, and AC #6 temporary-storage cleanup/provenance are verified by the focused and full server suites. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Add server request models in `apps/server/app/shared/schemas.py` for the `ijh7t3` normalized result and raw fallback envelope: file identity/revision, fingerprint, format/profile/parser metadata, parse report, normalized records, fallback reason, raw content and idempotency key.\n2. Add a normalized desktop-import route in `apps/server/app/modules/datacenter/router.py` that accepts already parsed tabular and document records, reuses existing ChangeSet/idempotency persistence, preserves source locators/unmapped data, and never reads a desktop path.\n3. Add a raw-fallback route that verifies the declared fingerprint, writes the received bytes only to a temporary file with the correct suffix, invokes the existing Excel/document parsers, and deletes the temporary artifact in a `finally` path.\n4. Map every raw-fallback outcome to an explicit per-file response: `SERVER_PARSED` with changeset/result, `FAILED` with actionable diagnostics, or `CONFLICT_REVIEW` when source hash/format/profile metadata disagrees. Conflict outcomes must not apply canonical state and must remain reviewable through the existing ChangeSet flow.\n5. Preserve idempotency across normalized and raw requests using the supplied idempotency key plus file identity/fingerprint; repeated requests return the existing outcome without creating duplicate ChangeSets.\n6. Add API/domain tests for normalized XLSX/document payloads, raw fallback success/failure, temporary-artifact cleanup, hash mismatch conflict staging, metadata mismatch, and duplicate retries.\n7. Verify with the server test suite, focused desktop-import tests, diff checks, Knowns task validation, and a review of the route contract for compatibility with the next worker task `r3nkb7`.\n\n### Plan check\n\n- Task AC-2 is covered by steps 1, 3, 4 and 6.\n- Task AC-10 is covered by steps 3, 4 and 6.\n- Task AC-11 is covered by steps 4 and 6.\n- The normalized endpoint is included because `r3nkb7` must upload the local parser result without sending a source path.\n- No circular dependency: `r3nkb7` consumes these routes after this task; `dt5dz4` owns durable report/history queries.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass (worker-owned), D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "server",
+          "raw-fallback",
+          "conflict"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 401,
+        "title": "[desktop-parse-before-server-upload-03] Implement server raw fallback parsing và conflict review",
+        "updatedAt": "2026-08-10T06:10:33.9265733Z"
+      }
+    }
+  ]
+}

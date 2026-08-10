@@ -1,0 +1,70 @@
+---
+id: dt5dz4
+title: "[desktop-parse-before-server-upload-04] Lưu parse report và retry history theo project"
+status: done
+priority: medium
+labels:
+  - from-spec
+  - spec:desktop-parse-before-server-upload
+  - spec-date:2026-08-10
+  - audit
+  - reporting
+  - provenance
+createdAt: '2026-08-10T05:23:07.361Z'
+updatedAt: '2026-08-10T06:10:39.873Z'
+completedAt: '2026-08-10T06:05:30.837Z'
+timeSpent: 422
+assignee: '@me'
+spec: specs/2026-08-10/desktop-parse-before-server-upload
+fulfills:
+  - AC-12
+order: 40
+---
+# [desktop-parse-before-server-upload-04] Lưu parse report và retry history theo project
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Bảo đảm parse report, warnings/errors, raw fallback reason, server result, retry attempts và trạng thái cuối được lưu/truy vấn được trong suốt vòng đời project, không làm mất provenance.
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [x] #1 Persist parse reports, warnings/errors, retry history and final status for project-lifetime queries.
+- [x] #2 Expose enough provenance and server-fallback metadata for audit and reconciliation.
+- [x] #3 Add persistence/query tests including restart and retry history.
+<!-- AC:END -->
+
+## Implementation Plan
+
+<!-- SECTION:PLAN:BEGIN -->
+## Implementation Plan
+
+1. Add a project-scoped `local_import_history` table and typed query result in `crates/desktop-core/src/manifest.rs`, created alongside the existing manifest tables so existing databases gain the table on reopen.
+2. Make each `store_local_import_result` call append an immutable history row containing import identity, attempt number, status, error/report payload reference and timestamp while continuing to replace the latest `local_imports` projection used by the UI.
+3. Expose a Tauri `list_local_import_history` command and pass the current FILE_SCAN attempt from `apps/web/src/features/datacenter/importWorker.ts` for parsing, uploading, final, and failure states. Keep provenance/fingerprint/parser/server metadata in the existing payload projection.
+4. Add focused Rust restart/query tests proving history survives reopening the manifest, preserves attempt order/status/error, and remains scoped to the project/import.
+5. Verify desktop-core/Tauri/web checks, server regression tests, diff checks and Knowns validation.
+
+### Plan check
+
+- AC-12 is covered by steps 1–4: reports/statuses remain in the latest projection and every attempt is queryable for the project lifetime.
+- Existing worker behavior remains unchanged except for passing attempt metadata; no new server contract is introduced.
+- No schema migration destructive operation is required; `CREATE TABLE IF NOT EXISTS` is additive.
+
+### Spec Decision Compliance
+
+D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.
+<!-- SECTION:PLAN:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Using kn-flow: ownership taken after parser/server/worker tasks completed.
+Plan saved: immutable local import history projection with attempt/status/report query support.
+Done: Added additive project-scoped local_import_history persistence, immutable per-attempt rows, latest-state projection retention, Tauri list_local_import_history exposure, worker attempt propagation, and restart/query coverage. Verification: cargo fmt --all -- --check passed; cargo test -p desktop-core = 31 passed; cargo check -p project-digital-twin-desktop passed; web typecheck/build passed (existing Vite chunk-size warning); server uv run --locked --extra test pytest -q = 68 passed with existing Starlette/httpx deprecation warning; git diff --check passed; Knowns validation passed. Fixed history query ordering to preserve append/retry order. System Decision Impact: candidate @decision/20260810-1305-desktop-local-import-history-is-append-only-and-project-scoped (added) — durable project-scoped append-only local import audit/history contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.
+Review: PASS, P1=0, P2=0, P3=0. Artifact verification: local_import_history table/query substantive and wired through ManifestDb → Tauri command → desktop jobs helper; worker writes attempt/status/report/provenance payloads. No review follow-up required.
+Flow audit: integrated verification confirms project-scoped parse report and retry history persistence/query behavior. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass
+<!-- SECTION:NOTES:END -->
+

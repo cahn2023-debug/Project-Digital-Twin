@@ -4,6 +4,7 @@ pub mod db_encrypted;
 pub mod hash;
 pub mod manifest;
 pub mod mutation;
+pub mod parser;
 pub mod queue;
 pub mod replay;
 pub mod safe_write;
@@ -16,11 +17,16 @@ pub use db_encrypted::{CachedCredential, DbError, DbResult, EncryptedDb, Mutatio
 pub use hash::{sha256_file, sha256_reader};
 pub use manifest::{
     file_id_for_path, source_id_for_directory, DiscoveredFile, FileScanContext, FileVersion,
-    LocalImport, ManifestDb, ManifestEntry, PendingJob, RawRecord, ScanFailure, SourceRegistration,
+    LocalImport, LocalImportHistory, LocalProfile, ManifestDb, ManifestEntry, PendingJob,
+    RawRecord, ScanFailure, SourceRegistration,
 };
 pub use mutation::{
     enqueue_mutation, enqueue_mutation_with_metadata, fetch_pending_mutations, is_network_online,
     mark_mutation_status, pending_mutations_count, set_network_online, SyncPayloadEnvelope,
+};
+pub use parser::{
+    parse_file, DesktopParseResult, FileFormat, NormalizedRecord, ParseIssue, ParseIssueSeverity,
+    ParseRequest, ParseStatus, ParserProfile, SourceLocation,
 };
 pub use replay::{ReplayEngine, SyncBatchResult};
 pub use safe_write::{safe_replace, SafeWriteError};
@@ -182,6 +188,7 @@ mod tests {
                     "IMPORTED",
                     r#"{"changeset":{"id":"change-1"}}"#,
                     "now",
+                    1,
                     &[RawRecord {
                         raw_id: "raw-1".to_owned(),
                         file_version_id: version_id.clone(),
@@ -208,12 +215,75 @@ mod tests {
                 .len(),
             1
         );
+        let history = database
+            .list_local_import_history("project-1", Some("import-1"))
+            .expect("history");
+        assert_eq!(history.len(), 1);
+        assert_eq!(history[0].attempt, 1);
+        assert_eq!(history[0].status, "IMPORTED");
         assert!(database
             .save_local_profile("camera-custom", "project-1", 1, "{}", "now")
             .expect("profile"));
         assert!(!database
             .save_local_profile("camera-custom", "project-1", 1, "changed", "later")
             .expect("immutable profile"));
+    }
+
+    #[test]
+    fn local_import_history_survives_restart_and_tracks_attempts() {
+        let directory = tempfile::tempdir().expect("tempdir");
+        let database_path = directory.path().join("manifest.sqlite");
+        {
+            let database = ManifestDb::open(&database_path).expect("manifest");
+            database
+                .upsert_file("file-1", "SOURCE", "C:/Data/Camera.xlsx", "now")
+                .expect("file");
+            let version_id = database
+                .register_file_version("version-1", "file-1", "hash-1", 10, None, "now")
+                .expect("version")
+                .expect("new version")
+                .file_version_id;
+            database
+                .store_local_import_result(
+                    "import-1",
+                    "project-1",
+                    &version_id,
+                    "PARSED",
+                    "{}",
+                    "now",
+                    1,
+                    &[],
+                )
+                .expect("parsed");
+            database
+                .store_local_import_result(
+                    "import-1",
+                    "project-1",
+                    &version_id,
+                    "FAILED",
+                    "{\"error\":\"offline\"}",
+                    "later",
+                    2,
+                    &[],
+                )
+                .expect("failed");
+        }
+        let reopened = ManifestDb::open(&database_path).expect("reopen manifest");
+        let history = reopened
+            .list_local_import_history("project-1", Some("import-1"))
+            .expect("history");
+        assert_eq!(
+            history
+                .iter()
+                .map(|entry| entry.attempt)
+                .collect::<Vec<_>>(),
+            vec![1, 2]
+        );
+        assert_eq!(history[1].status, "FAILED");
+        assert!(reopened
+            .list_local_import_history("project-2", None)
+            .expect("other project")
+            .is_empty());
     }
 
     #[test]
@@ -425,5 +495,38 @@ mod tests {
         let job = database.claim_next_job(0).expect("claim").expect("job");
         assert!(job.payload.contains(&source_id));
         assert!(job.payload.contains("Camera.xlsx"));
+    }
+
+    #[test]
+    fn failed_file_scan_can_be_requeued_for_manual_retry() {
+        let database = ManifestDb::open_in_memory().expect("manifest");
+        database
+            .register_source("project-1", "C:/Data", 5, "now")
+            .expect("register source");
+        let source_id = source_id_for_directory("project-1", "C:/Data");
+        let file = DiscoveredFile {
+            path: "C:/Data/Camera.xlsx".to_owned(),
+            sha256: "hash".to_owned(),
+            size: 10,
+            modified_at: Some("1".to_owned()),
+        };
+        database
+            .enqueue_file_scan_for_source(&source_id, &file, "now")
+            .expect("enqueue");
+        let job_id = format!("FILE_SCAN:{source_id}:hash:C:/Data/Camera.xlsx");
+        assert!(!database
+            .record_job_failure(&job_id, "offline", 100, 1)
+            .expect("fail"));
+        assert_eq!(
+            database.job_status(&job_id).expect("status").unwrap().0,
+            "FAILED"
+        );
+        assert!(database
+            .requeue_file_scan_for_source(&source_id, &file, "later")
+            .expect("requeue"));
+        assert_eq!(
+            database.job_status(&job_id).expect("status").unwrap(),
+            ("PENDING".to_owned(), 0)
+        );
     }
 }

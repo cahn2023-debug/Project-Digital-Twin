@@ -1,0 +1,919 @@
+{
+  "taskId": "r3nkb7",
+  "currentVersion": 14,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "r3nkb7",
+      "version": 1,
+      "timestamp": "2026-08-10T05:23:07.2764923Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.2746424Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:23:07.2746424Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "r3nkb7",
+      "version": 2,
+      "timestamp": "2026-08-10T05:23:21.8497031Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+            },
+            {
+              "completed": false,
+              "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+            },
+            {
+              "completed": false,
+              "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:23:21.8497031Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "r3nkb7",
+      "version": 3,
+      "timestamp": "2026-08-10T05:27:50.8451697Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior."
+        },
+        {
+          "field": "fulfills",
+          "oldValue": [
+            "AC-6",
+            "AC-7",
+            "AC-8",
+            "AC-9"
+          ],
+          "newValue": [
+            "AC-1",
+            "AC-6",
+            "AC-7",
+            "AC-8",
+            "AC-9"
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:27:50.8451697Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "r3nkb7",
+      "version": 4,
+      "timestamp": "2026-08-10T05:37:55.8033395Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:37:55.8033395Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "r3nkb7",
+      "version": 5,
+      "timestamp": "2026-08-10T05:38:44.1090014Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport."
+        },
+        {
+          "field": "order",
+          "oldValue": 20,
+          "newValue": 30
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:38:44.1090014Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "r3nkb7",
+      "version": 6,
+      "timestamp": "2026-08-10T05:38:54.0620795Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 55
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 55,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:38:54.0620795Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "r3nkb7",
+      "version": 7,
+      "timestamp": "2026-08-10T05:38:56.360081Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "todo"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 55,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:38:56.360081Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "r3nkb7",
+      "version": 8,
+      "timestamp": "2026-08-10T05:47:27.4760824Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 55,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:47:27.4760824Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "r3nkb7",
+      "version": 9,
+      "timestamp": "2026-08-10T05:48:36.2193952Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Add the local transport commands required by the worker: read a selected file as base64 for raw fallback, list saved local profiles for parser matching, and enqueue a single file scan for manual retry. Keep all three commands local and reuse the existing manifest/job identity.\n2. Refactor `apps/web/src/features/datacenter/importWorker.ts` into a per-file state machine:\n   - invoke `parse_file` before any server request;\n   - reuse a cached local parse result on retry/reconnect instead of parsing again;\n   - send `PARSED`/`PARTIAL` results to `desktop-imports/normalized`;\n   - send `RAW_FALLBACK` files to `desktop-imports/raw-fallback`;\n   - persist `PARSING`, `PARSED`/`PARTIAL`, `UPLOADING`, final and `FAILED` states locally with the parser report and provenance.\n3. Preserve per-file idempotency and offline behavior by keeping the existing pending-job backoff, using the stable file fingerprint/idempotency key, and making the cached local parse payload the retry source of truth.\n4. Extend `LocalImportView` and Datacenter source UI to render the full lifecycle/status set, parse-report locations and actionable errors, and expose a retry action for one failed file without re-running successful files.\n5. Add focused Rust tests for profile listing/retry command behavior and TypeScript-safe worker/status helpers where practical; verify batch independence through the existing one-job-at-a-time worker loop.\n6. Verify with desktop-core/Tauri checks, web typecheck/build, server endpoint tests, diff checks and Knowns validation.\n\n### Plan check\n\n- AC-1 is covered by steps 2 and 3: local parse precedes both normalized and raw upload branches.\n- AC-6 is covered by steps 2 and 4: each FILE_SCAN job persists an independent final status.\n- AC-7 is covered by steps 2, 3 and 4: cached parse payload, stable idempotency and single-file retry.\n- AC-8 is covered by steps 2 and 3: normalized payload survives offline/reconnect without reparsing.\n- AC-9 is covered by step 4: status, location, cause and next action are visible.\n- Server endpoint dependency `drpdus` is complete; no parallel writer touches the same worker files.\n- No new API shape is invented here; requests must match the server schemas completed by `drpdus`.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": false,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": false,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the local transport commands required by the worker: read a selected file as base64 for raw fallback, list saved local profiles for parser matching, and enqueue a single file scan for manual retry. Keep all three commands local and reuse the existing manifest/job identity.\n2. Refactor `apps/web/src/features/datacenter/importWorker.ts` into a per-file state machine:\n   - invoke `parse_file` before any server request;\n   - reuse a cached local parse result on retry/reconnect instead of parsing again;\n   - send `PARSED`/`PARTIAL` results to `desktop-imports/normalized`;\n   - send `RAW_FALLBACK` files to `desktop-imports/raw-fallback`;\n   - persist `PARSING`, `PARSED`/`PARTIAL`, `UPLOADING`, final and `FAILED` states locally with the parser report and provenance.\n3. Preserve per-file idempotency and offline behavior by keeping the existing pending-job backoff, using the stable file fingerprint/idempotency key, and making the cached local parse payload the retry source of truth.\n4. Extend `LocalImportView` and Datacenter source UI to render the full lifecycle/status set, parse-report locations and actionable errors, and expose a retry action for one failed file without re-running successful files.\n5. Add focused Rust tests for profile listing/retry command behavior and TypeScript-safe worker/status helpers where practical; verify batch independence through the existing one-job-at-a-time worker loop.\n6. Verify with desktop-core/Tauri checks, web typecheck/build, server endpoint tests, diff checks and Knowns validation.\n\n### Plan check\n\n- AC-1 is covered by steps 2 and 3: local parse precedes both normalized and raw upload branches.\n- AC-6 is covered by steps 2 and 4: each FILE_SCAN job persists an independent final status.\n- AC-7 is covered by steps 2, 3 and 4: cached parse payload, stable idempotency and single-file retry.\n- AC-8 is covered by steps 2 and 3: normalized payload survives offline/reconnect without reparsing.\n- AC-9 is covered by step 4: status, location, cause and next action are visible.\n- Server endpoint dependency `drpdus` is complete; no parallel writer touches the same worker files.\n- No new API shape is invented here; requests must match the server schemas completed by `drpdus`.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 55,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:48:36.2193952Z"
+      }
+    },
+    {
+      "id": "v10",
+      "taskId": "r3nkb7",
+      "version": 10,
+      "timestamp": "2026-08-10T05:57:34.8003088Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+            },
+            {
+              "completed": false,
+              "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+            },
+            {
+              "completed": false,
+              "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+            },
+            {
+              "completed": true,
+              "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+            },
+            {
+              "completed": true,
+              "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": true,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": true,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the local transport commands required by the worker: read a selected file as base64 for raw fallback, list saved local profiles for parser matching, and enqueue a single file scan for manual retry. Keep all three commands local and reuse the existing manifest/job identity.\n2. Refactor `apps/web/src/features/datacenter/importWorker.ts` into a per-file state machine:\n   - invoke `parse_file` before any server request;\n   - reuse a cached local parse result on retry/reconnect instead of parsing again;\n   - send `PARSED`/`PARTIAL` results to `desktop-imports/normalized`;\n   - send `RAW_FALLBACK` files to `desktop-imports/raw-fallback`;\n   - persist `PARSING`, `PARSED`/`PARTIAL`, `UPLOADING`, final and `FAILED` states locally with the parser report and provenance.\n3. Preserve per-file idempotency and offline behavior by keeping the existing pending-job backoff, using the stable file fingerprint/idempotency key, and making the cached local parse payload the retry source of truth.\n4. Extend `LocalImportView` and Datacenter source UI to render the full lifecycle/status set, parse-report locations and actionable errors, and expose a retry action for one failed file without re-running successful files.\n5. Add focused Rust tests for profile listing/retry command behavior and TypeScript-safe worker/status helpers where practical; verify batch independence through the existing one-job-at-a-time worker loop.\n6. Verify with desktop-core/Tauri checks, web typecheck/build, server endpoint tests, diff checks and Knowns validation.\n\n### Plan check\n\n- AC-1 is covered by steps 2 and 3: local parse precedes both normalized and raw upload branches.\n- AC-6 is covered by steps 2 and 4: each FILE_SCAN job persists an independent final status.\n- AC-7 is covered by steps 2, 3 and 4: cached parse payload, stable idempotency and single-file retry.\n- AC-8 is covered by steps 2 and 3: normalized payload survives offline/reconnect without reparsing.\n- AC-9 is covered by step 4: status, location, cause and next action are visible.\n- Server endpoint dependency `drpdus` is complete; no parallel writer touches the same worker files.\n- No new API shape is invented here; requests must match the server schemas completed by `drpdus`.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 55,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:57:34.8003088Z"
+      }
+    },
+    {
+      "id": "v11",
+      "taskId": "r3nkb7",
+      "version": 11,
+      "timestamp": "2026-08-10T05:57:44.6981223Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": 55,
+          "newValue": 669
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": true,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": true,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the local transport commands required by the worker: read a selected file as base64 for raw fallback, list saved local profiles for parser matching, and enqueue a single file scan for manual retry. Keep all three commands local and reuse the existing manifest/job identity.\n2. Refactor `apps/web/src/features/datacenter/importWorker.ts` into a per-file state machine:\n   - invoke `parse_file` before any server request;\n   - reuse a cached local parse result on retry/reconnect instead of parsing again;\n   - send `PARSED`/`PARTIAL` results to `desktop-imports/normalized`;\n   - send `RAW_FALLBACK` files to `desktop-imports/raw-fallback`;\n   - persist `PARSING`, `PARSED`/`PARTIAL`, `UPLOADING`, final and `FAILED` states locally with the parser report and provenance.\n3. Preserve per-file idempotency and offline behavior by keeping the existing pending-job backoff, using the stable file fingerprint/idempotency key, and making the cached local parse payload the retry source of truth.\n4. Extend `LocalImportView` and Datacenter source UI to render the full lifecycle/status set, parse-report locations and actionable errors, and expose a retry action for one failed file without re-running successful files.\n5. Add focused Rust tests for profile listing/retry command behavior and TypeScript-safe worker/status helpers where practical; verify batch independence through the existing one-job-at-a-time worker loop.\n6. Verify with desktop-core/Tauri checks, web typecheck/build, server endpoint tests, diff checks and Knowns validation.\n\n### Plan check\n\n- AC-1 is covered by steps 2 and 3: local parse precedes both normalized and raw upload branches.\n- AC-6 is covered by steps 2 and 4: each FILE_SCAN job persists an independent final status.\n- AC-7 is covered by steps 2, 3 and 4: cached parse payload, stable idempotency and single-file retry.\n- AC-8 is covered by steps 2 and 3: normalized payload survives offline/reconnect without reparsing.\n- AC-9 is covered by step 4: status, location, cause and next action are visible.\n- Server endpoint dependency `drpdus` is complete; no parallel writer touches the same worker files.\n- No new API shape is invented here; requests must match the server schemas completed by `drpdus`.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 669,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:57:44.6981223Z"
+      }
+    },
+    {
+      "id": "v12",
+      "taskId": "r3nkb7",
+      "version": 12,
+      "timestamp": "2026-08-10T05:57:54.1311678Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T05:57:54.1311678Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": true,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": true,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T05:57:54.1311678Z",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the local transport commands required by the worker: read a selected file as base64 for raw fallback, list saved local profiles for parser matching, and enqueue a single file scan for manual retry. Keep all three commands local and reuse the existing manifest/job identity.\n2. Refactor `apps/web/src/features/datacenter/importWorker.ts` into a per-file state machine:\n   - invoke `parse_file` before any server request;\n   - reuse a cached local parse result on retry/reconnect instead of parsing again;\n   - send `PARSED`/`PARTIAL` results to `desktop-imports/normalized`;\n   - send `RAW_FALLBACK` files to `desktop-imports/raw-fallback`;\n   - persist `PARSING`, `PARSED`/`PARTIAL`, `UPLOADING`, final and `FAILED` states locally with the parser report and provenance.\n3. Preserve per-file idempotency and offline behavior by keeping the existing pending-job backoff, using the stable file fingerprint/idempotency key, and making the cached local parse payload the retry source of truth.\n4. Extend `LocalImportView` and Datacenter source UI to render the full lifecycle/status set, parse-report locations and actionable errors, and expose a retry action for one failed file without re-running successful files.\n5. Add focused Rust tests for profile listing/retry command behavior and TypeScript-safe worker/status helpers where practical; verify batch independence through the existing one-job-at-a-time worker loop.\n6. Verify with desktop-core/Tauri checks, web typecheck/build, server endpoint tests, diff checks and Knowns validation.\n\n### Plan check\n\n- AC-1 is covered by steps 2 and 3: local parse precedes both normalized and raw upload branches.\n- AC-6 is covered by steps 2 and 4: each FILE_SCAN job persists an independent final status.\n- AC-7 is covered by steps 2, 3 and 4: cached parse payload, stable idempotency and single-file retry.\n- AC-8 is covered by steps 2 and 3: normalized payload survives offline/reconnect without reparsing.\n- AC-9 is covered by step 4: status, location, cause and next action are visible.\n- Server endpoint dependency `drpdus` is complete; no parallel writer touches the same worker files.\n- No new API shape is invented here; requests must match the server schemas completed by `drpdus`.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 669,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T05:57:54.1311678Z"
+      }
+    },
+    {
+      "id": "v13",
+      "taskId": "r3nkb7",
+      "version": 13,
+      "timestamp": "2026-08-10T06:08:47.5852878Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: integrated verification confirms parse-first upload, cached retry, offline outbox, per-file status and idempotency behavior. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses."
+          },
+          {
+            "completed": true,
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency."
+          },
+          {
+            "completed": true,
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T05:57:54.131Z",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: integrated verification confirms parse-first upload, cached retry, offline outbox, per-file status and idempotency behavior. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the local transport commands required by the worker: read a selected file as base64 for raw fallback, list saved local profiles for parser matching, and enqueue a single file scan for manual retry. Keep all three commands local and reuse the existing manifest/job identity.\n2. Refactor `apps/web/src/features/datacenter/importWorker.ts` into a per-file state machine:\n   - invoke `parse_file` before any server request;\n   - reuse a cached local parse result on retry/reconnect instead of parsing again;\n   - send `PARSED`/`PARTIAL` results to `desktop-imports/normalized`;\n   - send `RAW_FALLBACK` files to `desktop-imports/raw-fallback`;\n   - persist `PARSING`, `PARSED`/`PARTIAL`, `UPLOADING`, final and `FAILED` states locally with the parser report and provenance.\n3. Preserve per-file idempotency and offline behavior by keeping the existing pending-job backoff, using the stable file fingerprint/idempotency key, and making the cached local parse payload the retry source of truth.\n4. Extend `LocalImportView` and Datacenter source UI to render the full lifecycle/status set, parse-report locations and actionable errors, and expose a retry action for one failed file without re-running successful files.\n5. Add focused Rust tests for profile listing/retry command behavior and TypeScript-safe worker/status helpers where practical; verify batch independence through the existing one-job-at-a-time worker loop.\n6. Verify with desktop-core/Tauri checks, web typecheck/build, server endpoint tests, diff checks and Knowns validation.\n\n### Plan check\n\n- AC-1 is covered by steps 2 and 3: local parse precedes both normalized and raw upload branches.\n- AC-6 is covered by steps 2 and 4: each FILE_SCAN job persists an independent final status.\n- AC-7 is covered by steps 2, 3 and 4: cached parse payload, stable idempotency and single-file retry.\n- AC-8 is covered by steps 2 and 3: normalized payload survives offline/reconnect without reparsing.\n- AC-9 is covered by step 4: status, location, cause and next action are visible.\n- Server endpoint dependency `drpdus` is complete; no parallel writer touches the same worker files.\n- No new API shape is invented here; requests must match the server schemas completed by `drpdus`.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 669,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T06:08:47.5852878Z"
+      }
+    },
+    {
+      "id": "v14",
+      "taskId": "r3nkb7",
+      "version": 14,
+      "timestamp": "2026-08-10T06:10:36.8730371Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: integrated verification confirms parse-first upload, cached retry, offline outbox, per-file status and idempotency behavior. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+          "newValue": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: integrated verification confirms parse-first upload, cached retry, offline outbox, per-file status and idempotency behavior. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Wire per-file parsing outcomes to automatic upload and visible lifecycle statuses.",
+            "completed": true
+          },
+          {
+            "text": "Persist/replay parsed payloads through the existing outbox and enforce per-file retry/idempotency.",
+            "completed": true
+          },
+          {
+            "text": "Add tests for partial batch success, lost ACK, offline reconnect and actionable error details.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T05:57:54.131Z",
+        "createdAt": "2026-08-10T05:23:07.274Z",
+        "description": "Kết nối kết quả desktop parsing với upload tự động theo từng file, trạng thái lifecycle, actionable errors, per-file retry từ bước lỗi, fingerprint/idempotency và resume từ local outbox khi offline/reconnect.",
+        "fulfills": [
+          "AC-1",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9"
+        ],
+        "id": "r3nkb7",
+        "implementationNotes": "Scope refinement from code audit: consume the local parser result from ijh7t3 before any server upload request; preserve per-file status/retry/outbox behavior.\nUsing kn-flow: ownership taken; planning and implementation started after ijh7t3.\nDependency refinement: wait for server normalized/raw fallback contract from drpdus before wiring worker transport.\nPaused before plan/implementation: server contract task drpdus must define normalized/raw fallback endpoints first.\nResumed after drpdus completed; server normalized/raw-fallback endpoints are available.\nPlan saved: local parse-first worker state machine, normalized/raw transport, cached retry and per-file UI retry.\nDone: Worker now invokes local parse_file before any server request, routes normalized/partial results to the normalized endpoint and raw fallback results to the temporary-raw endpoint, persists parser/transport states, reuses cached parse results on retries, exposes per-file retry, maps detailed parse issues/statuses in Datacenter UI, and keeps old path-based upload out of the desktop flow. Added local profile listing, base64 read command and requeue of failed FILE_SCAN jobs with stable idempotency. Verification: web typecheck/build passed (existing chunk-size warning only); cargo test -p desktop-core = 30 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 68 passed; Knowns validation passed; git diff --check passed. Review: PASS, P1=0, P2=0, P3=0. System Decision Impact: candidate @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results (added) — durable cached-parse/manual-requeue/idempotency contract; draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nFlow audit: integrated verification confirms parse-first upload, cached retry, offline outbox, per-file status and idempotency behavior. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the local transport commands required by the worker: read a selected file as base64 for raw fallback, list saved local profiles for parser matching, and enqueue a single file scan for manual retry. Keep all three commands local and reuse the existing manifest/job identity.\n2. Refactor `apps/web/src/features/datacenter/importWorker.ts` into a per-file state machine:\n   - invoke `parse_file` before any server request;\n   - reuse a cached local parse result on retry/reconnect instead of parsing again;\n   - send `PARSED`/`PARTIAL` results to `desktop-imports/normalized`;\n   - send `RAW_FALLBACK` files to `desktop-imports/raw-fallback`;\n   - persist `PARSING`, `PARSED`/`PARTIAL`, `UPLOADING`, final and `FAILED` states locally with the parser report and provenance.\n3. Preserve per-file idempotency and offline behavior by keeping the existing pending-job backoff, using the stable file fingerprint/idempotency key, and making the cached local parse payload the retry source of truth.\n4. Extend `LocalImportView` and Datacenter source UI to render the full lifecycle/status set, parse-report locations and actionable errors, and expose a retry action for one failed file without re-running successful files.\n5. Add focused Rust tests for profile listing/retry command behavior and TypeScript-safe worker/status helpers where practical; verify batch independence through the existing one-job-at-a-time worker loop.\n6. Verify with desktop-core/Tauri checks, web typecheck/build, server endpoint tests, diff checks and Knowns validation.\n\n### Plan check\n\n- AC-1 is covered by steps 2 and 3: local parse precedes both normalized and raw upload branches.\n- AC-6 is covered by steps 2 and 4: each FILE_SCAN job persists an independent final status.\n- AC-7 is covered by steps 2, 3 and 4: cached parse payload, stable idempotency and single-file retry.\n- AC-8 is covered by steps 2 and 3: normalized payload survives offline/reconnect without reparsing.\n- AC-9 is covered by step 4: status, location, cause and next action are visible.\n- Server endpoint dependency `drpdus` is complete; no parallel writer touches the same worker files.\n- No new API shape is invented here; requests must match the server schemas completed by `drpdus`.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "desktop",
+          "upload",
+          "retry",
+          "outbox"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 669,
+        "title": "[desktop-parse-before-server-upload-02] Tích hợp auto-upload, trạng thái file, retry và offline outbox",
+        "updatedAt": "2026-08-10T06:10:36.8730371Z"
+      }
+    }
+  ]
+}

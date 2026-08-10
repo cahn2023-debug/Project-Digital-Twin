@@ -4,6 +4,7 @@ mod db;
 mod jobs;
 mod main_core;
 mod mutation_cmd;
+mod parse_cmd;
 mod replay_cmd;
 mod scan;
 mod state;
@@ -12,11 +13,13 @@ pub use auth_cmd::{cache_user_session, offline_authenticate_user};
 pub use conflict_cmd::resolve_mutation_conflict;
 pub use db::{check_encrypted_database_health, init_encrypted_database, EncryptedDbState};
 pub use jobs::{
-    claim_pending_jobs, complete_pending_job, list_local_imports, prepare_file_scan,
-    retry_pending_job, save_local_profile, store_local_import_result,
+    claim_pending_jobs, complete_pending_job, list_local_import_history, list_local_imports,
+    list_local_profiles, prepare_file_scan, retry_file_scan, retry_pending_job, save_local_profile,
+    store_local_import_result,
 };
 pub use main_core::WatcherState;
 pub use mutation_cmd::{get_pending_mutation_count, push_client_mutation, set_network_status};
+pub use parse_cmd::{parse_file, read_file_base64};
 pub use replay_cmd::trigger_manual_sync;
 pub use scan::{
     get_local_manifest_path, health, list_local_sources, register_local_source,
@@ -41,7 +44,10 @@ pub fn run() {
         prepare_file_scan,
         store_local_import_result,
         list_local_imports,
+        list_local_import_history,
+        list_local_profiles,
         save_local_profile,
+        retry_file_scan,
         complete_pending_job,
         retry_pending_job,
         init_encrypted_database,
@@ -51,6 +57,8 @@ pub fn run() {
         push_client_mutation,
         get_pending_mutation_count,
         set_network_status,
+        parse_file,
+        read_file_base64,
         trigger_manual_sync,
         resolve_mutation_conflict
     ]);

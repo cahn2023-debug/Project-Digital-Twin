@@ -1,0 +1,106 @@
+{
+  "docId": "doc-fe1eb2302ab0ef8279fed5113a48581e",
+  "docPath": "learnings/learning-desktop-parse-before-server-upload",
+  "currentPath": "learnings/learning-desktop-parse-before-server-upload",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "docId": "doc-fe1eb2302ab0ef8279fed5113a48581e",
+      "docPath": "learnings/learning-desktop-parse-before-server-upload",
+      "currentPath": "learnings/learning-desktop-parse-before-server-upload",
+      "version": 1,
+      "timestamp": "2026-08-10T06:19:13.3879715Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "newHash": "265475ddaa204a4eaca096c86e83aa30c5eef7167a15ceaf5a77c2e7f38ea129",
+      "checkpoint": true,
+      "changes": [
+        {
+          "field": "path",
+          "oldValue": null,
+          "newValue": "learnings/learning-desktop-parse-before-server-upload"
+        },
+        {
+          "field": "title",
+          "oldValue": null,
+          "newValue": "Learning: desktop parse before server upload"
+        },
+        {
+          "field": "description",
+          "oldValue": null,
+          "newValue": "Reusable patterns, decisions, and failure learnings from the desktop parse-before-server-upload pipeline."
+        },
+        {
+          "field": "content",
+          "oldValue": null,
+          "newValue": "## Patterns\n\n### Parse Gate with Explicit Raw Fallback\n- **What:** Resolve exactly one local source profile, parse and normalize locally, then route normalized results or an explicit `RAW_FALLBACK` outcome to separate server contracts.\n- **When to use:** Desktop ingestion where successful uploads must never include raw content, while unsupported or ambiguous files still need server-side recovery.\n- **Source:** @task-ijh7t3, @task-r3nkb7, @task-drpdus, @doc/specs/2026-08-10/desktop-parse-before-server-upload\n\n### Cached Parse Result with Append-Only Import History\n- **What:** Persist the latest local import projection plus immutable per-attempt history keyed by project/import/file version; retries reuse the cached parse payload and stable idempotency identity.\n- **When to use:** Offline-capable ingestion where reconnects, lost acknowledgements, and audit/reconciliation must not reparse or duplicate data.\n- **Source:** @task-r3nkb7, @task-dt5dz4, @task-opsvq7\n\n## Decisions\n\n### Explicit Contracts at the Desktop/Server Boundary\n- **Chose:** Separate normalized and raw-fallback request contracts with per-file statuses, source hash verification, temporary raw cleanup, and conflict staging.\n- **Over:** Sending a desktop path or an opaque raw payload through the normalized path.\n- **Tag:** GOOD_CALL / TRADEOFF\n- **Outcome:** The server can reconcile its own parse result without weakening the desktop parse gate.\n- **Recommendation:** Keep parser outcomes, transport statuses, provenance, and fallback reasons explicit in both local storage and server responses.\n- **System Decisions:** @decision/20260810-1236-desktop-local-parser-contract-and-tauri-parse-boundary, @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract, @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results, @decision/20260810-1305-desktop-local-import-history-is-append-only-and-project-scoped\n\n## Failures\n\n### Timestamp-Dependent Retry Ordering\n- **What went wrong:** The first history test ordered attempts by arbitrary fixture timestamps (`now` and `later`) and returned attempts in the wrong order.\n- **Root cause:** History chronology was coupled to lexical timestamp values instead of immutable append order.\n- **Time lost:** A few minutes.\n- **Prevention:** Query append-only history by insertion order (`rowid`) or a monotonic event sequence, and test restart plus attempt ordering.\n\n### SDD Marker Formatting\n- **What went wrong:** Aggregate SDD validation did not recognize compliance markers embedded in longer notes or ending with punctuation.\n- **Root cause:** The validator expects a standalone exact `Spec Decision Compliance: D1=pass, ...` note line.\n- **Time lost:** A few minutes.\n- **Prevention:** Append a standalone marker line with every D-ID before marking a linked task done.\n"
+        },
+        {
+          "field": "tags",
+          "oldValue": null,
+          "newValue": [
+            "learning",
+            "desktop",
+            "parsing",
+            "upload",
+            "retry",
+            "provenance"
+          ]
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "path",
+          "field": "path",
+          "summary": "path",
+          "newBytes": 55,
+          "deltaBytes": 55
+        },
+        {
+          "type": "field",
+          "field": "title",
+          "summary": "title",
+          "newBytes": 46,
+          "deltaBytes": 46
+        },
+        {
+          "type": "field",
+          "field": "description",
+          "summary": "description",
+          "newBytes": 107,
+          "deltaBytes": 107
+        },
+        {
+          "type": "whole_doc",
+          "field": "content",
+          "summary": "Whole document content",
+          "newBytes": 2835,
+          "deltaBytes": 2835
+        },
+        {
+          "type": "field",
+          "field": "tags",
+          "summary": "tags",
+          "newBytes": 62,
+          "deltaBytes": 62
+        }
+      ],
+      "snapshot": {
+        "content": "## Patterns\n\n### Parse Gate with Explicit Raw Fallback\n- **What:** Resolve exactly one local source profile, parse and normalize locally, then route normalized results or an explicit `RAW_FALLBACK` outcome to separate server contracts.\n- **When to use:** Desktop ingestion where successful uploads must never include raw content, while unsupported or ambiguous files still need server-side recovery.\n- **Source:** @task-ijh7t3, @task-r3nkb7, @task-drpdus, @doc/specs/2026-08-10/desktop-parse-before-server-upload\n\n### Cached Parse Result with Append-Only Import History\n- **What:** Persist the latest local import projection plus immutable per-attempt history keyed by project/import/file version; retries reuse the cached parse payload and stable idempotency identity.\n- **When to use:** Offline-capable ingestion where reconnects, lost acknowledgements, and audit/reconciliation must not reparse or duplicate data.\n- **Source:** @task-r3nkb7, @task-dt5dz4, @task-opsvq7\n\n## Decisions\n\n### Explicit Contracts at the Desktop/Server Boundary\n- **Chose:** Separate normalized and raw-fallback request contracts with per-file statuses, source hash verification, temporary raw cleanup, and conflict staging.\n- **Over:** Sending a desktop path or an opaque raw payload through the normalized path.\n- **Tag:** GOOD_CALL / TRADEOFF\n- **Outcome:** The server can reconcile its own parse result without weakening the desktop parse gate.\n- **Recommendation:** Keep parser outcomes, transport statuses, provenance, and fallback reasons explicit in both local storage and server responses.\n- **System Decisions:** @decision/20260810-1236-desktop-local-parser-contract-and-tauri-parse-boundary, @decision/20260810-1246-desktop-normalized-and-raw-fallback-server-import-contract, @decision/20260810-1257-desktop-import-retries-reuse-cached-parse-results, @decision/20260810-1305-desktop-local-import-history-is-append-only-and-project-scoped\n\n## Failures\n\n### Timestamp-Dependent Retry Ordering\n- **What went wrong:** The first history test ordered attempts by arbitrary fixture timestamps (`now` and `later`) and returned attempts in the wrong order.\n- **Root cause:** History chronology was coupled to lexical timestamp values instead of immutable append order.\n- **Time lost:** A few minutes.\n- **Prevention:** Query append-only history by insertion order (`rowid`) or a monotonic event sequence, and test restart plus attempt ordering.\n\n### SDD Marker Formatting\n- **What went wrong:** Aggregate SDD validation did not recognize compliance markers embedded in longer notes or ending with punctuation.\n- **Root cause:** The validator expects a standalone exact `Spec Decision Compliance: D1=pass, ...` note line.\n- **Time lost:** A few minutes.\n- **Prevention:** Append a standalone marker line with every D-ID before marking a linked task done.\n",
+        "description": "Reusable patterns, decisions, and failure learnings from the desktop parse-before-server-upload pipeline.",
+        "path": "learnings/learning-desktop-parse-before-server-upload",
+        "tags": [
+          "learning",
+          "desktop",
+          "parsing",
+          "upload",
+          "retry",
+          "provenance"
+        ],
+        "title": "Learning: desktop parse before server upload"
+      }
+    }
+  ]
+}

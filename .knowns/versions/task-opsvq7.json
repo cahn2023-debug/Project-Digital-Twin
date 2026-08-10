@@ -1,0 +1,629 @@
+{
+  "taskId": "opsvq7",
+  "currentVersion": 9,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "opsvq7",
+      "version": 1,
+      "timestamp": "2026-08-10T05:23:07.4057139Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.4040407Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T05:23:07.4040407Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "opsvq7",
+      "version": 2,
+      "timestamp": "2026-08-10T05:23:27.9634571Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+            },
+            {
+              "completed": false,
+              "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+            },
+            {
+              "completed": false,
+              "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+          },
+          {
+            "completed": false,
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T05:23:27.9634571Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "opsvq7",
+      "version": 3,
+      "timestamp": "2026-08-10T06:06:31.0587731Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+          },
+          {
+            "completed": false,
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T06:06:31.0587731Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "opsvq7",
+      "version": 4,
+      "timestamp": "2026-08-10T06:06:52.6984603Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Trace the integrated parse-before-upload path across local parser/Tauri commands, worker state transitions, normalized/raw server routes, conflict staging, retry/outbox persistence, and project-scoped history; use the real diff and linked task outcomes as evidence.\n2. Run focused integration fixtures for prioritized formats and partial/unmapped/provenance behavior, normalized upload, raw fallback cleanup/statuses, hash/metadata conflict review, cached retry/offline outbox, and local restart/history queries.\n3. Run broad verification with desktop-core tests, Tauri compile, web typecheck/build, server test environment from apps/server/uv.lock, formatting and diff checks.\n4. Verify AC-1 through AC-12 and D1-D20 explicitly against implementation/tests; record any gaps as conflicts instead of silently passing them.\n5. Run Knowns entity/SDD validation and integrated review, then record evidence, check implementation ACs, stop the timer, and complete the task.\n\n### Plan check\n\n- AC-1..AC-12 are covered by the linked completed implementation tasks plus focused tests and integrated path review; step 4 is the explicit coverage gate.\n- D1..D20 are canonical in the spec Locked Decisions section and will be reported as pass/conflict only after evidence review.\n- Verification is read-only except Knowns task evidence/status metadata; no new runtime contract or production feature is introduced.\n- The server suite must run from `apps/server` with `uv run --locked --extra test pytest -q` so its declared `pythonpath = [\".\"]` and locked dependencies are active.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+          },
+          {
+            "completed": false,
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+          },
+          {
+            "completed": false,
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the integrated parse-before-upload path across local parser/Tauri commands, worker state transitions, normalized/raw server routes, conflict staging, retry/outbox persistence, and project-scoped history; use the real diff and linked task outcomes as evidence.\n2. Run focused integration fixtures for prioritized formats and partial/unmapped/provenance behavior, normalized upload, raw fallback cleanup/statuses, hash/metadata conflict review, cached retry/offline outbox, and local restart/history queries.\n3. Run broad verification with desktop-core tests, Tauri compile, web typecheck/build, server test environment from apps/server/uv.lock, formatting and diff checks.\n4. Verify AC-1 through AC-12 and D1-D20 explicitly against implementation/tests; record any gaps as conflicts instead of silently passing them.\n5. Run Knowns entity/SDD validation and integrated review, then record evidence, check implementation ACs, stop the timer, and complete the task.\n\n### Plan check\n\n- AC-1..AC-12 are covered by the linked completed implementation tasks plus focused tests and integrated path review; step 4 is the explicit coverage gate.\n- D1..D20 are canonical in the spec Locked Decisions section and will be reported as pass/conflict only after evidence review.\n- Verification is read-only except Knowns task evidence/status metadata; no new runtime contract or production feature is introduced.\n- The server suite must run from `apps/server` with `uv run --locked --extra test pytest -q` so its declared `pythonpath = [\".\"]` and locked dependencies are active.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T06:06:52.6984603Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "opsvq7",
+      "version": 5,
+      "timestamp": "2026-08-10T06:12:34.1588674Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+            },
+            {
+              "completed": false,
+              "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+            },
+            {
+              "completed": false,
+              "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+            },
+            {
+              "completed": true,
+              "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+            },
+            {
+              "completed": true,
+              "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+          },
+          {
+            "completed": true,
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+          },
+          {
+            "completed": true,
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "implementationNotes": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the integrated parse-before-upload path across local parser/Tauri commands, worker state transitions, normalized/raw server routes, conflict staging, retry/outbox persistence, and project-scoped history; use the real diff and linked task outcomes as evidence.\n2. Run focused integration fixtures for prioritized formats and partial/unmapped/provenance behavior, normalized upload, raw fallback cleanup/statuses, hash/metadata conflict review, cached retry/offline outbox, and local restart/history queries.\n3. Run broad verification with desktop-core tests, Tauri compile, web typecheck/build, server test environment from apps/server/uv.lock, formatting and diff checks.\n4. Verify AC-1 through AC-12 and D1-D20 explicitly against implementation/tests; record any gaps as conflicts instead of silently passing them.\n5. Run Knowns entity/SDD validation and integrated review, then record evidence, check implementation ACs, stop the timer, and complete the task.\n\n### Plan check\n\n- AC-1..AC-12 are covered by the linked completed implementation tasks plus focused tests and integrated path review; step 4 is the explicit coverage gate.\n- D1..D20 are canonical in the spec Locked Decisions section and will be reported as pass/conflict only after evidence review.\n- Verification is read-only except Knowns task evidence/status metadata; no new runtime contract or production feature is introduced.\n- The server suite must run from `apps/server` with `uv run --locked --extra test pytest -q` so its declared `pythonpath = [\".\"]` and locked dependencies are active.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T06:12:34.1588674Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "opsvq7",
+      "version": 6,
+      "timestamp": "2026-08-10T06:12:55.1358888Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 381
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+          },
+          {
+            "completed": true,
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+          },
+          {
+            "completed": true,
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "implementationNotes": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the integrated parse-before-upload path across local parser/Tauri commands, worker state transitions, normalized/raw server routes, conflict staging, retry/outbox persistence, and project-scoped history; use the real diff and linked task outcomes as evidence.\n2. Run focused integration fixtures for prioritized formats and partial/unmapped/provenance behavior, normalized upload, raw fallback cleanup/statuses, hash/metadata conflict review, cached retry/offline outbox, and local restart/history queries.\n3. Run broad verification with desktop-core tests, Tauri compile, web typecheck/build, server test environment from apps/server/uv.lock, formatting and diff checks.\n4. Verify AC-1 through AC-12 and D1-D20 explicitly against implementation/tests; record any gaps as conflicts instead of silently passing them.\n5. Run Knowns entity/SDD validation and integrated review, then record evidence, check implementation ACs, stop the timer, and complete the task.\n\n### Plan check\n\n- AC-1..AC-12 are covered by the linked completed implementation tasks plus focused tests and integrated path review; step 4 is the explicit coverage gate.\n- D1..D20 are canonical in the spec Locked Decisions section and will be reported as pass/conflict only after evidence review.\n- Verification is read-only except Knowns task evidence/status metadata; no new runtime contract or production feature is introduced.\n- The server suite must run from `apps/server` with `uv run --locked --extra test pytest -q` so its declared `pythonpath = [\".\"]` and locked dependencies are active.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "in-progress",
+        "timeSpent": 381,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T06:12:55.1358888Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "opsvq7",
+      "version": 7,
+      "timestamp": "2026-08-10T06:12:58.2076851Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T06:12:58.2076851Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+          },
+          {
+            "completed": true,
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+          },
+          {
+            "completed": true,
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T06:12:58.2076851Z",
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "implementationNotes": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the integrated parse-before-upload path across local parser/Tauri commands, worker state transitions, normalized/raw server routes, conflict staging, retry/outbox persistence, and project-scoped history; use the real diff and linked task outcomes as evidence.\n2. Run focused integration fixtures for prioritized formats and partial/unmapped/provenance behavior, normalized upload, raw fallback cleanup/statuses, hash/metadata conflict review, cached retry/offline outbox, and local restart/history queries.\n3. Run broad verification with desktop-core tests, Tauri compile, web typecheck/build, server test environment from apps/server/uv.lock, formatting and diff checks.\n4. Verify AC-1 through AC-12 and D1-D20 explicitly against implementation/tests; record any gaps as conflicts instead of silently passing them.\n5. Run Knowns entity/SDD validation and integrated review, then record evidence, check implementation ACs, stop the timer, and complete the task.\n\n### Plan check\n\n- AC-1..AC-12 are covered by the linked completed implementation tasks plus focused tests and integrated path review; step 4 is the explicit coverage gate.\n- D1..D20 are canonical in the spec Locked Decisions section and will be reported as pass/conflict only after evidence review.\n- Verification is read-only except Knowns task evidence/status metadata; no new runtime contract or production feature is introduced.\n- The server suite must run from `apps/server` with `uv run --locked --extra test pytest -q` so its declared `pythonpath = [\".\"]` and locked dependencies are active.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 381,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T06:12:58.2076851Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "opsvq7",
+      "version": 8,
+      "timestamp": "2026-08-10T06:13:15.4891448Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+          "newValue": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review."
+          },
+          {
+            "completed": true,
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff."
+          },
+          {
+            "completed": true,
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T06:12:58.207Z",
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "implementationNotes": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the integrated parse-before-upload path across local parser/Tauri commands, worker state transitions, normalized/raw server routes, conflict staging, retry/outbox persistence, and project-scoped history; use the real diff and linked task outcomes as evidence.\n2. Run focused integration fixtures for prioritized formats and partial/unmapped/provenance behavior, normalized upload, raw fallback cleanup/statuses, hash/metadata conflict review, cached retry/offline outbox, and local restart/history queries.\n3. Run broad verification with desktop-core tests, Tauri compile, web typecheck/build, server test environment from apps/server/uv.lock, formatting and diff checks.\n4. Verify AC-1 through AC-12 and D1-D20 explicitly against implementation/tests; record any gaps as conflicts instead of silently passing them.\n5. Run Knowns entity/SDD validation and integrated review, then record evidence, check implementation ACs, stop the timer, and complete the task.\n\n### Plan check\n\n- AC-1..AC-12 are covered by the linked completed implementation tasks plus focused tests and integrated path review; step 4 is the explicit coverage gate.\n- D1..D20 are canonical in the spec Locked Decisions section and will be reported as pass/conflict only after evidence review.\n- Verification is read-only except Knowns task evidence/status metadata; no new runtime contract or production feature is introduced.\n- The server suite must run from `apps/server` with `uv run --locked --extra test pytest -q` so its declared `pythonpath = [\".\"]` and locked dependencies are active.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 381,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T06:13:15.4891448Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "opsvq7",
+      "version": 9,
+      "timestamp": "2026-08-10T06:19:28.3438433Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass",
+          "newValue": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass\nExtracted reusable patterns, decisions, and failures to @doc/learnings/learning-desktop-parse-before-server-upload; promoted the parse-gate/cached-fallback pattern to @doc/learnings/critical-patterns."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Run end-to-end fixtures across supported formats, raw fallback, partial parsing, retries, offline recovery and conflict review.",
+            "completed": true
+          },
+          {
+            "text": "Verify all spec ACs and D1-D20 compliance against the integrated diff.",
+            "completed": true
+          },
+          {
+            "text": "Run focused and broad tests, Knowns validation and final review; record System Decision Impact.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T06:12:58.207Z",
+        "createdAt": "2026-08-10T05:23:07.404Z",
+        "description": "Chạy kiểm thử tích hợp toàn pipeline desktop parse → normalized/raw upload → server fallback → conflict review → retry/offline recovery; rà soát toàn bộ AC, D1-D20, validation và review.",
+        "fulfills": [
+          "AC-1",
+          "AC-2",
+          "AC-3",
+          "AC-4",
+          "AC-5",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-9",
+          "AC-10",
+          "AC-11",
+          "AC-12"
+        ],
+        "id": "opsvq7",
+        "implementationNotes": "Integrated evidence: focused parser fixtures = 5 passed (XLSX, CSV, Markdown, Word, ambiguous-profile raw fallback); focused server desktop-import fixtures = 5 passed; full Rust workspace = 32 tests passed (desktop-core 31 + Tauri 1); Tauri cargo check passed; web typecheck/build passed (existing Vite chunk-size warning); full server suite = 68 passed with existing Starlette/httpx deprecation warning; web tests have no test files; cargo fmt --all -- --check and git diff --check passed. AC mapping: AC-1 parse_file precedes normalized/raw branches and normalized requests omit raw content; AC-2 RAW_FALLBACK branch plus server outcome tests; AC-3/4/5 parser partial/unmapped/provenance tests; AC-6 one-job-at-a-time worker with independent local projections; AC-7 cached parse, stable idempotency and retry tests; AC-8 persisted local payload/outbox retry path; AC-9 SourceManagement status/issue/action UI; AC-10/11 server parsed/cleanup/conflict tests; AC-12 restart/history query test. Review: PASS, P1=0, P2=0, P3=0; artifact verification fully wired. System Decision Impact: none — integrated verification adds no new durable guidance; it confirms the existing parser, server import, cached retry, and local history candidates remain review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass\nExtracted reusable patterns, decisions, and failures to @doc/learnings/learning-desktop-parse-before-server-upload; promoted the parse-gate/cached-fallback pattern to @doc/learnings/critical-patterns.",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the integrated parse-before-upload path across local parser/Tauri commands, worker state transitions, normalized/raw server routes, conflict staging, retry/outbox persistence, and project-scoped history; use the real diff and linked task outcomes as evidence.\n2. Run focused integration fixtures for prioritized formats and partial/unmapped/provenance behavior, normalized upload, raw fallback cleanup/statuses, hash/metadata conflict review, cached retry/offline outbox, and local restart/history queries.\n3. Run broad verification with desktop-core tests, Tauri compile, web typecheck/build, server test environment from apps/server/uv.lock, formatting and diff checks.\n4. Verify AC-1 through AC-12 and D1-D20 explicitly against implementation/tests; record any gaps as conflicts instead of silently passing them.\n5. Run Knowns entity/SDD validation and integrated review, then record evidence, check implementation ACs, stop the timer, and complete the task.\n\n### Plan check\n\n- AC-1..AC-12 are covered by the linked completed implementation tasks plus focused tests and integrated path review; step 4 is the explicit coverage gate.\n- D1..D20 are canonical in the spec Locked Decisions section and will be reported as pass/conflict only after evidence review.\n- Verification is read-only except Knowns task evidence/status metadata; no new runtime contract or production feature is introduced.\n- The server suite must run from `apps/server` with `uv run --locked --extra test pytest -q` so its declared `pythonpath = [\".\"]` and locked dependencies are active.\n\n### Spec Decision Compliance\n\nD1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-parse-before-server-upload",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification"
+        ],
+        "order": 50,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-parse-before-server-upload",
+        "status": "done",
+        "timeSpent": 381,
+        "title": "[desktop-parse-before-server-upload-05] Integrated verification và SDD compliance",
+        "updatedAt": "2026-08-10T06:19:28.3438433Z"
+      }
+    }
+  ]
+}

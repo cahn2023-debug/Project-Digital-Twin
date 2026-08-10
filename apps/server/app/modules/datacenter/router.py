@@ -1,11 +1,18 @@
 from __future__ import annotations
 
+import base64
+import binascii
 import csv
+import hashlib
 import io
 import json
+import tempfile
+from dataclasses import replace
 from time import perf_counter
 from typing import Any
 from uuid import UUID
+from pathlib import Path
+from zipfile import BadZipFile
 
 from fastapi import APIRouter, Header, HTTPException
 from fastapi.encoders import jsonable_encoder
@@ -23,7 +30,12 @@ from ...domain import (
     RevisionConflict,
     normalize_coordinate,
 )
-from ...adapters.files.importers.documents import parse_document
+from ...adapters.files.importers.documents import (
+    DocumentLocator,
+    DocumentNode,
+    DocumentParseResult,
+    parse_document,
+)
 from ...adapters.files.importers.excel import (
     CameraWorkbookProfile,
     WorkbookProfile,
@@ -35,6 +47,8 @@ from ...shared.schemas import (
     ApprovalRequest,
     ContractorCreate,
     DocumentImportRequest,
+    DesktopNormalizedImportRequest,
+    DesktopRawFallbackRequest,
     FileImportProfileRequest,
     FileImportFromPathRequest,
     FileImportRequest,
@@ -123,6 +137,100 @@ def _preview_rows(scan: Any) -> list[dict[str, Any]]:
     return rows
 
 
+def _desktop_record_rows(request: DesktopNormalizedImportRequest) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for record in request.records:
+        row = dict(record.fields)
+        row.update(record.unmapped)
+        if record.source:
+            row["__source_locator"] = record.source
+        rows.append(row)
+    return rows
+
+
+def _desktop_document_result(
+    project_id: UUID,
+    request: DesktopNormalizedImportRequest,
+) -> DocumentParseResult:
+    nodes: list[DocumentNode] = []
+    for record in request.records:
+        source = record.source
+        content = record.fields.get("content")
+        if content is None:
+            content = json.dumps(record.fields, ensure_ascii=False, sort_keys=True)
+        locator = DocumentLocator(
+            file_id=request.file_id,
+            file_revision=request.file_revision,
+            source_path=f"desktop://normalized/{project_id}/{request.file_id}",
+            line=source.get("line") if isinstance(source.get("line"), int) else None,
+            column=source.get("column") if isinstance(source.get("column"), int) else None,
+            part=source.get("sheet") if isinstance(source.get("sheet"), str) else None,
+        )
+        nodes.append(
+            DocumentNode(
+                kind="paragraph",
+                text=str(content),
+                locator=locator,
+                attributes={
+                    "fields": record.fields,
+                    "unmapped": record.unmapped,
+                    "source": source,
+                },
+            )
+        )
+    return DocumentParseResult(
+        file_id=request.file_id,
+        file_revision=request.file_revision,
+        format=request.format.lower(),
+        source_hash=request.source_hash,
+        nodes=nodes,
+        tables=[],
+        links=[],
+        assets=[],
+        references=[],
+        relationship_proposals=[],
+        mapped_tables=[],
+    )
+
+
+def _document_result_source_name(parsed: DocumentParseResult, source_name: str) -> DocumentParseResult:
+    nodes = [
+        replace(node, locator=replace(node.locator, source_path=source_name))
+        for node in parsed.nodes
+    ]
+    tables = [
+        replace(table, locator=replace(table.locator, source_path=source_name))
+        for table in parsed.tables
+    ]
+    assets = [
+        replace(
+            asset,
+            source_path=source_name,
+            locator=replace(asset.locator, source_path=source_name),
+        )
+        for asset in parsed.assets
+    ]
+    return replace(parsed, nodes=nodes, tables=tables, assets=assets)
+
+
+def _fallback_suffix(request: DesktopRawFallbackRequest) -> str:
+    suffix = Path(request.filename).suffix.lower()
+    if suffix:
+        return suffix
+    return {
+        "XLSX": ".xlsx",
+        "CSV": ".csv",
+        "TXT": ".txt",
+        "MARKDOWN": ".md",
+        "WORD": ".docx",
+        "UNSUPPORTED": ".bin",
+    }[request.format]
+
+
+def _raw_hash(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
+
+
 def _authorize_header(project_id: UUID, action: str, actor: str, role: str) -> None:
     main_core.authorize_header(project_id, action, actor, role)
 
@@ -200,6 +308,223 @@ def create_file_import_changeset(project_id: UUID, request: FileImportRequest) -
         "result": result,
         "notice": "Unmapped and invalid source values are retained in Raw.",
         "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+    })
+
+
+@router.post("/api/v1/projects/{project_id}/desktop-imports/normalized", status_code=202)
+def create_desktop_normalized_import(
+    project_id: UUID,
+    request: DesktopNormalizedImportRequest,
+) -> dict[str, Any]:
+    if store.get_project(project_id) is None:
+        raise HTTPException(status_code=404, detail="Project not found")
+    if store.is_self_write(request.file_id, request.source_hash):
+        store.record_self_write_suppression(project_id, request.file_id, request.source_hash, request.created_by)
+        return {
+            "status": "SUPPRESSED",
+            "changeset": None,
+            "result": None,
+            "parse_report": request.parse_report,
+            "raw_deleted": True,
+        }
+
+    started_at = perf_counter()
+    if request.format in {"TXT", "MARKDOWN", "WORD"}:
+        parsed = _desktop_document_result(project_id, request)
+        changeset = store.create_document_import_changeset(
+            project_id,
+            parsed,
+            request.created_by,
+            round((perf_counter() - started_at) * 1000),
+            request.idempotency_key,
+        )
+        return jsonable_encoder({
+            "status": "NORMALIZED_ACCEPTED",
+            "changeset": changeset,
+            "result": None,
+            "parse_report": request.parse_report,
+            "raw_deleted": True,
+            "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+        })
+
+    rows = _desktop_record_rows(request)
+    cameras, issues = parse_camera_rows(
+        rows,
+        file_id=request.file_id,
+        file_revision=request.file_revision,
+        sheet="CAMERA" if request.format == "XLSX" else "CSV",
+    )
+    changeset, result = store.create_file_import_changeset(
+        project_id,
+        request.file_id,
+        request.file_revision,
+        cameras,
+        issues,
+        rows,
+        request.created_by,
+        request.idempotency_key,
+        request.source_hash,
+        round((perf_counter() - started_at) * 1000),
+    )
+    return jsonable_encoder({
+        "status": "NORMALIZED_ACCEPTED",
+        "changeset": changeset,
+        "result": result,
+        "parse_report": request.parse_report,
+        "raw_deleted": True,
+        "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+    })
+
+
+@router.post("/api/v1/projects/{project_id}/desktop-imports/raw-fallback", status_code=202)
+def create_desktop_raw_fallback(
+    project_id: UUID,
+    request: DesktopRawFallbackRequest,
+) -> dict[str, Any]:
+    if store.get_project(project_id) is None:
+        raise HTTPException(status_code=404, detail="Project not found")
+    try:
+        raw_bytes = base64.b64decode(request.content_base64, validate=True)
+    except (ValueError, binascii.Error) as exc:
+        raise HTTPException(status_code=400, detail="content_base64 is invalid") from exc
+
+    actual_hash = _raw_hash(raw_bytes)
+    if actual_hash != request.source_hash:
+        return {
+            "status": "CONFLICT_REVIEW",
+            "changeset": None,
+            "result": None,
+            "parse_report": {
+                **request.parse_report,
+                "issues": [{
+                    "code": "SOURCE_HASH_MISMATCH",
+                    "message": "Received raw content does not match the desktop fingerprint",
+                    "severity": "ERROR",
+                }],
+            },
+            "raw_deleted": True,
+            "conflicts": [{"field": "source_hash", "expected": request.source_hash, "actual": actual_hash}],
+        }
+
+    started_at = perf_counter()
+    server_profile_id = "document-default" if request.format in {"TXT", "MARKDOWN", "WORD"} else "camera-default"
+    metadata_conflicts: list[dict[str, Any]] = []
+    if request.expected_profile_id and request.expected_profile_id != server_profile_id:
+        metadata_conflicts.append({
+            "field": "profile_id",
+            "expected": request.expected_profile_id,
+            "server": server_profile_id,
+        })
+
+    try:
+        with tempfile.TemporaryDirectory(prefix="desktop-import-") as temp_dir:
+            path = Path(temp_dir) / f"source{_fallback_suffix(request)}"
+            path.write_bytes(raw_bytes)
+            if request.format == "XLSX":
+                raw_rows, cameras, issues, _scan = parse_camera_workbook_for_import(
+                    path,
+                    file_id=request.file_id,
+                    file_revision=request.file_revision,
+                    profile=WorkbookProfile(
+                        profile_id=server_profile_id,
+                        version=1,
+                        sheet="CAMERA",
+                        header_rows=(1,),
+                        data_start_row=2,
+                        table_start_row=1,
+                    ),
+                )
+                if not cameras:
+                    return {
+                        "status": "FAILED",
+                        "changeset": None,
+                        "result": {"invalid": issues, "inserted": [], "changed": [], "unchanged": [], "conflict": [], "unmapped": []},
+                        "parse_report": {**request.parse_report, "server_issues": issues},
+                        "raw_deleted": True,
+                    }
+                changeset, result = store.create_file_import_changeset(
+                    project_id,
+                    request.file_id,
+                    request.file_revision,
+                    cameras,
+                    issues,
+                    raw_rows,
+                    request.created_by,
+                    request.idempotency_key,
+                    request.source_hash,
+                    round((perf_counter() - started_at) * 1000),
+                )
+            elif request.format == "CSV":
+                rows = list(csv.DictReader(io.StringIO(raw_bytes.decode("utf-8-sig"))))
+                cameras, issues = parse_camera_rows(
+                    rows,
+                    file_id=request.file_id,
+                    file_revision=request.file_revision,
+                    sheet="CSV",
+                )
+                if not cameras:
+                    return {
+                        "status": "FAILED",
+                        "changeset": None,
+                        "result": {"invalid": issues, "inserted": [], "changed": [], "unchanged": [], "conflict": [], "unmapped": []},
+                        "parse_report": {**request.parse_report, "server_issues": issues},
+                        "raw_deleted": True,
+                    }
+                changeset, result = store.create_file_import_changeset(
+                    project_id,
+                    request.file_id,
+                    request.file_revision,
+                    cameras,
+                    issues,
+                    rows,
+                    request.created_by,
+                    request.idempotency_key,
+                    request.source_hash,
+                    round((perf_counter() - started_at) * 1000),
+                )
+            else:
+                parsed = parse_document(
+                    path,
+                    file_id=request.file_id,
+                    file_revision=request.file_revision,
+                    canonical_entities=[],
+                )
+                parsed = _document_result_source_name(parsed, request.filename)
+                changeset = store.create_document_import_changeset(
+                    project_id,
+                    parsed,
+                    request.created_by,
+                    round((perf_counter() - started_at) * 1000),
+                    request.idempotency_key,
+                )
+                result = None
+    except (OSError, ValueError, UnicodeDecodeError, BadZipFile) as exc:
+        return {
+            "status": "FAILED",
+            "changeset": None,
+            "result": None,
+            "parse_report": {**request.parse_report, "server_error": str(exc)},
+            "raw_deleted": True,
+        }
+
+    if metadata_conflicts:
+        changeset = store.mark_changeset_conflict_review(
+            project_id,
+            changeset.id,
+            metadata_conflicts,
+            request.created_by,
+        )
+        status = "CONFLICT_REVIEW"
+    else:
+        status = "SERVER_PARSED"
+    return jsonable_encoder({
+        "status": status,
+        "changeset": changeset,
+        "result": result,
+        "parse_report": request.parse_report,
+        "raw_deleted": True,
+        "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+        "server_profile_id": server_profile_id,
     })
 
 

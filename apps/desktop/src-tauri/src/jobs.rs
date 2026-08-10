@@ -1,5 +1,6 @@
 use desktop_core::{
-    DiscoveredFile, FileScanContext, LocalImport, ManifestDb, PendingJob, RawRecord,
+    DiscoveredFile, FileScanContext, LocalImport, LocalImportHistory, LocalProfile, ManifestDb,
+    PendingJob, RawRecord,
 };
 
 #[tauri::command]
@@ -54,6 +55,7 @@ pub fn store_local_import_result(
     status: String,
     payload: String,
     created_at: String,
+    attempt: Option<i64>,
     raw_records: Vec<RawRecord>,
 ) -> Result<(), String> {
     let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
@@ -65,6 +67,7 @@ pub fn store_local_import_result(
             &status,
             &payload,
             &created_at,
+            attempt.unwrap_or_default(),
             &raw_records,
         )
         .map_err(|error| error.to_string())
@@ -78,6 +81,54 @@ pub fn list_local_imports(
     let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
     database
         .list_local_imports(&project_id)
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn list_local_profiles(
+    manifest_path: String,
+    project_id: String,
+) -> Result<Vec<LocalProfile>, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .list_local_profiles(&project_id)
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn list_local_import_history(
+    manifest_path: String,
+    project_id: String,
+    import_id: Option<String>,
+) -> Result<Vec<LocalImportHistory>, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .list_local_import_history(&project_id, import_id.as_deref())
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn retry_file_scan(
+    manifest_path: String,
+    source_id: String,
+    path: String,
+    sha256: String,
+    size: u64,
+    modified_at: Option<String>,
+    created_at: String,
+) -> Result<bool, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .requeue_file_scan_for_source(
+            &source_id,
+            &DiscoveredFile {
+                path,
+                sha256,
+                size,
+                modified_at,
+            },
+            &created_at,
+        )
         .map_err(|error| error.to_string())
 }
 

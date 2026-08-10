@@ -27,6 +27,16 @@ export interface LocalImport {
   created_at: string;
 }
 
+export interface LocalImportHistory {
+  import_id: string;
+  project_id: string;
+  file_version_id: string;
+  attempt: number;
+  status: string;
+  payload: string;
+  created_at: string;
+}
+
 export interface PendingJob {
   job_id: string;
   job_type: string;
@@ -73,6 +83,7 @@ export async function storeLocalImportResult(
   status: string,
   payload: string,
   rawRecords: LocalRawRecord[],
+  attempt = 0,
 ): Promise<void> {
   return invoke("store_local_import_result", {
     manifestPath,
@@ -81,6 +92,7 @@ export async function storeLocalImportResult(
     fileVersionId,
     status,
     payload,
+    attempt,
     createdAt: new Date().toISOString(),
     rawRecords,
   });
@@ -88,6 +100,14 @@ export async function storeLocalImportResult(
 
 export async function listLocalImports(manifestPath: string, projectId: string): Promise<LocalImport[]> {
   return invoke<LocalImport[]>("list_local_imports", { manifestPath, projectId });
+}
+
+export async function listLocalImportHistory(
+  manifestPath: string,
+  projectId: string,
+  importId?: string,
+): Promise<LocalImportHistory[]> {
+  return invoke<LocalImportHistory[]>("list_local_import_history", { manifestPath, projectId, importId });
 }
 
 export async function saveLocalProfile(

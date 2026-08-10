@@ -49,6 +49,41 @@ class FileImportFromPathRequest(BaseModel):
     profile: FileImportProfileRequest | None = None
 
 
+class DesktopNormalizedRecord(BaseModel):
+    fields: dict[str, Any] = Field(default_factory=dict)
+    unmapped: dict[str, Any] = Field(default_factory=dict)
+    source: dict[str, Any] = Field(default_factory=dict)
+
+
+class DesktopNormalizedImportRequest(BaseModel):
+    file_id: UUID
+    file_revision: int = Field(ge=1)
+    idempotency_key: str = Field(min_length=1, max_length=200)
+    format: Literal["XLSX", "CSV", "TXT", "MARKDOWN", "WORD"]
+    source_hash: str = Field(min_length=64, max_length=64)
+    parser_version: str = Field(min_length=1, max_length=120)
+    profile_id: str | None = Field(default=None, max_length=120)
+    profile_version: int | None = Field(default=None, ge=1)
+    parsed_at: int = Field(ge=0)
+    records: list[DesktopNormalizedRecord] = Field(default_factory=list)
+    parse_report: dict[str, Any] = Field(default_factory=dict)
+    created_by: str = Field(default="desktop-import", min_length=1)
+
+
+class DesktopRawFallbackRequest(BaseModel):
+    file_id: UUID
+    file_revision: int = Field(ge=1)
+    idempotency_key: str = Field(min_length=1, max_length=200)
+    format: Literal["XLSX", "CSV", "TXT", "MARKDOWN", "WORD", "UNSUPPORTED"]
+    filename: str = Field(min_length=1, max_length=260)
+    source_hash: str = Field(min_length=64, max_length=64)
+    content_base64: str = Field(min_length=1)
+    fallback_reason: str = Field(min_length=1, max_length=500)
+    expected_profile_id: str | None = Field(default=None, max_length=120)
+    parse_report: dict[str, Any] = Field(default_factory=dict)
+    created_by: str = Field(default="desktop-import-fallback", min_length=1)
+
+
 class GeometryRequest(BaseModel):
     latitude: float
     longitude: float
