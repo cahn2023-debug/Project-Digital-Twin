@@ -10,39 +10,53 @@ from .schemas import BasemapManifest
 
 _MANIFEST = BasemapManifest.model_validate(
     {
-        "schemaVersion": 1,
-        "manifestVersion": "2026-08-10.1",
+        "schemaVersion": 2,
+        "manifestVersion": "2026-08-10.2",
         "generatedAt": "2026-08-10T00:00:00Z",
         "defaultMode": "vector",
         "modes": {
             "street": {
                 "key": "street",
                 "label": "Street",
-                "detail": "Google public roads",
+                "detail": "Google public roads · online-only",
                 "source": {
                     "kind": "raster",
+                    "provider": "google",
+                    "layerControl": "baked-raster",
                     "tiles": ["https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"],
                     "styleUrl": None,
+                    "offline": {"supported": False, "kind": "none", "glyphs": None, "sprite": None},
                 },
             },
             "hybrid": {
                 "key": "hybrid",
                 "label": "Hybrid",
-                "detail": "Google public imagery",
+                "detail": "Google public imagery · online-only",
                 "source": {
                     "kind": "raster",
+                    "provider": "google",
+                    "layerControl": "baked-raster",
                     "tiles": ["https://mt1.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}"],
                     "styleUrl": None,
+                    "offline": {"supported": False, "kind": "none", "glyphs": None, "sprite": None},
                 },
             },
             "vector": {
                 "key": "vector",
                 "label": "Vector",
-                "detail": "OpenStreetMap vector",
+                "detail": "OpenStreetMap/OpenFreeMap vector · offline",
                 "source": {
                     "kind": "style",
-                    "tiles": [],
+                    "provider": "openstreetmap",
+                    "layerControl": "style-layer",
+                    "tiles": ["https://tiles.openfreemap.org/planet/{z}/{x}/{y}.pbf"],
                     "styleUrl": "https://tiles.openfreemap.org/styles/bright",
+                    "offline": {
+                        "supported": True,
+                        "kind": "vector-style",
+                        "glyphs": "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+                        "sprite": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm",
+                    },
                 },
             },
         },
@@ -109,6 +123,7 @@ _MANIFEST = BasemapManifest.model_validate(
         ],
         "tilePackages": {
             "supported": True,
+            "supportedModes": ["vector"],
             "selection": "boundingBox",
             "minZoom": 0,
             "maxZoom": 18,

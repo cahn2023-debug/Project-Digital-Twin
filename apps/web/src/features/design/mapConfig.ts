@@ -47,21 +47,39 @@ export const defaultLayerVisibility: LayerVisibility = {
   landWater: true,
 };
 
-const source = (kind: BasemapSource["kind"], tiles: string[], styleUrl: string | null): BasemapSource => ({
+const source = (
+  kind: BasemapSource["kind"],
+  provider: BasemapSource["provider"],
+  layerControl: BasemapSource["layerControl"],
+  tiles: string[],
+  styleUrl: string | null,
+  offline: BasemapSource["offline"],
+): BasemapSource => ({
   kind,
+  provider,
+  layerControl,
   tiles,
   styleUrl,
+  offline,
 });
 
+const googleOffline = { supported: false, kind: "none", glyphs: null, sprite: null } as const;
+const osmOffline = {
+  supported: true,
+  kind: "vector-style",
+  glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
+  sprite: "https://tiles.openfreemap.org/sprites/ofm_f384/ofm",
+} as const;
+
 export const bundledManifest: BasemapManifest = {
-  schemaVersion: 1,
-  manifestVersion: "bundled-2026-08-10.1",
+  schemaVersion: 2,
+  manifestVersion: "bundled-2026-08-10.2",
   generatedAt: "2026-08-10T00:00:00Z",
   defaultMode: "vector",
   modes: {
-    street: { key: "street", label: "Street", detail: "Google public roads", source: source("raster", [googleStreetTiles], null) },
-    hybrid: { key: "hybrid", label: "Hybrid", detail: "Google public imagery", source: source("raster", [googleHybridTiles], null) },
-    vector: { key: "vector", label: "Vector", detail: "OpenStreetMap vector", source: source("style", [], vectorStyleUrl) },
+    street: { key: "street", label: "Street", detail: "Google public roads · online", source: source("raster", "google", "baked-raster", [googleStreetTiles], null, googleOffline) },
+    hybrid: { key: "hybrid", label: "Hybrid", detail: "Google public imagery · online", source: source("raster", "google", "baked-raster", [googleHybridTiles], null, googleOffline) },
+    vector: { key: "vector", label: "Vector", detail: "OpenStreetMap · offline", source: source("style", "openstreetmap", "style-layer", ["https://tiles.openfreemap.org/planet/{z}/{x}/{y}.pbf"], vectorStyleUrl, osmOffline) },
   },
   layers: [
     { key: "transport", label: "Đường & giao thông", detail: "Đường bộ, cầu, đường sắt", color: "#3b82f6", layerPrefixes: ["highway", "road_", "tunnel-", "bridge-", "railway", "ferry", "cablecar", "aeroway"], excludePrefixes: [], defaultVisibility: true },
@@ -71,8 +89,8 @@ export const bundledManifest: BasemapManifest = {
     { key: "placeLabels", label: "Tên địa danh", detail: "Thành phố, thị trấn, địa danh", color: "#be123c", layerPrefixes: ["label_"], excludePrefixes: ["label_state", "label_country"], defaultVisibility: true },
     { key: "landWater", label: "Đất, nước & công trình", detail: "Sông, hồ, đất phủ, tòa nhà", color: "#64748b", layerPrefixes: ["landcover", "landuse", "park", "water", "waterway", "building", "road_area", "road_pier", "highway-area"], excludePrefixes: [], defaultVisibility: true },
   ],
-  attribution: ["© OpenStreetMap contributors", "Google Maps tiles (experimental)", "MapLibre"],
-  tilePackages: { supported: true, selection: "boundingBox", minZoom: 0, maxZoom: 18, storage: "desktop-local" },
+  attribution: ["© OpenStreetMap contributors", "© OpenFreeMap", "Google Maps tiles (online-only)", "MapLibre"],
+  tilePackages: { supported: true, supportedModes: ["vector"], selection: "boundingBox", minZoom: 0, maxZoom: 18, storage: "desktop-local" },
 };
 
 export const basemapModes: Array<{ key: BasemapKey; label: string; detail: string }> = manifestModes(bundledManifest);
@@ -100,15 +118,23 @@ function isPublicUrl(value: unknown): value is string {
 }
 
 function isSource(value: unknown): value is BasemapSource {
-  if (!isRecord(value) || (value.kind !== "raster" && value.kind !== "style")) return false;
-  if (!Array.isArray(value.tiles) || !value.tiles.every((tile) => isPublicUrl(tile) && tile.includes("{x}") && tile.includes("{y}") && tile.includes("{z}"))) return false;
-  if (value.kind === "raster") return value.tiles.length > 0;
-  return isPublicUrl(value.styleUrl);
+  if (!isRecord(value) || (value.kind !== "raster" && value.kind !== "style") || (value.provider !== "google" && value.provider !== "openstreetmap") || (value.layerControl !== "baked-raster" && value.layerControl !== "style-layer")) return false;
+  if (!Array.isArray(value.tiles) || !value.tiles.length || !value.tiles.every((tile) => isPublicUrl(tile) && tile.includes("{x}") && tile.includes("{y}") && tile.includes("{z}"))) return false;
+  if (!isRecord(value.offline) || typeof value.offline.supported !== "boolean" || (value.offline.kind !== "none" && value.offline.kind !== "vector-style")) return false;
+  if (value.offline.supported !== (value.offline.kind === "vector-style")) return false;
+  if (value.offline.kind === "vector-style" && (!isPublicUrl(value.offline.glyphs) || !isPublicUrl(value.offline.sprite))) return false;
+  if (value.offline.kind === "none" && (value.offline.glyphs !== null || value.offline.sprite !== null)) return false;
+  if (value.provider === "google" && (value.kind !== "raster" || value.layerControl !== "baked-raster" || value.offline.supported)) return false;
+  if (value.provider === "openstreetmap" && (value.kind !== "style" || value.layerControl !== "style-layer" || !value.offline.supported)) return false;
+  return value.kind === "raster" ? value.styleUrl === null : isPublicUrl(value.styleUrl);
 }
 
 function isTilePackageCapabilities(value: unknown): boolean {
   if (!isRecord(value)) return false;
   return typeof value.supported === "boolean"
+    && Array.isArray(value.supportedModes)
+    && value.supportedModes.every((mode) => mode === "vector")
+    && (value.supported ? value.supportedModes.length > 0 : value.supportedModes.length === 0)
     && value.selection === "boundingBox"
     && Number.isInteger(value.minZoom)
     && Number.isInteger(value.maxZoom)
@@ -120,7 +146,7 @@ function isTilePackageCapabilities(value: unknown): boolean {
 
 export function validateBasemapManifest(value: unknown): value is BasemapManifest {
   if (!isRecord(value)) return false;
-  if (value.schemaVersion !== 1 || !isNonEmptyString(value.manifestVersion) || !isIsoTimestamp(value.generatedAt)) return false;
+  if (value.schemaVersion !== 2 || !isNonEmptyString(value.manifestVersion) || !isIsoTimestamp(value.generatedAt)) return false;
   if (!isRecord(value.modes) || !Array.isArray(value.layers) || !Array.isArray(value.attribution) || !isRecord(value.tilePackages)) return false;
   if (value.defaultMode !== "street" && value.defaultMode !== "hybrid" && value.defaultMode !== "vector") return false;
   if (!value.attribution.every((item) => isNonEmptyString(item)) || !isTilePackageCapabilities(value.tilePackages)) return false;

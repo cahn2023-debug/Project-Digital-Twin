@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from app.main import app
-from app.shared.schemas import BasemapManifest
+from app.shared.schemas import BasemapManifest, BasemapSource
 
 
 def test_basemap_manifest_is_display_only_and_complete() -> None:
@@ -11,7 +11,7 @@ def test_basemap_manifest_is_display_only_and_complete() -> None:
 
     assert response.status_code == 200
     payload = response.json()
-    assert payload["schemaVersion"] == 1
+    assert payload["schemaVersion"] == 2
     assert set(payload["modes"]) == {"street", "hybrid", "vector"}
     assert {layer["key"] for layer in payload["layers"]} == {
         "transport",
@@ -24,6 +24,13 @@ def test_basemap_manifest_is_display_only_and_complete() -> None:
     place_labels = next(layer for layer in payload["layers"] if layer["key"] == "placeLabels")
     assert place_labels["excludePrefixes"] == ["label_state", "label_country"]
     assert not {"projects", "entities", "cameras", "projectData"}.intersection(payload)
+    assert payload["modes"]["street"]["source"]["provider"] == "google"
+    assert payload["modes"]["street"]["source"]["layerControl"] == "baked-raster"
+    assert payload["modes"]["street"]["source"]["offline"]["supported"] is False
+    assert payload["modes"]["vector"]["source"]["provider"] == "openstreetmap"
+    assert payload["modes"]["vector"]["source"]["layerControl"] == "style-layer"
+    assert payload["modes"]["vector"]["source"]["offline"]["supported"] is True
+    assert payload["tilePackages"]["supportedModes"] == ["vector"]
     assert response.headers["cache-control"] == "no-cache"
     assert response.headers["etag"]
     assert response.headers["last-modified"]
@@ -60,5 +67,24 @@ def test_basemap_manifest_rejects_invalid_contract() -> None:
                 "layers": [],
                 "attribution": ["MapLibre"],
                 "tilePackages": {"supported": True, "selection": "boundingBox", "minZoom": 12, "maxZoom": 4, "storage": "desktop-local"},
+            }
+        )
+
+
+def test_google_source_cannot_be_declared_offline() -> None:
+    with pytest.raises(ValidationError):
+        BasemapSource.model_validate(
+            {
+                "kind": "raster",
+                "provider": "google",
+                "layerControl": "baked-raster",
+                "tiles": ["https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}"],
+                "styleUrl": None,
+                "offline": {
+                    "supported": True,
+                    "kind": "vector-style",
+                    "glyphs": "https://example.test/{fontstack}/{range}.pbf",
+                    "sprite": "https://example.test/sprite",
+                },
             }
         )

@@ -14,11 +14,24 @@ export interface EntityRevision {
 
 export type BasemapKey = "street" | "hybrid" | "vector";
 export type BasemapSourceKind = "raster" | "style";
+export type BasemapProvider = "google" | "openstreetmap";
+export type BasemapLayerControl = "baked-raster" | "style-layer";
+export type BasemapOfflineAssetKind = "none" | "vector-style";
+
+export interface BasemapOfflineAssets {
+  supported: boolean;
+  kind: BasemapOfflineAssetKind;
+  glyphs: string | null;
+  sprite: string | null;
+}
 
 export interface BasemapSource {
   kind: BasemapSourceKind;
+  provider: BasemapProvider;
+  layerControl: BasemapLayerControl;
   tiles: string[];
   styleUrl: string | null;
+  offline: BasemapOfflineAssets;
 }
 
 export interface BasemapMode {
@@ -40,6 +53,7 @@ export interface BasemapLayerGroup {
 
 export interface TilePackageCapabilities {
   supported: boolean;
+  supportedModes: BasemapKey[];
   selection: "boundingBox";
   minZoom: number;
   maxZoom: number;

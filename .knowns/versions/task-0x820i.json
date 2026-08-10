@@ -1,6 +1,6 @@
 {
   "taskId": "0x820i",
-  "currentVersion": 2,
+  "currentVersion": 3,
   "versions": [
     {
       "id": "v1",
@@ -48,18 +48,72 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "Processed mutation IDs and entity field state persist across server restart.",
-              "completed": false
+              "completed": false,
+              "text": "Processed mutation IDs and entity field state persist across server restart."
             },
             {
-              "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers.",
-              "completed": false
+              "completed": false,
+              "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
             },
             {
-              "text": "Persistence and restart/integration tests cover idempotency and conflict recovery.",
-              "completed": false
+              "completed": false,
+              "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
             }
           ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Processed mutation IDs and entity field state persist across server restart."
+          },
+          {
+            "completed": false,
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
+          },
+          {
+            "completed": false,
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T03:53:58.748Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T03:54:05.5203826Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "0x820i",
+      "version": 3,
+      "timestamp": "2026-08-10T04:18:01.1601939Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage."
         }
       ],
       "snapshot": {
@@ -78,19 +132,21 @@
           }
         ],
         "archived": false,
+        "assignee": "@me",
         "createdAt": "2026-08-10T03:53:58.748Z",
         "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
         "id": "0x820i",
+        "implementationNotes": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.",
         "labels": [
           "review-followup",
           "sync",
           "persistence"
         ],
         "priority": "medium",
-        "status": "todo",
+        "status": "in-progress",
         "timeSpent": 0,
         "title": "Review follow-up: persist server reconciliation state across restarts",
-        "updatedAt": "2026-08-10T03:54:05.5203826Z"
+        "updatedAt": "2026-08-10T04:18:01.1601939Z"
       }
     }
   ]

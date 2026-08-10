@@ -1,3 +1,18 @@
 {
-  "active": []
+  "active": [
+    {
+      "taskId": "nh6h0j",
+      "taskTitle": "Review follow-up: provider-specific MapLibre layer and Vector offline support",
+      "startedAt": "2026-08-10T04:03:14.611Z",
+      "pausedAt": null,
+      "totalPausedMs": 0
+    },
+    {
+      "taskId": "0x820i",
+      "taskTitle": "Review follow-up: persist server reconciliation state across restarts",
+      "startedAt": "2026-08-10T04:18:07.804Z",
+      "pausedAt": null,
+      "totalPausedMs": 0
+    }
+  ]
 }

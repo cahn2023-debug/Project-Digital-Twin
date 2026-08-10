@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as maplibregl from "maplibre-gl";
-import type { Map as MapLibreMap } from "maplibre-gl";
+import type { Map as MapLibreMap, StyleSpecification } from "maplibre-gl";
 import type { BasemapManifest } from "@project/domain";
 import { bundledManifest, defaultLayerVisibilityFromManifest, layerGroupMatchScore, layerGroupsFromManifest, loadBasemapManifest, manifestModes, readBasemapPreference, readCachedManifest, readLayerPreferences, vectorStyleUrl, type BasemapKey, type LayerVisibility, type MapLayerKey } from "./mapConfig";
-import { ensureOfflineBasemapProtocol, getActiveOfflinePackage, offlineTileTemplates, packageCoversViewport, type OfflineTilePackage } from "./offlineBasemap";
+import { ensureOfflineBasemapProtocol, getActiveOfflinePackage, packageCoversViewport, type OfflineTilePackage } from "./offlineBasemap";
 import { OfflineBasemapPanel } from "./OfflineBasemapPanel";
 import { Button, Icon, PageHeader, Panel, StatusBadge } from "../../shared/ui";
 
@@ -52,7 +52,7 @@ export function MapLibreMapView({
 
     const map = new maplibregl.Map({
       container: containerRef.current,
-      style: online ? manifest.modes.vector.source.styleUrl ?? vectorStyleUrl : {
+      style: online ? manifest.modes.vector.source.styleUrl ?? vectorStyleUrl : (offlinePackage?.style as StyleSpecification | undefined) ?? {
         version: 8,
         sources: {},
         layers: [{ id: "background", type: "background", paint: { "background-color": "#eef2f7" } }],
@@ -70,8 +70,7 @@ export function MapLibreMapView({
       setGoogleMapUrl(`https://www.google.com/maps/@${center.lat.toFixed(6)},${center.lng.toFixed(6)},${zoom}z`);
       const currentPackage = offlinePackageRef.current;
       if (onlineRef.current) setOfflineNotice("");
-      else if (modeRef.current === "vector") setOfflineNotice("Vector chưa có tile package offline; chọn Street hoặc Hybrid để tải vùng.");
-      else if (!currentPackage || currentPackage.mode !== modeRef.current) setOfflineNotice("Chưa có tile package cho mode này. Chọn vùng và zoom để tải offline.");
+      else if (!currentPackage || currentPackage.mode !== "vector") setOfflineNotice("Offline tự động chuyển sang OSM Vector; hãy tải package OSM trong phần nền bản đồ.");
       else {
         const viewport = map.getBounds();
         const viewportBounds = { west: viewport.getWest(), south: viewport.getSouth(), east: viewport.getEast(), north: viewport.getNorth() };
@@ -86,39 +85,41 @@ export function MapLibreMapView({
     map.on("error", handleMapError);
     map.on("moveend", updateGoogleMapUrl);
     map.on("load", () => {
-      const firstDataLayer = map.getStyle().layers?.find((layer: { id: string }) => layer.id !== "background")?.id;
-      map.addSource("google-street", {
-        type: "raster",
-        tiles: !online && offlinePackage?.mode === "street" ? offlineTileTemplates(offlinePackage.id, manifest.modes.street.source.tiles.length) : manifest.modes.street.source.tiles,
-        tileSize: 256,
-        attribution: "Google Maps",
-      });
-      map.addSource("google-hybrid", {
-        type: "raster",
-        tiles: !online && offlinePackage?.mode === "hybrid" ? offlineTileTemplates(offlinePackage.id, manifest.modes.hybrid.source.tiles.length) : manifest.modes.hybrid.source.tiles,
-        tileSize: 256,
-        attribution: "Google Maps",
-      });
-      map.addLayer(
-        {
-          id: "google-street-layer",
+      if (online) {
+        const firstDataLayer = map.getStyle().layers?.find((layer: { id: string }) => layer.id !== "background")?.id;
+        map.addSource("google-street", {
           type: "raster",
-          source: "google-street",
-          layout: { visibility: "none" },
-          paint: { "raster-fade-duration": 0 },
-        },
-        firstDataLayer,
-      );
-      map.addLayer(
-        {
-          id: "google-hybrid-layer",
+          tiles: manifest.modes.street.source.tiles,
+          tileSize: 256,
+          attribution: "Google Maps (online-only)",
+        });
+        map.addSource("google-hybrid", {
           type: "raster",
-          source: "google-hybrid",
-          layout: { visibility: "none" },
-          paint: { "raster-fade-duration": 0 },
-        },
-        firstDataLayer,
-      );
+          tiles: manifest.modes.hybrid.source.tiles,
+          tileSize: 256,
+          attribution: "Google Maps (online-only)",
+        });
+        map.addLayer(
+          {
+            id: "google-street-layer",
+            type: "raster",
+            source: "google-street",
+            layout: { visibility: "none" },
+            paint: { "raster-fade-duration": 0 },
+          },
+          firstDataLayer,
+        );
+        map.addLayer(
+          {
+            id: "google-hybrid-layer",
+            type: "raster",
+            source: "google-hybrid",
+            layout: { visibility: "none" },
+            paint: { "raster-fade-duration": 0 },
+          },
+          firstDataLayer,
+        );
+      }
       setMapReady(true);
       updateGoogleMapUrl();
     });
@@ -174,7 +175,7 @@ export function MapLibreMapView({
       <div className="map-layer-card">
         <div className="map-layer-head">
           <b className="map-layer-title">Lớp bản đồ</b>
-          <span>{mode === "vector" ? "Vector" : "Google raster + vector"}</span>
+          <span>{online ? (mode === "vector" ? "OSM Vector" : "Google raster + OSM layers") : "OSM Vector · offline fallback"}</span>
         </div>
         {mapLayerGroups.map((layer) => (
           <label className="layer-row" key={layer.key}>
@@ -189,9 +190,9 @@ export function MapLibreMapView({
           </label>
         ))}
         <div className="map-layer-note">Layer được điều khiển trực tiếp bằng MapLibre.</div>
-        <div className="map-layer-note">Street/Hybrid có chi tiết đã gộp sẵn trong raster public; checkbox điều khiển phần vector overlay.</div>
+        <div className="map-layer-note">Google Street/Hybrid là raster baked, chỉ online; checkbox chỉ điều khiển các layer style của OSM Vector.</div>
       </div>
-      <OfflineBasemapPanel manifest={manifest} mode={mode} activePackage={offlinePackage} onPackageReady={onOfflinePackageReady} />
+      <OfflineBasemapPanel manifest={manifest} activePackage={offlinePackage} onPackageReady={onOfflinePackageReady} />
       <a className="map-google-link" href={googleMapUrl} rel="noreferrer" target="_blank">
         Mở vị trí hiện tại trên Google Maps ↗
       </a>
@@ -210,6 +211,7 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
   const [layerVisibility, setLayerVisibility] = useState<LayerVisibility>(() => readLayerPreferences(defaultLayerVisibilityFromManifest(initialManifest)));
   const [offlinePackage, setOfflinePackage] = useState<OfflineTilePackage | null>(null);
   const [online, setOnline] = useState(() => navigator.onLine);
+  const effectiveBasemap: BasemapKey = online ? basemap : "vector";
   const hasSavedLayerPreferences = useRef(Boolean(window.localStorage.getItem("pp-design-map-layers")));
   const layerPreferencesInitialized = useRef(false);
 
@@ -221,11 +223,7 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
     ensureOfflineBasemapProtocol();
     let cancelled = false;
     const refreshPackage = () => {
-      if (basemap === "vector") {
-        setOfflinePackage(null);
-        return;
-      }
-      void getActiveOfflinePackage(basemap, manifest.manifestVersion, manifest.modes[basemap].source.tiles).then((packageToUse) => {
+      void getActiveOfflinePackage(manifest.manifestVersion, manifest.modes.vector.source.tiles).then((packageToUse) => {
         if (!cancelled) setOfflinePackage(packageToUse);
       }).catch(() => {
         if (!cancelled) setOfflinePackage(null);
@@ -241,7 +239,7 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
       window.removeEventListener("online", handleOnline);
       window.removeEventListener("offline", handleOffline);
     };
-  }, [basemap, manifest]);
+  }, [manifest]);
 
   useEffect(() => {
     let cancelled = false;
@@ -302,10 +300,10 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
       <div className="grid-12">
         <Panel className="col-8" title="Bản đồ thiết kế" subtitle="EPSG:4326 • Nền MapLibre • Địa giới và địa danh Việt Nam" action={<div className="panel-actions"><Button onClick={() => onAction("Chế độ chỉnh sửa bản đồ đã bật")}><Icon name="edit" size={13} />Chỉnh sửa</Button><Button onClick={() => onAction("Layer nền bản đồ đang được điều khiển trực tiếp")}>Layers</Button></div>}>
           <MapLibreMapView
-            key={`${manifest.manifestVersion}-${basemap}-${online}-${offlinePackage?.id ?? "none"}`}
+            key={`${manifest.manifestVersion}-${effectiveBasemap}-${online}-${offlinePackage?.id ?? "none"}`}
             layerVisibility={layerVisibility}
             manifest={manifest}
-            mode={basemap}
+            mode={effectiveBasemap}
             offlinePackage={offlinePackage}
             online={online}
             notice={manifestNotice}

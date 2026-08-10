@@ -172,17 +172,47 @@ class WriteJobFailureRequest(BaseModel):
     reason: str = Field(min_length=1, max_length=500)
 
 
+class BasemapOfflineAssets(BaseModel):
+    supported: bool
+    kind: Literal["none", "vector-style"]
+    glyphs: str | None = None
+    sprite: str | None = None
+
+    @model_validator(mode="after")
+    def validate_assets(self) -> "BasemapOfflineAssets":
+        if self.supported and self.kind != "vector-style":
+            raise ValueError("Supported offline basemap sources require vector-style assets")
+        if not self.supported and self.kind != "none":
+            raise ValueError("Unsupported offline basemap sources must use kind=none")
+        if self.kind == "vector-style" and (not self.glyphs or not self.sprite):
+            raise ValueError("Vector-style offline assets require glyphs and sprite templates")
+        if self.kind == "none" and (self.glyphs or self.sprite):
+            raise ValueError("Offline asset URLs are not allowed when offline support is disabled")
+        return self
+
+
 class BasemapSource(BaseModel):
     kind: Literal["raster", "style"]
+    provider: Literal["google", "openstreetmap"]
+    layerControl: Literal["baked-raster", "style-layer"]
     tiles: list[str] = Field(default_factory=list)
     styleUrl: str | None = None
+    offline: BasemapOfflineAssets
 
     @model_validator(mode="after")
     def validate_source(self) -> "BasemapSource":
-        if self.kind == "raster" and not self.tiles:
-            raise ValueError("Raster basemap sources require at least one tile template")
+        if not self.tiles:
+            raise ValueError("Basemap sources require at least one tile template")
+        if self.kind == "raster" and not self.styleUrl and self.provider != "google":
+            raise ValueError("Non-Google raster basemap sources require a styleUrl")
         if self.kind == "style" and not self.styleUrl:
             raise ValueError("Style basemap sources require a styleUrl")
+        if self.provider == "google":
+            if self.kind != "raster" or self.layerControl != "baked-raster" or self.offline.supported:
+                raise ValueError("Google basemap sources are online-only baked raster sources")
+        if self.provider == "openstreetmap":
+            if self.kind != "style" or self.layerControl != "style-layer" or not self.offline.supported:
+                raise ValueError("OpenStreetMap basemap sources require offline style-layer assets")
         return self
 
 
@@ -205,6 +235,7 @@ class BasemapLayerGroup(BaseModel):
 
 class TilePackageCapabilities(BaseModel):
     supported: bool
+    supportedModes: list[Literal["street", "hybrid", "vector"]]
     selection: Literal["boundingBox"]
     minZoom: int = Field(ge=0, le=24)
     maxZoom: int = Field(ge=0, le=24)
@@ -214,6 +245,10 @@ class TilePackageCapabilities(BaseModel):
     def validate_zoom_range(self) -> "TilePackageCapabilities":
         if self.maxZoom < self.minZoom:
             raise ValueError("maxZoom must be greater than or equal to minZoom")
+        if self.supported and not self.supportedModes:
+            raise ValueError("Supported tile packages require at least one supported mode")
+        if not self.supported and self.supportedModes:
+            raise ValueError("Unsupported tile packages cannot declare supported modes")
         return self
 
 
@@ -304,4 +339,3 @@ class StagedConflictResponse(BaseModel):
 class StagedConflictListResponse(BaseModel):
     total: int
     conflicts: list[StagedConflictResponse]
-
