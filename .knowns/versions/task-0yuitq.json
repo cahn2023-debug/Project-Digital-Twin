@@ -1,0 +1,587 @@
+{
+  "taskId": "0yuitq",
+  "currentVersion": 9,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "0yuitq",
+      "version": 1,
+      "timestamp": "2026-08-10T01:37:26.4036109Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "medium"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T01:37:26.4024907Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T01:37:26.4024907Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "0yuitq",
+      "version": 2,
+      "timestamp": "2026-08-10T01:37:43.095451Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T01:37:43.095451Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "0yuitq",
+      "version": 3,
+      "timestamp": "2026-08-10T01:40:08.8954219Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+            },
+            {
+              "completed": false,
+              "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+            },
+            {
+              "completed": false,
+              "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+            },
+            {
+              "completed": false,
+              "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+            },
+            {
+              "completed": false,
+              "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+            },
+            {
+              "completed": false,
+              "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+            }
+          ]
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+          },
+          {
+            "completed": false,
+            "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+          },
+          {
+            "completed": false,
+            "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+          },
+          {
+            "completed": false,
+            "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+          },
+          {
+            "completed": false,
+            "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+          },
+          {
+            "completed": false,
+            "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "implementationPlan": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed.",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T01:40:08.8954219Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "0yuitq",
+      "version": 4,
+      "timestamp": "2026-08-10T01:40:30.0618962Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 164
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+          },
+          {
+            "completed": false,
+            "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+          },
+          {
+            "completed": false,
+            "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+          },
+          {
+            "completed": false,
+            "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+          },
+          {
+            "completed": false,
+            "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+          },
+          {
+            "completed": false,
+            "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "implementationPlan": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed.",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 164,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T01:40:30.0618962Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "0yuitq",
+      "version": 5,
+      "timestamp": "2026-08-10T01:45:08.7716589Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+          },
+          {
+            "completed": false,
+            "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+          },
+          {
+            "completed": false,
+            "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+          },
+          {
+            "completed": false,
+            "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+          },
+          {
+            "completed": false,
+            "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+          },
+          {
+            "completed": false,
+            "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "implementationNotes": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.",
+        "implementationPlan": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed.",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 164,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T01:45:08.7716589Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "0yuitq",
+      "version": 6,
+      "timestamp": "2026-08-10T01:55:57.2973639Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.",
+          "newValue": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.\nDone: extracted web shell/project context/navigation/notifications into apps/web/src/main_core and kept App.tsx plus feature navigation config as compatibility entrypoints. Extracted Tauri runtime composition into apps/desktop/src-tauri/src/main_core; command implementations and public command names remain unchanged. Updated CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md. Verification so far: uv run pytest 44 passed, corepack pnpm typecheck passed, cargo check --workspace passed."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+          },
+          {
+            "completed": false,
+            "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+          },
+          {
+            "completed": false,
+            "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+          },
+          {
+            "completed": false,
+            "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+          },
+          {
+            "completed": false,
+            "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+          },
+          {
+            "completed": false,
+            "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "implementationNotes": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.\nDone: extracted web shell/project context/navigation/notifications into apps/web/src/main_core and kept App.tsx plus feature navigation config as compatibility entrypoints. Extracted Tauri runtime composition into apps/desktop/src-tauri/src/main_core; command implementations and public command names remain unchanged. Updated CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md. Verification so far: uv run pytest 44 passed, corepack pnpm typecheck passed, cargo check --workspace passed.",
+        "implementationPlan": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed.",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 164,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T01:55:57.2973639Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "0yuitq",
+      "version": 7,
+      "timestamp": "2026-08-10T02:00:34.597955Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+            },
+            {
+              "completed": false,
+              "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+            },
+            {
+              "completed": false,
+              "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+            },
+            {
+              "completed": false,
+              "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+            },
+            {
+              "completed": false,
+              "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+            },
+            {
+              "completed": false,
+              "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+            },
+            {
+              "completed": true,
+              "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+            },
+            {
+              "completed": true,
+              "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+            },
+            {
+              "completed": true,
+              "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+            },
+            {
+              "completed": true,
+              "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+            },
+            {
+              "completed": true,
+              "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.\nDone: extracted web shell/project context/navigation/notifications into apps/web/src/main_core and kept App.tsx plus feature navigation config as compatibility entrypoints. Extracted Tauri runtime composition into apps/desktop/src-tauri/src/main_core; command implementations and public command names remain unchanged. Updated CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md. Verification so far: uv run pytest 44 passed, corepack pnpm typecheck passed, cargo check --workspace passed.",
+          "newValue": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.\nDone: extracted web shell/project context/navigation/notifications into apps/web/src/main_core and kept App.tsx plus feature navigation config as compatibility entrypoints. Extracted Tauri runtime composition into apps/desktop/src-tauri/src/main_core; command implementations and public command names remain unchanged. Updated CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md. Verification so far: uv run pytest 44 passed, corepack pnpm typecheck passed, cargo check --workspace passed.\nCompleted: all five tab boundaries remain canonical without duplicate top-level folders; runtime-local main_core namespaces exist for server, web and Tauri; main.py, App.tsx and Tauri lib.rs are thin compatibility/bootstrap entrypoints; router/feature dependency boundaries are enforced; CameraStore, project isolation, provenance, revisions, ChangeSets, audit/outbox, dashboard read-only and file-write behavior remain covered. Added a local binding in crates/desktop-core/src/manifest.rs::list_sources to satisfy the Rust borrow checker without changing behavior while verifying the existing overlapping desktop source-ingestion work. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing 1.2 MB bundle-size warning; uv run pytest 44 passed with existing Starlette/httpx deprecation warning; cargo fmt --all -- --check passed; cargo check --workspace passed; cargo test --workspace 21 passed; git diff --check passed; knowns validate task passed. System Decision Impact: candidate @decision/20260810-0859-runtime-local-main-core-composition-boundary (added) — records runtime-local main_core composition boundary and import-safe naming; reviewState=needs_evidence because local architecture docs are not Knowns-managed. Spec Decision Compliance: no linked spec; ADR-001..ADR-008 and adjacent locked decisions remain unchanged with no conflict."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+          },
+          {
+            "completed": true,
+            "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+          },
+          {
+            "completed": true,
+            "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+          },
+          {
+            "completed": true,
+            "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+          },
+          {
+            "completed": true,
+            "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "implementationNotes": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.\nDone: extracted web shell/project context/navigation/notifications into apps/web/src/main_core and kept App.tsx plus feature navigation config as compatibility entrypoints. Extracted Tauri runtime composition into apps/desktop/src-tauri/src/main_core; command implementations and public command names remain unchanged. Updated CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md. Verification so far: uv run pytest 44 passed, corepack pnpm typecheck passed, cargo check --workspace passed.\nCompleted: all five tab boundaries remain canonical without duplicate top-level folders; runtime-local main_core namespaces exist for server, web and Tauri; main.py, App.tsx and Tauri lib.rs are thin compatibility/bootstrap entrypoints; router/feature dependency boundaries are enforced; CameraStore, project isolation, provenance, revisions, ChangeSets, audit/outbox, dashboard read-only and file-write behavior remain covered. Added a local binding in crates/desktop-core/src/manifest.rs::list_sources to satisfy the Rust borrow checker without changing behavior while verifying the existing overlapping desktop source-ingestion work. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing 1.2 MB bundle-size warning; uv run pytest 44 passed with existing Starlette/httpx deprecation warning; cargo fmt --all -- --check passed; cargo check --workspace passed; cargo test --workspace 21 passed; git diff --check passed; knowns validate task passed. System Decision Impact: candidate @decision/20260810-0859-runtime-local-main-core-composition-boundary (added) — records runtime-local main_core composition boundary and import-safe naming; reviewState=needs_evidence because local architecture docs are not Knowns-managed. Spec Decision Compliance: no linked spec; ADR-001..ADR-008 and adjacent locked decisions remain unchanged with no conflict.",
+        "implementationPlan": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed.",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 164,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T02:00:34.597955Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "0yuitq",
+      "version": 8,
+      "timestamp": "2026-08-10T02:00:52.1556854Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": 164,
+          "newValue": 1253
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders."
+          },
+          {
+            "completed": true,
+            "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core."
+          },
+          {
+            "completed": true,
+            "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged."
+          },
+          {
+            "completed": true,
+            "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation."
+          },
+          {
+            "completed": true,
+            "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact."
+          },
+          {
+            "completed": true,
+            "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "implementationNotes": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.\nDone: extracted web shell/project context/navigation/notifications into apps/web/src/main_core and kept App.tsx plus feature navigation config as compatibility entrypoints. Extracted Tauri runtime composition into apps/desktop/src-tauri/src/main_core; command implementations and public command names remain unchanged. Updated CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md. Verification so far: uv run pytest 44 passed, corepack pnpm typecheck passed, cargo check --workspace passed.\nCompleted: all five tab boundaries remain canonical without duplicate top-level folders; runtime-local main_core namespaces exist for server, web and Tauri; main.py, App.tsx and Tauri lib.rs are thin compatibility/bootstrap entrypoints; router/feature dependency boundaries are enforced; CameraStore, project isolation, provenance, revisions, ChangeSets, audit/outbox, dashboard read-only and file-write behavior remain covered. Added a local binding in crates/desktop-core/src/manifest.rs::list_sources to satisfy the Rust borrow checker without changing behavior while verifying the existing overlapping desktop source-ingestion work. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing 1.2 MB bundle-size warning; uv run pytest 44 passed with existing Starlette/httpx deprecation warning; cargo fmt --all -- --check passed; cargo check --workspace passed; cargo test --workspace 21 passed; git diff --check passed; knowns validate task passed. System Decision Impact: candidate @decision/20260810-0859-runtime-local-main-core-composition-boundary (added) — records runtime-local main_core composition boundary and import-safe naming; reviewState=needs_evidence because local architecture docs are not Knowns-managed. Spec Decision Compliance: no linked spec; ADR-001..ADR-008 and adjacent locked decisions remain unchanged with no conflict.",
+        "implementationPlan": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed.",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 1253,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T02:00:52.1556854Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "0yuitq",
+      "version": 9,
+      "timestamp": "2026-08-10T02:00:54.2598074Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T02:00:54.2598074Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Five product-tab boundaries remain canonical across server modules, web features and domain contracts without duplicate top-level tab folders.",
+            "completed": true
+          },
+          {
+            "text": "Runtime-local Main-core namespaces exist for server, web and Tauri composition using the import-safe name main_core.",
+            "completed": true
+          },
+          {
+            "text": "main.py, App.tsx and Tauri lib.rs become thin bootstrap/compatibility entrypoints while existing REST routes, payloads and command names remain unchanged.",
+            "completed": true
+          },
+          {
+            "text": "Routers and features follow the dependency direction and no feature imports another feature's private implementation.",
+            "completed": true
+          },
+          {
+            "text": "CameraStore compatibility, project isolation, provenance, revision, ChangeSet, audit, outbox, dashboard read-only behavior and file-write safety remain intact.",
+            "completed": true
+          },
+          {
+            "text": "All workspace typecheck, build, test, Rust checks, diff validation and Knowns validation pass.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:00:54.2598074Z",
+        "createdAt": "2026-08-10T01:37:26.402Z",
+        "description": "Tổ chức code theo năm tab DATACENTER, DESIGN, OPERATE, ORGANIZE và DASHBOARD; đưa code app composition, dependency wiring, project context, navigation và runtime command registration vào vùng Main-core theo từng runtime. Giữ nguyên REST/API, database contract, runtime behavior và các invariant ADR-001 đến ADR-008.",
+        "id": "0yuitq",
+        "implementationNotes": "Done: created apps/server/app/main_core/{app_factory,dependencies,request_context,router_registry}.py; main.py is now a compatibility/bootstrap entrypoint and all six feature routers use Main-core dependency providers instead of importing app.main. Server verification: uv run pytest 43 passed; existing Starlette/httpx deprecation warning remains.\nDone: extracted web shell/project context/navigation/notifications into apps/web/src/main_core and kept App.tsx plus feature navigation config as compatibility entrypoints. Extracted Tauri runtime composition into apps/desktop/src-tauri/src/main_core; command implementations and public command names remain unchanged. Updated CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md. Verification so far: uv run pytest 44 passed, corepack pnpm typecheck passed, cargo check --workspace passed.\nCompleted: all five tab boundaries remain canonical without duplicate top-level folders; runtime-local main_core namespaces exist for server, web and Tauri; main.py, App.tsx and Tauri lib.rs are thin compatibility/bootstrap entrypoints; router/feature dependency boundaries are enforced; CameraStore, project isolation, provenance, revisions, ChangeSets, audit/outbox, dashboard read-only and file-write behavior remain covered. Added a local binding in crates/desktop-core/src/manifest.rs::list_sources to satisfy the Rust borrow checker without changing behavior while verifying the existing overlapping desktop source-ingestion work. Verification: corepack pnpm typecheck passed; corepack pnpm test passed; corepack pnpm build passed with existing 1.2 MB bundle-size warning; uv run pytest 44 passed with existing Starlette/httpx deprecation warning; cargo fmt --all -- --check passed; cargo check --workspace passed; cargo test --workspace 21 passed; git diff --check passed; knowns validate task passed. System Decision Impact: candidate @decision/20260810-0859-runtime-local-main-core-composition-boundary (added) — records runtime-local main_core composition boundary and import-safe naming; reviewState=needs_evidence because local architecture docs are not Knowns-managed. Spec Decision Compliance: no linked spec; ADR-001..ADR-008 and adjacent locked decisions remain unchanged with no conflict.",
+        "implementationPlan": "## Implementation Plan\n\n1. Freeze the current contract and ownership baseline.\n   - Inventory the existing five-tab paths, orchestration entrypoints, compatibility facades and router imports.\n   - Record REST routes, request/response schemas and runtime command names before editing.\n   - Use completed task kxz78p as the structural baseline; do not create duplicate top-level tab folders.\n\n2. Establish the Main-core convention and boundary.\n   - Create runtime-local orchestration namespaces: apps/server/app/main_core, apps/web/src/main_core and apps/desktop/src-tauri/src/main_core.\n   - Use main_core as the import-safe source name for the requested Main-core area; document the product-facing name as Main-core.\n   - Update docs/architecture/CURRENT_ARCHITECTURE.md, TARGET_ARCHITECTURE_V1.md and MODULE_BOUNDARIES.md with ownership and dependency rules.\n   - Main-core may compose modules, but must not own domain rules, persistence implementation, auth implementation or physical file writes.\n\n3. Extract server application composition.\n   - Move app factory, dependency wiring, router registration and request-context coordination out of apps/server/app/main.py into main_core/app_factory.py, dependencies.py, router_registry.py and request_context.py.\n   - Keep auth, observability and persistence implementations in platform/shared; keep CameraStore as the compatibility facade.\n   - Leave main.py as a thin compatibility/bootstrap entrypoint and preserve health, metrics, middleware behavior and REST paths.\n\n4. Migrate project, DATACENTER and DESIGN server routers.\n   - Replace direct router imports of main.store and main helpers with Main-core dependency/provider ports.\n   - Keep project lifecycle in modules/project, import/mapping/source concerns in modules/datacenter and geometry/revision concerns in modules/design.\n   - Add import-boundary and endpoint contract tests before removing each compatibility path.\n\n5. Migrate OPERATE, ORGANIZE and DASHBOARD server routers.\n   - Apply the same provider boundary to field package, observation, sync, conflict, group/tag, lifecycle, write-back and projection routes.\n   - Keep ORGANIZE write-back orchestration behind file-adapter interfaces and keep DASHBOARD read-only.\n   - Verify project isolation, provenance, revision, ChangeSet, audit and outbox behavior remains unchanged.\n\n6. Extract web Main-core shell coordination.\n   - Move shell state, project context/switching, navigation selection, global search, theme and toast coordination from apps/web/src/App.tsx into AppShell.tsx, ProjectContext.tsx, navigation.ts and notifications.ts.\n   - Keep project-lifecycle API/dialog implementation under features/project-lifecycle and tab views under features/{datacenter,design,operate,organize,dashboard}.\n   - Leave App.tsx as a compatibility entrypoint and prevent feature-to-feature private imports.\n\n7. Extract desktop runtime coordination.\n   - Move Tauri command registration, runtime state wiring and startup composition from apps/desktop/src-tauri/src/lib.rs into main_core.\n   - Keep scan, jobs, mutation, replay, conflict, auth and encrypted-database implementations in their capability modules; keep crates/desktop-core as a compatibility barrel.\n   - Preserve SQLite schema, retry/idempotency, watcher debounce, self-write suppression, safe replace and offline sync behavior.\n\n8. Verify, document and hand off.\n   - Add or update module-boundary, REST contract, project isolation, dashboard read-only and compatibility-facade tests.\n   - Run corepack pnpm typecheck, corepack pnpm test, corepack pnpm build, uv run pytest, cargo fmt --all -- --check, cargo check --workspace, cargo test --workspace, git diff --check and knowns validate.\n   - Confirm no database migration, public endpoint, payload, ADR-001..ADR-008 invariant or runtime behavior changed.",
+        "labels": [
+          "normal",
+          "architecture",
+          "module-boundaries",
+          "maintainability"
+        ],
+        "priority": "medium",
+        "status": "done",
+        "timeSpent": 1253,
+        "title": "Tạo cấu trúc 5 tab và Main-core cho Project Digital Twin",
+        "updatedAt": "2026-08-10T02:00:54.2598074Z"
+      }
+    }
+  ]
+}

@@ -8,12 +8,14 @@
 
 | Runtime | Current boundary | Notes |
 | --- | --- | --- |
-| Web | `apps/web` React/Vite application | `App.tsx` owns the shell; tab views are under `features/`; shared API/UI/config are extracted. |
-| Server | `apps/server/app` FastAPI application | `main.py` owns setup and router registration; REST handlers are grouped under `modules/*/router.py`. |
+| Web | `apps/web` React/Vite application | `App.tsx` is a compatibility entrypoint; shell/project context/navigation orchestration lives under `main_core/`; tab views are under `features/`. |
+| Server | `apps/server/app` FastAPI application | `main.py` is a compatibility entrypoint; app factory, request context and router registration live under `main_core/`; REST handlers are grouped under `modules/*/router.py`. |
 | Desktop shell | `apps/desktop` TypeScript Tauri bridge | Local-file and job commands are exported through feature files. |
 | Desktop core | `crates/desktop-core` Rust library | Manifest, scanner, queue contract, hashing and safe-write are separate modules; queue operations still execute transactionally through `ManifestDb`. |
 | Shared contracts | `packages/domain` | Context-specific files are re-exported through `src/index.ts` for compatibility. |
 | Canonical storage | `migrations`, server persistence adapter | PostgreSQL/PostGIS is the target; the transitional runtime snapshot adapter remains in use. |
+
+`Main-core` is implemented as the language-safe `main_core` namespace inside each runtime. It composes modules and runtime capabilities but does not own domain rules, persistence implementation, authentication implementation or physical file writes.
 
 ## Feature ownership
 
@@ -38,4 +40,4 @@ The public REST paths and response shapes remain unchanged. New code should impo
 - `cargo check --workspace`: passed.
 - `cargo test --workspace`: 10 desktop-core tests passed.
 
-The remaining architecture work is to split `CameraStore` into application services/repository ports, move project dialogs out of the web shell, and decompose the transitional persistence snapshot by context without changing the public contract.
+The remaining architecture work is to split `CameraStore` into application services/repository ports and decompose the transitional persistence snapshot by context without changing the public contract.

@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from app.modules.dashboard.router import router as dashboard_router
 from app.modules.datacenter.router import router as datacenter_router
 from app.modules.design.router import router as design_router
@@ -28,3 +30,17 @@ def test_compatibility_domain_facade_exports_context_contracts() -> None:
     assert Project is ProjectContract
     assert OrganizeGroup.__module__.endswith("organize.domain")
     assert issubclass(RevisionConflict, Exception)
+
+
+def test_main_core_owns_server_composition_without_router_main_imports() -> None:
+    from app.main_core.app_factory import create_app
+    from app.main_core.dependencies import get_store
+
+    assert create_app is not None
+    assert get_store is not None
+
+    router_root = Path(__file__).parents[1] / "app" / "modules"
+    for router_path in router_root.glob("*/router.py"):
+        source = router_path.read_text(encoding="utf-8")
+        assert "from ... import main" not in source
+        assert "from ...main import" not in source

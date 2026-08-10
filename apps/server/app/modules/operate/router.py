@@ -11,7 +11,7 @@ from fastapi import APIRouter, Header, HTTPException
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import Response
 
-from ... import main as main_module
+from ...main_core import dependencies as main_core
 from ...authorization import Role
 from ...domain import (
     FileImportConflict,
@@ -26,7 +26,7 @@ from ...domain import (
 from ...documents import parse_document
 from ...importer import parse_camera_rows
 
-from ...main import (
+from ...shared.schemas import (
     ApprovalRequest,
     ContractorCreate,
     DocumentImportRequest,
@@ -57,22 +57,22 @@ router = APIRouter()
 
 class _StoreProxy:
     def __getattr__(self, name: str) -> Any:
-        return getattr(main_module.store, name)
+        return getattr(main_core.get_store(), name)
 
 
 store = _StoreProxy()
 
 
 def _authorize_header(project_id: UUID, action: str, actor: str, role: str) -> None:
-    main_module._authorize_header(project_id, action, actor, role)
+    main_core.authorize_header(project_id, action, actor, role)
 
 
 def _organize_group_state(group: Any) -> dict[str, Any]:
-    return main_module._organize_group_state(group)
+    return main_core.organize_group_state(group)
 
 
 def _organize_membership_state(project_id: UUID, item_type: str, item_ids: list[UUID]) -> dict[str, list[str]]:
-    return main_module._organize_membership_state(project_id, item_type, item_ids)
+    return main_core.organize_membership_state(project_id, item_type, item_ids)
 
 
 @router.post("/api/v1/projects/{project_id}/field-packages", status_code=201)

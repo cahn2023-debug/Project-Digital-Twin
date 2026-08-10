@@ -9,6 +9,7 @@ This document defines the maintainable module layout for the Camera Vertical Sli
 ```text
 apps/server/app/
   main.py
+  main_core/              # app factory, dependency wiring, router registry, request context
   shared/                  # clock, normalization, errors, event/audit contracts
   platform/                # auth, observability, persistence
   modules/
@@ -21,7 +22,8 @@ apps/server/app/
   adapters/                # repositories, importers, writers
 
 apps/web/src/
-  App.tsx                  # shell and project context
+  App.tsx                  # compatibility entrypoint
+  main_core/               # shell, project context, navigation and notifications
   shared/                  # API, UI primitives, common types
   features/                # one directory per product capability
 
@@ -31,6 +33,10 @@ packages/domain/src/
 
 crates/desktop-core/src/
   lib.rs hash.rs safe_write.rs manifest/scanner/queue boundaries
+
+apps/desktop/src-tauri/src/
+  lib.rs                   # Tauri compatibility entrypoint and command macro boundary
+  main_core/               # runtime composition, command registration and state wiring
 ```
 
 ## Dependency direction
@@ -41,6 +47,8 @@ UI feature → feature API client → FastAPI router → application service
 ```
 
 Feature modules may depend on shared contracts and platform ports. They must not import another feature's private implementation. `DASHBOARD` is read-only and consumes projections. `ORGANIZE` can request write-back, but only a file adapter performs physical writes.
+
+`main_core` may depend on feature/module public interfaces for composition. Feature and domain modules must not depend on `main_core` internals.
 
 ## Runtime invariants
 
