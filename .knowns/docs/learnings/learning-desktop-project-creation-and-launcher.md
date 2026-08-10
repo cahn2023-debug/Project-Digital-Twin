@@ -36,3 +36,13 @@ tags:
 - **What went wrong:** Using icon names like `"folder"` or `"x"` before declaring them in the `IconName` type union resulted in build-time TypeScript type errors.
 - **Root cause:** String literal union type `IconName` was missing newly added icon keys.
 - **Prevention:** Always update `shared/types.ts` (`IconName`) whenever using new SVG icon components.
+
+### React Hook Ordering during Vite HMR
+- **What went wrong:** Adding new `useState` hooks into `useProjectContext` while the Vite dev server was running caused React HMR to throw "Should have a queue. You are likely calling Hooks conditionally".
+- **Root cause:** Hot Module Replacement preserved previous component render hook index while the new code inserted an extra hook before `useEffect`.
+- **Prevention:** Refresh the browser page (F5) or restart Vite dev server after introducing new React hooks in custom context providers.
+
+### Project Fallback for Offline/Zero-Seed State
+- **What went wrong:** When a new project was created without pre-seeded API data or when operating offline, `projects.find(...)` returned `undefined`, causing `currentProject` to stay `null` and locking the UI in launcher mode.
+- **Root cause:** `currentProject` calculation did not fall back to `recentProjects` stored in `localStorage`.
+- **Fix:** Provided an inline fallback construct in `currentProject` to resolve from `recentProjects` whenever the server API `projects` list does not contain the selected project ID.

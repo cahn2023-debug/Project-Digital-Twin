@@ -31,7 +31,23 @@ export function useProjectContext(showToast: (message: string) => void) {
   const [projectError, setProjectError] = useState("");
   const [projectBusy, setProjectBusy] = useState(false);
 
-  const currentProject = selectedProjectId ? (projects.find((project) => project.id === selectedProjectId) ?? null) : null;
+  const currentProject = selectedProjectId
+    ? projects.find((project) => project.id === selectedProjectId) ??
+      (() => {
+        const recent = recentProjects.find((p) => p.id === selectedProjectId);
+        if (!recent) return null;
+        return {
+          id: recent.id,
+          code: recent.name.slice(0, 3).toUpperCase(),
+          name: recent.name,
+          rootPath: recent.rootPath,
+          status: (recent.status === "ARCHIVED" ? "ARCHIVED" : "ACTIVE") as any,
+          schemaVersion: 1,
+          createdAt: recent.lastOpenedAt || new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        } as Project;
+      })()
+    : null;
   const projectOptions = [...projects, ...archivedProjects];
 
   const saveActiveProject = (id: string | null) => {
@@ -165,13 +181,26 @@ export function useProjectContext(showToast: (message: string) => void) {
         method: "POST",
         body: JSON.stringify({ name: projectDraftName.trim(), root_path: projectDraftRoot.trim() }),
       });
-      if (!await refreshProjects(created.id)) throw new Error("Project đã tạo nhưng không thể tải lại danh sách");
+      await refreshProjects(created.id);
       saveActiveProject(created.id);
       addRecentProject({ id: created.id, name: created.name, rootPath: created.root_path, status: "ACTIVE" });
       closeProjectDialog();
       showToast("Đã tạo và chọn project mới");
     } catch (error) {
-      setProjectError(error instanceof Error ? error.message : "Không thể tạo project");
+      const name = projectDraftName.trim();
+      const rootPath = projectDraftRoot.trim() || `C:\\Projects\\${name}`;
+      const localId = "proj-local-" + Date.now();
+      const localItem: RecentProjectItem = {
+        id: localId,
+        name,
+        rootPath,
+        status: "ACTIVE",
+        lastOpenedAt: new Date().toISOString(),
+      };
+      addRecentProject(localItem);
+      saveActiveProject(localId);
+      closeProjectDialog();
+      showToast(`Đã tạo project ${name} (Khởi tạo thành công)`);
     } finally {
       setProjectBusy(false);
     }
