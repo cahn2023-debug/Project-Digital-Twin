@@ -45,7 +45,7 @@ impl ReplayEngine {
                     synced_count += 1;
                 }
                 Err(err) if err.contains("CONFLICT") => {
-                    db.update_mutation_status(&event.id, "CONFLICT")?;
+                    db.update_mutation_status(&event.id, "STAGED_FOR_REVIEW")?;
                     conflict_count += 1;
                 }
                 Err(_) => {
@@ -66,13 +66,25 @@ impl ReplayEngine {
             conflict_count,
             failed_count,
             message: format!(
-                "Replayed {} events: {} synced, {} conflicts, {} failed",
+                "Replayed {} events: {} synced, {} staged conflicts, {} failed",
                 pending_events.len(),
                 synced_count,
                 conflict_count,
                 failed_count
             ),
         })
+    }
+
+    /// Triggers immediate manual sync regardless of background worker schedule
+    pub fn trigger_manual_sync<F>(
+        db: &EncryptedDb,
+        batch_size: usize,
+        server_handler: F,
+    ) -> DbResult<SyncBatchResult>
+    where
+        F: Fn(&MutationEvent) -> Result<(), String>,
+    {
+        Self::replay_pending(db, batch_size, server_handler)
     }
 }
 

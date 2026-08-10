@@ -33,6 +33,10 @@ from .shared.schemas import (
     WriteJobComplete,
     WriteJobCreate,
     WriteJobFailureRequest,
+    SyncBatchRequest,
+    SyncBatchResponse,
+    SyncMutationAck,
+    SyncMutationItem,
 )
 
 
@@ -58,6 +62,10 @@ __all__ = [
     "ProjectCreate",
     "ProjectDelete",
     "RestoreJobCreate",
+    "SyncBatchRequest",
+    "SyncBatchResponse",
+    "SyncMutationAck",
+    "SyncMutationItem",
     "WorkPackageCreate",
     "WriteJobComplete",
     "WriteJobCreate",

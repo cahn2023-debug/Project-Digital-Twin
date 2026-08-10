@@ -1,28 +1,28 @@
 ---
 title: Desktop Server Data Synchronization and Reconciliation
-description: Specification for desktop features unification, offline outbox sync, and server-side data reconciliation & conflict resolution.
+description: 'Specification for desktop features unification, offline outbox sync, and server-side data reconciliation & conflict resolution.'
 createdAt: '2026-08-10T02:12:30.000Z'
-updatedAt: '2026-08-10T02:12:30.000Z'
+updatedAt: '2026-08-10T03:34:44.710Z'
 tags:
   - spec
   - draft
+  - review-required
 ---
 
 ## Overview
 
 Feature đồng nhất tính năng ứng dụng Desktop với phần mềm hệ thống (Server/Web), hỗ trợ hoạt động offline-first trên phần mềm Desktop, đồng bộ dữ liệu biến đổi (mutations) từ các ứng dụng Desktop lên Server, và xử lý so sánh đối chiếu để hợp nhất hoặc cho phép người dùng chọn bản ghi ưu tiên từ các Client khác nhau.
 
-## Locked Decisions
-
-- **D1 (Conflict Resolution Strategy)**: Server sử dụng cơ chế Field-level Merge tự động cho các trường dữ liệu không bị xung đột giữa các Desktop Clients. Với các trường dữ liệu bị xung đột cùng lúc từ 2 hoặc nhiều Clients, Server chuyển bản ghi vào trạng thái Staging/Conflict Flagged và cung cấp giao diện/API cho Admin/User duyệt chọn giữ phiên bản của Client nào.
-- **D2 (Sync Trigger & Offline Engine)**: Desktop Client sử dụng cơ chế đồng bộ Hybrid. SQLite Encrypted Outbox lưu trữ ngoại tuyến mọi mutation event. Background replay worker tự động kiểm tra mạng và đẩy lô sự kiện lên server kèm exponential backoff retry. Đồng thời, giao diện Desktop cung cấp nút "Đồng bộ ngay" (Sync Now) để người dùng chủ động kích hoạt.
-- **D3 (Client Identity & Scoping)**: Định danh Desktop Client sử dụng `client_id` (UUID duy nhất) lưu an toàn ở local SQLite, gửi kèm `workspace_id` và `user_id`. Server dùng `client_id` để phân biệt các nguồn phát sinh thay đổi từ các máy desktop khác nhau trong cùng một dự án/workspace, phục vụ lưu vết và đối chiếu.
+- D1 (Conflict Resolution Strategy): Server sử dụng cơ chế Field-level Merge tự động cho các trường dữ liệu không bị xung đột giữa các Desktop Clients. Với các trường dữ liệu bị xung đột cùng lúc từ 2 hoặc nhiều Clients, Server chuyển bản ghi vào trạng thái Staging/Conflict Flagged và cung cấp giao diện/API cho Admin/User duyệt chọn giữ phiên bản của Client nào.
+- D2 (Sync Trigger & Offline Engine): Desktop Client sử dụng cơ chế đồng bộ Hybrid. SQLite Encrypted Outbox lưu trữ ngoại tuyến mọi mutation event. Background replay worker tự động kiểm tra mạng và đẩy lô sự kiện lên server kèm exponential backoff retry. Đồng thời, giao diện Desktop cung cấp nút "Đồng bộ ngay" (Sync Now) để người dùng chủ động kích hoạt.
+- D3 (Client Identity & Scoping): Định danh Desktop Client sử dụng `client_id` (UUID duy nhất) lưu an toàn ở local SQLite, gửi kèm `workspace_id` và `user_id`. Server dùng `client_id` để phân biệt các nguồn phát sinh thay đổi từ các máy desktop khác nhau trong cùng một dự án/workspace, phục vụ lưu vết và đối chiếu.
 
 ## System Decision Impact
 
-- **Impact**: draft new
-- **Decision**: @decision/desktop-server-reconciliation-policy
-- **Acceptance gate**: Unit & Integration tests verifying Field-level merge and conflict staging pass cleanly on Server.
+- Impact: draft new
+- Decision: none
+- Acceptance Gate: Unit & Integration tests verifying Field-level merge and conflict staging pass cleanly on Server.
+
 
 ## Requirements
 
@@ -44,11 +44,11 @@ Feature đồng nhất tính năng ứng dụng Desktop với phần mềm hệ 
 
 ## Acceptance Criteria
 
-- [ ] **AC-1**: Khi Desktop ngắt kết nối mạng, người dùng thực hiện thao tác sửa đổi dữ liệu -> Dữ liệu được ghi vào SQLite Outbox dưới dạng PENDING, không mất dữ liệu.
-- [ ] **AC-2**: Khi khôi phục kết nối mạng (hoặc nhấn nút "Đồng bộ ngay"), Background Replay Worker đẩy thành công lô PENDING mutations lên Server và nhận ACK `CONFIRMED`.
-- [ ] **AC-3**: Hai máy Desktop A và Desktop B cùng sửa các trường khác nhau trên cùng 1 dự án -> Server tự động hợp nhất (Field-level Merge) thành công mà không gây lỗi hoặc mất thông tin của cả 2 máy.
-- [ ] **AC-4**: Hai máy Desktop A và Desktop B cùng sửa CÙNG một trường dữ liệu -> Server phát hiện xung đột, tạo bản ghi `STAGED` và hiển thị trên Conflict Resolution Dashboard.
-- [ ] **AC-5**: Admin thực hiện chọn "Giữ phiên bản Client A" trên Dashboard -> Dữ liệu của Client A được áp dụng làm dữ liệu chính thức (Canonical State) và được đồng bộ lại xuống tất cả các Desktop Clients liên quan.
+- [x] **AC-1**: Khi Desktop ngắt kết nối mạng, người dùng thực hiện thao tác sửa đổi dữ liệu -> Dữ liệu được ghi vào SQLite Outbox dưới dạng PENDING, không mất dữ liệu.
+- [x] **AC-2**: Khi khôi phục kết nối mạng (hoặc nhấn nút "Đồng bộ ngay"), Background Replay Worker đẩy thành công lô PENDING mutations lên Server và nhận ACK `CONFIRMED`.
+- [x] **AC-3**: Hai máy Desktop A và Desktop B cùng sửa các trường khác nhau trên cùng 1 dự án -> Server tự động hợp nhất (Field-level Merge) thành công mà không gây lỗi hoặc mất thông tin của cả 2 máy.
+- [x] **AC-4**: Hai máy Desktop A và Desktop B cùng sửa CÙNG một trường dữ liệu -> Server phát hiện xung đột, tạo bản ghi `STAGED` và hiển thị trên Conflict Resolution Dashboard.
+- [x] **AC-5**: Admin thực hiện chọn "Giữ phiên bản Client A" trên Dashboard -> Dữ liệu của Client A được áp dụng làm dữ liệu chính thức (Canonical State) và được đồng bộ lại xuống tất cả các Desktop Clients liên quan.
 
 ## Scenarios
 
@@ -70,7 +70,10 @@ Feature đồng nhất tính năng ứng dụng Desktop với phần mềm hệ 
 
 ## Task Links
 
-Generated tasks will be linked here after `/kn-plan --from @doc/specs/2026-08-10/desktop-server-sync` runs.
+- `@task-qz0bjs` - [desktop-server-sync-01] Desktop Encrypted Outbox and Hybrid Replay Worker (Done)
+- `@task-4p3rrx` - [desktop-server-sync-02] Server Reconcile Batch Endpoint & Field-level Auto-Merge Engine (Done)
+- `@task-xbtnje` - [desktop-server-sync-03] Server Conflict Detection, Staging Table & Reconciliation API (Done)
+- `@task-n6psxm` - [desktop-server-sync-04] Conflict Resolution UI Dashboard & End-to-End Verification (Done)
 
 ## Open Questions
 

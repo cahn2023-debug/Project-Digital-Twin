@@ -245,3 +245,63 @@ class BasemapManifest(BaseModel):
         return self
 
 
+class SyncMutationItem(BaseModel):
+    mutation_id: str = Field(min_length=1, max_length=200)
+    client_id: str = Field(min_length=1, max_length=200)
+    workspace_id: str = Field(default="default-workspace", min_length=1, max_length=200)
+    user_id: str = Field(default="default-user", min_length=1, max_length=200)
+    entity_type: str = Field(min_length=1, max_length=100)
+    entity_id: str = Field(min_length=1, max_length=200)
+    action: str = Field(min_length=1, max_length=50)
+    timestamp: int = Field(ge=0)
+    payload: str = Field(default="{}")
+    field_changes: dict[str, Any] = Field(default_factory=dict)
+
+
+class SyncBatchRequest(BaseModel):
+    mutations: list[SyncMutationItem] = Field(default_factory=list)
+    idempotency_key: str | None = Field(default=None, max_length=200)
+
+
+class SyncMutationAck(BaseModel):
+    mutation_id: str
+    status: Literal["SYNCED", "STAGED_FOR_REVIEW", "IGNORED_DUPLICATE", "FAILED"]
+    entity_id: str
+    applied_fields: list[str] = Field(default_factory=list)
+    conflicting_fields: list[str] = Field(default_factory=list)
+    message: str = ""
+
+
+class SyncBatchResponse(BaseModel):
+    processed_count: int
+    synced_count: int
+    conflict_count: int
+    failed_count: int
+    results: list[SyncMutationAck]
+
+
+class ConflictResolveRequest(BaseModel):
+    chosen_client_id: str | None = None
+    custom_values: dict[str, Any] | None = None
+    resolved_by: str = Field(default="admin", min_length=1)
+
+
+class StagedConflictResponse(BaseModel):
+    conflict_id: str
+    mutation_id: str
+    client_id: str
+    workspace_id: str
+    user_id: str
+    entity_type: str
+    entity_id: str
+    timestamp: int
+    conflicting_fields: dict[str, Any]
+    server_fields: dict[str, Any]
+    status: str
+    created_at: str
+
+
+class StagedConflictListResponse(BaseModel):
+    total: int
+    conflicts: list[StagedConflictResponse]
+

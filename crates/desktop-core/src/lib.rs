@@ -19,8 +19,8 @@ pub use manifest::{
     LocalImport, ManifestDb, ManifestEntry, PendingJob, RawRecord, ScanFailure, SourceRegistration,
 };
 pub use mutation::{
-    enqueue_mutation, fetch_pending_mutations, is_network_online, mark_mutation_status,
-    pending_mutations_count, set_network_online,
+    enqueue_mutation, enqueue_mutation_with_metadata, fetch_pending_mutations, is_network_online,
+    mark_mutation_status, pending_mutations_count, set_network_online, SyncPayloadEnvelope,
 };
 pub use replay::{ReplayEngine, SyncBatchResult};
 pub use safe_write::{safe_replace, SafeWriteError};

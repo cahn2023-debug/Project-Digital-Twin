@@ -3,6 +3,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { Icon, Button, Panel, StatusBadge } from "../shared/ui";
 import { AuditView } from "../features/audit/AuditView";
 import { DatacenterView } from "../features/datacenter/DatacenterView";
+import { ConflictDashboard } from "../features/sync";
 import { DashboardView } from "../features/dashboard/DashboardView";
 import { DesignView } from "../features/design/DesignView";
 import { OperateView } from "../features/operate/OperateView";
@@ -84,6 +85,7 @@ export default function App() {
   const renderView = () => {
     if (activeModule === "datacenter") {
       if (activeSideItem === "audit") return <AuditView onAction={showToast} />;
+      if (activeSideItem === "sync") return <ConflictDashboard onAction={showToast} />;
       return <DatacenterView onAction={showToast} onSearchChange={setSearchQuery} projectId={currentProject?.id ?? null} searchQuery={searchQuery} />;
     }
     if (activeModule === "design") return <DesignView onAction={showToast} />;

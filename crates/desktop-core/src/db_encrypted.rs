@@ -2,6 +2,7 @@ use crate::crypto::DbPasskey;
 use rusqlite::{params, Connection, Result as SqlResult};
 use serde::{Deserialize, Serialize};
 use std::path::Path;
+use uuid::Uuid;
 
 #[derive(Debug)]
 pub enum DbError {
@@ -91,6 +92,11 @@ impl EncryptedDb {
             CREATE TABLE IF NOT EXISTS _db_key_sentinel (
                 id INTEGER PRIMARY KEY,
                 sentinel_val TEXT NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS app_metadata (
+                key TEXT PRIMARY KEY,
+                val TEXT NOT NULL
             );
 
             CREATE TABLE IF NOT EXISTS cached_credentials (
@@ -277,6 +283,37 @@ impl EncryptedDb {
             |row| row.get(0),
         )?;
         Ok(count)
+    }
+
+    pub fn set_app_metadata(&self, key: &str, val: &str) -> DbResult<()> {
+        self.conn.execute(
+            "INSERT OR REPLACE INTO app_metadata (key, val) VALUES (?1, ?2);",
+            params![key, val],
+        )?;
+        Ok(())
+    }
+
+    pub fn get_app_metadata(&self, key: &str) -> DbResult<Option<String>> {
+        let mut stmt = self
+            .conn
+            .prepare("SELECT val FROM app_metadata WHERE key = ?1 LIMIT 1;")?;
+        let mut rows = stmt.query(params![key])?;
+
+        if let Some(row) = rows.next()? {
+            Ok(Some(row.get(0)?))
+        } else {
+            Ok(None)
+        }
+    }
+
+    pub fn get_or_create_client_id(&self) -> DbResult<String> {
+        if let Some(client_id) = self.get_app_metadata("client_id")? {
+            Ok(client_id)
+        } else {
+            let new_id = Uuid::new_v4().to_string();
+            self.set_app_metadata("client_id", &new_id)?;
+            Ok(new_id)
+        }
     }
 }
 

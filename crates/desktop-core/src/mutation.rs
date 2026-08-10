@@ -1,7 +1,24 @@
 use crate::db_encrypted::{DbResult, EncryptedDb, MutationEvent};
+use serde::{Deserialize, Serialize};
+use std::collections::HashMap;
 use std::sync::atomic::{AtomicBool, Ordering};
+use uuid::Uuid;
 
 pub static IS_ONLINE: AtomicBool = AtomicBool::new(false);
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+pub struct SyncPayloadEnvelope {
+    pub mutation_id: String,
+    pub client_id: String,
+    pub workspace_id: String,
+    pub user_id: String,
+    pub entity_type: String,
+    pub entity_id: String,
+    pub action: String,
+    pub timestamp: i64,
+    pub payload: String,
+    pub field_changes: HashMap<String, serde_json::Value>,
+}
 
 pub fn set_network_online(online: bool) {
     IS_ONLINE.store(online, Ordering::SeqCst);
@@ -9,6 +26,53 @@ pub fn set_network_online(online: bool) {
 
 pub fn is_network_online() -> bool {
     IS_ONLINE.load(Ordering::SeqCst)
+}
+
+pub fn enqueue_mutation_with_metadata(
+    db: &EncryptedDb,
+    workspace_id: &str,
+    user_id: &str,
+    entity_type: &str,
+    entity_id: &str,
+    action: &str,
+    payload_json: &str,
+    now_timestamp: i64,
+) -> DbResult<MutationEvent> {
+    let client_id = db.get_or_create_client_id()?;
+    let mutation_id = Uuid::new_v4().to_string();
+
+    let parsed_fields: HashMap<String, serde_json::Value> =
+        serde_json::from_str(payload_json).unwrap_or_default();
+
+    let envelope = SyncPayloadEnvelope {
+        mutation_id: mutation_id.clone(),
+        client_id,
+        workspace_id: workspace_id.to_string(),
+        user_id: user_id.to_string(),
+        entity_type: entity_type.to_string(),
+        entity_id: entity_id.to_string(),
+        action: action.to_string(),
+        timestamp: now_timestamp,
+        payload: payload_json.to_string(),
+        field_changes: parsed_fields,
+    };
+
+    let envelope_json =
+        serde_json::to_string(&envelope).unwrap_or_else(|_| payload_json.to_string());
+
+    let event = MutationEvent {
+        id: mutation_id,
+        entity_type: entity_type.to_string(),
+        entity_id: entity_id.to_string(),
+        action: action.to_string(),
+        payload: envelope_json,
+        timestamp: now_timestamp,
+        status: "PENDING".to_string(),
+        retry_count: 0,
+    };
+
+    db.push_mutation_event(&event)?;
+    Ok(event)
 }
 
 pub fn enqueue_mutation(
@@ -19,19 +83,16 @@ pub fn enqueue_mutation(
     payload: &str,
     now_timestamp: i64,
 ) -> DbResult<MutationEvent> {
-    let event = MutationEvent {
-        id: format!("evt-{}", now_timestamp),
-        entity_type: entity_type.to_string(),
-        entity_id: entity_id.to_string(),
-        action: action.to_string(),
-        payload: payload.to_string(),
-        timestamp: now_timestamp,
-        status: "PENDING".to_string(),
-        retry_count: 0,
-    };
-
-    db.push_mutation_event(&event)?;
-    Ok(event)
+    enqueue_mutation_with_metadata(
+        db,
+        "default-workspace",
+        "default-user",
+        entity_type,
+        entity_id,
+        action,
+        payload,
+        now_timestamp,
+    )
 }
 
 pub fn fetch_pending_mutations(db: &EncryptedDb, limit: usize) -> DbResult<Vec<MutationEvent>> {
@@ -83,5 +144,35 @@ mod tests {
 
         set_network_online(true);
         assert!(is_network_online());
+    }
+
+    #[test]
+    fn enqueues_mutation_with_client_id_and_metadata() {
+        let passkey = DbPasskey::new("secret-meta");
+        let db = EncryptedDb::open_in_memory(&passkey).expect("db");
+
+        let event = enqueue_mutation_with_metadata(
+            &db,
+            "ws-99",
+            "usr-88",
+            "DEVICE",
+            "dev-1",
+            "UPDATE",
+            r#"{"sampling_rate":50}"#,
+            2000,
+        )
+        .expect("enqueue with meta");
+
+        let envelope: SyncPayloadEnvelope =
+            serde_json::from_str(&event.payload).expect("parse envelope");
+        assert_eq!(envelope.workspace_id, "ws-99");
+        assert_eq!(envelope.user_id, "usr-88");
+        assert_eq!(envelope.entity_type, "DEVICE");
+        assert_eq!(envelope.entity_id, "dev-1");
+        assert!(Uuid::parse_str(&envelope.client_id).is_ok());
+        assert_eq!(
+            envelope.field_changes.get("sampling_rate").unwrap(),
+            &serde_json::json!(50)
+        );
     }
 }

@@ -8,6 +8,7 @@ from ..modules.design.router import router as design_router
 from ..modules.operate.router import router as operate_router
 from ..modules.organize.router import router as organize_router
 from ..modules.project.router import router as project_router
+from ..modules.sync.router import router as sync_router
 
 
 def register_feature_routers(app: FastAPI) -> None:
@@ -17,3 +18,5 @@ def register_feature_routers(app: FastAPI) -> None:
     app.include_router(operate_router)
     app.include_router(organize_router)
     app.include_router(dashboard_router)
+    app.include_router(sync_router)
+
