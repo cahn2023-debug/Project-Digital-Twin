@@ -1,5 +1,6 @@
 use calamine::{open_workbook_auto, Data, Reader};
 use csv::ReaderBuilder;
+use encoding_rs::WINDOWS_1252;
 use quick_xml::events::Event;
 use quick_xml::Reader as XmlReader;
 use serde::{Deserialize, Serialize};
@@ -16,6 +17,7 @@ use zip::ZipArchive;
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]
 pub enum FileFormat {
     Xlsx,
+    Xls,
     Csv,
     Txt,
     Markdown,
@@ -33,10 +35,11 @@ impl FileFormat {
             .as_str()
         {
             "xlsx" | "xlsm" => Self::Xlsx,
+            "xls" => Self::Xls,
             "csv" => Self::Csv,
             "txt" => Self::Txt,
             "md" | "markdown" => Self::Markdown,
-            "docx" => Self::Word,
+            "doc" | "docx" => Self::Word,
             _ => Self::Unsupported,
         }
     }
@@ -52,6 +55,14 @@ pub struct ParserProfile {
     pub data_start_row: usize,
     pub required_fields: Vec<String>,
     pub aliases: BTreeMap<String, Vec<String>>,
+    #[serde(default)]
+    pub skip_rows: Vec<usize>,
+    #[serde(default)]
+    pub field_types: BTreeMap<String, String>,
+    #[serde(default)]
+    pub delimiter: Option<String>,
+    #[serde(default)]
+    pub encoding: Option<String>,
 }
 
 impl ParserProfile {
@@ -87,10 +98,14 @@ impl ParserProfile {
             sheet: matches!(format, FileFormat::Xlsx).then(|| "CAMERA".to_owned()),
             header_row: 1,
             data_start_row: 2,
-            required_fields: matches!(format, FileFormat::Xlsx | FileFormat::Csv)
+            required_fields: matches!(format, FileFormat::Xlsx | FileFormat::Xls | FileFormat::Csv)
                 .then(|| vec!["code".to_owned()])
                 .unwrap_or_default(),
             aliases,
+            field_types: BTreeMap::new(),
+            skip_rows: Vec::new(),
+            delimiter: None,
+            encoding: None,
         }
     }
 }
@@ -102,6 +117,12 @@ pub struct ParseRequest {
     pub file_revision: u32,
     #[serde(default)]
     pub profiles: Vec<ParserProfile>,
+    #[serde(default)]
+    pub project_id: Option<String>,
+    #[serde(default)]
+    pub source_id: Option<String>,
+    #[serde(default)]
+    pub source_hash: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -116,8 +137,10 @@ pub struct SourceLocation {
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 pub struct NormalizedRecord {
+    pub identity: String,
     pub fields: BTreeMap<String, Value>,
     pub unmapped: BTreeMap<String, Value>,
+    pub raw: BTreeMap<String, Value>,
     pub source: SourceLocation,
 }
 
@@ -239,7 +262,7 @@ pub fn parse_file(request: &ParseRequest) -> Result<DesktopParseResult, String> 
         }
     };
 
-    let rows = match read_rows(
+    let (rows, read_issues) = match read_rows(
         path,
         &format,
         &profile,
@@ -265,7 +288,13 @@ pub fn parse_file(request: &ParseRequest) -> Result<DesktopParseResult, String> 
         }
     };
 
-    let (records, mut report) = normalize_rows(rows, &profile);
+    let (records, mut report) = normalize_rows(rows, &profile, request);
+    for issue in read_issues {
+        if matches!(issue.severity, ParseIssueSeverity::Warning) {
+            report.warning_count += 1;
+        }
+        report.issues.push(issue);
+    }
     let status = if report.valid_records == 0 && report.invalid_records > 0 {
         ParseStatus::RawFallback
     } else if report.invalid_records > 0 {
@@ -319,12 +348,12 @@ fn read_rows(
     profile: &ParserProfile,
     file_id: &str,
     file_revision: u32,
-) -> Result<Vec<SourceRow>, String> {
+) -> Result<(Vec<SourceRow>, Vec<ParseIssue>), String> {
     match format {
-        FileFormat::Xlsx => read_xlsx(path, profile, file_id, file_revision),
+        FileFormat::Xlsx | FileFormat::Xls => read_xlsx(path, profile, file_id, file_revision),
         FileFormat::Csv => read_csv(path, profile, file_id, file_revision),
         FileFormat::Txt | FileFormat::Markdown => read_text(path, format, file_id, file_revision),
-        FileFormat::Word => read_docx(path, file_id, file_revision),
+        FileFormat::Word => read_word(path, file_id, file_revision),
         FileFormat::Unsupported => Err("Unsupported file format".to_owned()),
     }
 }
@@ -334,7 +363,7 @@ fn read_xlsx(
     profile: &ParserProfile,
     file_id: &str,
     file_revision: u32,
-) -> Result<Vec<SourceRow>, String> {
+) -> Result<(Vec<SourceRow>, Vec<ParseIssue>), String> {
     let mut workbook = open_workbook_auto(path).map_err(|error| error.to_string())?;
     let sheet = profile
         .sheet
@@ -356,11 +385,18 @@ fn read_csv(
     profile: &ParserProfile,
     file_id: &str,
     file_revision: u32,
-) -> Result<Vec<SourceRow>, String> {
+) -> Result<(Vec<SourceRow>, Vec<ParseIssue>), String> {
+    let bytes = fs::read(path).map_err(|error| error.to_string())?;
+    let (text, mut issues) = decode_csv(&bytes, profile.encoding.as_deref())?;
+    let (delimiter, delimiter_issue) = detect_csv_delimiter(&text, profile.delimiter.as_deref());
+    if let Some(issue) = delimiter_issue {
+        issues.push(issue);
+    }
     let mut reader = ReaderBuilder::new()
         .has_headers(false)
-        .from_path(path)
-        .map_err(|error| error.to_string())?;
+        .flexible(true)
+        .delimiter(delimiter)
+        .from_reader(text.as_bytes());
     let rows = reader
         .records()
         .map(|record| {
@@ -373,7 +409,108 @@ fn read_csv(
                 .map_err(|error| error.to_string())
         })
         .collect::<Result<Vec<_>, _>>()?;
-    rows_from_table(rows, profile, file_id, file_revision, "CSV")
+    let (rows, table_issues) = rows_from_table(rows, profile, file_id, file_revision, "CSV")?;
+    issues.extend(table_issues);
+    Ok((rows, issues))
+}
+
+fn decode_csv(
+    bytes: &[u8],
+    requested_encoding: Option<&str>,
+) -> Result<(String, Vec<ParseIssue>), String> {
+    let mut issues = Vec::new();
+    let payload = bytes.strip_prefix(&[0xEF, 0xBB, 0xBF]).unwrap_or(bytes);
+    let encoding = requested_encoding.unwrap_or("auto").to_ascii_lowercase();
+    let (text, fallback) = match encoding.as_str() {
+        "auto" | "utf-8" | "utf8" => match String::from_utf8(payload.to_vec()) {
+            Ok(text) => (text, false),
+            Err(_) => {
+                let (decoded, _, _) = WINDOWS_1252.decode(payload);
+                (decoded.into_owned(), true)
+            }
+        },
+        "windows-1252" | "cp1252" | "latin-1" => {
+            let (decoded, _, had_errors) = WINDOWS_1252.decode(payload);
+            (decoded.into_owned(), had_errors)
+        }
+        other => return Err(format!("Unsupported CSV encoding: {other}")),
+    };
+    if fallback {
+        issues.push(ParseIssue {
+            code: "CSV_ENCODING_FALLBACK".to_owned(),
+            message: "CSV was decoded with Windows-1252 fallback; confirm encoding in preview"
+                .to_owned(),
+            severity: ParseIssueSeverity::Warning,
+            row: None,
+            line: None,
+            column: None,
+        });
+    }
+    Ok((text, issues))
+}
+
+fn detect_csv_delimiter(text: &str, requested: Option<&str>) -> (u8, Option<ParseIssue>) {
+    if let Some(value) = requested.and_then(|value| value.as_bytes().first().copied()) {
+        return (value, None);
+    }
+    let candidates = [b',', b';', b'\t', b'|'];
+    let lines = text
+        .lines()
+        .filter(|line| !line.trim().is_empty())
+        .take(8)
+        .collect::<Vec<_>>();
+    let mut scores = candidates
+        .iter()
+        .map(|delimiter| {
+            let counts = lines
+                .iter()
+                .map(|line| {
+                    line.as_bytes()
+                        .iter()
+                        .filter(|byte| *byte == delimiter)
+                        .count()
+                })
+                .filter(|count| *count > 0)
+                .collect::<Vec<_>>();
+            (*delimiter, counts.iter().sum::<usize>(), counts.len())
+        })
+        .filter(|(_, score, _)| *score > 0)
+        .collect::<Vec<_>>();
+    scores.sort_by(|left, right| right.1.cmp(&left.1).then(right.2.cmp(&left.2)));
+    let Some((delimiter, score, line_count)) = scores.first().copied() else {
+        return (
+            b',',
+            Some(csv_warning(
+                "CSV_DELIMITER_AMBIGUOUS",
+                "CSV delimiter could not be detected; preview confirmation is required",
+            )),
+        );
+    };
+    let tied = scores
+        .iter()
+        .filter(|(_, candidate_score, candidate_lines)| {
+            *candidate_score == score && *candidate_lines == line_count
+        })
+        .count()
+        > 1;
+    let issue = tied.then(|| {
+        csv_warning(
+            "CSV_DELIMITER_AMBIGUOUS",
+            "Multiple CSV delimiters look plausible; preview confirmation is required",
+        )
+    });
+    (delimiter, issue)
+}
+
+fn csv_warning(code: &str, message: &str) -> ParseIssue {
+    ParseIssue {
+        code: code.to_owned(),
+        message: message.to_owned(),
+        severity: ParseIssueSeverity::Warning,
+        row: None,
+        line: None,
+        column: None,
+    }
 }
 
 fn rows_from_table(
@@ -382,7 +519,7 @@ fn rows_from_table(
     file_id: &str,
     file_revision: u32,
     sheet: &str,
-) -> Result<Vec<SourceRow>, String> {
+) -> Result<(Vec<SourceRow>, Vec<ParseIssue>), String> {
     let header_index = profile.header_row.saturating_sub(1);
     let data_index = profile.data_start_row.saturating_sub(1);
     let headers = rows
@@ -424,7 +561,7 @@ fn rows_from_table(
             },
         });
     }
-    Ok(result)
+    Ok((result, Vec::new()))
 }
 
 fn read_text(
@@ -432,7 +569,7 @@ fn read_text(
     format: &FileFormat,
     file_id: &str,
     file_revision: u32,
-) -> Result<Vec<SourceRow>, String> {
+) -> Result<(Vec<SourceRow>, Vec<ParseIssue>), String> {
     let content = fs::read_to_string(path).map_err(|error| error.to_string())?;
     let mut section = String::new();
     let mut rows = Vec::new();
@@ -461,7 +598,22 @@ fn read_text(
             },
         });
     }
-    Ok(rows)
+    Ok((rows, Vec::new()))
+}
+
+fn read_word(
+    path: &Path,
+    file_id: &str,
+    file_revision: u32,
+) -> Result<(Vec<SourceRow>, Vec<ParseIssue>), String> {
+    if path
+        .extension()
+        .and_then(|value| value.to_str())
+        .is_some_and(|value| value.eq_ignore_ascii_case("doc"))
+    {
+        return read_legacy_doc(path, file_id, file_revision);
+    }
+    read_docx(path, file_id, file_revision).map(|rows| (rows, Vec::new()))
 }
 
 fn read_docx(path: &Path, file_id: &str, file_revision: u32) -> Result<Vec<SourceRow>, String> {
@@ -518,13 +670,130 @@ fn read_docx(path: &Path, file_id: &str, file_revision: u32) -> Result<Vec<Sourc
     Ok(rows)
 }
 
+fn read_legacy_doc(
+    path: &Path,
+    file_id: &str,
+    file_revision: u32,
+) -> Result<(Vec<SourceRow>, Vec<ParseIssue>), String> {
+    let mut compound = cfb::open(path).map_err(|error| error.to_string())?;
+    let mut stream = compound
+        .open_stream("/WordDocument")
+        .map_err(|error| error.to_string())?;
+    let mut bytes = Vec::new();
+    stream
+        .read_to_end(&mut bytes)
+        .map_err(|error| error.to_string())?;
+    let text = legacy_word_text(&bytes);
+    if text.trim().is_empty() {
+        return Err("Legacy Word document contains no readable text".to_owned());
+    }
+    let rows = text
+        .lines()
+        .enumerate()
+        .filter_map(|(index, line)| {
+            let content = line.trim();
+            (!content.is_empty()).then(|| {
+                let mut fields = BTreeMap::new();
+                fields.insert("content".to_owned(), Value::String(content.to_owned()));
+                SourceRow {
+                    fields,
+                    source: SourceLocation {
+                        file_id: file_id.to_owned(),
+                        file_revision,
+                        sheet: "DOCUMENT".to_owned(),
+                        row: None,
+                        line: Some(index + 1),
+                        column: Some("content".to_owned()),
+                    },
+                }
+            })
+        })
+        .collect::<Vec<_>>();
+    Ok((
+        rows,
+        vec![csv_warning(
+            "LEGACY_WORD_LIMITATION",
+            "Legacy .doc text was extracted from the OLE WordDocument stream; confirm tables and embedded assets in preview",
+        )],
+    ))
+}
+
+fn legacy_word_text(bytes: &[u8]) -> String {
+    let mut candidates = Vec::new();
+    for offset in 0..2 {
+        let mut current = String::new();
+        let mut start = offset;
+        let mut index = offset;
+        while index + 1 < bytes.len() {
+            let code = u16::from_le_bytes([bytes[index], bytes[index + 1]]);
+            if legacy_word_codepoint(code) {
+                if current.is_empty() {
+                    start = index;
+                }
+                current.push(char::from_u32(code as u32).unwrap_or(' '));
+            } else if current.chars().count() >= 4 {
+                candidates.push((current.len(), start, current.replace('\r', "\n")));
+                current = String::new();
+            } else {
+                current.clear();
+            }
+            index += 2;
+        }
+        if current.chars().count() >= 4 {
+            candidates.push((current.len(), start, current.replace('\r', "\n")));
+        }
+    }
+    let mut current = String::new();
+    let mut start = 0;
+    for (index, byte) in bytes.iter().copied().enumerate() {
+        if legacy_word_byte(byte) {
+            if current.is_empty() {
+                start = index;
+            }
+            current.push(byte as char);
+        } else if current.chars().count() >= 8 {
+            candidates.push((current.len(), start, current.replace('\r', "\n")));
+            current = String::new();
+        } else {
+            current.clear();
+        }
+    }
+    if current.chars().count() >= 8 {
+        candidates.push((current.len(), start, current.replace('\r', "\n")));
+    }
+    candidates.sort_by(|left, right| right.0.cmp(&left.0).then(left.1.cmp(&right.1)));
+    candidates
+        .first()
+        .map(|(_, _, text)| text.clone())
+        .unwrap_or_default()
+}
+
+fn legacy_word_codepoint(code: u16) -> bool {
+    matches!(code, 0x0009 | 0x000A | 0x000D) || (0x0020..=0x0FFF).contains(&code)
+}
+
+fn legacy_word_byte(byte: u8) -> bool {
+    matches!(byte, 0x09 | 0x0A | 0x0D)
+        || (0x20..=0x7E).contains(&byte)
+        || (0xA0..=0xFF).contains(&byte)
+}
+
 fn normalize_rows(
     rows: Vec<SourceRow>,
     profile: &ParserProfile,
+    request: &ParseRequest,
 ) -> (Vec<NormalizedRecord>, ParseReport) {
     let mut records = Vec::new();
     let mut report = ParseReport::default();
     for row in rows {
+        if row
+            .source
+            .row
+            .is_some_and(|row_number| profile.skip_rows.contains(&row_number))
+        {
+            continue;
+        }
+        let raw = row.fields.clone();
         let mut fields = BTreeMap::new();
         let mut unmapped = BTreeMap::new();
         let mut missing = Vec::new();
@@ -552,8 +821,24 @@ fn normalize_rows(
             continue;
         }
         for (key, value) in row.fields {
-            let normalized_value = normalize_value(value);
-            if let Some(canonical) = canonical_alias(&key, profile) {
+            let canonical = canonical_alias(&key, profile);
+            let expected_type = canonical
+                .as_ref()
+                .and_then(|field| profile.field_types.get(field));
+            let (normalized_value, warning_code) = normalize_value(value, expected_type);
+            if let Some(code) = warning_code {
+                report.warning_count += 1;
+                report.issues.push(ParseIssue {
+                    code: code.to_owned(),
+                    message: "Value was kept in source form because its locale/type is ambiguous"
+                        .to_owned(),
+                    severity: ParseIssueSeverity::Warning,
+                    row: row.source.row,
+                    line: row.source.line,
+                    column: Some(key.clone()),
+                });
+            }
+            if let Some(canonical) = canonical {
                 fields.insert(canonical, normalized_value);
             } else if profile.aliases.is_empty()
                 || matches!(
@@ -577,12 +862,50 @@ fn normalize_rows(
         }
         report.valid_records += 1;
         records.push(NormalizedRecord {
+            identity: record_identity(request, &row.source, &raw, profile),
             fields,
             unmapped,
+            raw,
             source: row.source,
         });
     }
     (records, report)
+}
+
+fn record_identity(
+    request: &ParseRequest,
+    source: &SourceLocation,
+    raw: &BTreeMap<String, Value>,
+    profile: &ParserProfile,
+) -> String {
+    let stable_value = ["id", "uuid", "key", "code"]
+        .iter()
+        .find_map(|canonical| {
+            raw.iter().find_map(|(key, value)| {
+                (canonical_name(key, profile) == *canonical && !value.is_null())
+                    .then(|| value.to_string())
+            })
+        })
+        .map(|value| value.to_owned());
+    let namespace = if let Some(stable_value) = stable_value {
+        format!(
+            "{}|{}|stable|{}",
+            request.project_id.as_deref().unwrap_or("project"),
+            request.source_id.as_deref().unwrap_or("source"),
+            stable_value,
+        )
+    } else {
+        format!(
+            "{}|{}|{}|{}|{}|{}",
+            request.project_id.as_deref().unwrap_or("project"),
+            request.source_id.as_deref().unwrap_or("source"),
+            request.file_id,
+            request.file_revision,
+            request.source_hash.as_deref().unwrap_or("hash"),
+            serde_json::to_string(source).unwrap_or_default(),
+        )
+    };
+    format!("record-{}", sha256_bytes(namespace.as_bytes()))
 }
 
 fn canonical_name(key: &str, profile: &ParserProfile) -> String {
@@ -599,18 +922,60 @@ fn canonical_alias(key: &str, profile: &ParserProfile) -> Option<String> {
     })
 }
 
-fn normalize_value(value: Value) -> Value {
+fn normalize_value(value: Value, expected_type: Option<&String>) -> (Value, Option<&'static str>) {
     match value {
         Value::String(value) => {
             let trimmed = value.trim();
+            if let Some(expected) = expected_type {
+                return match expected.as_str() {
+                    "text" => (Value::String(trimmed.to_owned()), None),
+                    "number" => trimmed
+                        .parse::<f64>()
+                        .ok()
+                        .and_then(Number::from_f64)
+                        .map(|number| (Value::Number(number), None))
+                        .unwrap_or_else(|| {
+                            (
+                                Value::String(trimmed.to_owned()),
+                                Some("INVALID_TYPED_VALUE"),
+                            )
+                        }),
+                    "boolean" => match trimmed.to_ascii_lowercase().as_str() {
+                        "true" | "yes" | "y" => (Value::Bool(true), None),
+                        "false" | "no" | "n" => (Value::Bool(false), None),
+                        _ => (
+                            Value::String(trimmed.to_owned()),
+                            Some("INVALID_TYPED_VALUE"),
+                        ),
+                    },
+                    "date" => (Value::String(trimmed.to_owned()), None),
+                    _ => (
+                        Value::String(trimmed.to_owned()),
+                        Some("INVALID_TYPED_VALUE"),
+                    ),
+                };
+            }
             match trimmed.to_ascii_lowercase().as_str() {
-                "true" => Value::Bool(true),
-                "false" => Value::Bool(false),
-                _ => Value::String(trimmed.to_owned()),
+                "true" | "yes" | "y" => (Value::Bool(true), None),
+                "false" | "no" | "n" => (Value::Bool(false), None),
+                _ if ambiguous_scalar(trimmed) => {
+                    (Value::String(trimmed.to_owned()), Some("AMBIGUOUS_SCALAR"))
+                }
+                _ => (Value::String(trimmed.to_owned()), None),
             }
         }
-        other => other,
+        other => (other, None),
     }
+}
+
+fn ambiguous_scalar(value: &str) -> bool {
+    let has_digit = value.chars().any(|character| character.is_ascii_digit());
+    let has_locale_separator = value.contains(',') || value.contains('/');
+    has_digit
+        && has_locale_separator
+        && value.chars().all(|character| {
+            character.is_ascii_digit() || matches!(character, ',' | '/' | '-' | '.' | ':' | ' ')
+        })
 }
 
 fn cell_value(value: &Data) -> Value {
@@ -681,6 +1046,10 @@ mod tests {
             data_start_row: 2,
             required_fields: vec!["code".to_owned()],
             aliases,
+            field_types: BTreeMap::new(),
+            skip_rows: Vec::new(),
+            delimiter: None,
+            encoding: None,
         }
     }
 
@@ -694,6 +1063,9 @@ mod tests {
             file_id: "file-1".to_owned(),
             file_revision: 1,
             profiles: vec![csv_profile()],
+            project_id: None,
+            source_id: None,
+            source_hash: None,
         })
         .expect("parse");
         assert_eq!(result.status, ParseStatus::Partial);
@@ -712,6 +1084,58 @@ mod tests {
             .issues
             .iter()
             .any(|issue| issue.code == "MISSING_REQUIRED_FIELD"));
+        assert_eq!(
+            result.records[0].raw.get("Code"),
+            Some(&Value::String("CAM-1".to_owned()))
+        );
+    }
+
+    #[test]
+    fn csv_parser_detects_semicolon_and_reports_ambiguous_scalar() {
+        let directory = tempfile::tempdir().expect("tempdir");
+        let path = directory.path().join("cameras.csv");
+        fs::write(&path, "\u{feff}Code;Name;Amount\nCAM-1;Main;1,23\n").expect("csv");
+        let result = parse_file(&ParseRequest {
+            path: path.to_string_lossy().into_owned(),
+            file_id: "file-1".to_owned(),
+            file_revision: 1,
+            profiles: vec![csv_profile()],
+            project_id: None,
+            source_id: None,
+            source_hash: None,
+        })
+        .expect("parse");
+        assert_eq!(result.status, ParseStatus::Parsed);
+        assert_eq!(result.records.len(), 1);
+        assert_eq!(
+            result.records[0].unmapped["Amount"],
+            Value::String("1,23".to_owned())
+        );
+        assert!(result
+            .report
+            .issues
+            .iter()
+            .any(|issue| issue.code == "AMBIGUOUS_SCALAR"));
+    }
+
+    #[test]
+    fn record_identity_prefers_stable_source_key_across_revisions() {
+        let directory = tempfile::tempdir().expect("tempdir");
+        let path = directory.path().join("cameras.csv");
+        fs::write(&path, "Code,Name\nCAM-1,Main\n").expect("csv");
+        let request = |revision| ParseRequest {
+            path: path.to_string_lossy().into_owned(),
+            file_id: "file-1".to_owned(),
+            file_revision: revision,
+            profiles: vec![csv_profile()],
+            project_id: Some("project-1".to_owned()),
+            source_id: Some("source-1".to_owned()),
+            source_hash: Some("a".repeat(64)),
+        };
+        let first = parse_file(&request(1)).expect("first parse");
+        let second = parse_file(&request(2)).expect("second parse");
+        assert_eq!(first.records[0].identity, second.records[0].identity);
+        assert!(first.records[0].identity.starts_with("record-"));
     }
 
     #[test]
@@ -731,6 +1155,9 @@ mod tests {
                     ..profile
                 },
             ],
+            project_id: None,
+            source_id: None,
+            source_hash: None,
         })
         .expect("parse");
         assert_eq!(result.status, ParseStatus::RawFallback);
@@ -748,6 +1175,9 @@ mod tests {
             file_id: "file-1".to_owned(),
             file_revision: 1,
             profiles: vec![],
+            project_id: None,
+            source_id: None,
+            source_hash: None,
         })
         .expect("parse");
         assert_eq!(result.status, ParseStatus::Parsed);
@@ -797,6 +1227,9 @@ mod tests {
             file_id: "file-1".to_owned(),
             file_revision: 1,
             profiles: vec![],
+            project_id: None,
+            source_id: None,
+            source_hash: None,
         })
         .expect("parse");
         assert_eq!(result.status, ParseStatus::Parsed);
@@ -829,6 +1262,9 @@ mod tests {
             file_id: "file-1".to_owned(),
             file_revision: 1,
             profiles: vec![],
+            project_id: None,
+            source_id: None,
+            source_hash: None,
         })
         .expect("parse");
         assert_eq!(result.status, ParseStatus::Parsed);
@@ -836,5 +1272,44 @@ mod tests {
             result.records[0].fields.get("content"),
             Some(&Value::String("Hello".to_owned()))
         );
+    }
+
+    #[test]
+    fn legacy_doc_parser_extracts_ole_word_document_text() {
+        let directory = tempfile::tempdir().expect("tempdir");
+        let path = directory.path().join("notes.doc");
+        {
+            let mut compound = cfb::create(&path).expect("compound file");
+            let mut stream = compound
+                .create_stream("/WordDocument")
+                .expect("word stream");
+            let text = "Legacy heading\rLegacy paragraph";
+            let encoded = text
+                .encode_utf16()
+                .flat_map(u16::to_le_bytes)
+                .collect::<Vec<_>>();
+            stream.write_all(&encoded).expect("word text");
+        }
+        let result = parse_file(&ParseRequest {
+            path: path.to_string_lossy().into_owned(),
+            file_id: "file-1".to_owned(),
+            file_revision: 1,
+            profiles: vec![],
+            project_id: None,
+            source_id: None,
+            source_hash: None,
+        })
+        .expect("parse");
+        assert_eq!(result.format, FileFormat::Word);
+        assert_eq!(result.records.len(), 2);
+        assert_eq!(
+            result.records[0].fields["content"],
+            Value::String("Legacy heading".to_owned())
+        );
+        assert!(result
+            .report
+            .issues
+            .iter()
+            .any(|issue| issue.code == "LEGACY_WORD_LIMITATION"));
     }
 }

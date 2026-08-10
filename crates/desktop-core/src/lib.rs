@@ -17,8 +17,8 @@ pub use db_encrypted::{CachedCredential, DbError, DbResult, EncryptedDb, Mutatio
 pub use hash::{sha256_file, sha256_reader};
 pub use manifest::{
     file_id_for_path, source_id_for_directory, DiscoveredFile, FileScanContext, FileVersion,
-    LocalImport, LocalImportHistory, LocalProfile, ManifestDb, ManifestEntry, PendingJob,
-    RawRecord, ScanFailure, SourceRegistration,
+    LocalAsset, LocalAuditEvent, LocalImport, LocalImportHistory, LocalProfile, ManifestDb,
+    ManifestEntry, PendingJob, RawRecord, ScanFailure, SourceRegistration,
 };
 pub use mutation::{
     enqueue_mutation, enqueue_mutation_with_metadata, fetch_pending_mutations, is_network_online,
@@ -37,7 +37,7 @@ pub use server_sync::{ConflictChoice, ConflictItem, ServerSyncHandler};
 mod tests {
     use super::{
         safe_replace, scan_directory, sha256_reader, source_id_for_directory, DiscoveredFile,
-        ManifestDb, RawRecord, SafeWriteError,
+        LocalAsset, LocalAuditEvent, ManifestDb, RawRecord, SafeWriteError,
     };
     use std::io::Cursor;
 
@@ -426,6 +426,36 @@ mod tests {
     }
 
     #[test]
+    fn pending_jobs_expose_progress_and_cancel_only_the_selected_job() {
+        let database = ManifestDb::open_in_memory().expect("manifest");
+        database
+            .enqueue_job("job-1", "FILE_SCAN", "payload-1", "key-1", "now")
+            .expect("enqueue one");
+        database
+            .enqueue_job("job-2", "FILE_SCAN", "payload-2", "key-2", "now")
+            .expect("enqueue two");
+        assert!(database
+            .update_job_progress("job-1", 42, "PARSING")
+            .expect("progress"));
+        assert!(database.request_job_cancellation("job-2").expect("cancel"));
+        let claimed = database.claim_next_job(0).expect("claim").expect("job");
+        assert_eq!(claimed.job_id, "job-1");
+        assert_eq!(claimed.progress, 42);
+        assert_eq!(claimed.phase, "PARSING");
+        assert!(!claimed.cancel_requested);
+        assert_eq!(
+            database
+                .list_pending_jobs(None)
+                .expect("pending")
+                .iter()
+                .find(|job| job.job_id == "job-2")
+                .expect("cancelled job")
+                .status,
+            "CANCELLED"
+        );
+    }
+
+    #[test]
     fn unreadable_file_failures_enter_the_retry_queue() {
         let database = ManifestDb::open_in_memory().expect("manifest");
         assert!(database
@@ -438,6 +468,57 @@ mod tests {
                 .expect("job"),
             ("RETRY".to_owned(), 1)
         );
+    }
+
+    #[test]
+    fn source_failure_and_other_source_jobs_remain_isolated() {
+        let database = ManifestDb::open_in_memory().expect("manifest");
+        let source_one = database
+            .register_source("project-1", "C:/Data/One", 5, "now")
+            .expect("source one");
+        let source_two = database
+            .register_source("project-1", "C:/Data/Two", 5, "now")
+            .expect("source two");
+        database
+            .enqueue_file_failure_for_source(
+                "C:/Data/One/locked.xlsx",
+                "file is locked",
+                "now",
+                Some(&source_one.source_id),
+            )
+            .expect("failure");
+        database
+            .enqueue_file_scan_for_source(
+                &source_two.source_id,
+                &DiscoveredFile {
+                    path: "C:/Data/Two/ok.xlsx".to_owned(),
+                    sha256: "hash-two".to_owned(),
+                    size: 10,
+                    modified_at: None,
+                },
+                "now",
+            )
+            .expect("other source job");
+        assert_eq!(
+            database
+                .list_pending_jobs(Some(&source_one.source_id))
+                .expect("one")
+                .len(),
+            1
+        );
+        assert_eq!(
+            database
+                .list_pending_jobs(Some(&source_two.source_id))
+                .expect("two")
+                .len(),
+            1
+        );
+        let first = database.claim_next_job(0).expect("claim").expect("job");
+        let second = database
+            .claim_next_job(0)
+            .expect("claim other")
+            .expect("job");
+        assert_ne!(first.source_id, second.source_id);
     }
 
     #[test]
@@ -471,6 +552,132 @@ mod tests {
             .expect("registered source");
         assert_eq!(source.project_id, "project-1");
         assert_eq!(source.debounce_seconds, 8);
+    }
+
+    #[test]
+    fn local_assets_audit_and_archived_source_survive_restart() {
+        let directory = tempfile::tempdir().expect("tempdir");
+        let database_path = directory.path().join("manifest.sqlite");
+        let source_id;
+        let file_version_id;
+        {
+            let database = ManifestDb::open(&database_path).expect("manifest");
+            let source = database
+                .register_source("project-1", "C:/Data/Archive", 5, "now")
+                .expect("source");
+            source_id = source.source_id;
+            database
+                .upsert_file(
+                    "file-archive",
+                    "SOURCE",
+                    "C:/Data/Archive/report.docx",
+                    "now",
+                )
+                .expect("file");
+            file_version_id = database
+                .register_file_version(
+                    "version-archive",
+                    "file-archive",
+                    "hash-archive",
+                    12,
+                    None,
+                    "now",
+                )
+                .expect("version")
+                .expect("new version")
+                .file_version_id;
+            database
+                .store_local_import_result_with_metadata(
+                    "import-archive",
+                    "project-1",
+                    &file_version_id,
+                    "PENDING_APPROVAL",
+                    r#"{"changeset":{"id":"changeset-archive"}}"#,
+                    "now",
+                    1,
+                    &[RawRecord {
+                        raw_id: "raw-archive".to_owned(),
+                        file_version_id: file_version_id.clone(),
+                        row_key: "record-1".to_owned(),
+                        payload: r#"{"text":"keep"}"#.to_owned(),
+                        source_locator: r#"{"line":1}"#.to_owned(),
+                    }],
+                    &[LocalAsset {
+                        asset_id: "asset-1".to_owned(),
+                        project_id: "project-1".to_owned(),
+                        file_version_id: file_version_id.clone(),
+                        source_id: Some(source_id.clone()),
+                        file_id: Some("file-archive".to_owned()),
+                        source_hash: Some("hash-archive".to_owned()),
+                        source_path: Some("C:/Data/Archive/plan.png".to_owned()),
+                        source_locator: r#"{"line":2}"#.to_owned(),
+                        asset_version: 1,
+                        payload: r#"{"name":"plan.png"}"#.to_owned(),
+                        status: "PENDING_SYNC".to_owned(),
+                        created_at: "now".to_owned(),
+                    }],
+                    &[LocalAuditEvent {
+                        audit_id: "audit-1".to_owned(),
+                        project_id: "project-1".to_owned(),
+                        source_id: Some(source_id.clone()),
+                        file_id: Some("file-archive".to_owned()),
+                        file_version_id: Some(file_version_id.clone()),
+                        source_hash: Some("hash-archive".to_owned()),
+                        actor: "user-1".to_owned(),
+                        occurred_at: "now".to_owned(),
+                        operation: "parse".to_owned(),
+                        outcome: "PENDING_APPROVAL".to_owned(),
+                        correlation_id: "correlation-1".to_owned(),
+                        payload: r#"{"path":"C:/Data/Archive/report.docx"}"#.to_owned(),
+                    }],
+                )
+                .expect("metadata transaction");
+            let asset_job = database
+                .claim_next_job(0)
+                .expect("asset job")
+                .expect("pending asset job");
+            assert_eq!(asset_job.job_type, "ASSET_SYNC");
+            assert!(database
+                .complete_job(&asset_job.job_id)
+                .expect("complete asset job"));
+            assert!(database
+                .claim_next_job(0)
+                .expect("no duplicate asset job")
+                .is_none());
+            assert!(database
+                .archive_source(&source_id, "archived")
+                .expect("archive"));
+        }
+        let database = ManifestDb::open(&database_path).expect("reopen manifest");
+        assert_eq!(
+            database
+                .source_registration(&source_id)
+                .expect("source")
+                .expect("archived")
+                .status,
+            "ARCHIVED"
+        );
+        assert_eq!(
+            database
+                .raw_records_for_version(&file_version_id)
+                .expect("raw")
+                .len(),
+            1
+        );
+        assert_eq!(
+            database
+                .local_assets_for_version(&file_version_id)
+                .expect("assets")
+                .len(),
+            1
+        );
+        assert_eq!(
+            database
+                .local_audit_events_for_project("project-1")
+                .expect("audit")
+                .len(),
+            1
+        );
     }
 
     #[test]

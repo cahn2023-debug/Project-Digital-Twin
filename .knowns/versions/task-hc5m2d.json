@@ -1,0 +1,532 @@
+{
+  "taskId": "hc5m2d",
+  "currentVersion": 8,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "hc5m2d",
+      "version": 1,
+      "timestamp": "2026-08-10T12:45:27.8795574Z",
+      "author": "@me",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+          },
+          {
+            "completed": false,
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+          },
+          {
+            "completed": false,
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+          },
+          {
+            "completed": false,
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T19:45:27.8683417+07:00",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T19:45:27.8683417+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "hc5m2d",
+      "version": 2,
+      "timestamp": "2026-08-10T12:45:45.9855976Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "order",
+          "oldValue": null,
+          "newValue": 70
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+          },
+          {
+            "completed": false,
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+          },
+          {
+            "completed": false,
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+          },
+          {
+            "completed": false,
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.868Z",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T12:45:45.9855976Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "hc5m2d",
+      "version": 3,
+      "timestamp": "2026-08-10T12:58:53.431696Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Started implementation: deterministic identity and revision diff wave."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+          },
+          {
+            "completed": false,
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+          },
+          {
+            "completed": false,
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+          },
+          {
+            "completed": false,
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.868Z",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationNotes": "Started implementation: deterministic identity and revision diff wave.",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T12:58:53.431696Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "hc5m2d",
+      "version": 4,
+      "timestamp": "2026-08-10T13:03:32.7001151Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+            },
+            {
+              "completed": false,
+              "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+            },
+            {
+              "completed": false,
+              "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+            },
+            {
+              "completed": false,
+              "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+            },
+            {
+              "completed": true,
+              "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+            },
+            {
+              "completed": true,
+              "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+            },
+            {
+              "completed": true,
+              "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: deterministic identity and revision diff wave.",
+          "newValue": "Started implementation: deterministic identity and revision diff wave.\nDone: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2008-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+          },
+          {
+            "completed": true,
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+          },
+          {
+            "completed": true,
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+          },
+          {
+            "completed": true,
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.868Z",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationNotes": "Started implementation: deterministic identity and revision diff wave.\nDone: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2008-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T13:03:32.7001151Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "hc5m2d",
+      "version": 5,
+      "timestamp": "2026-08-10T13:03:35.7759007Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 279
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+          },
+          {
+            "completed": true,
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+          },
+          {
+            "completed": true,
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+          },
+          {
+            "completed": true,
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.868Z",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationNotes": "Started implementation: deterministic identity and revision diff wave.\nDone: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2008-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 279,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T13:03:35.7759007Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "hc5m2d",
+      "version": 6,
+      "timestamp": "2026-08-10T13:03:38.2710199Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T13:03:38.2710199Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+          },
+          {
+            "completed": true,
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+          },
+          {
+            "completed": true,
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+          },
+          {
+            "completed": true,
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T13:03:38.2710199Z",
+        "createdAt": "2026-08-10T12:45:27.868Z",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationNotes": "Started implementation: deterministic identity and revision diff wave.\nDone: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2008-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 279,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T13:03:38.2710199Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "hc5m2d",
+      "version": 7,
+      "timestamp": "2026-08-10T13:03:57.360347Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: deterministic identity and revision diff wave.\nDone: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2008-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+          "newValue": "Done: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2003-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity."
+          },
+          {
+            "completed": true,
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile."
+          },
+          {
+            "completed": true,
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback."
+          },
+          {
+            "completed": true,
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T13:03:38.271Z",
+        "createdAt": "2026-08-10T12:45:27.868Z",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationNotes": "Done: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2003-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 279,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T13:03:57.360347Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "hc5m2d",
+      "version": 8,
+      "timestamp": "2026-08-10T14:47:18.5129186Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2003-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+          "newValue": "Done: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2003-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Records with a stable source key reuse deterministic identity; records without one use Project/source/file revision/hash/locator identity.",
+            "completed": true
+          },
+          {
+            "text": "New or missing fields remain unmapped and trigger preview without mutating the active Profile.",
+            "completed": true
+          },
+          {
+            "text": "Every changed file revision is fully reparsed, diffed by locator/version and retained for rollback.",
+            "completed": true
+          },
+          {
+            "text": "Identity, schema-drift, duplicate and rollback tests pass across repeated parses.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T13:03:38.271Z",
+        "createdAt": "2026-08-10T12:45:27.868Z",
+        "description": "Replace row/UUID-only identity behavior with deterministic record identity, preserve immutable Profile/schema versions, detect schema drift, and create revision diffs and rollback ChangeSets without duplicate records.",
+        "fulfills": [
+          "AC-4",
+          "AC-5",
+          "AC-9",
+          "AC-12"
+        ],
+        "id": "hc5m2d",
+        "implementationNotes": "Done: added deterministic parser record identity with stable source-key preference and provenance fallback, propagated identity/raw fields through web/server contracts, switched local raw row keys to identity, and persisted identity-based revision diff metadata for repeated file revisions while retaining immutable profiles/history. Verification: cargo test -p desktop-core = 34 passed; web typecheck passed; focused server pytest = 9 passed; cargo fmt/check passed. System Decision Impact: candidate @decision/20260810-2003-deterministic-source-record-identity-and-revision-diff (added) — identity/revision contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Locate current row-key, raw-record and server mapping identity paths and define one deterministic identity contract from the linked spec.\n2. Implement stable identity derivation with source-key preference and locator fallback across local persistence and server ChangeSet mapping.\n3. Persist immutable schema/Profile revisions and surface schema drift as unmapped preview data.\n4. Add full-reparse revision diff, history and rollback ChangeSet behavior with idempotent duplicate suppression.\n5. Add Rust/Python integration tests, validate task refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 70,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 279,
+        "title": "[desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff",
+        "updatedAt": "2026-08-10T14:47:18.5129186Z"
+      }
+    }
+  ]
+}

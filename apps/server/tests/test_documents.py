@@ -5,6 +5,7 @@ from pathlib import Path
 from uuid import UUID, uuid4
 from zipfile import ZipFile, ZIP_DEFLATED
 
+from app.adapters.files.importers import documents as document_parser
 from app.documents import create_document_changeset, parse_document
 
 
@@ -110,3 +111,28 @@ def test_word_parser_extracts_heading_table_link_image_and_attachment(tmp_path: 
     assert any(link["target"].startswith("word/") is False for link in parsed.links)
     assert {asset.name for asset in parsed.assets} == {"plan.png", "schedule.pdf"}
     assert parsed.relationship_proposals[0].target_entity_id == "entity-1"
+
+
+def test_legacy_word_parser_reads_ole_word_document_stream(tmp_path: Path, monkeypatch) -> None:
+    source = tmp_path / "legacy.doc"
+    source.write_bytes(b"legacy-word-fixture")
+
+    class FakeStream:
+        def read(self) -> bytes:
+            return "Legacy heading\rLegacy paragraph".encode("utf-16le")
+
+    class FakeOle:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_args) -> None:
+            return None
+
+        def openstream(self, _name):
+            return FakeStream()
+
+    monkeypatch.setattr(document_parser.olefile, "OleFileIO", lambda _path: FakeOle())
+    parsed = parse_document(source, file_id=uuid4(), file_revision=4)
+
+    assert parsed.format == "word"
+    assert [node.text for node in parsed.nodes] == ["Legacy heading", "Legacy paragraph"]

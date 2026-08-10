@@ -630,6 +630,21 @@ tbody tr:hover { background: var(--surface-2); }
 .source-mapping-form { display: grid; gap: 5px; margin-top: 6px; }
 .source-mapping-form label { display: grid; gap: 2px; color: var(--muted); }
 .source-mapping-form select { min-height: 24px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.source-import-meta, .source-review-heading, .source-review-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+.source-preview-table, .source-review, .source-review-diff, .source-locators { display: grid; gap: 5px; margin-top: 7px; overflow-x: auto; }
+.source-preview-table .data-table { min-width: 420px; }
+.source-preview-table th .meta-line { display: block; font-weight: normal; }
+.source-type-grid, .source-skip-rows { display: grid; grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); gap: 5px; }
+.source-type-grid > span, .source-skip-rows > span { grid-column: 1 / -1; }
+.source-type-grid label, .source-skip-rows label { display: grid; gap: 2px; color: var(--muted); }
+.source-type-grid select, .source-review-item input { min-height: 24px; background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+.source-review-items { display: grid; gap: 6px; }
+.source-review-item { display: grid; gap: 4px; padding: 5px; border: 1px solid var(--border); }
+.source-review-item label { display: grid; grid-template-columns: 100px minmax(0, 1fr); align-items: center; gap: 5px; color: var(--muted); }
+.source-row-skipped { opacity: 0.45; text-decoration: line-through; }
+.source-job-list { display: grid; gap: 3px; width: 100%; margin-top: 4px; }
+.source-job { display: flex; align-items: center; gap: 5px; }
+.source-job .meta-line { flex: 1; }
 
 .alert-list { display: grid; gap: 13px; }
 .alert-item { display: flex; align-items: flex-start; gap: 9px; }
@@ -1089,4 +1104,3 @@ tbody tr:hover { background: var(--surface-2); }
 .recent-project-card:hover .recent-card-actions {
   opacity: 1;
 }
-

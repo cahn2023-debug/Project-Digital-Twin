@@ -49,6 +49,7 @@ class ChangeSet:
     relationship_proposals: list[dict[str, Any]] = field(default_factory=list)
     document_tables: list[dict[str, Any]] = field(default_factory=list)
     document_mapped_tables: list[dict[str, Any]] = field(default_factory=list)
+    parse_report: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass(frozen=True)

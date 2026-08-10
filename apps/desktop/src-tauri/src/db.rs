@@ -2,6 +2,7 @@ use desktop_core::{DbPasskey, EncryptedDb};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 use std::sync::{atomic::AtomicBool, Arc, Mutex};
+use uuid::Uuid;
 
 pub struct EncryptedDbState {
     pub db: Arc<Mutex<Option<EncryptedDb>>>,
@@ -24,12 +25,29 @@ pub struct DbStatusResponse {
     pub message: String,
 }
 
+fn keychain_secret(scope: &str) -> Result<String, String> {
+    let entry = keyring::Entry::new("project-digital-twin", scope)
+        .map_err(|error| format!("OS keychain entry could not be opened: {error}"))?;
+    match entry.get_password() {
+        Ok(secret) => Ok(secret),
+        Err(keyring::Error::NoEntry) => {
+            let secret = Uuid::new_v4().to_string();
+            entry
+                .set_password(&secret)
+                .map_err(|error| format!("OS keychain secret could not be stored: {error}"))?;
+            Ok(secret)
+        }
+        Err(error) => Err(format!("OS keychain secret could not be read: {error}")),
+    }
+}
+
 #[tauri::command]
 pub fn init_encrypted_database(
     state: tauri::State<'_, EncryptedDbState>,
     db_path: String,
-    secret_passkey: String,
+    keychain_scope: String,
 ) -> Result<DbStatusResponse, String> {
+    let secret_passkey = keychain_secret(&keychain_scope)?;
     let passkey = DbPasskey::new(&secret_passkey);
     let path = PathBuf::from(&db_path);
 

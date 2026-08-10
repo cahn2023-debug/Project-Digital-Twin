@@ -47,6 +47,11 @@ export interface PendingJob {
   attempts: number;
   next_retry_at: number;
   last_error: string | null;
+  progress: number;
+  phase: string;
+  cancel_requested: boolean;
+  source_id: string | null;
+  file_id: string | null;
 }
 
 export async function claimPendingJobs(

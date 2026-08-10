@@ -1,0 +1,452 @@
+{
+  "taskId": "746tlu",
+  "currentVersion": 7,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "746tlu",
+      "version": 1,
+      "timestamp": "2026-08-10T12:45:29.2920979Z",
+      "author": "@me",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+          },
+          {
+            "completed": false,
+            "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+          },
+          {
+            "completed": false,
+            "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+          },
+          {
+            "completed": false,
+            "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T19:45:29.280588+07:00",
+        "description": "Finish server and outbox handling for explicit ChangeSet approval, server/local conflicts, asset synchronization and bounded idempotent retry while preventing canonical writes before user confirmation.",
+        "fulfills": [
+          "AC-11",
+          "AC-15"
+        ],
+        "id": "746tlu",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace normalized/raw fallback endpoints, ChangeSet domain transitions and the existing desktop outbox contract.\n2. Add explicit approval/rejection and conflict-review transitions with field/source provenance and no implicit local/server winner.\n3. Queue assets and normalized ChangeSets with bounded retry, idempotency and offline replay semantics.\n4. Add server/worker tests for conflicts, approval gates, asset retry and duplicate suppression.\n5. Run server/web checks, validate linked refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval",
+        "updatedAt": "2026-08-10T19:45:29.280588+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "746tlu",
+      "version": 2,
+      "timestamp": "2026-08-10T12:45:46.038407Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "order",
+          "oldValue": null,
+          "newValue": 100
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+          },
+          {
+            "completed": false,
+            "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+          },
+          {
+            "completed": false,
+            "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+          },
+          {
+            "completed": false,
+            "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.28Z",
+        "description": "Finish server and outbox handling for explicit ChangeSet approval, server/local conflicts, asset synchronization and bounded idempotent retry while preventing canonical writes before user confirmation.",
+        "fulfills": [
+          "AC-11",
+          "AC-15"
+        ],
+        "id": "746tlu",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace normalized/raw fallback endpoints, ChangeSet domain transitions and the existing desktop outbox contract.\n2. Add explicit approval/rejection and conflict-review transitions with field/source provenance and no implicit local/server winner.\n3. Queue assets and normalized ChangeSets with bounded retry, idempotency and offline replay semantics.\n4. Add server/worker tests for conflicts, approval gates, asset retry and duplicate suppression.\n5. Run server/web checks, validate linked refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 100,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval",
+        "updatedAt": "2026-08-10T12:45:46.038407Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "746tlu",
+      "version": 3,
+      "timestamp": "2026-08-10T14:30:33.2354197Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+          },
+          {
+            "completed": false,
+            "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+          },
+          {
+            "completed": false,
+            "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+          },
+          {
+            "completed": false,
+            "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.28Z",
+        "description": "Finish server and outbox handling for explicit ChangeSet approval, server/local conflicts, asset synchronization and bounded idempotent retry while preventing canonical writes before user confirmation.",
+        "fulfills": [
+          "AC-11",
+          "AC-15"
+        ],
+        "id": "746tlu",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace normalized/raw fallback endpoints, ChangeSet domain transitions and the existing desktop outbox contract.\n2. Add explicit approval/rejection and conflict-review transitions with field/source provenance and no implicit local/server winner.\n3. Queue assets and normalized ChangeSets with bounded retry, idempotency and offline replay semantics.\n4. Add server/worker tests for conflicts, approval gates, asset retry and duplicate suppression.\n5. Run server/web checks, validate linked refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 100,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval",
+        "updatedAt": "2026-08-10T14:30:33.2354197Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "746tlu",
+      "version": 4,
+      "timestamp": "2026-08-10T14:35:39.1406321Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+            },
+            {
+              "completed": false,
+              "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+            },
+            {
+              "completed": false,
+              "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+            },
+            {
+              "completed": false,
+              "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+            },
+            {
+              "completed": true,
+              "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+            },
+            {
+              "completed": true,
+              "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+            },
+            {
+              "completed": true,
+              "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: added idempotent server file-asset sync with version conflict review; local asset metadata creates independent ASSET_SYNC jobs, bounded retry and SYNCED/CONFLICT_REVIEW status; ChangeSet items retain deterministic identity/source locator and parse report; normalized/raw responses retain retry history; all profile-matched imports remain PENDING_APPROVAL until explicit approve/reject. Verification: cargo fmt, cargo test -p desktop-core = 35 passed, cargo check desktop passed; server desktop/doc/API suite = 24 passed; web typecheck passed. System Decision Impact: candidate @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated (added) — sync and approval contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+          },
+          {
+            "completed": true,
+            "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+          },
+          {
+            "completed": true,
+            "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+          },
+          {
+            "completed": true,
+            "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.28Z",
+        "description": "Finish server and outbox handling for explicit ChangeSet approval, server/local conflicts, asset synchronization and bounded idempotent retry while preventing canonical writes before user confirmation.",
+        "fulfills": [
+          "AC-11",
+          "AC-15"
+        ],
+        "id": "746tlu",
+        "implementationNotes": "Done: added idempotent server file-asset sync with version conflict review; local asset metadata creates independent ASSET_SYNC jobs, bounded retry and SYNCED/CONFLICT_REVIEW status; ChangeSet items retain deterministic identity/source locator and parse report; normalized/raw responses retain retry history; all profile-matched imports remain PENDING_APPROVAL until explicit approve/reject. Verification: cargo fmt, cargo test -p desktop-core = 35 passed, cargo check desktop passed; server desktop/doc/API suite = 24 passed; web typecheck passed. System Decision Impact: candidate @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated (added) — sync and approval contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace normalized/raw fallback endpoints, ChangeSet domain transitions and the existing desktop outbox contract.\n2. Add explicit approval/rejection and conflict-review transitions with field/source provenance and no implicit local/server winner.\n3. Queue assets and normalized ChangeSets with bounded retry, idempotency and offline replay semantics.\n4. Add server/worker tests for conflicts, approval gates, asset retry and duplicate suppression.\n5. Run server/web checks, validate linked refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 100,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval",
+        "updatedAt": "2026-08-10T14:35:39.1406321Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "746tlu",
+      "version": 5,
+      "timestamp": "2026-08-10T14:35:45.8888963Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 310
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+          },
+          {
+            "completed": true,
+            "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+          },
+          {
+            "completed": true,
+            "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+          },
+          {
+            "completed": true,
+            "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.28Z",
+        "description": "Finish server and outbox handling for explicit ChangeSet approval, server/local conflicts, asset synchronization and bounded idempotent retry while preventing canonical writes before user confirmation.",
+        "fulfills": [
+          "AC-11",
+          "AC-15"
+        ],
+        "id": "746tlu",
+        "implementationNotes": "Done: added idempotent server file-asset sync with version conflict review; local asset metadata creates independent ASSET_SYNC jobs, bounded retry and SYNCED/CONFLICT_REVIEW status; ChangeSet items retain deterministic identity/source locator and parse report; normalized/raw responses retain retry history; all profile-matched imports remain PENDING_APPROVAL until explicit approve/reject. Verification: cargo fmt, cargo test -p desktop-core = 35 passed, cargo check desktop passed; server desktop/doc/API suite = 24 passed; web typecheck passed. System Decision Impact: candidate @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated (added) — sync and approval contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace normalized/raw fallback endpoints, ChangeSet domain transitions and the existing desktop outbox contract.\n2. Add explicit approval/rejection and conflict-review transitions with field/source provenance and no implicit local/server winner.\n3. Queue assets and normalized ChangeSets with bounded retry, idempotency and offline replay semantics.\n4. Add server/worker tests for conflicts, approval gates, asset retry and duplicate suppression.\n5. Run server/web checks, validate linked refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 100,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 310,
+        "title": "[desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval",
+        "updatedAt": "2026-08-10T14:35:45.8888963Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "746tlu",
+      "version": 6,
+      "timestamp": "2026-08-10T14:35:52.3230783Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T14:35:52.3230783Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports."
+          },
+          {
+            "completed": true,
+            "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite."
+          },
+          {
+            "completed": true,
+            "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files."
+          },
+          {
+            "completed": true,
+            "text": "Server responses preserve parse reports, provenance, conflict details and retry history."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T14:35:52.3230783Z",
+        "createdAt": "2026-08-10T12:45:29.28Z",
+        "description": "Finish server and outbox handling for explicit ChangeSet approval, server/local conflicts, asset synchronization and bounded idempotent retry while preventing canonical writes before user confirmation.",
+        "fulfills": [
+          "AC-11",
+          "AC-15"
+        ],
+        "id": "746tlu",
+        "implementationNotes": "Done: added idempotent server file-asset sync with version conflict review; local asset metadata creates independent ASSET_SYNC jobs, bounded retry and SYNCED/CONFLICT_REVIEW status; ChangeSet items retain deterministic identity/source locator and parse report; normalized/raw responses retain retry history; all profile-matched imports remain PENDING_APPROVAL until explicit approve/reject. Verification: cargo fmt, cargo test -p desktop-core = 35 passed, cargo check desktop passed; server desktop/doc/API suite = 24 passed; web typecheck passed. System Decision Impact: candidate @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated (added) — sync and approval contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace normalized/raw fallback endpoints, ChangeSet domain transitions and the existing desktop outbox contract.\n2. Add explicit approval/rejection and conflict-review transitions with field/source provenance and no implicit local/server winner.\n3. Queue assets and normalized ChangeSets with bounded retry, idempotency and offline replay semantics.\n4. Add server/worker tests for conflicts, approval gates, asset retry and duplicate suppression.\n5. Run server/web checks, validate linked refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 100,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 310,
+        "title": "[desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval",
+        "updatedAt": "2026-08-10T14:35:52.3230783Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "746tlu",
+      "version": 7,
+      "timestamp": "2026-08-10T14:47:29.2762204Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added idempotent server file-asset sync with version conflict review; local asset metadata creates independent ASSET_SYNC jobs, bounded retry and SYNCED/CONFLICT_REVIEW status; ChangeSet items retain deterministic identity/source locator and parse report; normalized/raw responses retain retry history; all profile-matched imports remain PENDING_APPROVAL until explicit approve/reject. Verification: cargo fmt, cargo test -p desktop-core = 35 passed, cargo check desktop passed; server desktop/doc/API suite = 24 passed; web typecheck passed. System Decision Impact: candidate @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated (added) — sync and approval contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+          "newValue": "Done: added idempotent server file-asset sync with version conflict review; local asset metadata creates independent ASSET_SYNC jobs, bounded retry and SYNCED/CONFLICT_REVIEW status; ChangeSet items retain deterministic identity/source locator and parse report; normalized/raw responses retain retry history; all profile-matched imports remain PENDING_APPROVAL until explicit approve/reject. Verification: cargo fmt, cargo test -p desktop-core = 35 passed, cargo check desktop passed; server desktop/doc/API suite = 24 passed; web typecheck passed. System Decision Impact: candidate @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated (added) — sync and approval contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Normalized and asset sync jobs preserve idempotency and retry independently without replaying successful imports.",
+            "completed": true
+          },
+          {
+            "text": "Local/server differences produce conflict review with no implicit winner or canonical overwrite.",
+            "completed": true
+          },
+          {
+            "text": "Every ChangeSet requires explicit user approval before canonical apply, including Profile-matched files.",
+            "completed": true
+          },
+          {
+            "text": "Server responses preserve parse reports, provenance, conflict details and retry history.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T14:35:52.323Z",
+        "createdAt": "2026-08-10T12:45:29.28Z",
+        "description": "Finish server and outbox handling for explicit ChangeSet approval, server/local conflicts, asset synchronization and bounded idempotent retry while preventing canonical writes before user confirmation.",
+        "fulfills": [
+          "AC-11",
+          "AC-15"
+        ],
+        "id": "746tlu",
+        "implementationNotes": "Done: added idempotent server file-asset sync with version conflict review; local asset metadata creates independent ASSET_SYNC jobs, bounded retry and SYNCED/CONFLICT_REVIEW status; ChangeSet items retain deterministic identity/source locator and parse report; normalized/raw responses retain retry history; all profile-matched imports remain PENDING_APPROVAL until explicit approve/reject. Verification: cargo fmt, cargo test -p desktop-core = 35 passed, cargo check desktop passed; server desktop/doc/API suite = 24 passed; web typecheck passed. System Decision Impact: candidate @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated (added) — sync and approval contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace normalized/raw fallback endpoints, ChangeSet domain transitions and the existing desktop outbox contract.\n2. Add explicit approval/rejection and conflict-review transitions with field/source provenance and no implicit local/server winner.\n3. Queue assets and normalized ChangeSets with bounded retry, idempotency and offline replay semantics.\n4. Add server/worker tests for conflicts, approval gates, asset retry and duplicate suppression.\n5. Run server/web checks, validate linked refs and record D1-D31 compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 100,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 310,
+        "title": "[desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval",
+        "updatedAt": "2026-08-10T14:47:29.2762204Z"
+      }
+    }
+  ]
+}

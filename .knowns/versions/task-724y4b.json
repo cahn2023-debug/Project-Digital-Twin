@@ -1,0 +1,452 @@
+{
+  "taskId": "724y4b",
+  "currentVersion": 7,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "724y4b",
+      "version": 1,
+      "timestamp": "2026-08-10T12:45:29.7647746Z",
+      "author": "@me",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+          },
+          {
+            "completed": false,
+            "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+          },
+          {
+            "completed": false,
+            "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+          },
+          {
+            "completed": false,
+            "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T19:45:29.7332085+07:00",
+        "description": "Make scan/parse/import progress observable and cancellable, keep locked/permission failures per-file, and preserve independent source watchers and batch continuation.",
+        "fulfills": [
+          "AC-3",
+          "AC-14"
+        ],
+        "id": "724y4b",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the Tauri job queue and SourceManagement polling path; define progress/cancellation state transitions compatible with existing imports.\n2. Add cancellation checkpoints and per-file error classification for locked, permission and transient failures.\n3. Expose progress/cancel state in source UI while preserving independent watcher and batch behavior.\n4. Add focused Rust/TypeScript tests for cancellation, locked files, retry and multiple-source isolation.\n5. Run desktop/web checks, validate the task and record compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation",
+        "updatedAt": "2026-08-10T19:45:29.7332085+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "724y4b",
+      "version": 2,
+      "timestamp": "2026-08-10T12:45:46.0966047Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "order",
+          "oldValue": null,
+          "newValue": 110
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+          },
+          {
+            "completed": false,
+            "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+          },
+          {
+            "completed": false,
+            "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+          },
+          {
+            "completed": false,
+            "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.733Z",
+        "description": "Make scan/parse/import progress observable and cancellable, keep locked/permission failures per-file, and preserve independent source watchers and batch continuation.",
+        "fulfills": [
+          "AC-3",
+          "AC-14"
+        ],
+        "id": "724y4b",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the Tauri job queue and SourceManagement polling path; define progress/cancellation state transitions compatible with existing imports.\n2. Add cancellation checkpoints and per-file error classification for locked, permission and transient failures.\n3. Expose progress/cancel state in source UI while preserving independent watcher and batch behavior.\n4. Add focused Rust/TypeScript tests for cancellation, locked files, retry and multiple-source isolation.\n5. Run desktop/web checks, validate the task and record compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 110,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation",
+        "updatedAt": "2026-08-10T12:45:46.0966047Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "724y4b",
+      "version": 3,
+      "timestamp": "2026-08-10T14:36:02.9660431Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+          },
+          {
+            "completed": false,
+            "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+          },
+          {
+            "completed": false,
+            "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+          },
+          {
+            "completed": false,
+            "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.733Z",
+        "description": "Make scan/parse/import progress observable and cancellable, keep locked/permission failures per-file, and preserve independent source watchers and batch continuation.",
+        "fulfills": [
+          "AC-3",
+          "AC-14"
+        ],
+        "id": "724y4b",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the Tauri job queue and SourceManagement polling path; define progress/cancellation state transitions compatible with existing imports.\n2. Add cancellation checkpoints and per-file error classification for locked, permission and transient failures.\n3. Expose progress/cancel state in source UI while preserving independent watcher and batch behavior.\n4. Add focused Rust/TypeScript tests for cancellation, locked files, retry and multiple-source isolation.\n5. Run desktop/web checks, validate the task and record compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 110,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation",
+        "updatedAt": "2026-08-10T14:36:02.9660431Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "724y4b",
+      "version": 4,
+      "timestamp": "2026-08-10T14:45:55.7578055Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+            },
+            {
+              "completed": false,
+              "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+            },
+            {
+              "completed": false,
+              "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+            },
+            {
+              "completed": false,
+              "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+            },
+            {
+              "completed": true,
+              "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+            },
+            {
+              "completed": true,
+              "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+            },
+            {
+              "completed": true,
+              "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: persisted per-job source/file identity, status, phase, progress, retry error and cancellation fields with migration-safe manifest columns; added list/update/cancel/checkpoint Tauri commands and source UI progress/cancel controls; worker checkpoints before parse/upload, classifies locked/permission/transient errors, keeps retry/outbox state and continues independent files; source failure jobs are source-scoped and readable retries resolve old failure jobs. Verification: cargo fmt, cargo test -p desktop-core = 37 passed, cargo check desktop passed; web typecheck/build passed; focused server pytest = 11 passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation (added) — job progress/cancellation contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+          },
+          {
+            "completed": true,
+            "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+          },
+          {
+            "completed": true,
+            "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+          },
+          {
+            "completed": true,
+            "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.733Z",
+        "description": "Make scan/parse/import progress observable and cancellable, keep locked/permission failures per-file, and preserve independent source watchers and batch continuation.",
+        "fulfills": [
+          "AC-3",
+          "AC-14"
+        ],
+        "id": "724y4b",
+        "implementationNotes": "Done: persisted per-job source/file identity, status, phase, progress, retry error and cancellation fields with migration-safe manifest columns; added list/update/cancel/checkpoint Tauri commands and source UI progress/cancel controls; worker checkpoints before parse/upload, classifies locked/permission/transient errors, keeps retry/outbox state and continues independent files; source failure jobs are source-scoped and readable retries resolve old failure jobs. Verification: cargo fmt, cargo test -p desktop-core = 37 passed, cargo check desktop passed; web typecheck/build passed; focused server pytest = 11 passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation (added) — job progress/cancellation contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the Tauri job queue and SourceManagement polling path; define progress/cancellation state transitions compatible with existing imports.\n2. Add cancellation checkpoints and per-file error classification for locked, permission and transient failures.\n3. Expose progress/cancel state in source UI while preserving independent watcher and batch behavior.\n4. Add focused Rust/TypeScript tests for cancellation, locked files, retry and multiple-source isolation.\n5. Run desktop/web checks, validate the task and record compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 110,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation",
+        "updatedAt": "2026-08-10T14:45:55.7578055Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "724y4b",
+      "version": 5,
+      "timestamp": "2026-08-10T14:46:08.0800725Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 603
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+          },
+          {
+            "completed": true,
+            "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+          },
+          {
+            "completed": true,
+            "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+          },
+          {
+            "completed": true,
+            "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:29.733Z",
+        "description": "Make scan/parse/import progress observable and cancellable, keep locked/permission failures per-file, and preserve independent source watchers and batch continuation.",
+        "fulfills": [
+          "AC-3",
+          "AC-14"
+        ],
+        "id": "724y4b",
+        "implementationNotes": "Done: persisted per-job source/file identity, status, phase, progress, retry error and cancellation fields with migration-safe manifest columns; added list/update/cancel/checkpoint Tauri commands and source UI progress/cancel controls; worker checkpoints before parse/upload, classifies locked/permission/transient errors, keeps retry/outbox state and continues independent files; source failure jobs are source-scoped and readable retries resolve old failure jobs. Verification: cargo fmt, cargo test -p desktop-core = 37 passed, cargo check desktop passed; web typecheck/build passed; focused server pytest = 11 passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation (added) — job progress/cancellation contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the Tauri job queue and SourceManagement polling path; define progress/cancellation state transitions compatible with existing imports.\n2. Add cancellation checkpoints and per-file error classification for locked, permission and transient failures.\n3. Expose progress/cancel state in source UI while preserving independent watcher and batch behavior.\n4. Add focused Rust/TypeScript tests for cancellation, locked files, retry and multiple-source isolation.\n5. Run desktop/web checks, validate the task and record compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 110,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 603,
+        "title": "[desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation",
+        "updatedAt": "2026-08-10T14:46:08.0800725Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "724y4b",
+      "version": 6,
+      "timestamp": "2026-08-10T14:46:16.621341Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T14:46:16.621341Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI."
+          },
+          {
+            "completed": true,
+            "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources."
+          },
+          {
+            "completed": true,
+            "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work."
+          },
+          {
+            "completed": true,
+            "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T14:46:16.621341Z",
+        "createdAt": "2026-08-10T12:45:29.733Z",
+        "description": "Make scan/parse/import progress observable and cancellable, keep locked/permission failures per-file, and preserve independent source watchers and batch continuation.",
+        "fulfills": [
+          "AC-3",
+          "AC-14"
+        ],
+        "id": "724y4b",
+        "implementationNotes": "Done: persisted per-job source/file identity, status, phase, progress, retry error and cancellation fields with migration-safe manifest columns; added list/update/cancel/checkpoint Tauri commands and source UI progress/cancel controls; worker checkpoints before parse/upload, classifies locked/permission/transient errors, keeps retry/outbox state and continues independent files; source failure jobs are source-scoped and readable retries resolve old failure jobs. Verification: cargo fmt, cargo test -p desktop-core = 37 passed, cargo check desktop passed; web typecheck/build passed; focused server pytest = 11 passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation (added) — job progress/cancellation contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the Tauri job queue and SourceManagement polling path; define progress/cancellation state transitions compatible with existing imports.\n2. Add cancellation checkpoints and per-file error classification for locked, permission and transient failures.\n3. Expose progress/cancel state in source UI while preserving independent watcher and batch behavior.\n4. Add focused Rust/TypeScript tests for cancellation, locked files, retry and multiple-source isolation.\n5. Run desktop/web checks, validate the task and record compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 110,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 603,
+        "title": "[desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation",
+        "updatedAt": "2026-08-10T14:46:16.621341Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "724y4b",
+      "version": 7,
+      "timestamp": "2026-08-10T14:47:32.6511874Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: persisted per-job source/file identity, status, phase, progress, retry error and cancellation fields with migration-safe manifest columns; added list/update/cancel/checkpoint Tauri commands and source UI progress/cancel controls; worker checkpoints before parse/upload, classifies locked/permission/transient errors, keeps retry/outbox state and continues independent files; source failure jobs are source-scoped and readable retries resolve old failure jobs. Verification: cargo fmt, cargo test -p desktop-core = 37 passed, cargo check desktop passed; web typecheck/build passed; focused server pytest = 11 passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation (added) — job progress/cancellation contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+          "newValue": "Done: persisted per-job source/file identity, status, phase, progress, retry error and cancellation fields with migration-safe manifest columns; added list/update/cancel/checkpoint Tauri commands and source UI progress/cancel controls; worker checkpoints before parse/upload, classifies locked/permission/transient errors, keeps retry/outbox state and continues independent files; source failure jobs are source-scoped and readable retries resolve old failure jobs. Verification: cargo fmt, cargo test -p desktop-core = 37 passed, cargo check desktop passed; web typecheck/build passed; focused server pytest = 11 passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation (added) — job progress/cancellation contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Background jobs expose source/file progress and queued/running/failed/cancelled states without blocking the main UI.",
+            "completed": true
+          },
+          {
+            "text": "Queued work can be cancelled safely and does not cancel unrelated files or sources.",
+            "completed": true
+          },
+          {
+            "text": "Locked or inaccessible files are not uploaded, retain retry/outbox state and do not stop other work.",
+            "completed": true
+          },
+          {
+            "text": "Watcher auto-start, debounce and multi-source isolation remain covered by focused tests.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T14:46:16.621Z",
+        "createdAt": "2026-08-10T12:45:29.733Z",
+        "description": "Make scan/parse/import progress observable and cancellable, keep locked/permission failures per-file, and preserve independent source watchers and batch continuation.",
+        "fulfills": [
+          "AC-3",
+          "AC-14"
+        ],
+        "id": "724y4b",
+        "implementationNotes": "Done: persisted per-job source/file identity, status, phase, progress, retry error and cancellation fields with migration-safe manifest columns; added list/update/cancel/checkpoint Tauri commands and source UI progress/cancel controls; worker checkpoints before parse/upload, classifies locked/permission/transient errors, keeps retry/outbox state and continues independent files; source failure jobs are source-scoped and readable retries resolve old failure jobs. Verification: cargo fmt, cargo test -p desktop-core = 37 passed, cargo check desktop passed; web typecheck/build passed; focused server pytest = 11 passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation (added) — job progress/cancellation contract is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the Tauri job queue and SourceManagement polling path; define progress/cancellation state transitions compatible with existing imports.\n2. Add cancellation checkpoints and per-file error classification for locked, permission and transient failures.\n3. Expose progress/cancel state in source UI while preserving independent watcher and batch behavior.\n4. Add focused Rust/TypeScript tests for cancellation, locked files, retry and multiple-source isolation.\n5. Run desktop/web checks, validate the task and record compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 110,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 603,
+        "title": "[desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation",
+        "updatedAt": "2026-08-10T14:47:32.6511874Z"
+      }
+    }
+  ]
+}

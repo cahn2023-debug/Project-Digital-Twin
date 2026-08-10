@@ -11,7 +11,9 @@ use tauri::{Manager, State};
 
 use super::WatcherState;
 
-const SUPPORTED_EXTENSIONS: [&str; 7] = ["xlsx", "xlsm", "xls", "md", "txt", "doc", "docx"];
+const SUPPORTED_EXTENSIONS: [&str; 9] = [
+    "xlsx", "xlsm", "xls", "csv", "md", "markdown", "txt", "doc", "docx",
+];
 
 #[tauri::command]
 pub fn health() -> &'static str {
@@ -52,7 +54,12 @@ fn scan_and_enqueue(
     let mut queued = 0;
     for failure in failures {
         if database
-            .enqueue_file_failure(&failure.path, &failure.error, &observed_at.to_string())
+            .enqueue_file_failure_for_source(
+                &failure.path,
+                &failure.error,
+                &observed_at.to_string(),
+                source_id,
+            )
             .map_err(|error| error.to_string())?
         {
             queued += 1;
@@ -285,6 +292,26 @@ pub fn stop_source_watcher(
         stop.store(true, Ordering::Relaxed);
     }
     Ok(())
+}
+
+#[tauri::command]
+pub fn archive_local_source(
+    manifest_path: String,
+    source_id: String,
+    archived_at: String,
+    state: State<'_, WatcherState>,
+) -> Result<bool, String> {
+    let database = ManifestDb::open(&manifest_path).map_err(|error| error.to_string())?;
+    let archived = database
+        .archive_source(&source_id, &archived_at)
+        .map_err(|error| error.to_string())?;
+    if archived {
+        let mut current = state.stops.lock().map_err(|_| "watcher state poisoned")?;
+        if let Some(stop) = current.remove(&source_id) {
+            stop.store(true, Ordering::Relaxed);
+        }
+    }
+    Ok(archived)
 }
 
 #[tauri::command]

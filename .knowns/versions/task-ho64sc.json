@@ -1,0 +1,466 @@
+{
+  "taskId": "ho64sc",
+  "currentVersion": 7,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "ho64sc",
+      "version": 1,
+      "timestamp": "2026-08-10T12:45:28.34989Z",
+      "author": "@me",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+          },
+          {
+            "completed": false,
+            "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+          },
+          {
+            "completed": false,
+            "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+          },
+          {
+            "completed": false,
+            "text": "UI tests/typecheck/build cover independent file status and review actions."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T19:45:28.3268009+07:00",
+        "description": "Extend preview/mapping UX to show regions, headers, sample rows, inferred types and field issues; allow mapping/type changes/row skips/Profile versions, then review and edit normalized ChangeSets before approval.",
+        "fulfills": [
+          "AC-5",
+          "AC-9",
+          "AC-15"
+        ],
+        "id": "ho64sc",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend import worker response models and server contracts for preview, schema drift, diff, assets and editable normalized values.\n2. Build the preview/mapping interactions while preserving per-file isolation and the existing Tauri-only source boundary.\n3. Add a ChangeSet review surface with diff, Raw/unmapped/invalid, warnings, assets, locators and explicit approve/reject actions.\n4. Persist normalized edits and audit events without modifying source files; add focused UI/API tests.\n5. Run web typecheck/build and relevant server tests; validate the task and compliance markers.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI",
+        "updatedAt": "2026-08-10T19:45:28.3268009+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "ho64sc",
+      "version": 2,
+      "timestamp": "2026-08-10T12:45:46.0030289Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "order",
+          "oldValue": null,
+          "newValue": 80
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+          },
+          {
+            "completed": false,
+            "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+          },
+          {
+            "completed": false,
+            "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+          },
+          {
+            "completed": false,
+            "text": "UI tests/typecheck/build cover independent file status and review actions."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:28.326Z",
+        "description": "Extend preview/mapping UX to show regions, headers, sample rows, inferred types and field issues; allow mapping/type changes/row skips/Profile versions, then review and edit normalized ChangeSets before approval.",
+        "fulfills": [
+          "AC-5",
+          "AC-9",
+          "AC-15"
+        ],
+        "id": "ho64sc",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend import worker response models and server contracts for preview, schema drift, diff, assets and editable normalized values.\n2. Build the preview/mapping interactions while preserving per-file isolation and the existing Tauri-only source boundary.\n3. Add a ChangeSet review surface with diff, Raw/unmapped/invalid, warnings, assets, locators and explicit approve/reject actions.\n4. Persist normalized edits and audit events without modifying source files; add focused UI/API tests.\n5. Run web typecheck/build and relevant server tests; validate the task and compliance markers.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI",
+        "updatedAt": "2026-08-10T12:45:46.0030289Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "ho64sc",
+      "version": 3,
+      "timestamp": "2026-08-10T13:04:10.4118628Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Started implementation: preview/mapping and ChangeSet review wave."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+          },
+          {
+            "completed": false,
+            "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+          },
+          {
+            "completed": false,
+            "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+          },
+          {
+            "completed": false,
+            "text": "UI tests/typecheck/build cover independent file status and review actions."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:28.326Z",
+        "description": "Extend preview/mapping UX to show regions, headers, sample rows, inferred types and field issues; allow mapping/type changes/row skips/Profile versions, then review and edit normalized ChangeSets before approval.",
+        "fulfills": [
+          "AC-5",
+          "AC-9",
+          "AC-15"
+        ],
+        "id": "ho64sc",
+        "implementationNotes": "Started implementation: preview/mapping and ChangeSet review wave.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend import worker response models and server contracts for preview, schema drift, diff, assets and editable normalized values.\n2. Build the preview/mapping interactions while preserving per-file isolation and the existing Tauri-only source boundary.\n3. Add a ChangeSet review surface with diff, Raw/unmapped/invalid, warnings, assets, locators and explicit approve/reject actions.\n4. Persist normalized edits and audit events without modifying source files; add focused UI/API tests.\n5. Run web typecheck/build and relevant server tests; validate the task and compliance markers.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI",
+        "updatedAt": "2026-08-10T13:04:10.4118628Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "ho64sc",
+      "version": 4,
+      "timestamp": "2026-08-10T13:15:02.1926756Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+            },
+            {
+              "completed": false,
+              "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+            },
+            {
+              "completed": false,
+              "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+            },
+            {
+              "completed": false,
+              "text": "UI tests/typecheck/build cover independent file status and review actions."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+            },
+            {
+              "completed": true,
+              "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+            },
+            {
+              "completed": true,
+              "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+            },
+            {
+              "completed": true,
+              "text": "UI tests/typecheck/build cover independent file status and review actions."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: preview/mapping and ChangeSet review wave.",
+          "newValue": "Started implementation: preview/mapping and ChangeSet review wave.\nDone: extended preview contracts/UI with regions, headers, sample rows, inferred types, mapping/type/skip-row controls and immutable profile version fields; added ChangeSet diff/raw/unmapped/invalid/warning/asset/source-locator review; added normalized value edit, explicit approve/reject endpoints and append-only audit events. Verification: cargo fmt/check and cargo test -p desktop-core = 34 passed; focused server pytest = 10 passed; web typecheck/build passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated (added) — review edits remain ChangeSet-local and auditable; canonical apply requires explicit approval. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+          },
+          {
+            "completed": true,
+            "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+          },
+          {
+            "completed": true,
+            "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+          },
+          {
+            "completed": true,
+            "text": "UI tests/typecheck/build cover independent file status and review actions."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:28.326Z",
+        "description": "Extend preview/mapping UX to show regions, headers, sample rows, inferred types and field issues; allow mapping/type changes/row skips/Profile versions, then review and edit normalized ChangeSets before approval.",
+        "fulfills": [
+          "AC-5",
+          "AC-9",
+          "AC-15"
+        ],
+        "id": "ho64sc",
+        "implementationNotes": "Started implementation: preview/mapping and ChangeSet review wave.\nDone: extended preview contracts/UI with regions, headers, sample rows, inferred types, mapping/type/skip-row controls and immutable profile version fields; added ChangeSet diff/raw/unmapped/invalid/warning/asset/source-locator review; added normalized value edit, explicit approve/reject endpoints and append-only audit events. Verification: cargo fmt/check and cargo test -p desktop-core = 34 passed; focused server pytest = 10 passed; web typecheck/build passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated (added) — review edits remain ChangeSet-local and auditable; canonical apply requires explicit approval. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend import worker response models and server contracts for preview, schema drift, diff, assets and editable normalized values.\n2. Build the preview/mapping interactions while preserving per-file isolation and the existing Tauri-only source boundary.\n3. Add a ChangeSet review surface with diff, Raw/unmapped/invalid, warnings, assets, locators and explicit approve/reject actions.\n4. Persist normalized edits and audit events without modifying source files; add focused UI/API tests.\n5. Run web typecheck/build and relevant server tests; validate the task and compliance markers.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI",
+        "updatedAt": "2026-08-10T13:15:02.1926756Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "ho64sc",
+      "version": 5,
+      "timestamp": "2026-08-10T13:15:24.747733Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T13:15:24.747733Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+          },
+          {
+            "completed": true,
+            "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+          },
+          {
+            "completed": true,
+            "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+          },
+          {
+            "completed": true,
+            "text": "UI tests/typecheck/build cover independent file status and review actions."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T13:15:24.747733Z",
+        "createdAt": "2026-08-10T12:45:28.326Z",
+        "description": "Extend preview/mapping UX to show regions, headers, sample rows, inferred types and field issues; allow mapping/type changes/row skips/Profile versions, then review and edit normalized ChangeSets before approval.",
+        "fulfills": [
+          "AC-5",
+          "AC-9",
+          "AC-15"
+        ],
+        "id": "ho64sc",
+        "implementationNotes": "Started implementation: preview/mapping and ChangeSet review wave.\nDone: extended preview contracts/UI with regions, headers, sample rows, inferred types, mapping/type/skip-row controls and immutable profile version fields; added ChangeSet diff/raw/unmapped/invalid/warning/asset/source-locator review; added normalized value edit, explicit approve/reject endpoints and append-only audit events. Verification: cargo fmt/check and cargo test -p desktop-core = 34 passed; focused server pytest = 10 passed; web typecheck/build passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated (added) — review edits remain ChangeSet-local and auditable; canonical apply requires explicit approval. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend import worker response models and server contracts for preview, schema drift, diff, assets and editable normalized values.\n2. Build the preview/mapping interactions while preserving per-file isolation and the existing Tauri-only source boundary.\n3. Add a ChangeSet review surface with diff, Raw/unmapped/invalid, warnings, assets, locators and explicit approve/reject actions.\n4. Persist normalized edits and audit events without modifying source files; add focused UI/API tests.\n5. Run web typecheck/build and relevant server tests; validate the task and compliance markers.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI",
+        "updatedAt": "2026-08-10T13:15:24.747733Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "ho64sc",
+      "version": 6,
+      "timestamp": "2026-08-10T13:15:24.7687353Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 671
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save."
+          },
+          {
+            "completed": true,
+            "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators."
+          },
+          {
+            "completed": true,
+            "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events."
+          },
+          {
+            "completed": true,
+            "text": "UI tests/typecheck/build cover independent file status and review actions."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T13:15:24.747Z",
+        "createdAt": "2026-08-10T12:45:28.326Z",
+        "description": "Extend preview/mapping UX to show regions, headers, sample rows, inferred types and field issues; allow mapping/type changes/row skips/Profile versions, then review and edit normalized ChangeSets before approval.",
+        "fulfills": [
+          "AC-5",
+          "AC-9",
+          "AC-15"
+        ],
+        "id": "ho64sc",
+        "implementationNotes": "Started implementation: preview/mapping and ChangeSet review wave.\nDone: extended preview contracts/UI with regions, headers, sample rows, inferred types, mapping/type/skip-row controls and immutable profile version fields; added ChangeSet diff/raw/unmapped/invalid/warning/asset/source-locator review; added normalized value edit, explicit approve/reject endpoints and append-only audit events. Verification: cargo fmt/check and cargo test -p desktop-core = 34 passed; focused server pytest = 10 passed; web typecheck/build passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated (added) — review edits remain ChangeSet-local and auditable; canonical apply requires explicit approval. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend import worker response models and server contracts for preview, schema drift, diff, assets and editable normalized values.\n2. Build the preview/mapping interactions while preserving per-file isolation and the existing Tauri-only source boundary.\n3. Add a ChangeSet review surface with diff, Raw/unmapped/invalid, warnings, assets, locators and explicit approve/reject actions.\n4. Persist normalized edits and audit events without modifying source files; add focused UI/API tests.\n5. Run web typecheck/build and relevant server tests; validate the task and compliance markers.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 671,
+        "title": "[desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI",
+        "updatedAt": "2026-08-10T13:15:24.7687353Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "ho64sc",
+      "version": 7,
+      "timestamp": "2026-08-10T14:47:22.4195695Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: preview/mapping and ChangeSet review wave.\nDone: extended preview contracts/UI with regions, headers, sample rows, inferred types, mapping/type/skip-row controls and immutable profile version fields; added ChangeSet diff/raw/unmapped/invalid/warning/asset/source-locator review; added normalized value edit, explicit approve/reject endpoints and append-only audit events. Verification: cargo fmt/check and cargo test -p desktop-core = 34 passed; focused server pytest = 10 passed; web typecheck/build passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated (added) — review edits remain ChangeSet-local and auditable; canonical apply requires explicit approval. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+          "newValue": "Started implementation: preview/mapping and ChangeSet review wave.\nDone: extended preview contracts/UI with regions, headers, sample rows, inferred types, mapping/type/skip-row controls and immutable profile version fields; added ChangeSet diff/raw/unmapped/invalid/warning/asset/source-locator review; added normalized value edit, explicit approve/reject endpoints and append-only audit events. Verification: cargo fmt/check and cargo test -p desktop-core = 34 passed; focused server pytest = 10 passed; web typecheck/build passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated (added) — review edits remain ChangeSet-local and auditable; canonical apply requires explicit approval. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Preview exposes region/header/sample/type/issue data and supports mapping, type changes, row skips and immutable Profile version save.",
+            "completed": true
+          },
+          {
+            "text": "Review shows before/after diff, valid/unmapped/invalid data, warnings, assets and source locators.",
+            "completed": true
+          },
+          {
+            "text": "Users can edit normalized ChangeSet values without editing source files; edits are append-only audit events.",
+            "completed": true
+          },
+          {
+            "text": "UI tests/typecheck/build cover independent file status and review actions.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T13:15:24.747Z",
+        "createdAt": "2026-08-10T12:45:28.326Z",
+        "description": "Extend preview/mapping UX to show regions, headers, sample rows, inferred types and field issues; allow mapping/type changes/row skips/Profile versions, then review and edit normalized ChangeSets before approval.",
+        "fulfills": [
+          "AC-5",
+          "AC-9",
+          "AC-15"
+        ],
+        "id": "ho64sc",
+        "implementationNotes": "Started implementation: preview/mapping and ChangeSet review wave.\nDone: extended preview contracts/UI with regions, headers, sample rows, inferred types, mapping/type/skip-row controls and immutable profile version fields; added ChangeSet diff/raw/unmapped/invalid/warning/asset/source-locator review; added normalized value edit, explicit approve/reject endpoints and append-only audit events. Verification: cargo fmt/check and cargo test -p desktop-core = 34 passed; focused server pytest = 10 passed; web typecheck/build passed; Python compileall passed. System Decision Impact: candidate @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated (added) — review edits remain ChangeSet-local and auditable; canonical apply requires explicit approval. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend import worker response models and server contracts for preview, schema drift, diff, assets and editable normalized values.\n2. Build the preview/mapping interactions while preserving per-file isolation and the existing Tauri-only source boundary.\n3. Add a ChangeSet review surface with diff, Raw/unmapped/invalid, warnings, assets, locators and explicit approve/reject actions.\n4. Persist normalized edits and audit events without modifying source files; add focused UI/API tests.\n5. Run web typecheck/build and relevant server tests; validate the task and compliance markers.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 80,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 671,
+        "title": "[desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI",
+        "updatedAt": "2026-08-10T14:47:22.4195695Z"
+      }
+    }
+  ]
+}

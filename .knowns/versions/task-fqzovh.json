@@ -1,0 +1,479 @@
+{
+  "taskId": "fqzovh",
+  "currentVersion": 7,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "fqzovh",
+      "version": 1,
+      "timestamp": "2026-08-10T12:45:27.3652006Z",
+      "author": "@me",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+          },
+          {
+            "completed": false,
+            "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+          },
+          {
+            "completed": false,
+            "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+          },
+          {
+            "completed": false,
+            "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T19:45:27.3431954+07:00",
+        "description": "Complete the local parser boundary for CSV and Word .doc/.docx, including encoding/delimiter/header detection, structured document extraction, source locators, assets and deterministic normalization reports. Preserve raw values and explicit warnings without modifying source files.",
+        "fulfills": [
+          "AC-2",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-10"
+        ],
+        "id": "fqzovh",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the existing desktop-core parser and server document/importer boundaries; add the missing format/profile fields without changing the upload gate.\n2. Implement CSV dialect/header detection and structured .doc/.docx parsing with source locators, raw preservation, asset metadata and parse-report issues.\n3. Align normalization behavior across desktop and server boundaries, including Project locale/config inputs and ambiguous-value warnings.\n4. Add representative fixtures and focused parser/server tests for supported formats, malformed input, assets and source immutability.\n5. Run Rust/server checks and Knowns validation; record compliance for D1-D31 relevant to this task.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage",
+        "updatedAt": "2026-08-10T19:45:27.3431954+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "fqzovh",
+      "version": 2,
+      "timestamp": "2026-08-10T12:45:46.021568Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "order",
+          "oldValue": null,
+          "newValue": 60
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+          },
+          {
+            "completed": false,
+            "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+          },
+          {
+            "completed": false,
+            "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+          },
+          {
+            "completed": false,
+            "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.343Z",
+        "description": "Complete the local parser boundary for CSV and Word .doc/.docx, including encoding/delimiter/header detection, structured document extraction, source locators, assets and deterministic normalization reports. Preserve raw values and explicit warnings without modifying source files.",
+        "fulfills": [
+          "AC-2",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-10"
+        ],
+        "id": "fqzovh",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the existing desktop-core parser and server document/importer boundaries; add the missing format/profile fields without changing the upload gate.\n2. Implement CSV dialect/header detection and structured .doc/.docx parsing with source locators, raw preservation, asset metadata and parse-report issues.\n3. Align normalization behavior across desktop and server boundaries, including Project locale/config inputs and ambiguous-value warnings.\n4. Add representative fixtures and focused parser/server tests for supported formats, malformed input, assets and source immutability.\n5. Run Rust/server checks and Knowns validation; record compliance for D1-D31 relevant to this task.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage",
+        "updatedAt": "2026-08-10T12:45:46.021568Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "fqzovh",
+      "version": 3,
+      "timestamp": "2026-08-10T12:46:14.8844008Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Started implementation: parser coverage wave; preserving existing source-ingestion changes."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+          },
+          {
+            "completed": false,
+            "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+          },
+          {
+            "completed": false,
+            "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+          },
+          {
+            "completed": false,
+            "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.343Z",
+        "description": "Complete the local parser boundary for CSV and Word .doc/.docx, including encoding/delimiter/header detection, structured document extraction, source locators, assets and deterministic normalization reports. Preserve raw values and explicit warnings without modifying source files.",
+        "fulfills": [
+          "AC-2",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-10"
+        ],
+        "id": "fqzovh",
+        "implementationNotes": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the existing desktop-core parser and server document/importer boundaries; add the missing format/profile fields without changing the upload gate.\n2. Implement CSV dialect/header detection and structured .doc/.docx parsing with source locators, raw preservation, asset metadata and parse-report issues.\n3. Align normalization behavior across desktop and server boundaries, including Project locale/config inputs and ambiguous-value warnings.\n4. Add representative fixtures and focused parser/server tests for supported formats, malformed input, assets and source immutability.\n5. Run Rust/server checks and Knowns validation; record compliance for D1-D31 relevant to this task.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage",
+        "updatedAt": "2026-08-10T12:46:14.8844008Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "fqzovh",
+      "version": 4,
+      "timestamp": "2026-08-10T12:58:34.1503155Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+            },
+            {
+              "completed": false,
+              "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+            },
+            {
+              "completed": false,
+              "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+            },
+            {
+              "completed": false,
+              "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+            },
+            {
+              "completed": true,
+              "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+            },
+            {
+              "completed": true,
+              "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+            },
+            {
+              "completed": true,
+              "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.",
+          "newValue": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.\nDone: extended desktop-core scanner/parser for CSV, XLS, Markdown, legacy Word .doc and .docx; added CSV encoding/delimiter detection warnings, raw-preserving normalization, OLE2 legacy Word extraction, server olefile document support, schema format updates and fixtures. Verification: cargo test -p desktop-core = 33 passed; server focused pytest = 13 passed; web typecheck passed; cargo fmt/check and Python compileall passed. System Decision Impact: candidate @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word (added) — parser format/detection boundary is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+          },
+          {
+            "completed": true,
+            "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+          },
+          {
+            "completed": true,
+            "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+          },
+          {
+            "completed": true,
+            "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.343Z",
+        "description": "Complete the local parser boundary for CSV and Word .doc/.docx, including encoding/delimiter/header detection, structured document extraction, source locators, assets and deterministic normalization reports. Preserve raw values and explicit warnings without modifying source files.",
+        "fulfills": [
+          "AC-2",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-10"
+        ],
+        "id": "fqzovh",
+        "implementationNotes": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.\nDone: extended desktop-core scanner/parser for CSV, XLS, Markdown, legacy Word .doc and .docx; added CSV encoding/delimiter detection warnings, raw-preserving normalization, OLE2 legacy Word extraction, server olefile document support, schema format updates and fixtures. Verification: cargo test -p desktop-core = 33 passed; server focused pytest = 13 passed; web typecheck passed; cargo fmt/check and Python compileall passed. System Decision Impact: candidate @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word (added) — parser format/detection boundary is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the existing desktop-core parser and server document/importer boundaries; add the missing format/profile fields without changing the upload gate.\n2. Implement CSV dialect/header detection and structured .doc/.docx parsing with source locators, raw preservation, asset metadata and parse-report issues.\n3. Align normalization behavior across desktop and server boundaries, including Project locale/config inputs and ambiguous-value warnings.\n4. Add representative fixtures and focused parser/server tests for supported formats, malformed input, assets and source immutability.\n5. Run Rust/server checks and Knowns validation; record compliance for D1-D31 relevant to this task.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage",
+        "updatedAt": "2026-08-10T12:58:34.1503155Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "fqzovh",
+      "version": 5,
+      "timestamp": "2026-08-10T12:58:37.0499035Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 739
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+          },
+          {
+            "completed": true,
+            "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+          },
+          {
+            "completed": true,
+            "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+          },
+          {
+            "completed": true,
+            "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T12:45:27.343Z",
+        "description": "Complete the local parser boundary for CSV and Word .doc/.docx, including encoding/delimiter/header detection, structured document extraction, source locators, assets and deterministic normalization reports. Preserve raw values and explicit warnings without modifying source files.",
+        "fulfills": [
+          "AC-2",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-10"
+        ],
+        "id": "fqzovh",
+        "implementationNotes": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.\nDone: extended desktop-core scanner/parser for CSV, XLS, Markdown, legacy Word .doc and .docx; added CSV encoding/delimiter detection warnings, raw-preserving normalization, OLE2 legacy Word extraction, server olefile document support, schema format updates and fixtures. Verification: cargo test -p desktop-core = 33 passed; server focused pytest = 13 passed; web typecheck passed; cargo fmt/check and Python compileall passed. System Decision Impact: candidate @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word (added) — parser format/detection boundary is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the existing desktop-core parser and server document/importer boundaries; add the missing format/profile fields without changing the upload gate.\n2. Implement CSV dialect/header detection and structured .doc/.docx parsing with source locators, raw preservation, asset metadata and parse-report issues.\n3. Align normalization behavior across desktop and server boundaries, including Project locale/config inputs and ambiguous-value warnings.\n4. Add representative fixtures and focused parser/server tests for supported formats, malformed input, assets and source immutability.\n5. Run Rust/server checks and Knowns validation; record compliance for D1-D31 relevant to this task.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 739,
+        "title": "[desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage",
+        "updatedAt": "2026-08-10T12:58:37.0499035Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "fqzovh",
+      "version": 6,
+      "timestamp": "2026-08-10T12:58:39.7127302Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T12:58:39.7127302Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets."
+          },
+          {
+            "completed": true,
+            "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing."
+          },
+          {
+            "completed": true,
+            "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values."
+          },
+          {
+            "completed": true,
+            "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T12:58:39.7127302Z",
+        "createdAt": "2026-08-10T12:45:27.343Z",
+        "description": "Complete the local parser boundary for CSV and Word .doc/.docx, including encoding/delimiter/header detection, structured document extraction, source locators, assets and deterministic normalization reports. Preserve raw values and explicit warnings without modifying source files.",
+        "fulfills": [
+          "AC-2",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-10"
+        ],
+        "id": "fqzovh",
+        "implementationNotes": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.\nDone: extended desktop-core scanner/parser for CSV, XLS, Markdown, legacy Word .doc and .docx; added CSV encoding/delimiter detection warnings, raw-preserving normalization, OLE2 legacy Word extraction, server olefile document support, schema format updates and fixtures. Verification: cargo test -p desktop-core = 33 passed; server focused pytest = 13 passed; web typecheck passed; cargo fmt/check and Python compileall passed. System Decision Impact: candidate @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word (added) — parser format/detection boundary is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the existing desktop-core parser and server document/importer boundaries; add the missing format/profile fields without changing the upload gate.\n2. Implement CSV dialect/header detection and structured .doc/.docx parsing with source locators, raw preservation, asset metadata and parse-report issues.\n3. Align normalization behavior across desktop and server boundaries, including Project locale/config inputs and ambiguous-value warnings.\n4. Add representative fixtures and focused parser/server tests for supported formats, malformed input, assets and source immutability.\n5. Run Rust/server checks and Knowns validation; record compliance for D1-D31 relevant to this task.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 739,
+        "title": "[desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage",
+        "updatedAt": "2026-08-10T12:58:39.7127302Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "fqzovh",
+      "version": 7,
+      "timestamp": "2026-08-10T14:47:15.1331675Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.\nDone: extended desktop-core scanner/parser for CSV, XLS, Markdown, legacy Word .doc and .docx; added CSV encoding/delimiter detection warnings, raw-preserving normalization, OLE2 legacy Word extraction, server olefile document support, schema format updates and fixtures. Verification: cargo test -p desktop-core = 33 passed; server focused pytest = 13 passed; web typecheck passed; cargo fmt/check and Python compileall passed. System Decision Impact: candidate @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word (added) — parser format/detection boundary is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+          "newValue": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.\nDone: extended desktop-core scanner/parser for CSV, XLS, Markdown, legacy Word .doc and .docx; added CSV encoding/delimiter detection warnings, raw-preserving normalization, OLE2 legacy Word extraction, server olefile document support, schema format updates and fixtures. Verification: cargo test -p desktop-core = 33 passed; server focused pytest = 13 passed; web typecheck passed; cargo fmt/check and Python compileall passed. System Decision Impact: candidate @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word (added) — parser format/detection boundary is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Desktop parser supports .doc and .docx structured content with source locators and source assets.",
+            "completed": true
+          },
+          {
+            "text": "CSV parser detects encoding/BOM, delimiter and header; ambiguous input produces preview issues instead of silent guessing.",
+            "completed": true
+          },
+          {
+            "text": "Date, number and boolean normalization preserves original values and emits warnings for ambiguous values.",
+            "completed": true
+          },
+          {
+            "text": "Focused Rust/server fixtures cover Excel, CSV, Markdown/TXT and both Word formats.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T12:58:39.712Z",
+        "createdAt": "2026-08-10T12:45:27.343Z",
+        "description": "Complete the local parser boundary for CSV and Word .doc/.docx, including encoding/delimiter/header detection, structured document extraction, source locators, assets and deterministic normalization reports. Preserve raw values and explicit warnings without modifying source files.",
+        "fulfills": [
+          "AC-2",
+          "AC-6",
+          "AC-7",
+          "AC-8",
+          "AC-10"
+        ],
+        "id": "fqzovh",
+        "implementationNotes": "Started implementation: parser coverage wave; preserving existing source-ingestion changes.\nDone: extended desktop-core scanner/parser for CSV, XLS, Markdown, legacy Word .doc and .docx; added CSV encoding/delimiter detection warnings, raw-preserving normalization, OLE2 legacy Word extraction, server olefile document support, schema format updates and fixtures. Verification: cargo test -p desktop-core = 33 passed; server focused pytest = 13 passed; web typecheck passed; cargo fmt/check and Python compileall passed. System Decision Impact: candidate @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word (added) — parser format/detection boundary is draft review-gated. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Trace the existing desktop-core parser and server document/importer boundaries; add the missing format/profile fields without changing the upload gate.\n2. Implement CSV dialect/header detection and structured .doc/.docx parsing with source locators, raw preservation, asset metadata and parse-report issues.\n3. Align normalization behavior across desktop and server boundaries, including Project locale/config inputs and ambiguous-value warnings.\n4. Add representative fixtures and focused parser/server tests for supported formats, malformed input, assets and source immutability.\n5. Run Rust/server checks and Knowns validation; record compliance for D1-D31 relevant to this task.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 60,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 739,
+        "title": "[desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage",
+        "updatedAt": "2026-08-10T14:47:15.1331675Z"
+      }
+    }
+  ]
+}

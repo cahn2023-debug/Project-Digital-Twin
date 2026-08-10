@@ -37,6 +37,9 @@ def authorize(principal: Principal, action: str, project_id: UUID) -> None:
         "audit.view": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER, Role.APPROVER, Role.CONTRACTOR_USER, Role.VIEWER},
         "audit.export": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER},
         "changeset.approve": {Role.PROJECT_ADMIN, Role.APPROVER},
+        "changeset.edit": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER, Role.APPROVER},
+        "changeset.reject": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER, Role.APPROVER},
+        "changeset.sync": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER, Role.DESIGNER, Role.APPROVER},
         "file.restore": {Role.PROJECT_ADMIN, Role.PROJECT_ENGINEER},
     }
     if not principal.roles.intersection(allowed_roles.get(action, set())):

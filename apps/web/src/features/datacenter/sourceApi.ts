@@ -80,3 +80,11 @@ export async function stopSourceWatcher(manifestPath: string, sourceId: string):
     updatedAt: nowIso(),
   });
 }
+
+export async function archiveLocalSource(manifestPath: string, sourceId: string): Promise<boolean> {
+  return invoke<boolean>("archive_local_source", {
+    manifestPath,
+    sourceId,
+    archivedAt: nowIso(),
+  });
+}

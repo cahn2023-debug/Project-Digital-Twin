@@ -2,7 +2,7 @@
   "docId": "doc-17707e951666bc800518658de0a1e082",
   "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
   "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
-  "currentVersion": 4,
+  "currentVersion": 19,
   "versions": [
     {
       "id": "v1",
@@ -236,6 +236,691 @@
           "desktop",
           "data-source",
           "ingestion"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v5",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 5,
+      "timestamp": "2026-08-10T12:24:43.6875545Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "584144372841be380524d44b568b9b75ca806ce5ef748f33fce198bb30fa29aa",
+      "newHash": "259a03f0a8c3997a0639c306edc5082531566be620b5976b07426da49cbf4bd5",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Overview\n\nHoàn thiện luồng **Thêm nguồn dữ liệu** trong desktop app: người dùng chọn một thư mục gốc, đăng ký thư mục đó cho Project, quét đệ quy các file dữ liệu, parsing theo Profile hoặc qua preview/mapping, lưu Raw và ChangeSet vào database local mã hóa, sau đó đồng bộ lên server qua hàng đợi khi có mạng.\n\nFeature này nối UI desktop hiện có với pipeline scan/watcher, importer và persistence. Nó bao phủ cả Excel có cấu trúc phức tạp và tài liệu Markdown/TXT/Word theo contract ingestion hiện tại.",
+          "newValue": "## Overview"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Overview",
+          "summary": "Section: Overview",
+          "oldBytes": 600,
+          "newBytes": 11,
+          "deltaBytes": -589
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "approved",
+          "desktop",
+          "data-source",
+          "ingestion"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v6",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 6,
+      "timestamp": "2026-08-10T12:24:44.1420555Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "259a03f0a8c3997a0639c306edc5082531566be620b5976b07426da49cbf4bd5",
+      "newHash": "1d91c97c144940723d1a98e7d87019a3484ea2307a36b00e301885bff0c323f9",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Locked Decisions\n\n- D1: Phạm vi bao gồm chọn thư mục trên desktop, quét file, parsing, lưu database và áp dụng các contract ingestion hiện có; không tách parsing/database thành hạng mục sau.\n- D2: Thư mục nguồn được quét đệ quy; chỉ nhận định dạng được hỗ trợ và bỏ qua file ẩn hoặc file tạm.\n- D3: File khớp Profile được parsing tự động; file mới hoặc không khớp phải qua preview/mapping và xác nhận trước khi tạo ChangeSet/ghi canonical state.\n- D4: Parsing ghi vào database local mã hóa trước; Raw, ChangeSet và pending sync job được lưu bền vững tại desktop rồi mới đồng bộ lên server.\n- D5: Thư mục được đăng ký như nguồn dữ liệu lâu dài, hỗ trợ quét thủ công và watcher tự phát hiện file mới/thay đổi.\n- D6: Batch import xử lý độc lập theo file; file hợp lệ vẫn tiếp tục. Trong từng file, dòng hợp lệ có thể import một phần; lỗi hiển thị theo file/dòng/field.\n- D7: Một Project có thể đăng ký nhiều thư mục nguồn; mỗi thư mục là một source riêng và có watcher độc lập.",
+          "newValue": "## Locked Decisions"
+        },
+        {
+          "field": "tags",
+          "oldValue": [
+            "spec",
+            "approved",
+            "desktop",
+            "data-source",
+            "ingestion"
+          ],
+          "newValue": [
+            "spec",
+            "desktop",
+            "data-source",
+            "ingestion",
+            "draft",
+            "review-required"
+          ]
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Locked Decisions",
+          "summary": "Section: Locked Decisions",
+          "oldBytes": 1208,
+          "newBytes": 19,
+          "deltaBytes": -1189
+        },
+        {
+          "type": "field",
+          "field": "tags",
+          "summary": "tags",
+          "oldBytes": 55,
+          "newBytes": 70,
+          "deltaBytes": 15
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v7",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 7,
+      "timestamp": "2026-08-10T12:24:44.6612901Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "1d91c97c144940723d1a98e7d87019a3484ea2307a36b00e301885bff0c323f9",
+      "newHash": "b3982204ca72b3202ce3c57a4bcead383d920b790c179e17d79b99648cb87597",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## System Decision Impact\n\n- Impact: existing\n- Decision: Tái sử dụng contract trong @doc/specs/2026-08-09/local-file-ingestion-and-synchronization và mô hình local-first trong @doc/specs/2026-08-10/offline-desktop-server-sync; không tạo System Decision mới.\n- Acceptance gate: xác nhận các acceptance criteria của spec này, gồm persistence local mã hóa, queue sau restart, import idempotent và đồng bộ khi online.",
+          "newValue": "## System Decision Impact"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "System Decision Impact",
+          "summary": "Section: System Decision Impact",
+          "oldBytes": 444,
+          "newBytes": 25,
+          "deltaBytes": -419
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v8",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 8,
+      "timestamp": "2026-08-10T12:25:20.8720285Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "b3982204ca72b3202ce3c57a4bcead383d920b790c179e17d79b99648cb87597",
+      "newHash": "0e5521c86c6ba6b665048d857ca528f68c3dbd52155a3259d7caefb6b112b424",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Requirements\n\n### Functional Requirements\n\n- FR-1: UI desktop cung cấp thao tác “Thêm nguồn dữ liệu”, mở folder picker native và từ chối đường dẫn không tồn tại hoặc không phải thư mục.\n- FR-2: Khi xác nhận thư mục, hệ thống tạo source registration gắn với Project, lưu đường dẫn chuẩn hóa, trạng thái hoạt động, thời điểm đăng ký và cấu hình watcher; Project có thể có nhiều registration.\n- FR-3: Manual scan và watcher quét đệ quy từng source registration; chỉ nhận `.xlsx`, `.xlsm`, `.xls`, `.md`, `.txt`, `.doc`, `.docx`, bỏ qua file ẩn/temp và file ngoài danh sách.\n- FR-4: Scanner tính hash SHA-256, size, mtime và tạo file identity/version bất biến; chỉ enqueue file sau khi file ổn định, đọc được và không bị khóa.\n- FR-5: Với file khớp Profile version đang hoạt động, worker tự chạy parser tương ứng và tạo Raw/source locators, kết quả mapping và file-specific ChangeSet.\n- FR-6: Với file chưa có Profile hoặc cấu trúc không khớp, UI hiển thị preview vùng dữ liệu, header, mapping, lỗi và dòng cần bỏ qua; người dùng có thể xác nhận hoặc lưu Profile version mới trước khi tạo ChangeSet.\n- FR-7: Excel phải hỗ trợ sheet visible, nhiều vùng/bảng, header nhiều dòng, ô merge ngang/dọc, công thức dùng giá trị đã tính và giữ lại công thức/raw cùng locator sheet/row/column.\n- FR-8: Markdown/TXT/Word phải được parse thành cấu trúc Markdown-like gồm heading/section, đoạn văn, danh sách, link, metadata, bảng, hình ảnh và attachment; bảng và reference đi qua flow mapping tương ứng.\n- FR-9: Mỗi dòng/field được gán identity theo contract; dữ liệu mapped, unmapped, invalid và skipped vẫn được giữ trong Raw cùng source file/version và source locator.\n- FR-10: Sau preview confirmation, hệ thống tạo đúng một ChangeSet cho mỗi file, validate và giữ trạng thái chờ approval trước khi áp dụng canonical state.\n- FR-11: Raw, ChangeSet, file registry/version và pending sync job được ghi transactionally vào database local mã hóa; dữ liệu phải còn sau khi app restart hoặc offline.\n- FR-12: File có cùng file identity, revision và SHA-256 đã xử lý không tạo import/ChangeSet trùng; thay đổi do chính write-back tạo ra được audit/version hóa nhưng không enqueue import trùng.\n- FR-13: Watcher của từng source registration chạy độc lập, debounce thay đổi, chỉ enqueue file khi size/mtime/hash ổn định; lỗi watcher hoặc một source không làm dừng các source khác.\n- FR-14: Lỗi scan/parser/import được ghi nhận theo source/file và hiển thị cho người dùng; file khác vẫn được xử lý, dòng hợp lệ có thể import một phần.\n- FR-15: Khi online, pending sync jobs được gửi lên server theo thứ tự và idempotency key; lỗi mạng retry có giới hạn, conflict được giữ lại để người dùng xử lý.\n- FR-16: UI hiển thị trạng thái source (registered/scanning/waiting-preview/imported/failed), số file phát hiện, số file queued, số lỗi và trạng thái sync gần nhất.\n\n### Non-Functional Requirements\n\n- NFR-1: Không ghi dữ liệu canonical trước khi preview/mapping của cấu trúc mới được người dùng xác nhận và ChangeSet được tạo.\n- NFR-2: Database local, Raw, ChangeSet và queue phải dùng boundary persistence hiện có của desktop; không dùng browser local storage làm nơi lưu dữ liệu nghiệp vụ.\n- NFR-3: Mọi bản ghi import phải truy vết được tới source registration, file version, hash và locator; lifecycle chính phải có audit correlation.\n- NFR-4: Thao tác scan/import phải không làm treo UI; trạng thái tiến trình và lỗi phải được cập nhật bất đồng bộ.\n- NFR-5: Parser và scanner phải xử lý Unicode path/nội dung, không làm mất dữ liệu unmanaged và không sửa file gốc trong luồng ingestion.\n- NFR-6: Tests phải bao phủ fixture đại diện cho Excel merged/multi-table, document có bảng/asset, file lỗi/locked, duplicate hash, restart offline và watcher nhiều source.",
+          "newValue": "## Requirements"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Requirements",
+          "summary": "Section: Requirements",
+          "oldBytes": 4394,
+          "newBytes": 15,
+          "deltaBytes": -4379
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v9",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 9,
+      "timestamp": "2026-08-10T12:25:21.349059Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "0e5521c86c6ba6b665048d857ca528f68c3dbd52155a3259d7caefb6b112b424",
+      "newHash": "62465b6fa8186487c1cc0880e8243bae40b2737fbc8918053f7e45d97d0ccf6b",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Acceptance Criteria\n\n- [ ] AC-1: Người dùng chọn được thư mục bằng native folder picker, đăng ký thành công source với Project và nhìn thấy source trong danh sách; có thể đăng ký source thứ hai mà source thứ nhất vẫn hoạt động.\n- [ ] AC-2: Manual scan quét đệ quy thư mục, nhận đúng các extension hỗ trợ, bỏ qua file ẩn/temp và hiển thị tổng số file phát hiện cùng lỗi scan nếu có.\n- [ ] AC-3: File ổn định tạo được file identity/version có SHA-256, size, mtime và được enqueue một lần; file đang bị khóa hoặc thay đổi liên tục không được import như file hoàn chỉnh.\n- [ ] AC-4: File khớp Profile được parsing tự động; Raw, source locator và một ChangeSet theo file được lưu vào local DB mã hóa mà không cần mapping lại.\n- [ ] AC-5: File cấu trúc mới mở preview có candidate region/header, mapping, validation issues và cho phép lưu Profile mới; chưa có ChangeSet/canonical apply trước khi người dùng xác nhận.\n- [ ] AC-6: Fixture Excel có sheet hidden, merged header/data, nhiều vùng bảng và công thức được parse đúng; giá trị tính được dùng cho mapping, công thức và locator vẫn còn trong Raw.\n- [ ] AC-7: Fixture Markdown/TXT/Word có heading, bảng, link, hình ảnh/attachment và reference được parse; asset/reference proposal được liên kết với file version và chờ xác nhận trong ChangeSet.\n- [ ] AC-8: Khi batch có file lỗi hoặc dòng lỗi, file/dòng hợp lệ vẫn được lưu; UI hiển thị lỗi theo source/file/row/field và không làm mất Raw của giá trị unmapped/invalid/skipped.\n- [ ] AC-9: Sau khi đóng/mở lại app ở trạng thái offline, source registrations, Raw, ChangeSet và pending sync jobs vẫn còn; khi online queue retry idempotently và cập nhật trạng thái sync.\n- [ ] AC-10: Quét lại file không đổi hoặc phát hiện self-write không tạo duplicate import/ChangeSet; thay đổi file thật tạo revision mới và được audit.\n- [ ] AC-11: Watcher của nhiều source chạy độc lập, debounce được thay đổi và tự enqueue file mới/thay đổi mà không cần mở lại source.\n- [ ] AC-12: Typecheck/build/test liên quan của desktop, desktop-core và server pass; `git diff --check` pass.",
+          "newValue": "## Acceptance Criteria"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Acceptance Criteria",
+          "summary": "Section: Acceptance Criteria",
+          "oldBytes": 2428,
+          "newBytes": 22,
+          "deltaBytes": -2406
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v10",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 10,
+      "timestamp": "2026-08-10T12:25:54.8105961Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "62465b6fa8186487c1cc0880e8243bae40b2737fbc8918053f7e45d97d0ccf6b",
+      "newHash": "8e430fa3151c9f8369c645290a79245848f335267c399d241b312fa7abe0c1c4",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Scenarios\n\n### Scenario 1: Thêm source và quét thư mục\n\n**Given** người dùng đang ở một Project và có thư mục dữ liệu gốc chứa nhiều thư mục con  \n**When** người dùng chọn “Thêm nguồn dữ liệu” và xác nhận thư mục  \n**Then** source được đăng ký, scanner quét đệ quy các file hỗ trợ, ghi manifest/hash và hiển thị kết quả theo file; source khác của Project không bị dừng.\n\n### Scenario 2: File khớp Profile\n\n**Given** source có workbook khớp Profile đã lưu và hash khác revision gần nhất  \n**When** manual scan hoặc watcher kết thúc debounce  \n**Then** file version mới được đăng ký, parser tự chạy, Raw/source locator và một ChangeSet file-specific được lưu local, không tạo import trùng.\n\n### Scenario 3: Workbook cấu trúc mới\n\n**Given** workbook có merged header, nhiều vùng bảng và không khớp Profile  \n**When** worker đưa file vào preview  \n**Then** UI hiển thị vùng/header/mapping/validation, người dùng xác nhận mapping và lưu Profile version mới, sau đó ChangeSet được tạo để chờ approval.\n\n### Scenario 4: Document và asset\n\n**Given** Word hoặc Markdown-like document có heading, reference, bảng, hình ảnh và attachment  \n**When** parser xử lý file  \n**Then** nội dung, bảng, asset, locator và relationship proposal được lưu vào Raw/ChangeSet; file gốc không bị sửa và proposal chưa trở thành canonical nếu chưa được xác nhận.\n\n### Scenario 5: Batch có lỗi một phần\n\n**Given** source có một file bị khóa, một workbook có dòng sai kiểu và các file hợp lệ khác  \n**When** người dùng chạy scan/import  \n**Then** file bị khóa chuyển trạng thái lỗi, dòng sai được đánh dấu theo field, file/dòng hợp lệ vẫn được lưu và UI hiển thị kết quả từng mục.\n\n### Scenario 6: Offline restart và đồng bộ\n\n**Given** desktop đang offline khi file được import  \n**When** app restart rồi kết nối mạng trở lại  \n**Then** source/Raw/ChangeSet/pending job được khôi phục, queue gửi lên server theo idempotency key, retry không tạo duplicate và conflict được giữ để xử lý.\n\n### Scenario 7: File unchanged và self-write\n\n**Given** file đã import hoặc vừa được app ghi write-back  \n**When** watcher phát hiện lại file  \n**Then** hash/idempotency hoặc self-write provenance ngăn import trùng; nếu nội dung thay đổi thật thì tạo file revision mới và audit liên kết được nguyên nhân.",
+          "newValue": "## Scenarios"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Scenarios",
+          "summary": "Section: Scenarios",
+          "oldBytes": 2659,
+          "newBytes": 12,
+          "deltaBytes": -2647
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v11",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 11,
+      "timestamp": "2026-08-10T12:25:55.260201Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "8e430fa3151c9f8369c645290a79245848f335267c399d241b312fa7abe0c1c4",
+      "newHash": "391fd3f2ced8b8366d6701b19fe2a22fa064f2de937e98f015882988b8f2644d",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Technical Notes\n\n- Desktop entry points hiện có: `apps/desktop/src/features/local-files.ts` và Tauri commands trong `apps/desktop/src-tauri/src/scan.rs`.\n- Scanner/manifest hiện có: `crates/desktop-core/src/scanner.rs` và `crates/desktop-core/src/manifest.rs`; cần nối source registration, UI state, worker/import execution và local encrypted persistence theo contract thay vì chỉ dừng ở enqueue.\n- Server-side parsing contracts hiện có tại `apps/server/app/adapters/files/importers/excel.py`, `apps/server/app/adapters/files/importers/documents.py`, `apps/server/app/shared/contracts.py`, `apps/server/app/shared/schemas.py` và domain import/ChangeSet.\n- Chi tiết hành vi ingestion dùng @doc/specs/2026-08-09/local-file-ingestion-and-synchronization; local-first queue dùng @doc/specs/2026-08-10/offline-desktop-server-sync.\n- Exact debounce interval, tên bảng local và cơ chế worker orchestration là nội dung planning/implementation, không phải quyết định sản phẩm của spec này.",
+          "newValue": "## Technical Notes"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Technical Notes",
+          "summary": "Section: Technical Notes",
+          "oldBytes": 1039,
+          "newBytes": 18,
+          "deltaBytes": -1021
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v12",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 12,
+      "timestamp": "2026-08-10T12:25:55.8000488Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "391fd3f2ced8b8366d6701b19fe2a22fa064f2de937e98f015882988b8f2644d",
+      "newHash": "135071a688350067bee735140b43ed80201e5637e25bbaeb5d83cd4eb544b92c",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence (todo)\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI (todo)\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence (todo)\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow (todo)\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification (todo)",
+          "newValue": "## Task Links"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Task Links",
+          "summary": "Section: Task Links",
+          "oldBytes": 628,
+          "newBytes": 13,
+          "deltaBytes": -615
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v13",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 13,
+      "timestamp": "2026-08-10T12:25:56.3190628Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "135071a688350067bee735140b43ed80201e5637e25bbaeb5d83cd4eb544b92c",
+      "newHash": "24198619d2b8547a87513a68fa28cd1708641d346c4eac0107e21a867aad42e0",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Open Questions\n\n- [ ] Quyền nào được phép đăng ký source và xác nhận preview/ChangeSet trong desktop: mọi thành viên Project hay chỉ Project editor?\n- [ ] Extension `.doc` legacy cần parser native đầy đủ ngay trong scope này hay chuyển trạng thái unsupported với hướng dẫn chuyển sang `.docx`?\n- [ ] Khi một source registration bị xóa khỏi Project, có dừng watcher nhưng giữ file registry/Raw/ChangeSet lịch sử hay archive toàn bộ source?",
+          "newValue": "## Open Questions"
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Open Questions",
+          "summary": "Section: Open Questions",
+          "oldBytes": 505,
+          "newBytes": 17,
+          "deltaBytes": -488
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v14",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 14,
+      "timestamp": "2026-08-10T12:26:39.6442884Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "24198619d2b8547a87513a68fa28cd1708641d346c4eac0107e21a867aad42e0",
+      "newHash": "d612a0a45d44887f1cc7b4ea2edf1492b3b584cb04f97a800243421bed487acc",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Overview",
+          "newValue": "## Overview\n\nHoàn thiện end-to-end luồng **Thêm nguồn dữ liệu** trong desktop app: người dùng chọn thư mục gốc, đăng ký thư mục cho Project, quét đệ quy, parsing và preview/mapping các file Excel/XLSX, CSV, TXT, Markdown, Word .doc và .docx, lưu Raw/ChangeSet/audit vào database local mã hóa, rồi đồng bộ lên server qua outbox khi có mạng.\n\nFeature nối UI desktop với scanner/watcher, parser local, preview/mapping, local-first persistence, ChangeSet review, rollback và server sync. File nguồn luôn được giữ nguyên; cảnh báo favicon.ico 404 trong Vite dev là vấn đề asset tĩnh riêng, không thuộc pipeline parsing."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Overview",
+          "summary": "Section: Overview",
+          "oldBytes": 11,
+          "newBytes": 694,
+          "deltaBytes": 683
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v15",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 15,
+      "timestamp": "2026-08-10T12:27:57.3407643Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "d612a0a45d44887f1cc7b4ea2edf1492b3b584cb04f97a800243421bed487acc",
+      "newHash": "6c7e0ad79f0f5b204da5a6a1c10420f0c52ab8658e4cbe44cc8939bf2058695e",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Overview\n\nHoàn thiện end-to-end luồng **Thêm nguồn dữ liệu** trong desktop app: người dùng chọn thư mục gốc, đăng ký thư mục cho Project, quét đệ quy, parsing và preview/mapping các file Excel/XLSX, CSV, TXT, Markdown, Word .doc và .docx, lưu Raw/ChangeSet/audit vào database local mã hóa, rồi đồng bộ lên server qua outbox khi có mạng.\n\nFeature nối UI desktop với scanner/watcher, parser local, preview/mapping, local-first persistence, ChangeSet review, rollback và server sync. File nguồn luôn được giữ nguyên; cảnh báo favicon.ico 404 trong Vite dev là vấn đề asset tĩnh riêng, không thuộc pipeline parsing.\n\n## Overview\n\nHoàn thiện end-to-end luồng **Thêm nguồn dữ liệu** trong desktop app: người dùng chọn thư mục gốc, đăng ký thư mục cho Project, quét đệ quy, parsing và preview/mapping các file Excel/XLSX, CSV, TXT, Markdown, Word .doc và .docx, lưu Raw/ChangeSet/audit vào database local mã hóa, rồi đồng bộ lên server qua outbox khi có mạng.\n\nFeature nối UI desktop với scanner/watcher, parser local, preview/mapping, local-first persistence, ChangeSet review, rollback và server sync. File nguồn luôn được giữ nguyên; cảnh báo favicon.ico 404 trong Vite dev là vấn đề asset tĩnh riêng, không thuộc pipeline parsing.\n\n## Locked Decisions\n\n## Locked Decisions\n\n- D1: Phạm vi bao gồm chọn thư mục trên desktop, quét file, parsing, lưu database và áp dụng các contract ingestion hiện có; không tách parsing/database thành hạng mục sau.\n- D2: Thư mục nguồn được quét đệ quy; chỉ nhận .xlsx, .xlsm, .xls, .csv, .md, .markdown, .txt, .doc và .docx; bỏ qua file ẩn, file tạm và extension ngoài danh sách.\n- D3: File khớp Profile được parsing tự động; file mới hoặc không khớp phải qua preview/mapping và xác nhận trước khi tạo ChangeSet/ghi canonical state.\n- D4: Parsing ghi vào database local mã hóa trước; Raw, ChangeSet, audit và pending sync job được lưu bền vững tại desktop rồi mới đồng bộ lên server.\n- D5: Thư mục được đăng ký như nguồn dữ liệu lâu dài, hỗ trợ quét thủ công và watcher tự phát hiện file mới/thay đổi.\n- D6: Batch import xử lý độc lập theo file; file hợp lệ vẫn tiếp tục. Trong từng file, dòng hợp lệ có thể import một phần; lỗi hiển thị theo file/dòng/field.\n- D7: Một Project có thể đăng ký nhiều thư mục nguồn; mỗi thư mục là một source riêng và có watcher độc lập.\n- D8: Word .doc và .docx đều nằm trong phạm vi hỗ trợ đầy đủ; không chuyển .doc thành unsupported mặc định.\n- D9: Mọi thành viên có quyền truy cập Project được đăng ký source và xác nhận preview/ChangeSet.\n- D10: Khi gỡ source, hệ thống dừng watcher, đánh dấu source archived và giữ file registry/Raw/ChangeSet/audit lịch sử.\n- D11: File chưa có Profile hoặc parser không tự nhận diện được phải đi qua preview/mapping trên desktop trước; raw fallback chỉ là nhánh dự phòng sau đó khi kết quả vẫn không thể xử lý.\n- D12: Field không mapping được, sai kiểu hoặc bị bỏ qua vẫn được giữ trong Raw/unmapped; phần hợp lệ được import một phần và cảnh báo phải hiển thị rõ.\n- D13: Giá trị ngày/số/boolean đủ rõ được chuẩn hóa theo locale/cấu hình Project nhưng luôn giữ giá trị gốc; giá trị mơ hồ không tự đoán, tạo warning và chờ xác nhận.\n- D14: Conflict giữa dữ liệu local và canonical state trên server được giữ ở trạng thái conflict review; không tự động ưu tiên hoặc ghi đè bên nào.\n- D15: CSV tự nhận diện UTF-8/BOM, delimiter và header; trường hợp mơ hồ phải mở preview/mapping.\n- D16: Hình ảnh và file đính kèm từ Markdown/Word được lưu local với hash/version/source locator và đưa vào queue sync cùng ChangeSet.\n- D17: Watcher tự bật sau khi source được đăng ký; người dùng vẫn có thể tạm dừng hoặc bật lại.\n- D18: Scan/parse chạy nền, hiển thị tiến độ theo source/file và cho phép hủy tác vụ đang chờ mà không chặn UI chính.\n- D19: Cùng một đường dẫn đã chuẩn hóa trong một Project chỉ tạo một source; đăng ký lại sẽ mở source hiện có.\n- D20: File không đọc được do quyền hệ điều hành hoặc đang bị khóa không được upload; lỗi được ghi theo file, giữ retry/outbox và không chặn file khác.\n- D21: Khóa mã hóa database/Raw/ChangeSet local được quản lý bởi OS keychain/credential store của desktop.\n- D22: Raw local được giữ đến khi người dùng chủ động xóa/archive source; chỉ file tạm được dọn tự động.\n- D23: Audit log append-only cho scan, parse, mapping, import, retry và sync; mỗi event có user, thời gian, source/file/hash, kết quả và correlation ID.\n- D24: Mỗi revision file tạo version/ChangeSet mới, giữ lịch sử đầy đủ và cho phép rollback bản đã xác nhận qua ChangeSet.\n- D25: Mỗi revision được parse lại toàn bộ để deterministic; hệ thống tạo diff theo version/source locator thay vì chỉ cập nhật phần thay đổi.\n- D26: Mọi ChangeSet, kể cả file khớp Profile, phải được người dùng xác nhận trước khi áp dụng vào canonical state.\n- D27: Record không có ID ổn định dùng identity deterministic từ Project/source/file revision/hash/locator; nếu có cột khóa thì ưu tiên cột đó.\n- D28: Field mới hoặc mất field giữa các revision được giữ trong unmapped, cảnh báo và đưa qua preview/mapping; Profile không tự bị sửa.\n- D29: Preview hiển thị vùng dữ liệu, header, mẫu dòng, kiểu dữ liệu và lỗi theo field; người dùng được map, đổi kiểu, bỏ qua dòng và lưu Profile version mới.\n- D30: Review trước khi apply hiển thị diff trước/sau, record hợp lệ, unmapped/invalid, warning, asset và source locator; phải có xác nhận rõ ràng.\n- D31: Người dùng được sửa giá trị normalized trong ChangeSet nhưng không sửa file nguồn; mọi chỉnh sửa phải ghi audit.\n\n## System Decision Impact\n\n## System Decision Impact\n\n- Impact: existing\n- Decision: Tái sử dụng contract trong @doc/specs/2026-08-09/local-file-ingestion-and-synchronization, mô hình local-first trong @doc/specs/2026-08-10/offline-desktop-server-sync và các contract parse-before-upload tại @doc/specs/2026-08-10/desktop-parse-before-server-upload; không tạo System Decision mới.\n- Acceptance gate: xác nhận các acceptance criteria của spec này, gồm parser formats, preview/mapping, persistence local mã hóa bằng OS keychain, queue sau restart, import idempotent, audit append-only, rollback và đồng bộ khi online. Các quyết định hệ thống draft liên quan chỉ được accept sau khi implementation/verification đạt gate.\n\n## Requirements\n\n## Requirements\n\n### Functional Requirements\n\n- FR-1: UI desktop cung cấp thao tác “Thêm nguồn dữ liệu”, mở folder picker native và từ chối đường dẫn không tồn tại hoặc không phải thư mục.\n- FR-2: Khi xác nhận thư mục, hệ thống tạo source registration gắn với Project, lưu đường dẫn đã chuẩn hóa, trạng thái hoạt động, thời điểm đăng ký và cấu hình watcher; đăng ký lại cùng đường dẫn phải mở source hiện có.\n- FR-3: Manual scan và watcher quét đệ quy từng source registration; chỉ nhận .xlsx, .xlsm, .xls, .csv, .md, .markdown, .txt, .doc và .docx; bỏ qua file ẩn/temp và file ngoài danh sách.\n- FR-4: Scanner tính SHA-256, size, mtime và tạo file identity/version bất biến; chỉ enqueue file sau khi file ổn định, đọc được và không bị khóa.\n- FR-5: File khớp Profile version đang hoạt động được parser local xử lý tự động, tạo Raw/source locator, normalized records, mapping result và một ChangeSet file-specific.\n- FR-6: File chưa có Profile, cấu trúc không khớp hoặc parser không nhận diện được phải mở preview/mapping trên desktop trước; sau khi không thể xử lý tiếp mới được dùng raw fallback.\n- FR-7: Excel phải hỗ trợ sheet visible, nhiều vùng/bảng, header nhiều dòng, ô merge ngang/dọc, công thức dùng giá trị đã tính và giữ công thức/raw cùng locator sheet/row/column.\n- FR-8: CSV phải tự nhận diện UTF-8/BOM, delimiter và header; khi kết quả không chắc chắn phải hiển thị preview để người dùng xác nhận.\n- FR-9: Markdown/TXT/Word .doc và .docx phải parse cấu trúc Markdown-like gồm heading/section, đoạn văn, danh sách, link, metadata, bảng, hình ảnh và attachment; asset/reference proposal phải liên kết với file version.\n- FR-10: Mỗi record/field được gán identity deterministic theo Project/source/file revision/hash/locator; cột khóa ổn định nếu có được ưu tiên và parse lại không tạo UUID mới cho cùng record.\n- FR-11: Field mapped, unmapped, invalid và skipped đều được giữ trong Raw cùng source file/version và source locator; phần hợp lệ có thể tạo import một phần.\n- FR-12: Preview phải hiển thị vùng dữ liệu, header, mẫu dòng, kiểu dữ liệu, mapping và lỗi theo field; người dùng có thể map, đổi kiểu, bỏ qua dòng và lưu Profile version mới.\n- FR-13: Sau preview confirmation, hệ thống tạo đúng một ChangeSet cho mỗi file, validate và giữ trạng thái chờ approval trước khi áp dụng canonical state.\n- FR-14: Người dùng có thể sửa giá trị normalized trong ChangeSet nhưng không sửa file nguồn; chỉnh sửa phải tạo audit event.\n- FR-15: Giá trị ngày/số/boolean đủ rõ được chuẩn hóa theo locale/cấu hình Project nhưng giữ giá trị gốc; giá trị mơ hồ tạo warning và không được tự đoán.\n- FR-16: Sau mỗi revision, parser chạy lại toàn bộ file để deterministic, tạo diff theo version/source locator, giữ lịch sử và hỗ trợ rollback ChangeSet đã xác nhận.\n- FR-17: Hình ảnh và file đính kèm được lưu local với hash/version/source locator và đưa vào queue sync cùng ChangeSet.\n- FR-18: Raw, ChangeSet, file registry/version, audit và pending sync job được ghi transactionally vào database local mã hóa; khóa mã hóa do OS keychain/credential store quản lý.\n- FR-19: File có cùng file identity, revision và SHA-256 đã xử lý không tạo import/ChangeSet trùng; thay đổi do write-back được audit/version hóa nhưng không enqueue import trùng.\n- FR-20: Watcher tự bật sau đăng ký, chạy độc lập theo source, debounce thay đổi và chỉ enqueue khi size/mtime/hash ổn định; source archive phải dừng watcher nhưng giữ lịch sử.\n- FR-21: Scan/parse/import chạy nền, hiển thị tiến độ theo source/file, cho phép hủy tác vụ đang chờ và không chặn UI chính.\n- FR-22: Lỗi scan/parser/import/quyền file/file bị khóa được ghi nhận theo source/file/row/field; file khác vẫn được xử lý và file chưa đọc được không được upload.\n- FR-23: Audit log append-only cho scan, parse, mapping, import, retry và sync; event phải chứa user, timestamp, source/file/hash, kết quả và correlation ID.\n- FR-24: Khi online, pending sync jobs gửi theo thứ tự và idempotency key; lỗi mạng retry có giới hạn, conflict được giữ để người dùng review, không tự ưu tiên local/server.\n- FR-25: Raw local được giữ đến khi người dùng chủ động xóa/archive source; chỉ file tạm được dọn tự động.\n- FR-26: UI hiển thị trạng thái source, số file phát hiện, queued, lỗi, tiến độ, trạng thái sync và review diff trước/sau cùng Raw/unmapped/invalid/asset/source locator.\n\n### Non-Functional Requirements\n\n- NFR-1: Không ghi dữ liệu canonical trước khi preview/mapping và ChangeSet được người dùng xác nhận.\n- NFR-2: Database local, Raw, ChangeSet, audit và queue dùng boundary persistence mã hóa hiện có của desktop; không dùng browser local storage làm nơi lưu dữ liệu nghiệp vụ.\n- NFR-3: Mọi bản ghi import và asset phải truy vết được tới Project, source registration, file version, hash, locator, Profile và audit correlation.\n- NFR-4: Thao tác scan/import không làm treo UI; progress/cancel/status phải được cập nhật nhất quán.\n- NFR-5: Parser/scanner xử lý Unicode path/nội dung, không làm mất dữ liệu unmanaged và không sửa file gốc trong luồng ingestion.\n- NFR-6: Tests phải bao phủ Excel merged/multi-table/formula, CSV encoding/delimiter/header, Markdown/TXT/Word .doc/.docx với bảng/asset, file lỗi/locked, duplicate identity, schema drift, restart offline, watcher nhiều source, conflict và rollback.\n- NFR-7: Audit là append-only và Raw lịch sử không bị dọn tự động ngoài file tạm; dữ liệu local được bảo vệ bằng OS keychain.\n\n## Acceptance Criteria\n\n## Acceptance Criteria\n\n- [ ] AC-1: Người dùng chọn được thư mục bằng native folder picker, đăng ký thành công source với Project và nhìn thấy source trong danh sách; có thể đăng ký source thứ hai mà source thứ nhất vẫn hoạt động.\n- [ ] AC-2: Manual scan quét đệ quy thư mục, nhận đúng các extension hỗ trợ gồm CSV và Word .doc/.docx, bỏ qua file ẩn/temp và hiển thị tổng số file phát hiện cùng lỗi scan nếu có.\n- [ ] AC-3: File ổn định tạo được file identity/version có SHA-256, size, mtime và được enqueue một lần; file đang bị khóa, thiếu quyền hoặc thay đổi liên tục không được import như file hoàn chỉnh.\n- [ ] AC-4: File khớp Profile được parsing tự động; Raw, source locator, identity deterministic và một ChangeSet theo file được lưu vào local DB mã hóa mà không cần mapping lại.\n- [ ] AC-5: File cấu trúc mới mở preview có candidate region/header, mẫu dòng, kiểu dữ liệu, mapping, validation issues và cho phép lưu Profile mới; chưa có canonical apply trước khi người dùng xác nhận.\n- [ ] AC-6: Fixture Excel có sheet hidden, merged header/data, nhiều vùng bảng và công thức được parse đúng; giá trị tính được dùng cho mapping, công thức và locator vẫn còn trong Raw.\n- [ ] AC-7: Fixture CSV có BOM/encoding, delimiter hoặc header khác nhau được nhận diện; trường hợp mơ hồ mở preview/mapping thay vì tự đoán.\n- [ ] AC-8: Fixture Markdown/TXT/Word .doc/.docx có heading, bảng, link, hình ảnh/attachment và reference được parse; asset có hash/version/locator và proposal chờ xác nhận.\n- [ ] AC-9: Khi batch có file lỗi hoặc dòng lỗi, file/dòng hợp lệ vẫn được lưu; UI hiển thị lỗi theo source/file/row/field và không làm mất Raw của unmapped/invalid/skipped.\n- [ ] AC-10: Ngày/số/boolean rõ ràng được chuẩn hóa theo locale/cấu hình nhưng giữ giá trị gốc; giá trị mơ hồ tạo warning và chờ xác nhận.\n- [ ] AC-11: Sau khi đóng/mở lại app ở trạng thái offline, source registrations, Raw, ChangeSet, audit và pending sync jobs vẫn còn; khi online queue retry idempotently và conflict được giữ để review.\n- [ ] AC-12: Quét lại file không đổi hoặc phát hiện self-write không tạo duplicate import/ChangeSet; thay đổi file thật tạo revision mới, parse lại toàn bộ và tạo diff/rollback history.\n- [ ] AC-13: Cùng một đường dẫn đã chuẩn hóa trong một Project không tạo source thứ hai; source bị gỡ dừng watcher nhưng giữ lịch sử archive.\n- [ ] AC-14: Watcher tự bật sau đăng ký, chạy độc lập giữa nhiều source, debounce đúng và cập nhật progress; tác vụ đang chờ có thể hủy mà không làm dừng source khác.\n- [ ] AC-15: Review ChangeSet hiển thị diff trước/sau, record hợp lệ, unmapped/invalid, warning, asset và source locator; người dùng có thể sửa normalized value, xác nhận hoặc từ chối, và mọi sửa đổi xuất hiện trong audit.\n- [ ] AC-16: Audit append-only ghi đủ scan/parse/mapping/import/retry/sync với user, thời gian, source/file/hash, kết quả và correlation ID; Raw chỉ bị xóa khi người dùng chủ động xóa/archive source.\n- [ ] AC-17: Khóa mã hóa local được lấy từ OS keychain/credential store; dữ liệu nghiệp vụ không được lưu trong browser local storage.\n- [ ] AC-18: Typecheck/build/test liên quan của desktop, desktop-core, web và server pass; SDD validation và git diff --check pass.\n\n## Scenarios\n\n## Scenarios\n\n### Scenario 1: Thêm source và quét thư mục\n\n**Given** người dùng đang ở một Project và có thư mục dữ liệu gốc chứa nhiều thư mục con  \n**When** người dùng chọn “Thêm nguồn dữ liệu” và xác nhận thư mục  \n**Then** source được đăng ký, watcher tự bật, scanner quét đệ quy các file hỗ trợ, ghi manifest/hash và hiển thị kết quả theo file; nếu đường dẫn đã đăng ký thì mở source hiện có thay vì tạo bản ghi trùng.\n\n### Scenario 2: File khớp Profile\n\n**Given** source có workbook hoặc CSV khớp Profile đã lưu và hash khác revision gần nhất  \n**When** manual scan hoặc watcher kết thúc debounce  \n**Then** file version mới được đăng ký, parser local chạy toàn bộ file, identity deterministic/source locator/Raw và một ChangeSet file-specific được lưu local ở trạng thái chờ người dùng review.\n\n### Scenario 3: File cấu trúc mới\n\n**Given** workbook có merged header, nhiều vùng bảng hoặc file có schema mới và không khớp Profile  \n**When** worker đưa file vào preview  \n**Then** UI hiển thị vùng/header/mẫu dòng/kiểu dữ liệu/mapping/validation, người dùng có thể map, đổi kiểu, bỏ qua dòng, lưu Profile version mới và xác nhận ChangeSet trước canonical apply.\n\n### Scenario 4: CSV, Document và asset\n\n**Given** CSV có BOM/delimiter không mặc định hoặc Word .doc/.docx/Markdown-like document có heading, reference, bảng, hình ảnh và attachment  \n**When** parser xử lý file  \n**Then** hệ thống tự nhận diện phần rõ ràng, đưa phần mơ hồ vào preview, lưu nội dung/bảng/asset/locator/relationship proposal vào Raw/ChangeSet; asset có hash/version và được queue sync, file gốc không bị sửa.\n\n### Scenario 5: Batch có lỗi một phần\n\n**Given** source có một file bị khóa hoặc thiếu quyền, một workbook có dòng sai kiểu và các file hợp lệ khác  \n**When** người dùng chạy scan/import  \n**Then** file không đọc được chuyển trạng thái lỗi và giữ retry/outbox nhưng không upload; dòng sai được giữ Raw/unmapped và đánh dấu theo field; file/dòng hợp lệ vẫn được lưu và UI hiển thị kết quả từng mục.\n\n### Scenario 6: Offline restart và đồng bộ\n\n**Given** desktop đang offline khi file được import  \n**When** app restart rồi kết nối mạng trở lại  \n**Then** source/Raw/ChangeSet/audit/pending job được khôi phục từ local DB mã hóa, queue gửi theo idempotency key, retry không tạo duplicate và conflict được giữ để người dùng review.\n\n### Scenario 7: File unchanged, self-write và revision\n\n**Given** file đã import hoặc vừa được app ghi write-back  \n**When** watcher phát hiện lại file  \n**Then** hash/idempotency/self-write provenance ngăn import trùng; nếu nội dung thay đổi thật thì parser chạy lại toàn bộ, tạo file revision/diff/ChangeSet mới, giữ lịch sử và cho phép rollback bản đã xác nhận.\n\n### Scenario 8: Review và chỉnh sửa ChangeSet\n\n**Given** ChangeSet có normalized records, unmapped/invalid, warning và asset  \n**When** người dùng mở màn hình review  \n**Then** UI hiển thị diff trước/sau cùng source locator, cho sửa normalized value nhưng không sửa file nguồn, yêu cầu xác nhận rõ ràng trước canonical apply và ghi mọi chỉnh sửa vào audit append-only.\n\n### Scenario 9: Archive source\n\n**Given** người dùng gỡ source khỏi Project  \n**When** thao tác archive được xác nhận  \n**Then** watcher dừng, source chuyển archived, Raw/registry/ChangeSet/audit lịch sử và asset local vẫn còn; chỉ file tạm được dọn tự động.\n\n## Technical Notes\n\n## Technical Notes\n\n- Desktop entry points hiện có: apps/desktop/src/features/local-files.ts, apps/web/src/features/datacenter/sourceApi.ts, apps/web/src/features/datacenter/importWorker.ts và Tauri commands trong apps/desktop/src-tauri/src.\n- Scanner/manifest hiện có: crates/desktop-core/src/scanner.rs và crates/desktop-core/src/manifest.rs; parser boundary hiện có tại crates/desktop-core/src/parser.rs và apps/desktop/src-tauri/src/parse_cmd.rs.\n- Server-side parsing contracts hiện có tại apps/server/app/adapters/files/importers/excel.py, apps/server/app/adapters/files/importers/documents.py, apps/server/app/shared/contracts.py, apps/server/app/shared/schemas.py và domain import/ChangeSet.\n- Implementation phải bổ sung/hoàn thiện parser .doc bên cạnh .docx, CSV autodetection, deterministic record identity, preview/mapping editing, normalized-value audit, full-revision diff/rollback và OS keychain boundary theo các Locked Decisions.\n- Các key hiện tại chỉ theo row/file-version hoặc identity UUID tạm thời phải được thay bằng identity deterministic theo D27; không được tạo duplicate khi parse lại cùng record.\n- Chi tiết thư viện parser, schema bảng local, debounce interval, concurrency limit và worker orchestration là nội dung planning/implementation, không phải quyết định sản phẩm của spec này.\n- Hành vi ingestion dùng @doc/specs/2026-08-09/local-file-ingestion-and-synchronization; local-first queue dùng @doc/specs/2026-08-10/offline-desktop-server-sync; parse-before-upload dùng @doc/specs/2026-08-10/desktop-parse-before-server-upload.\n- Cảnh báo favicon.ico 404 chỉ cần xử lý trong một work item asset tĩnh riêng nếu muốn; không làm thay đổi parser, import contract hoặc acceptance của spec này.\n\n## Task Links\n\n## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n\n## Open Questions\n\n## Open Questions\n\n- [x] Quyền đăng ký source và xác nhận preview/ChangeSet — đã khóa tại D9.\n- [x] Hỗ trợ Word .doc legacy hay chỉ .docx — đã khóa hỗ trợ cả hai tại D8.\n- [x] Gỡ source có giữ lịch sử hay không — đã khóa archive/giữ lịch sử tại D10.\n- [x] Các câu hỏi mới về fallback, normalization, conflict, CSV, asset, watcher, retention, identity, schema và review — đã khóa tại D11-D31.\n- Không còn open question bắt buộc trước khi lập plan; mọi thay đổi các Locked Decisions sau khi spec được approve phải quay lại trạng thái draft/review.",
+          "newValue": "## Overview\n\nHoàn thiện end-to-end luồng **Thêm nguồn dữ liệu** trong desktop app: người dùng chọn thư mục gốc, đăng ký thư mục cho Project, quét đệ quy, parsing và preview/mapping các file Excel/XLSX, CSV, TXT, Markdown, Word .doc và .docx, lưu Raw/ChangeSet/audit vào database local mã hóa, rồi đồng bộ lên server qua outbox khi có mạng.\n\nFeature nối UI desktop với scanner/watcher, parser local, preview/mapping, local-first persistence, ChangeSet review, rollback và server sync. File nguồn luôn được giữ nguyên; cảnh báo favicon.ico 404 trong Vite dev là vấn đề asset tĩnh riêng, không thuộc pipeline parsing.\n\n## Locked Decisions\n\n- D1: Phạm vi bao gồm chọn thư mục trên desktop, quét file, parsing, lưu database và áp dụng các contract ingestion hiện có; không tách parsing/database thành hạng mục sau.\n- D2: Thư mục nguồn được quét đệ quy; chỉ nhận .xlsx, .xlsm, .xls, .csv, .md, .markdown, .txt, .doc và .docx; bỏ qua file ẩn, file tạm và extension ngoài danh sách.\n- D3: File khớp Profile được parsing tự động; file mới hoặc không khớp phải qua preview/mapping và xác nhận trước khi tạo ChangeSet/ghi canonical state.\n- D4: Parsing ghi vào database local mã hóa trước; Raw, ChangeSet, audit và pending sync job được lưu bền vững tại desktop rồi mới đồng bộ lên server.\n- D5: Thư mục được đăng ký như nguồn dữ liệu lâu dài, hỗ trợ quét thủ công và watcher tự phát hiện file mới/thay đổi.\n- D6: Batch import xử lý độc lập theo file; file hợp lệ vẫn tiếp tục. Trong từng file, dòng hợp lệ có thể import một phần; lỗi hiển thị theo file/dòng/field.\n- D7: Một Project có thể đăng ký nhiều thư mục nguồn; mỗi thư mục là một source riêng và có watcher độc lập.\n- D8: Word .doc và .docx đều nằm trong phạm vi hỗ trợ đầy đủ; không chuyển .doc thành unsupported mặc định.\n- D9: Mọi thành viên có quyền truy cập Project được đăng ký source và xác nhận preview/ChangeSet.\n- D10: Khi gỡ source, hệ thống dừng watcher, đánh dấu source archived và giữ file registry/Raw/ChangeSet/audit lịch sử.\n- D11: File chưa có Profile hoặc parser không tự nhận diện được phải đi qua preview/mapping trên desktop trước; raw fallback chỉ là nhánh dự phòng sau đó khi kết quả vẫn không thể xử lý.\n- D12: Field không mapping được, sai kiểu hoặc bị bỏ qua vẫn được giữ trong Raw/unmapped; phần hợp lệ được import một phần và cảnh báo phải hiển thị rõ.\n- D13: Giá trị ngày/số/boolean đủ rõ được chuẩn hóa theo locale/cấu hình Project nhưng luôn giữ giá trị gốc; giá trị mơ hồ không tự đoán, tạo warning và chờ xác nhận.\n- D14: Conflict giữa dữ liệu local và canonical state trên server được giữ ở trạng thái conflict review; không tự động ưu tiên hoặc ghi đè bên nào.\n- D15: CSV tự nhận diện UTF-8/BOM, delimiter và header; trường hợp mơ hồ phải mở preview/mapping.\n- D16: Hình ảnh và file đính kèm từ Markdown/Word được lưu local với hash/version/source locator và đưa vào queue sync cùng ChangeSet.\n- D17: Watcher tự bật sau khi source được đăng ký; người dùng vẫn có thể tạm dừng hoặc bật lại.\n- D18: Scan/parse chạy nền, hiển thị tiến độ theo source/file và cho phép hủy tác vụ đang chờ mà không chặn UI chính.\n- D19: Cùng một đường dẫn đã chuẩn hóa trong một Project chỉ tạo một source; đăng ký lại sẽ mở source hiện có.\n- D20: File không đọc được do quyền hệ điều hành hoặc đang bị khóa không được upload; lỗi được ghi theo file, giữ retry/outbox và không chặn file khác.\n- D21: Khóa mã hóa database/Raw/ChangeSet local được quản lý bởi OS keychain/credential store của desktop.\n- D22: Raw local được giữ đến khi người dùng chủ động xóa/archive source; chỉ file tạm được dọn tự động.\n- D23: Audit log append-only cho scan, parse, mapping, import, retry và sync; mỗi event có user, thời gian, source/file/hash, kết quả và correlation ID.\n- D24: Mỗi revision file tạo version/ChangeSet mới, giữ lịch sử đầy đủ và cho phép rollback bản đã xác nhận qua ChangeSet.\n- D25: Mỗi revision được parse lại toàn bộ để deterministic; hệ thống tạo diff theo version/source locator thay vì chỉ cập nhật phần thay đổi.\n- D26: Mọi ChangeSet, kể cả file khớp Profile, phải được người dùng xác nhận trước khi áp dụng vào canonical state.\n- D27: Record không có ID ổn định dùng identity deterministic từ Project/source/file revision/hash/locator; nếu có cột khóa thì ưu tiên cột đó.\n- D28: Field mới hoặc mất field giữa các revision được giữ trong unmapped, cảnh báo và đưa qua preview/mapping; Profile không tự bị sửa.\n- D29: Preview hiển thị vùng dữ liệu, header, mẫu dòng, kiểu dữ liệu và lỗi theo field; người dùng được map, đổi kiểu, bỏ qua dòng và lưu Profile version mới.\n- D30: Review trước khi apply hiển thị diff trước/sau, record hợp lệ, unmapped/invalid, warning, asset và source locator; phải có xác nhận rõ ràng.\n- D31: Người dùng được sửa giá trị normalized trong ChangeSet nhưng không sửa file nguồn; mọi chỉnh sửa phải ghi audit.\n\n## System Decision Impact\n\n- Impact: existing\n- Decision: Tái sử dụng contract trong @doc/specs/2026-08-09/local-file-ingestion-and-synchronization, mô hình local-first trong @doc/specs/2026-08-10/offline-desktop-server-sync và các contract parse-before-upload tại @doc/specs/2026-08-10/desktop-parse-before-server-upload; không tạo System Decision mới.\n- Acceptance gate: xác nhận các acceptance criteria của spec này, gồm parser formats, preview/mapping, persistence local mã hóa bằng OS keychain, queue sau restart, import idempotent, audit append-only, rollback và đồng bộ khi online. Các quyết định hệ thống draft liên quan chỉ được accept sau khi implementation/verification đạt gate.\n\n## Requirements\n\n### Functional Requirements\n\n- FR-1: UI desktop cung cấp thao tác “Thêm nguồn dữ liệu”, mở folder picker native và từ chối đường dẫn không tồn tại hoặc không phải thư mục.\n- FR-2: Khi xác nhận thư mục, hệ thống tạo source registration gắn với Project, lưu đường dẫn đã chuẩn hóa, trạng thái hoạt động, thời điểm đăng ký và cấu hình watcher; đăng ký lại cùng đường dẫn phải mở source hiện có.\n- FR-3: Manual scan và watcher quét đệ quy từng source registration; chỉ nhận .xlsx, .xlsm, .xls, .csv, .md, .markdown, .txt, .doc và .docx; bỏ qua file ẩn/temp và file ngoài danh sách.\n- FR-4: Scanner tính SHA-256, size, mtime và tạo file identity/version bất biến; chỉ enqueue file sau khi file ổn định, đọc được và không bị khóa.\n- FR-5: File khớp Profile version đang hoạt động được parser local xử lý tự động, tạo Raw/source locator, normalized records, mapping result và một ChangeSet file-specific.\n- FR-6: File chưa có Profile, cấu trúc không khớp hoặc parser không nhận diện được phải mở preview/mapping trên desktop trước; sau khi không thể xử lý tiếp mới được dùng raw fallback.\n- FR-7: Excel phải hỗ trợ sheet visible, nhiều vùng/bảng, header nhiều dòng, ô merge ngang/dọc, công thức dùng giá trị đã tính và giữ công thức/raw cùng locator sheet/row/column.\n- FR-8: CSV phải tự nhận diện UTF-8/BOM, delimiter và header; khi kết quả không chắc chắn phải hiển thị preview để người dùng xác nhận.\n- FR-9: Markdown/TXT/Word .doc và .docx phải parse cấu trúc Markdown-like gồm heading/section, đoạn văn, danh sách, link, metadata, bảng, hình ảnh và attachment; asset/reference proposal phải liên kết với file version.\n- FR-10: Mỗi record/field được gán identity deterministic theo Project/source/file revision/hash/locator; cột khóa ổn định nếu có được ưu tiên và parse lại không tạo UUID mới cho cùng record.\n- FR-11: Field mapped, unmapped, invalid và skipped đều được giữ trong Raw cùng source file/version và source locator; phần hợp lệ có thể tạo import một phần.\n- FR-12: Preview phải hiển thị vùng dữ liệu, header, mẫu dòng, kiểu dữ liệu, mapping và lỗi theo field; người dùng có thể map, đổi kiểu, bỏ qua dòng và lưu Profile version mới.\n- FR-13: Sau preview confirmation, hệ thống tạo đúng một ChangeSet cho mỗi file, validate và giữ trạng thái chờ approval trước khi áp dụng canonical state.\n- FR-14: Người dùng có thể sửa giá trị normalized trong ChangeSet nhưng không sửa file nguồn; chỉnh sửa phải tạo audit event.\n- FR-15: Giá trị ngày/số/boolean đủ rõ được chuẩn hóa theo locale/cấu hình Project nhưng giữ giá trị gốc; giá trị mơ hồ tạo warning và không được tự đoán.\n- FR-16: Sau mỗi revision, parser chạy lại toàn bộ file để deterministic, tạo diff theo version/source locator, giữ lịch sử và hỗ trợ rollback ChangeSet đã xác nhận.\n- FR-17: Hình ảnh và file đính kèm được lưu local với hash/version/source locator và đưa vào queue sync cùng ChangeSet.\n- FR-18: Raw, ChangeSet, file registry/version, audit và pending sync job được ghi transactionally vào database local mã hóa; khóa mã hóa do OS keychain/credential store quản lý.\n- FR-19: File có cùng file identity, revision và SHA-256 đã xử lý không tạo import/ChangeSet trùng; thay đổi do write-back được audit/version hóa nhưng không enqueue import trùng.\n- FR-20: Watcher tự bật sau đăng ký, chạy độc lập theo source, debounce thay đổi và chỉ enqueue khi size/mtime/hash ổn định; source archive phải dừng watcher nhưng giữ lịch sử.\n- FR-21: Scan/parse/import chạy nền, hiển thị tiến độ theo source/file, cho phép hủy tác vụ đang chờ và không chặn UI chính.\n- FR-22: Lỗi scan/parser/import/quyền file/file bị khóa được ghi nhận theo source/file/row/field; file khác vẫn được xử lý và file chưa đọc được không được upload.\n- FR-23: Audit log append-only cho scan, parse, mapping, import, retry và sync; event phải chứa user, timestamp, source/file/hash, kết quả và correlation ID.\n- FR-24: Khi online, pending sync jobs gửi theo thứ tự và idempotency key; lỗi mạng retry có giới hạn, conflict được giữ để người dùng review, không tự ưu tiên local/server.\n- FR-25: Raw local được giữ đến khi người dùng chủ động xóa/archive source; chỉ file tạm được dọn tự động.\n- FR-26: UI hiển thị trạng thái source, số file phát hiện, queued, lỗi, tiến độ, trạng thái sync và review diff trước/sau cùng Raw/unmapped/invalid/asset/source locator.\n\n### Non-Functional Requirements\n\n- NFR-1: Không ghi dữ liệu canonical trước khi preview/mapping và ChangeSet được người dùng xác nhận.\n- NFR-2: Database local, Raw, ChangeSet, audit và queue dùng boundary persistence mã hóa hiện có của desktop; không dùng browser local storage làm nơi lưu dữ liệu nghiệp vụ.\n- NFR-3: Mọi bản ghi import và asset phải truy vết được tới Project, source registration, file version, hash, locator, Profile và audit correlation.\n- NFR-4: Thao tác scan/import không làm treo UI; progress/cancel/status phải được cập nhật nhất quán.\n- NFR-5: Parser/scanner xử lý Unicode path/nội dung, không làm mất dữ liệu unmanaged và không sửa file gốc trong luồng ingestion.\n- NFR-6: Tests phải bao phủ Excel merged/multi-table/formula, CSV encoding/delimiter/header, Markdown/TXT/Word .doc/.docx với bảng/asset, file lỗi/locked, duplicate identity, schema drift, restart offline, watcher nhiều source, conflict và rollback.\n- NFR-7: Audit là append-only và Raw lịch sử không bị dọn tự động ngoài file tạm; dữ liệu local được bảo vệ bằng OS keychain.\n\n## Acceptance Criteria\n\n- [ ] AC-1: Người dùng chọn được thư mục bằng native folder picker, đăng ký thành công source với Project và nhìn thấy source trong danh sách; có thể đăng ký source thứ hai mà source thứ nhất vẫn hoạt động.\n- [ ] AC-2: Manual scan quét đệ quy thư mục, nhận đúng các extension hỗ trợ gồm CSV và Word .doc/.docx, bỏ qua file ẩn/temp và hiển thị tổng số file phát hiện cùng lỗi scan nếu có.\n- [ ] AC-3: File ổn định tạo được file identity/version có SHA-256, size, mtime và được enqueue một lần; file đang bị khóa, thiếu quyền hoặc thay đổi liên tục không được import như file hoàn chỉnh.\n- [ ] AC-4: File khớp Profile được parsing tự động; Raw, source locator, identity deterministic và một ChangeSet theo file được lưu vào local DB mã hóa mà không cần mapping lại.\n- [ ] AC-5: File cấu trúc mới mở preview có candidate region/header, mẫu dòng, kiểu dữ liệu, mapping, validation issues và cho phép lưu Profile mới; chưa có canonical apply trước khi người dùng xác nhận.\n- [ ] AC-6: Fixture Excel có sheet hidden, merged header/data, nhiều vùng bảng và công thức được parse đúng; giá trị tính được dùng cho mapping, công thức và locator vẫn còn trong Raw.\n- [ ] AC-7: Fixture CSV có BOM/encoding, delimiter hoặc header khác nhau được nhận diện; trường hợp mơ hồ mở preview/mapping thay vì tự đoán.\n- [ ] AC-8: Fixture Markdown/TXT/Word .doc/.docx có heading, bảng, link, hình ảnh/attachment và reference được parse; asset có hash/version/locator và proposal chờ xác nhận.\n- [ ] AC-9: Khi batch có file lỗi hoặc dòng lỗi, file/dòng hợp lệ vẫn được lưu; UI hiển thị lỗi theo source/file/row/field và không làm mất Raw của unmapped/invalid/skipped.\n- [ ] AC-10: Ngày/số/boolean rõ ràng được chuẩn hóa theo locale/cấu hình nhưng giữ giá trị gốc; giá trị mơ hồ tạo warning và chờ xác nhận.\n- [ ] AC-11: Sau khi đóng/mở lại app ở trạng thái offline, source registrations, Raw, ChangeSet, audit và pending sync jobs vẫn còn; khi online queue retry idempotently và conflict được giữ để review.\n- [ ] AC-12: Quét lại file không đổi hoặc phát hiện self-write không tạo duplicate import/ChangeSet; thay đổi file thật tạo revision mới, parse lại toàn bộ và tạo diff/rollback history.\n- [ ] AC-13: Cùng một đường dẫn đã chuẩn hóa trong một Project không tạo source thứ hai; source bị gỡ dừng watcher nhưng giữ lịch sử archive.\n- [ ] AC-14: Watcher tự bật sau đăng ký, chạy độc lập giữa nhiều source, debounce đúng và cập nhật progress; tác vụ đang chờ có thể hủy mà không làm dừng source khác.\n- [ ] AC-15: Review ChangeSet hiển thị diff trước/sau, record hợp lệ, unmapped/invalid, warning, asset và source locator; người dùng có thể sửa normalized value, xác nhận hoặc từ chối, và mọi sửa đổi xuất hiện trong audit.\n- [ ] AC-16: Audit append-only ghi đủ scan/parse/mapping/import/retry/sync với user, thời gian, source/file/hash, kết quả và correlation ID; Raw chỉ bị xóa khi người dùng chủ động xóa/archive source.\n- [ ] AC-17: Khóa mã hóa local được lấy từ OS keychain/credential store; dữ liệu nghiệp vụ không được lưu trong browser local storage.\n- [ ] AC-18: Typecheck/build/test liên quan của desktop, desktop-core, web và server pass; SDD validation và git diff --check pass.\n\n## Scenarios\n\n### Scenario 1: Thêm source và quét thư mục\n\n**Given** người dùng đang ở một Project và có thư mục dữ liệu gốc chứa nhiều thư mục con\n\n**When** người dùng chọn “Thêm nguồn dữ liệu” và xác nhận thư mục\n\n**Then** source được đăng ký, watcher tự bật, scanner quét đệ quy các file hỗ trợ, ghi manifest/hash và hiển thị kết quả theo file; nếu đường dẫn đã đăng ký thì mở source hiện có thay vì tạo bản ghi trùng.\n\n### Scenario 2: File khớp Profile\n\n**Given** source có workbook hoặc CSV khớp Profile đã lưu và hash khác revision gần nhất\n\n**When** manual scan hoặc watcher kết thúc debounce\n\n**Then** file version mới được đăng ký, parser local chạy toàn bộ file, identity deterministic/source locator/Raw và một ChangeSet file-specific được lưu local ở trạng thái chờ người dùng review.\n\n### Scenario 3: File cấu trúc mới\n\n**Given** workbook có merged header, nhiều vùng bảng hoặc file có schema mới và không khớp Profile\n\n**When** worker đưa file vào preview\n\n**Then** UI hiển thị vùng/header/mẫu dòng/kiểu dữ liệu/mapping/validation, người dùng có thể map, đổi kiểu, bỏ qua dòng, lưu Profile version mới và xác nhận ChangeSet trước canonical apply.\n\n### Scenario 4: CSV, Document và asset\n\n**Given** CSV có BOM/delimiter không mặc định hoặc Word .doc/.docx/Markdown-like document có heading, reference, bảng, hình ảnh và attachment\n\n**When** parser xử lý file\n\n**Then** hệ thống tự nhận diện phần rõ ràng, đưa phần mơ hồ vào preview, lưu nội dung/bảng/asset/locator/relationship proposal vào Raw/ChangeSet; asset có hash/version và được queue sync, file gốc không bị sửa.\n\n### Scenario 5: Batch có lỗi một phần\n\n**Given** source có một file bị khóa hoặc thiếu quyền, một workbook có dòng sai kiểu và các file hợp lệ khác\n\n**When** người dùng chạy scan/import\n\n**Then** file không đọc được chuyển trạng thái lỗi và giữ retry/outbox nhưng không upload; dòng sai được giữ Raw/unmapped và đánh dấu theo field; file/dòng hợp lệ vẫn được lưu và UI hiển thị kết quả từng mục.\n\n### Scenario 6: Offline restart và đồng bộ\n\n**Given** desktop đang offline khi file được import\n\n**When** app restart rồi kết nối mạng trở lại\n\n**Then** source/Raw/ChangeSet/audit/pending job được khôi phục từ local DB mã hóa, queue gửi theo idempotency key, retry không tạo duplicate và conflict được giữ để người dùng review.\n\n### Scenario 7: File unchanged, self-write và revision\n\n**Given** file đã import hoặc vừa được app ghi write-back\n\n**When** watcher phát hiện lại file\n\n**Then** hash/idempotency/self-write provenance ngăn import trùng; nếu nội dung thay đổi thật thì parser chạy lại toàn bộ, tạo file revision/diff/ChangeSet mới, giữ lịch sử và cho phép rollback bản đã xác nhận.\n\n### Scenario 8: Review và chỉnh sửa ChangeSet\n\n**Given** ChangeSet có normalized records, unmapped/invalid, warning và asset\n\n**When** người dùng mở màn hình review\n\n**Then** UI hiển thị diff trước/sau cùng source locator, cho sửa normalized value nhưng không sửa file nguồn, yêu cầu xác nhận rõ ràng trước canonical apply và ghi mọi chỉnh sửa vào audit append-only.\n\n### Scenario 9: Archive source\n\n**Given** người dùng gỡ source khỏi Project\n\n**When** thao tác archive được xác nhận\n\n**Then** watcher dừng, source chuyển archived, Raw/registry/ChangeSet/audit lịch sử và asset local vẫn còn; chỉ file tạm được dọn tự động.\n\n## Technical Notes\n\n- Desktop entry points hiện có: apps/desktop/src/features/local-files.ts, apps/web/src/features/datacenter/sourceApi.ts, apps/web/src/features/datacenter/importWorker.ts và Tauri commands trong apps/desktop/src-tauri/src.\n- Scanner/manifest hiện có: crates/desktop-core/src/scanner.rs và crates/desktop-core/src/manifest.rs; parser boundary hiện có tại crates/desktop-core/src/parser.rs và apps/desktop/src-tauri/src/parse_cmd.rs.\n- Server-side parsing contracts hiện có tại apps/server/app/adapters/files/importers/excel.py, apps/server/app/adapters/files/importers/documents.py, apps/server/app/shared/contracts.py, apps/server/app/shared/schemas.py và domain import/ChangeSet.\n- Implementation phải bổ sung/hoàn thiện parser .doc bên cạnh .docx, CSV autodetection, deterministic record identity, preview/mapping editing, normalized-value audit, full-revision diff/rollback và OS keychain boundary theo các Locked Decisions.\n- Các key hiện tại chỉ theo row/file-version hoặc identity UUID tạm thời phải được thay bằng identity deterministic theo D27; không được tạo duplicate khi parse lại cùng record.\n- Chi tiết thư viện parser, schema bảng local, debounce interval, concurrency limit và worker orchestration là nội dung planning/implementation, không phải quyết định sản phẩm của spec này.\n- Hành vi ingestion dùng @doc/specs/2026-08-09/local-file-ingestion-and-synchronization; local-first queue dùng @doc/specs/2026-08-10/offline-desktop-server-sync; parse-before-upload dùng @doc/specs/2026-08-10/desktop-parse-before-server-upload.\n- Cảnh báo favicon.ico 404 chỉ cần xử lý trong một work item asset tĩnh riêng nếu muốn; không làm thay đổi parser, import contract hoặc acceptance của spec này.\n\n## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n\n## Open Questions\n\n- [x] Quyền đăng ký source và xác nhận preview/ChangeSet — đã khóa tại D9.\n- [x] Hỗ trợ Word .doc legacy hay chỉ .docx — đã khóa hỗ trợ cả hai tại D8.\n- [x] Gỡ source có giữ lịch sử hay không — đã khóa archive/giữ lịch sử tại D10.\n- [x] Các câu hỏi mới về fallback, normalization, conflict, CSV, asset, watcher, retention, identity, schema và review — đã khóa tại D11-D31.\n- Không còn open question bắt buộc trước khi lập plan; mọi thay đổi các Locked Decisions sau khi spec được approve phải quay lại trạng thái draft/review."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "whole_doc",
+          "field": "content",
+          "summary": "Whole document content",
+          "oldBytes": 24539,
+          "newBytes": 23668,
+          "deltaBytes": -871
+        }
+      ],
+      "snapshot": {
+        "content": "## Overview\n\nHoàn thiện end-to-end luồng **Thêm nguồn dữ liệu** trong desktop app: người dùng chọn thư mục gốc, đăng ký thư mục cho Project, quét đệ quy, parsing và preview/mapping các file Excel/XLSX, CSV, TXT, Markdown, Word .doc và .docx, lưu Raw/ChangeSet/audit vào database local mã hóa, rồi đồng bộ lên server qua outbox khi có mạng.\n\nFeature nối UI desktop với scanner/watcher, parser local, preview/mapping, local-first persistence, ChangeSet review, rollback và server sync. File nguồn luôn được giữ nguyên; cảnh báo favicon.ico 404 trong Vite dev là vấn đề asset tĩnh riêng, không thuộc pipeline parsing.\n\n## Locked Decisions\n\n- D1: Phạm vi bao gồm chọn thư mục trên desktop, quét file, parsing, lưu database và áp dụng các contract ingestion hiện có; không tách parsing/database thành hạng mục sau.\n- D2: Thư mục nguồn được quét đệ quy; chỉ nhận .xlsx, .xlsm, .xls, .csv, .md, .markdown, .txt, .doc và .docx; bỏ qua file ẩn, file tạm và extension ngoài danh sách.\n- D3: File khớp Profile được parsing tự động; file mới hoặc không khớp phải qua preview/mapping và xác nhận trước khi tạo ChangeSet/ghi canonical state.\n- D4: Parsing ghi vào database local mã hóa trước; Raw, ChangeSet, audit và pending sync job được lưu bền vững tại desktop rồi mới đồng bộ lên server.\n- D5: Thư mục được đăng ký như nguồn dữ liệu lâu dài, hỗ trợ quét thủ công và watcher tự phát hiện file mới/thay đổi.\n- D6: Batch import xử lý độc lập theo file; file hợp lệ vẫn tiếp tục. Trong từng file, dòng hợp lệ có thể import một phần; lỗi hiển thị theo file/dòng/field.\n- D7: Một Project có thể đăng ký nhiều thư mục nguồn; mỗi thư mục là một source riêng và có watcher độc lập.\n- D8: Word .doc và .docx đều nằm trong phạm vi hỗ trợ đầy đủ; không chuyển .doc thành unsupported mặc định.\n- D9: Mọi thành viên có quyền truy cập Project được đăng ký source và xác nhận preview/ChangeSet.\n- D10: Khi gỡ source, hệ thống dừng watcher, đánh dấu source archived và giữ file registry/Raw/ChangeSet/audit lịch sử.\n- D11: File chưa có Profile hoặc parser không tự nhận diện được phải đi qua preview/mapping trên desktop trước; raw fallback chỉ là nhánh dự phòng sau đó khi kết quả vẫn không thể xử lý.\n- D12: Field không mapping được, sai kiểu hoặc bị bỏ qua vẫn được giữ trong Raw/unmapped; phần hợp lệ được import một phần và cảnh báo phải hiển thị rõ.\n- D13: Giá trị ngày/số/boolean đủ rõ được chuẩn hóa theo locale/cấu hình Project nhưng luôn giữ giá trị gốc; giá trị mơ hồ không tự đoán, tạo warning và chờ xác nhận.\n- D14: Conflict giữa dữ liệu local và canonical state trên server được giữ ở trạng thái conflict review; không tự động ưu tiên hoặc ghi đè bên nào.\n- D15: CSV tự nhận diện UTF-8/BOM, delimiter và header; trường hợp mơ hồ phải mở preview/mapping.\n- D16: Hình ảnh và file đính kèm từ Markdown/Word được lưu local với hash/version/source locator và đưa vào queue sync cùng ChangeSet.\n- D17: Watcher tự bật sau khi source được đăng ký; người dùng vẫn có thể tạm dừng hoặc bật lại.\n- D18: Scan/parse chạy nền, hiển thị tiến độ theo source/file và cho phép hủy tác vụ đang chờ mà không chặn UI chính.\n- D19: Cùng một đường dẫn đã chuẩn hóa trong một Project chỉ tạo một source; đăng ký lại sẽ mở source hiện có.\n- D20: File không đọc được do quyền hệ điều hành hoặc đang bị khóa không được upload; lỗi được ghi theo file, giữ retry/outbox và không chặn file khác.\n- D21: Khóa mã hóa database/Raw/ChangeSet local được quản lý bởi OS keychain/credential store của desktop.\n- D22: Raw local được giữ đến khi người dùng chủ động xóa/archive source; chỉ file tạm được dọn tự động.\n- D23: Audit log append-only cho scan, parse, mapping, import, retry và sync; mỗi event có user, thời gian, source/file/hash, kết quả và correlation ID.\n- D24: Mỗi revision file tạo version/ChangeSet mới, giữ lịch sử đầy đủ và cho phép rollback bản đã xác nhận qua ChangeSet.\n- D25: Mỗi revision được parse lại toàn bộ để deterministic; hệ thống tạo diff theo version/source locator thay vì chỉ cập nhật phần thay đổi.\n- D26: Mọi ChangeSet, kể cả file khớp Profile, phải được người dùng xác nhận trước khi áp dụng vào canonical state.\n- D27: Record không có ID ổn định dùng identity deterministic từ Project/source/file revision/hash/locator; nếu có cột khóa thì ưu tiên cột đó.\n- D28: Field mới hoặc mất field giữa các revision được giữ trong unmapped, cảnh báo và đưa qua preview/mapping; Profile không tự bị sửa.\n- D29: Preview hiển thị vùng dữ liệu, header, mẫu dòng, kiểu dữ liệu và lỗi theo field; người dùng được map, đổi kiểu, bỏ qua dòng và lưu Profile version mới.\n- D30: Review trước khi apply hiển thị diff trước/sau, record hợp lệ, unmapped/invalid, warning, asset và source locator; phải có xác nhận rõ ràng.\n- D31: Người dùng được sửa giá trị normalized trong ChangeSet nhưng không sửa file nguồn; mọi chỉnh sửa phải ghi audit.\n\n## System Decision Impact\n\n- Impact: existing\n- Decision: Tái sử dụng contract trong @doc/specs/2026-08-09/local-file-ingestion-and-synchronization, mô hình local-first trong @doc/specs/2026-08-10/offline-desktop-server-sync và các contract parse-before-upload tại @doc/specs/2026-08-10/desktop-parse-before-server-upload; không tạo System Decision mới.\n- Acceptance gate: xác nhận các acceptance criteria của spec này, gồm parser formats, preview/mapping, persistence local mã hóa bằng OS keychain, queue sau restart, import idempotent, audit append-only, rollback và đồng bộ khi online. Các quyết định hệ thống draft liên quan chỉ được accept sau khi implementation/verification đạt gate.\n\n## Requirements\n\n### Functional Requirements\n\n- FR-1: UI desktop cung cấp thao tác “Thêm nguồn dữ liệu”, mở folder picker native và từ chối đường dẫn không tồn tại hoặc không phải thư mục.\n- FR-2: Khi xác nhận thư mục, hệ thống tạo source registration gắn với Project, lưu đường dẫn đã chuẩn hóa, trạng thái hoạt động, thời điểm đăng ký và cấu hình watcher; đăng ký lại cùng đường dẫn phải mở source hiện có.\n- FR-3: Manual scan và watcher quét đệ quy từng source registration; chỉ nhận .xlsx, .xlsm, .xls, .csv, .md, .markdown, .txt, .doc và .docx; bỏ qua file ẩn/temp và file ngoài danh sách.\n- FR-4: Scanner tính SHA-256, size, mtime và tạo file identity/version bất biến; chỉ enqueue file sau khi file ổn định, đọc được và không bị khóa.\n- FR-5: File khớp Profile version đang hoạt động được parser local xử lý tự động, tạo Raw/source locator, normalized records, mapping result và một ChangeSet file-specific.\n- FR-6: File chưa có Profile, cấu trúc không khớp hoặc parser không nhận diện được phải mở preview/mapping trên desktop trước; sau khi không thể xử lý tiếp mới được dùng raw fallback.\n- FR-7: Excel phải hỗ trợ sheet visible, nhiều vùng/bảng, header nhiều dòng, ô merge ngang/dọc, công thức dùng giá trị đã tính và giữ công thức/raw cùng locator sheet/row/column.\n- FR-8: CSV phải tự nhận diện UTF-8/BOM, delimiter và header; khi kết quả không chắc chắn phải hiển thị preview để người dùng xác nhận.\n- FR-9: Markdown/TXT/Word .doc và .docx phải parse cấu trúc Markdown-like gồm heading/section, đoạn văn, danh sách, link, metadata, bảng, hình ảnh và attachment; asset/reference proposal phải liên kết với file version.\n- FR-10: Mỗi record/field được gán identity deterministic theo Project/source/file revision/hash/locator; cột khóa ổn định nếu có được ưu tiên và parse lại không tạo UUID mới cho cùng record.\n- FR-11: Field mapped, unmapped, invalid và skipped đều được giữ trong Raw cùng source file/version và source locator; phần hợp lệ có thể tạo import một phần.\n- FR-12: Preview phải hiển thị vùng dữ liệu, header, mẫu dòng, kiểu dữ liệu, mapping và lỗi theo field; người dùng có thể map, đổi kiểu, bỏ qua dòng và lưu Profile version mới.\n- FR-13: Sau preview confirmation, hệ thống tạo đúng một ChangeSet cho mỗi file, validate và giữ trạng thái chờ approval trước khi áp dụng canonical state.\n- FR-14: Người dùng có thể sửa giá trị normalized trong ChangeSet nhưng không sửa file nguồn; chỉnh sửa phải tạo audit event.\n- FR-15: Giá trị ngày/số/boolean đủ rõ được chuẩn hóa theo locale/cấu hình Project nhưng giữ giá trị gốc; giá trị mơ hồ tạo warning và không được tự đoán.\n- FR-16: Sau mỗi revision, parser chạy lại toàn bộ file để deterministic, tạo diff theo version/source locator, giữ lịch sử và hỗ trợ rollback ChangeSet đã xác nhận.\n- FR-17: Hình ảnh và file đính kèm được lưu local với hash/version/source locator và đưa vào queue sync cùng ChangeSet.\n- FR-18: Raw, ChangeSet, file registry/version, audit và pending sync job được ghi transactionally vào database local mã hóa; khóa mã hóa do OS keychain/credential store quản lý.\n- FR-19: File có cùng file identity, revision và SHA-256 đã xử lý không tạo import/ChangeSet trùng; thay đổi do write-back được audit/version hóa nhưng không enqueue import trùng.\n- FR-20: Watcher tự bật sau đăng ký, chạy độc lập theo source, debounce thay đổi và chỉ enqueue khi size/mtime/hash ổn định; source archive phải dừng watcher nhưng giữ lịch sử.\n- FR-21: Scan/parse/import chạy nền, hiển thị tiến độ theo source/file, cho phép hủy tác vụ đang chờ và không chặn UI chính.\n- FR-22: Lỗi scan/parser/import/quyền file/file bị khóa được ghi nhận theo source/file/row/field; file khác vẫn được xử lý và file chưa đọc được không được upload.\n- FR-23: Audit log append-only cho scan, parse, mapping, import, retry và sync; event phải chứa user, timestamp, source/file/hash, kết quả và correlation ID.\n- FR-24: Khi online, pending sync jobs gửi theo thứ tự và idempotency key; lỗi mạng retry có giới hạn, conflict được giữ để người dùng review, không tự ưu tiên local/server.\n- FR-25: Raw local được giữ đến khi người dùng chủ động xóa/archive source; chỉ file tạm được dọn tự động.\n- FR-26: UI hiển thị trạng thái source, số file phát hiện, queued, lỗi, tiến độ, trạng thái sync và review diff trước/sau cùng Raw/unmapped/invalid/asset/source locator.\n\n### Non-Functional Requirements\n\n- NFR-1: Không ghi dữ liệu canonical trước khi preview/mapping và ChangeSet được người dùng xác nhận.\n- NFR-2: Database local, Raw, ChangeSet, audit và queue dùng boundary persistence mã hóa hiện có của desktop; không dùng browser local storage làm nơi lưu dữ liệu nghiệp vụ.\n- NFR-3: Mọi bản ghi import và asset phải truy vết được tới Project, source registration, file version, hash, locator, Profile và audit correlation.\n- NFR-4: Thao tác scan/import không làm treo UI; progress/cancel/status phải được cập nhật nhất quán.\n- NFR-5: Parser/scanner xử lý Unicode path/nội dung, không làm mất dữ liệu unmanaged và không sửa file gốc trong luồng ingestion.\n- NFR-6: Tests phải bao phủ Excel merged/multi-table/formula, CSV encoding/delimiter/header, Markdown/TXT/Word .doc/.docx với bảng/asset, file lỗi/locked, duplicate identity, schema drift, restart offline, watcher nhiều source, conflict và rollback.\n- NFR-7: Audit là append-only và Raw lịch sử không bị dọn tự động ngoài file tạm; dữ liệu local được bảo vệ bằng OS keychain.\n\n## Acceptance Criteria\n\n- [ ] AC-1: Người dùng chọn được thư mục bằng native folder picker, đăng ký thành công source với Project và nhìn thấy source trong danh sách; có thể đăng ký source thứ hai mà source thứ nhất vẫn hoạt động.\n- [ ] AC-2: Manual scan quét đệ quy thư mục, nhận đúng các extension hỗ trợ gồm CSV và Word .doc/.docx, bỏ qua file ẩn/temp và hiển thị tổng số file phát hiện cùng lỗi scan nếu có.\n- [ ] AC-3: File ổn định tạo được file identity/version có SHA-256, size, mtime và được enqueue một lần; file đang bị khóa, thiếu quyền hoặc thay đổi liên tục không được import như file hoàn chỉnh.\n- [ ] AC-4: File khớp Profile được parsing tự động; Raw, source locator, identity deterministic và một ChangeSet theo file được lưu vào local DB mã hóa mà không cần mapping lại.\n- [ ] AC-5: File cấu trúc mới mở preview có candidate region/header, mẫu dòng, kiểu dữ liệu, mapping, validation issues và cho phép lưu Profile mới; chưa có canonical apply trước khi người dùng xác nhận.\n- [ ] AC-6: Fixture Excel có sheet hidden, merged header/data, nhiều vùng bảng và công thức được parse đúng; giá trị tính được dùng cho mapping, công thức và locator vẫn còn trong Raw.\n- [ ] AC-7: Fixture CSV có BOM/encoding, delimiter hoặc header khác nhau được nhận diện; trường hợp mơ hồ mở preview/mapping thay vì tự đoán.\n- [ ] AC-8: Fixture Markdown/TXT/Word .doc/.docx có heading, bảng, link, hình ảnh/attachment và reference được parse; asset có hash/version/locator và proposal chờ xác nhận.\n- [ ] AC-9: Khi batch có file lỗi hoặc dòng lỗi, file/dòng hợp lệ vẫn được lưu; UI hiển thị lỗi theo source/file/row/field và không làm mất Raw của unmapped/invalid/skipped.\n- [ ] AC-10: Ngày/số/boolean rõ ràng được chuẩn hóa theo locale/cấu hình nhưng giữ giá trị gốc; giá trị mơ hồ tạo warning và chờ xác nhận.\n- [ ] AC-11: Sau khi đóng/mở lại app ở trạng thái offline, source registrations, Raw, ChangeSet, audit và pending sync jobs vẫn còn; khi online queue retry idempotently và conflict được giữ để review.\n- [ ] AC-12: Quét lại file không đổi hoặc phát hiện self-write không tạo duplicate import/ChangeSet; thay đổi file thật tạo revision mới, parse lại toàn bộ và tạo diff/rollback history.\n- [ ] AC-13: Cùng một đường dẫn đã chuẩn hóa trong một Project không tạo source thứ hai; source bị gỡ dừng watcher nhưng giữ lịch sử archive.\n- [ ] AC-14: Watcher tự bật sau đăng ký, chạy độc lập giữa nhiều source, debounce đúng và cập nhật progress; tác vụ đang chờ có thể hủy mà không làm dừng source khác.\n- [ ] AC-15: Review ChangeSet hiển thị diff trước/sau, record hợp lệ, unmapped/invalid, warning, asset và source locator; người dùng có thể sửa normalized value, xác nhận hoặc từ chối, và mọi sửa đổi xuất hiện trong audit.\n- [ ] AC-16: Audit append-only ghi đủ scan/parse/mapping/import/retry/sync với user, thời gian, source/file/hash, kết quả và correlation ID; Raw chỉ bị xóa khi người dùng chủ động xóa/archive source.\n- [ ] AC-17: Khóa mã hóa local được lấy từ OS keychain/credential store; dữ liệu nghiệp vụ không được lưu trong browser local storage.\n- [ ] AC-18: Typecheck/build/test liên quan của desktop, desktop-core, web và server pass; SDD validation và git diff --check pass.\n\n## Scenarios\n\n### Scenario 1: Thêm source và quét thư mục\n\n**Given** người dùng đang ở một Project và có thư mục dữ liệu gốc chứa nhiều thư mục con\n\n**When** người dùng chọn “Thêm nguồn dữ liệu” và xác nhận thư mục\n\n**Then** source được đăng ký, watcher tự bật, scanner quét đệ quy các file hỗ trợ, ghi manifest/hash và hiển thị kết quả theo file; nếu đường dẫn đã đăng ký thì mở source hiện có thay vì tạo bản ghi trùng.\n\n### Scenario 2: File khớp Profile\n\n**Given** source có workbook hoặc CSV khớp Profile đã lưu và hash khác revision gần nhất\n\n**When** manual scan hoặc watcher kết thúc debounce\n\n**Then** file version mới được đăng ký, parser local chạy toàn bộ file, identity deterministic/source locator/Raw và một ChangeSet file-specific được lưu local ở trạng thái chờ người dùng review.\n\n### Scenario 3: File cấu trúc mới\n\n**Given** workbook có merged header, nhiều vùng bảng hoặc file có schema mới và không khớp Profile\n\n**When** worker đưa file vào preview\n\n**Then** UI hiển thị vùng/header/mẫu dòng/kiểu dữ liệu/mapping/validation, người dùng có thể map, đổi kiểu, bỏ qua dòng, lưu Profile version mới và xác nhận ChangeSet trước canonical apply.\n\n### Scenario 4: CSV, Document và asset\n\n**Given** CSV có BOM/delimiter không mặc định hoặc Word .doc/.docx/Markdown-like document có heading, reference, bảng, hình ảnh và attachment\n\n**When** parser xử lý file\n\n**Then** hệ thống tự nhận diện phần rõ ràng, đưa phần mơ hồ vào preview, lưu nội dung/bảng/asset/locator/relationship proposal vào Raw/ChangeSet; asset có hash/version và được queue sync, file gốc không bị sửa.\n\n### Scenario 5: Batch có lỗi một phần\n\n**Given** source có một file bị khóa hoặc thiếu quyền, một workbook có dòng sai kiểu và các file hợp lệ khác\n\n**When** người dùng chạy scan/import\n\n**Then** file không đọc được chuyển trạng thái lỗi và giữ retry/outbox nhưng không upload; dòng sai được giữ Raw/unmapped và đánh dấu theo field; file/dòng hợp lệ vẫn được lưu và UI hiển thị kết quả từng mục.\n\n### Scenario 6: Offline restart và đồng bộ\n\n**Given** desktop đang offline khi file được import\n\n**When** app restart rồi kết nối mạng trở lại\n\n**Then** source/Raw/ChangeSet/audit/pending job được khôi phục từ local DB mã hóa, queue gửi theo idempotency key, retry không tạo duplicate và conflict được giữ để người dùng review.\n\n### Scenario 7: File unchanged, self-write và revision\n\n**Given** file đã import hoặc vừa được app ghi write-back\n\n**When** watcher phát hiện lại file\n\n**Then** hash/idempotency/self-write provenance ngăn import trùng; nếu nội dung thay đổi thật thì parser chạy lại toàn bộ, tạo file revision/diff/ChangeSet mới, giữ lịch sử và cho phép rollback bản đã xác nhận.\n\n### Scenario 8: Review và chỉnh sửa ChangeSet\n\n**Given** ChangeSet có normalized records, unmapped/invalid, warning và asset\n\n**When** người dùng mở màn hình review\n\n**Then** UI hiển thị diff trước/sau cùng source locator, cho sửa normalized value nhưng không sửa file nguồn, yêu cầu xác nhận rõ ràng trước canonical apply và ghi mọi chỉnh sửa vào audit append-only.\n\n### Scenario 9: Archive source\n\n**Given** người dùng gỡ source khỏi Project\n\n**When** thao tác archive được xác nhận\n\n**Then** watcher dừng, source chuyển archived, Raw/registry/ChangeSet/audit lịch sử và asset local vẫn còn; chỉ file tạm được dọn tự động.\n\n## Technical Notes\n\n- Desktop entry points hiện có: apps/desktop/src/features/local-files.ts, apps/web/src/features/datacenter/sourceApi.ts, apps/web/src/features/datacenter/importWorker.ts và Tauri commands trong apps/desktop/src-tauri/src.\n- Scanner/manifest hiện có: crates/desktop-core/src/scanner.rs và crates/desktop-core/src/manifest.rs; parser boundary hiện có tại crates/desktop-core/src/parser.rs và apps/desktop/src-tauri/src/parse_cmd.rs.\n- Server-side parsing contracts hiện có tại apps/server/app/adapters/files/importers/excel.py, apps/server/app/adapters/files/importers/documents.py, apps/server/app/shared/contracts.py, apps/server/app/shared/schemas.py và domain import/ChangeSet.\n- Implementation phải bổ sung/hoàn thiện parser .doc bên cạnh .docx, CSV autodetection, deterministic record identity, preview/mapping editing, normalized-value audit, full-revision diff/rollback và OS keychain boundary theo các Locked Decisions.\n- Các key hiện tại chỉ theo row/file-version hoặc identity UUID tạm thời phải được thay bằng identity deterministic theo D27; không được tạo duplicate khi parse lại cùng record.\n- Chi tiết thư viện parser, schema bảng local, debounce interval, concurrency limit và worker orchestration là nội dung planning/implementation, không phải quyết định sản phẩm của spec này.\n- Hành vi ingestion dùng @doc/specs/2026-08-09/local-file-ingestion-and-synchronization; local-first queue dùng @doc/specs/2026-08-10/offline-desktop-server-sync; parse-before-upload dùng @doc/specs/2026-08-10/desktop-parse-before-server-upload.\n- Cảnh báo favicon.ico 404 chỉ cần xử lý trong một work item asset tĩnh riêng nếu muốn; không làm thay đổi parser, import contract hoặc acceptance của spec này.\n\n## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n\n## Open Questions\n\n- [x] Quyền đăng ký source và xác nhận preview/ChangeSet — đã khóa tại D9.\n- [x] Hỗ trợ Word .doc legacy hay chỉ .docx — đã khóa hỗ trợ cả hai tại D8.\n- [x] Gỡ source có giữ lịch sử hay không — đã khóa archive/giữ lịch sử tại D10.\n- [x] Các câu hỏi mới về fallback, normalization, conflict, CSV, asset, watcher, retention, identity, schema và review — đã khóa tại D11-D31.\n- Không còn open question bắt buộc trước khi lập plan; mọi thay đổi các Locked Decisions sau khi spec được approve phải quay lại trạng thái draft/review.",
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v16",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 16,
+      "timestamp": "2026-08-10T12:28:53.7483729Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "6c7e0ad79f0f5b204da5a6a1c10420f0c52ab8658e4cbe44cc8939bf2058695e",
+      "newHash": "a2ef22b02a9390132915a3fd45c40c8937606d7b9bf091a9f98234279c46fb5f",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "### Scenario 9: Archive source\n\n**Given** người dùng gỡ source khỏi Project\n\n**When** thao tác archive được xác nhận\n\n**Then** watcher dừng, source chuyển archived, Raw/registry/ChangeSet/audit lịch sử và asset local vẫn còn; chỉ file tạm được dọn tự động.",
+          "newValue": "### Scenario 9: Archive source\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n\nExisting tasks above cover the previously implemented D1-D7 scope. The new D8-D31 decisions require a new planning wave before the feature can be considered fully complete."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Scenario 9: Archive source",
+          "summary": "Section: Scenario 9: Archive source",
+          "oldBytes": 299,
+          "newBytes": 829,
+          "deltaBytes": 530
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v17",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 17,
+      "timestamp": "2026-08-10T12:29:18.9408855Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "a2ef22b02a9390132915a3fd45c40c8937606d7b9bf091a9f98234279c46fb5f",
+      "newHash": "6c7e0ad79f0f5b204da5a6a1c10420f0c52ab8658e4cbe44cc8939bf2058695e",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "### Scenario 9: Archive source\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n\nExisting tasks above cover the previously implemented D1-D7 scope. The new D8-D31 decisions require a new planning wave before the feature can be considered fully complete.",
+          "newValue": "### Scenario 9: Archive source\n\n**Given** người dùng gỡ source khỏi Project\n\n**When** thao tác archive được xác nhận\n\n**Then** watcher dừng, source chuyển archived, Raw/registry/ChangeSet/audit lịch sử và asset local vẫn còn; chỉ file tạm được dọn tự động."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Scenario 9: Archive source",
+          "summary": "Section: Scenario 9: Archive source",
+          "oldBytes": 829,
+          "newBytes": 299,
+          "deltaBytes": -530
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v18",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 18,
+      "timestamp": "2026-08-10T12:29:19.4938758Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "6c7e0ad79f0f5b204da5a6a1c10420f0c52ab8658e4cbe44cc8939bf2058695e",
+      "newHash": "9ab64fdee928907089bdf93b201408547cfc48c9586f9d597868f9b1de221177",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done",
+          "newValue": "## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n\nExisting tasks above cover the previously implemented D1-D7 scope. The new D8-D31 decisions require a new planning wave before the feature can be considered fully complete."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Task Links",
+          "summary": "Section: Task Links",
+          "oldBytes": 638,
+          "newBytes": 812,
+          "deltaBytes": 174
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
+        ],
+        "title": "Desktop data source folder ingestion"
+      }
+    },
+    {
+      "id": "v19",
+      "docId": "doc-17707e951666bc800518658de0a1e082",
+      "docPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "currentPath": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+      "version": 19,
+      "timestamp": "2026-08-10T12:45:51.2194903Z",
+      "author": "cli",
+      "actor": "cli",
+      "source": "cli",
+      "baseHash": "9ab64fdee928907089bdf93b201408547cfc48c9586f9d597868f9b1de221177",
+      "newHash": "3416c2c39bf342abe9fc3b0c98a7d4dae36c00d2e0566eae3af60904a4f9121a",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n\nExisting tasks above cover the previously implemented D1-D7 scope. The new D8-D31 decisions require a new planning wave before the feature can be considered fully complete.",
+          "newValue": "## Task Links\n\n- @task-i3beyy [desktop-data-source-folder-ingestion-01] Add source registry and multi-source watcher persistence — done\n- @task-p0zoqt [desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI — done\n- @task-bnuso1 [desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence — done\n- @task-aobrj5 [desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow — done\n- @task-kimegz [desktop-data-source-folder-ingestion-05] Run integrated offline import, sync and SDD verification — done\n- @task-fqzovh [desktop-data-source-folder-ingestion-06] Complete CSV and Word parser coverage — todo\n- @task-hc5m2d [desktop-data-source-folder-ingestion-07] Add deterministic identity and revision diff — todo\n- @task-ho64sc [desktop-data-source-folder-ingestion-08] Complete preview, mapping and ChangeSet review UI — todo\n- @task-t9mo1e [desktop-data-source-folder-ingestion-09] Harden local persistence, assets, audit and source archive — todo\n- @task-746tlu [desktop-data-source-folder-ingestion-10] Complete conflict-aware sync and approval — todo\n- @task-724y4b [desktop-data-source-folder-ingestion-11] Add background progress, cancellation and file isolation — todo\n- @task-at3xfd [desktop-data-source-folder-ingestion-12] Run integrated parsing and SDD verification — todo\n\nExisting tasks 01-05 cover the previously implemented D1-D7 scope. Tasks 06-12 cover the new D8-D31 decisions."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Task Links",
+          "summary": "Section: Task Links",
+          "oldBytes": 812,
+          "newBytes": 1547,
+          "deltaBytes": 735
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for adding desktop data sources by selecting folders, parsing files, and persisting ingestion results locally before synchronization.",
+        "path": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "tags": [
+          "spec",
+          "desktop",
+          "data-source",
+          "ingestion",
+          "draft",
+          "review-required"
         ],
         "title": "Desktop data source folder ingestion"
       }

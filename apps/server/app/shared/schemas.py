@@ -36,6 +36,7 @@ class FileImportProfileRequest(BaseModel):
     table_start_row: int | None = Field(default=None, ge=1)
     skip_row_patterns: list[str] = Field(default_factory=list)
     aliases: dict[str, list[str]] = Field(default_factory=dict)
+    field_types: dict[str, Literal["text", "number", "boolean", "date"]] = Field(default_factory=dict)
 
 
 class FileImportFromPathRequest(BaseModel):
@@ -50,16 +51,45 @@ class FileImportFromPathRequest(BaseModel):
 
 
 class DesktopNormalizedRecord(BaseModel):
+    identity: str = Field(default="", max_length=300)
     fields: dict[str, Any] = Field(default_factory=dict)
     unmapped: dict[str, Any] = Field(default_factory=dict)
+    raw: dict[str, Any] = Field(default_factory=dict)
     source: dict[str, Any] = Field(default_factory=dict)
+
+
+class ChangeSetEditRequest(BaseModel):
+    record_identity: str = Field(min_length=1, max_length=300)
+    field: str = Field(min_length=1, max_length=120)
+    value: Any = None
+    edited_by: str = Field(default="desktop-review", min_length=1, max_length=120)
+
+
+class ChangeSetRejectRequest(BaseModel):
+    rejected_by: str = Field(default="desktop-review", min_length=1, max_length=120)
+    reason: str | None = Field(default=None, max_length=500)
+
+
+class AssetSyncItem(BaseModel):
+    asset_id: str = Field(min_length=1, max_length=300)
+    asset_version: int = Field(ge=1)
+    source_hash: str | None = Field(default=None, min_length=64, max_length=64)
+    source_path: str | None = None
+    source_locator: Any = None
+    payload: Any = None
+
+
+class AssetSyncRequest(BaseModel):
+    idempotency_key: str = Field(min_length=1, max_length=300)
+    actor: str = Field(default="desktop-asset-sync", min_length=1, max_length=120)
+    assets: list[AssetSyncItem] = Field(min_length=1)
 
 
 class DesktopNormalizedImportRequest(BaseModel):
     file_id: UUID
     file_revision: int = Field(ge=1)
     idempotency_key: str = Field(min_length=1, max_length=200)
-    format: Literal["XLSX", "CSV", "TXT", "MARKDOWN", "WORD"]
+    format: Literal["XLSX", "XLS", "CSV", "TXT", "MARKDOWN", "WORD"]
     source_hash: str = Field(min_length=64, max_length=64)
     parser_version: str = Field(min_length=1, max_length=120)
     profile_id: str | None = Field(default=None, max_length=120)
@@ -67,6 +97,7 @@ class DesktopNormalizedImportRequest(BaseModel):
     parsed_at: int = Field(ge=0)
     records: list[DesktopNormalizedRecord] = Field(default_factory=list)
     parse_report: dict[str, Any] = Field(default_factory=dict)
+    retry_attempt: int = Field(default=0, ge=0)
     created_by: str = Field(default="desktop-import", min_length=1)
 
 
@@ -74,13 +105,14 @@ class DesktopRawFallbackRequest(BaseModel):
     file_id: UUID
     file_revision: int = Field(ge=1)
     idempotency_key: str = Field(min_length=1, max_length=200)
-    format: Literal["XLSX", "CSV", "TXT", "MARKDOWN", "WORD", "UNSUPPORTED"]
+    format: Literal["XLSX", "XLS", "CSV", "TXT", "MARKDOWN", "WORD", "UNSUPPORTED"]
     filename: str = Field(min_length=1, max_length=260)
     source_hash: str = Field(min_length=64, max_length=64)
     content_base64: str = Field(min_length=1)
     fallback_reason: str = Field(min_length=1, max_length=500)
     expected_profile_id: str | None = Field(default=None, max_length=120)
     parse_report: dict[str, Any] = Field(default_factory=dict)
+    retry_attempt: int = Field(default=0, ge=0)
     created_by: str = Field(default="desktop-import-fallback", min_length=1)
 
 

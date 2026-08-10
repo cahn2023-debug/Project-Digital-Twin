@@ -12,6 +12,8 @@ from urllib.parse import unquote, urlparse
 from uuid import UUID, uuid4
 from xml.etree import ElementTree
 
+import olefile
+
 
 @dataclass(frozen=True)
 class DocumentLocator:
@@ -348,6 +350,72 @@ def _parse_word(
     return nodes, tables, links, assets, references
 
 
+def _legacy_word_text(path: Path) -> str:
+    try:
+        with olefile.OleFileIO(path) as compound:
+            stream = compound.openstream(["WordDocument"]).read()
+    except (OSError, olefile.OleFileError) as exc:
+        raise ValueError(f"Unable to read legacy Word document: {exc}") from exc
+
+    candidates: list[tuple[int, int, str]] = []
+    for offset in (0, 1):
+        current: list[str] = []
+        start = offset
+        index = offset
+        while index + 1 < len(stream):
+            code = int.from_bytes(stream[index:index + 2], "little")
+            if code in {9, 10, 13} or 0x20 <= code <= 0x0FFF:
+                if not current:
+                    start = index
+                current.append(chr(code))
+            elif len(current) >= 4:
+                candidates.append((len(current), start, "".join(current).replace("\r", "\n")))
+                current = []
+            else:
+                current = []
+            index += 2
+        if len(current) >= 4:
+            candidates.append((len(current), start, "".join(current).replace("\r", "\n")))
+
+    current = []
+    start = 0
+    for index, byte in enumerate(stream):
+        if byte in {9, 10, 13} or 0x20 <= byte <= 0x7E or 0xA0 <= byte <= 0xFF:
+            if not current:
+                start = index
+            current.append(chr(byte))
+        elif len(current) >= 8:
+            candidates.append((len(current), start, "".join(current).replace("\r", "\n")))
+            current = []
+        else:
+            current = []
+    if len(current) >= 8:
+        candidates.append((len(current), start, "".join(current).replace("\r", "\n")))
+
+    candidates.sort(key=lambda item: (-item[0], item[1]))
+    return candidates[0][2] if candidates else ""
+
+
+def _parse_legacy_word(
+    path: Path,
+    file_id: UUID,
+    file_revision: int,
+) -> tuple[list[DocumentNode], list[DocumentTable], list[dict[str, Any]], list[DocumentAsset], list[dict[str, Any]]]:
+    text = _legacy_word_text(path)
+    nodes = [
+        DocumentNode(
+            kind="paragraph",
+            text=line.strip(),
+            locator=_locator(file_id, file_revision, path, index + 1, "WordDocument"),
+        )
+        for index, line in enumerate(text.splitlines())
+        if line.strip()
+    ]
+    if not nodes:
+        raise ValueError("Legacy Word document contains no readable text")
+    return nodes, [], [], [], []
+
+
 def _propose_relationships(
     references: Iterable[dict[str, Any]],
     canonical_entities: Iterable[Mapping[str, Any]],
@@ -400,8 +468,8 @@ def parse_document(
         text = raw.decode("utf-8-sig")
         parsed = _parse_markdown_like(source_path, file_id, file_revision, text)
         format_name = "markdown" if suffix != ".txt" else "text"
-    elif suffix == ".docx":
-        parsed = _parse_word(source_path, file_id, file_revision)
+    elif suffix in {".doc", ".docx"}:
+        parsed = _parse_legacy_word(source_path, file_id, file_revision) if suffix == ".doc" else _parse_word(source_path, file_id, file_revision)
         format_name = "word"
     else:
         raise ValueError(f"Unsupported document extension: {source_path.suffix}")

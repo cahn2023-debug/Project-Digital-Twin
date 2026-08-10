@@ -104,6 +104,11 @@ pub struct PendingJob {
     pub attempts: i64,
     pub next_retry_at: i64,
     pub last_error: Option<String>,
+    pub progress: i64,
+    pub phase: String,
+    pub cancel_requested: bool,
+    pub source_id: Option<String>,
+    pub file_id: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -123,6 +128,38 @@ pub struct LocalProfile {
     pub version: i64,
     pub payload: String,
     pub created_at: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct LocalAsset {
+    pub asset_id: String,
+    pub project_id: String,
+    pub file_version_id: String,
+    pub source_id: Option<String>,
+    pub file_id: Option<String>,
+    pub source_hash: Option<String>,
+    pub source_path: Option<String>,
+    pub source_locator: String,
+    pub asset_version: i64,
+    pub payload: String,
+    pub status: String,
+    pub created_at: String,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct LocalAuditEvent {
+    pub audit_id: String,
+    pub project_id: String,
+    pub source_id: Option<String>,
+    pub file_id: Option<String>,
+    pub file_version_id: Option<String>,
+    pub source_hash: Option<String>,
+    pub actor: String,
+    pub occurred_at: String,
+    pub operation: String,
+    pub outcome: String,
+    pub correlation_id: String,
+    pub payload: String,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -236,6 +273,15 @@ impl ManifestDb {
         )? == 1)
     }
 
+    pub fn archive_source(&self, source_id: &str, archived_at: &str) -> SqlResult<bool> {
+        Ok(self.connection.execute(
+            "UPDATE source_registrations
+             SET status = 'ARCHIVED', watcher_enabled = 0, updated_at = ?2
+             WHERE source_id = ?1",
+            params![source_id, archived_at],
+        )? == 1)
+    }
+
     pub fn record_source_scan(
         &self,
         source_id: &str,
@@ -268,6 +314,7 @@ impl ManifestDb {
             .source_registration(source_id)?
             .ok_or(rusqlite::Error::QueryReturnedNoRows)?;
         let file_id = file_id_for_path(&file.path);
+        self.resolve_file_failure(&file.path)?;
         let idempotency_key = format!("FILE_SCAN:{}:{}:{}", source_id, file.sha256, file.path);
         let payload = serde_json::json!({
             "source_id": source_id,
@@ -280,9 +327,10 @@ impl ManifestDb {
         })
         .to_string();
         let inserted = self.connection.execute(
-            "INSERT OR IGNORE INTO pending_jobs(job_id, job_type, payload, status, idempotency_key, created_at)
-             VALUES (?1, 'FILE_SCAN', ?2, 'PENDING', ?1, ?3)",
-            params![idempotency_key, payload, created_at],
+            "INSERT OR IGNORE INTO pending_jobs(
+               job_id, job_type, payload, status, idempotency_key, created_at, source_id, file_id
+             ) VALUES (?1, 'FILE_SCAN', ?2, 'PENDING', ?1, ?3, ?4, ?5)",
+            params![idempotency_key, payload, created_at, source_id, file_id],
         )?;
         Ok(inserted == 1)
     }
@@ -312,7 +360,7 @@ impl ManifestDb {
         })
         .to_string();
         let updated = self.connection.execute(
-            "UPDATE pending_jobs SET payload = ?2, status = 'PENDING', created_at = ?3
+            "UPDATE pending_jobs SET payload = ?2, status = 'PENDING', phase = 'QUEUED', progress = 0, cancel_requested = 0, created_at = ?3
              WHERE idempotency_key = ?1",
             params![idempotency_key, payload, created_at],
         )?;
@@ -325,9 +373,10 @@ impl ManifestDb {
             return Ok(true);
         }
         self.connection.execute(
-            "INSERT INTO pending_jobs(job_id, job_type, payload, status, idempotency_key, created_at)
-             VALUES (?1, 'FILE_SCAN', ?2, 'PENDING', ?1, ?3)",
-            params![idempotency_key, payload, created_at],
+            "INSERT INTO pending_jobs(
+               job_id, job_type, payload, status, idempotency_key, created_at, source_id, file_id
+             ) VALUES (?1, 'FILE_SCAN', ?2, 'PENDING', ?1, ?3, ?4, ?5)",
+            params![idempotency_key, payload, created_at, source_id, file_id],
         )?;
         Ok(true)
     }
@@ -375,6 +424,33 @@ impl ManifestDb {
         attempt: i64,
         raw_records: &[RawRecord],
     ) -> SqlResult<()> {
+        self.store_local_import_result_with_metadata(
+            import_id,
+            project_id,
+            file_version_id,
+            status,
+            payload,
+            created_at,
+            attempt,
+            raw_records,
+            &[],
+            &[],
+        )
+    }
+
+    pub fn store_local_import_result_with_metadata(
+        &self,
+        import_id: &str,
+        project_id: &str,
+        file_version_id: &str,
+        status: &str,
+        payload: &str,
+        created_at: &str,
+        attempt: i64,
+        raw_records: &[RawRecord],
+        assets: &[LocalAsset],
+        audit_events: &[LocalAuditEvent],
+    ) -> SqlResult<()> {
         self.connection.execute_batch("BEGIN IMMEDIATE")?;
         let result = (|| {
             self.connection.execute(
@@ -415,6 +491,80 @@ impl ManifestDb {
                         raw.row_key,
                         raw.payload,
                         raw.source_locator
+                    ],
+                )?;
+            }
+            for asset in assets {
+                self.connection.execute(
+                    "INSERT OR IGNORE INTO local_assets(
+                       asset_id, project_id, file_version_id, source_id, file_id,
+                       source_hash, source_path, source_locator, asset_version,
+                       payload, status, created_at
+                     ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
+                    params![
+                        asset.asset_id,
+                        asset.project_id,
+                        asset.file_version_id,
+                        asset.source_id,
+                        asset.file_id,
+                        asset.source_hash,
+                        asset.source_path,
+                        asset.source_locator,
+                        asset.asset_version,
+                        asset.payload,
+                        asset.status,
+                        asset.created_at,
+                    ],
+                )?;
+                let idempotency_key =
+                    format!("ASSET_SYNC:{}:{}", asset.asset_id, asset.asset_version);
+                let job_payload = serde_json::json!({
+                    "project_id": asset.project_id,
+                    "source_id": asset.source_id,
+                    "file_id": asset.file_id,
+                    "file_version_id": asset.file_version_id,
+                    "source_hash": asset.source_hash,
+                    "asset_id": asset.asset_id,
+                    "asset_version": asset.asset_version,
+                    "source_path": asset.source_path,
+                    "source_locator": asset.source_locator,
+                    "payload": asset.payload,
+                })
+                .to_string();
+                self.connection.execute(
+                    "INSERT OR IGNORE INTO pending_jobs(
+                       job_id, job_type, payload, status, idempotency_key, created_at,
+                       source_id, file_id
+                     ) VALUES (?1, 'ASSET_SYNC', ?2, 'PENDING', ?1, ?3, ?4, ?5)",
+                    params![
+                        idempotency_key,
+                        job_payload,
+                        asset.created_at,
+                        asset.source_id,
+                        asset.file_id
+                    ],
+                )?;
+            }
+            for audit in audit_events {
+                self.connection.execute(
+                    "INSERT INTO local_audit_events(
+                       audit_id, project_id, source_id, file_id, file_version_id,
+                       source_hash, actor, occurred_at, operation, outcome,
+                       correlation_id, payload
+                     ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
+                    params![
+                        audit.audit_id,
+                        audit.project_id,
+                        audit.source_id,
+                        audit.file_id,
+                        audit.file_version_id,
+                        audit.source_hash,
+                        audit.actor,
+                        audit.occurred_at,
+                        audit.operation,
+                        audit.outcome,
+                        audit.correlation_id,
+                        audit.payload,
                     ],
                 )?;
             }
@@ -523,6 +673,73 @@ impl ManifestDb {
         rows.collect()
     }
 
+    pub fn local_assets_for_version(&self, file_version_id: &str) -> SqlResult<Vec<LocalAsset>> {
+        let mut statement = self.connection.prepare(
+            "SELECT asset_id, project_id, file_version_id, source_id, file_id,
+                    source_hash, source_path, source_locator, asset_version,
+                    payload, status, created_at
+             FROM local_assets WHERE file_version_id = ?1 ORDER BY asset_id",
+        )?;
+        let rows = statement.query_map(params![file_version_id], |row| {
+            Ok(LocalAsset {
+                asset_id: row.get(0)?,
+                project_id: row.get(1)?,
+                file_version_id: row.get(2)?,
+                source_id: row.get(3)?,
+                file_id: row.get(4)?,
+                source_hash: row.get(5)?,
+                source_path: row.get(6)?,
+                source_locator: row.get(7)?,
+                asset_version: row.get(8)?,
+                payload: row.get(9)?,
+                status: row.get(10)?,
+                created_at: row.get(11)?,
+            })
+        })?;
+        rows.collect()
+    }
+
+    pub fn mark_local_asset_sync(
+        &self,
+        asset_id: &str,
+        asset_version: i64,
+        status: &str,
+    ) -> SqlResult<bool> {
+        Ok(self.connection.execute(
+            "UPDATE local_assets SET status = ?3 WHERE asset_id = ?1 AND asset_version = ?2",
+            params![asset_id, asset_version, status],
+        )? == 1)
+    }
+
+    pub fn local_audit_events_for_project(
+        &self,
+        project_id: &str,
+    ) -> SqlResult<Vec<LocalAuditEvent>> {
+        let mut statement = self.connection.prepare(
+            "SELECT audit_id, project_id, source_id, file_id, file_version_id,
+                    source_hash, actor, occurred_at, operation, outcome,
+                    correlation_id, payload
+             FROM local_audit_events WHERE project_id = ?1 ORDER BY rowid",
+        )?;
+        let rows = statement.query_map(params![project_id], |row| {
+            Ok(LocalAuditEvent {
+                audit_id: row.get(0)?,
+                project_id: row.get(1)?,
+                source_id: row.get(2)?,
+                file_id: row.get(3)?,
+                file_version_id: row.get(4)?,
+                source_hash: row.get(5)?,
+                actor: row.get(6)?,
+                occurred_at: row.get(7)?,
+                operation: row.get(8)?,
+                outcome: row.get(9)?,
+                correlation_id: row.get(10)?,
+                payload: row.get(11)?,
+            })
+        })?;
+        rows.collect()
+    }
+
     pub fn raw_records_for_version(&self, file_version_id: &str) -> SqlResult<Vec<RawRecord>> {
         let mut statement = self.connection.prepare(
             "SELECT raw_id, file_version_id, row_key, payload, source_locator
@@ -619,6 +836,7 @@ impl ManifestDb {
         if self.is_self_write(&file.path, &file.sha256)? {
             return Ok(false);
         }
+        self.resolve_file_failure(&file.path)?;
         let idempotency_key = format!("FILE_SCAN:{}:{}", file.sha256, file.path);
         let inserted = self.connection.execute(
             "INSERT OR IGNORE INTO pending_jobs(job_id, job_type, payload, status, idempotency_key, created_at)
@@ -665,11 +883,29 @@ impl ManifestDb {
         error: &str,
         created_at: &str,
     ) -> SqlResult<bool> {
+        self.enqueue_file_failure_for_source(path, error, created_at, None)
+    }
+
+    pub fn enqueue_file_failure_for_source(
+        &self,
+        path: &str,
+        error: &str,
+        created_at: &str,
+        source_id: Option<&str>,
+    ) -> SqlResult<bool> {
         let job_id = format!("FILE_SCAN_PATH:{path}");
+        let file_id = file_id_for_path(path);
         let inserted = self.connection.execute(
-            "INSERT OR IGNORE INTO pending_jobs(job_id, job_type, payload, status, idempotency_key, created_at)
-             VALUES (?1, 'FILE_SCAN', ?2, 'PENDING', ?1, ?3)",
-            params![job_id, format!("path={path}"), created_at],
+            "INSERT OR IGNORE INTO pending_jobs(
+               job_id, job_type, payload, status, idempotency_key, created_at, source_id, file_id
+             ) VALUES (?1, 'FILE_SCAN', ?2, 'PENDING', ?1, ?3, ?4, ?5)",
+            params![
+                job_id,
+                format!("path={path}"),
+                created_at,
+                source_id,
+                file_id
+            ],
         )?;
         self.record_job_failure(&job_id, error, 0, 3)?;
         Ok(inserted == 1)
@@ -700,10 +936,81 @@ impl ManifestDb {
             "RETRY"
         };
         self.connection.execute(
-            "UPDATE pending_jobs SET status = ?2 WHERE job_id = ?1",
+            "UPDATE pending_jobs SET status = ?2, phase = CASE WHEN ?2 = 'FAILED' THEN 'FAILED' ELSE 'RETRY' END WHERE job_id = ?1",
             params![job_id, status],
         )?;
         Ok(status == "RETRY")
+    }
+
+    pub fn resolve_file_failure(&self, path: &str) -> SqlResult<bool> {
+        let job_id = format!("FILE_SCAN_PATH:{path}");
+        Ok(self.connection.execute(
+            "UPDATE pending_jobs SET status = 'CANCELLED', phase = 'RESOLVED', cancel_requested = 1
+             WHERE job_id = ?1 AND status IN ('PENDING', 'RETRY', 'PROCESSING')",
+            params![job_id],
+        )? == 1)
+    }
+
+    pub fn update_job_progress(&self, job_id: &str, progress: i64, phase: &str) -> SqlResult<bool> {
+        Ok(self.connection.execute(
+            "UPDATE pending_jobs SET progress = ?2, phase = ?3 WHERE job_id = ?1",
+            params![job_id, progress.clamp(0, 100), phase],
+        )? == 1)
+    }
+
+    pub fn request_job_cancellation(&self, job_id: &str) -> SqlResult<bool> {
+        Ok(self.connection.execute(
+            "UPDATE pending_jobs SET cancel_requested = 1, status = CASE WHEN status IN ('PENDING', 'RETRY') THEN 'CANCELLED' ELSE status END, phase = 'CANCELLED'
+             WHERE job_id = ?1 AND status NOT IN ('DONE', 'FAILED', 'CANCELLED')",
+            params![job_id],
+        )? == 1)
+    }
+
+    pub fn is_job_cancel_requested(&self, job_id: &str) -> SqlResult<bool> {
+        Ok(self
+            .connection
+            .query_row(
+                "SELECT cancel_requested FROM pending_jobs WHERE job_id = ?1",
+                params![job_id],
+                |row| row.get::<_, i64>(0),
+            )
+            .optional()?
+            .unwrap_or_default()
+            != 0)
+    }
+
+    pub fn list_pending_jobs(&self, source_id: Option<&str>) -> SqlResult<Vec<PendingJob>> {
+        let mut statement = self.connection.prepare(
+            "SELECT pending_jobs.job_id, pending_jobs.job_type, pending_jobs.payload,
+                    pending_jobs.status, pending_jobs.idempotency_key, pending_jobs.created_at,
+                    COALESCE(job_attempts.attempts, 0), COALESCE(job_attempts.next_retry_at, 0),
+                    job_attempts.last_error, pending_jobs.progress, pending_jobs.phase,
+                    pending_jobs.cancel_requested, pending_jobs.source_id, pending_jobs.file_id
+             FROM pending_jobs
+             LEFT JOIN job_attempts ON job_attempts.job_id = pending_jobs.job_id
+             WHERE pending_jobs.status IN ('PENDING', 'RETRY', 'PROCESSING', 'FAILED', 'CANCELLED')
+               AND (?1 IS NULL OR pending_jobs.source_id = ?1)
+             ORDER BY pending_jobs.created_at, pending_jobs.job_id",
+        )?;
+        let rows = statement.query_map(params![source_id], |row| {
+            Ok(PendingJob {
+                job_id: row.get(0)?,
+                job_type: row.get(1)?,
+                payload: row.get(2)?,
+                status: row.get(3)?,
+                idempotency_key: row.get(4)?,
+                created_at: row.get(5)?,
+                attempts: row.get(6)?,
+                next_retry_at: row.get(7)?,
+                last_error: row.get(8)?,
+                progress: row.get(9)?,
+                phase: row.get(10)?,
+                cancel_requested: row.get::<_, i64>(11)? != 0,
+                source_id: row.get(12)?,
+                file_id: row.get(13)?,
+            })
+        })?;
+        rows.collect()
     }
 
     pub fn job_status(&self, job_id: &str) -> SqlResult<Option<(String, i64)>> {
@@ -739,7 +1046,7 @@ impl ManifestDb {
                 return Ok(None);
             };
             self.connection.execute(
-                "UPDATE pending_jobs SET status = 'PROCESSING' WHERE job_id = ?1",
+                "UPDATE pending_jobs SET status = 'PROCESSING', phase = CASE WHEN progress > 0 THEN phase ELSE 'CLAIMED' END WHERE job_id = ?1",
                 params![job_id],
             )?;
             self.connection
@@ -747,7 +1054,8 @@ impl ManifestDb {
                     "SELECT pending_jobs.job_id, pending_jobs.job_type, pending_jobs.payload,
                             pending_jobs.status, pending_jobs.idempotency_key, pending_jobs.created_at,
                             COALESCE(job_attempts.attempts, 0), COALESCE(job_attempts.next_retry_at, 0),
-                            job_attempts.last_error
+                            job_attempts.last_error, pending_jobs.progress, pending_jobs.phase,
+                            pending_jobs.cancel_requested, pending_jobs.source_id, pending_jobs.file_id
                      FROM pending_jobs
                      LEFT JOIN job_attempts ON job_attempts.job_id = pending_jobs.job_id
                      WHERE pending_jobs.job_id = ?1",
@@ -763,6 +1071,11 @@ impl ManifestDb {
                             attempts: row.get(6)?,
                             next_retry_at: row.get(7)?,
                             last_error: row.get(8)?,
+                            progress: row.get(9)?,
+                            phase: row.get(10)?,
+                            cancel_requested: row.get::<_, i64>(11)? != 0,
+                            source_id: row.get(12)?,
+                            file_id: row.get(13)?,
                         })
                     },
                 )
@@ -782,7 +1095,7 @@ impl ManifestDb {
 
     pub fn complete_job(&self, job_id: &str) -> SqlResult<bool> {
         Ok(self.connection.execute(
-            "UPDATE pending_jobs SET status = 'DONE' WHERE job_id = ?1 AND status = 'PROCESSING'",
+            "UPDATE pending_jobs SET status = 'DONE', progress = 100, phase = 'DONE' WHERE job_id = ?1 AND status = 'PROCESSING'",
             params![job_id],
         )? == 1)
     }
@@ -962,6 +1275,21 @@ impl ManifestDb {
                row_key TEXT NOT NULL, payload TEXT NOT NULL, source_locator TEXT NOT NULL,
                UNIQUE(file_version_id, row_key)
              );
+             CREATE TABLE IF NOT EXISTS local_assets (
+               asset_id TEXT NOT NULL, project_id TEXT NOT NULL,
+               file_version_id TEXT NOT NULL REFERENCES file_versions(file_version_id) ON DELETE CASCADE,
+               source_id TEXT, file_id TEXT, source_hash TEXT, source_path TEXT,
+               source_locator TEXT NOT NULL, asset_version INTEGER NOT NULL,
+               payload TEXT NOT NULL, status TEXT NOT NULL, created_at TEXT NOT NULL,
+               PRIMARY KEY(asset_id, asset_version)
+             );
+             CREATE TABLE IF NOT EXISTS local_audit_events (
+               audit_id TEXT PRIMARY KEY, project_id TEXT NOT NULL,
+               source_id TEXT, file_id TEXT, file_version_id TEXT,
+               source_hash TEXT, actor TEXT NOT NULL, occurred_at TEXT NOT NULL,
+               operation TEXT NOT NULL, outcome TEXT NOT NULL,
+               correlation_id TEXT NOT NULL, payload TEXT NOT NULL
+             );
              CREATE TABLE IF NOT EXISTS file_observations (
                path TEXT PRIMARY KEY, size INTEGER NOT NULL, modified_at TEXT,
                sha256 TEXT NOT NULL, stable_since INTEGER NOT NULL
@@ -976,13 +1304,38 @@ impl ManifestDb {
              );
              CREATE TABLE IF NOT EXISTS pending_jobs (
                job_id TEXT PRIMARY KEY, job_type TEXT NOT NULL, payload TEXT NOT NULL,
-               status TEXT NOT NULL, idempotency_key TEXT UNIQUE, created_at TEXT NOT NULL
+               status TEXT NOT NULL, idempotency_key TEXT UNIQUE, created_at TEXT NOT NULL,
+               progress INTEGER NOT NULL DEFAULT 0, phase TEXT NOT NULL DEFAULT 'QUEUED',
+               cancel_requested INTEGER NOT NULL DEFAULT 0, source_id TEXT, file_id TEXT
              );
              CREATE TABLE IF NOT EXISTS self_write_markers (
                path TEXT NOT NULL, sha256 TEXT NOT NULL, write_job_id TEXT NOT NULL,
                created_at TEXT NOT NULL, PRIMARY KEY(path, sha256)
              );",
-        )
+        )?;
+        for (column, definition) in [
+            ("progress", "INTEGER NOT NULL DEFAULT 0"),
+            ("phase", "TEXT NOT NULL DEFAULT 'QUEUED'"),
+            ("cancel_requested", "INTEGER NOT NULL DEFAULT 0"),
+            ("source_id", "TEXT"),
+            ("file_id", "TEXT"),
+        ] {
+            let exists: Option<String> = self
+                .connection
+                .query_row(
+                    "SELECT name FROM pragma_table_info('pending_jobs') WHERE name = ?1",
+                    params![column],
+                    |row| row.get(0),
+                )
+                .optional()?;
+            if exists.is_none() {
+                self.connection.execute(
+                    &format!("ALTER TABLE pending_jobs ADD COLUMN {column} {definition}"),
+                    [],
+                )?;
+            }
+        }
+        Ok(())
     }
 }
 

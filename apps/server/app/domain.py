@@ -127,6 +127,8 @@ class CameraStore:
         self.file_versions: dict[UUID, list[dict[str, Any]]] = {}
         self.self_write_hashes: set[tuple[UUID, str]] = set()
         self.source_assets: dict[UUID, dict[str, Any]] = {}
+        self.file_asset_versions: dict[tuple[UUID, str, int], str] = {}
+        self.file_asset_payloads: dict[tuple[UUID, str, int], dict[str, Any]] = {}
         self.organize_groups: dict[UUID, OrganizeGroup] = {}
         self.organize_tags: dict[UUID, OrganizeTag] = {}
         self.organize_group_parents: set[tuple[UUID, UUID]] = set()
@@ -874,6 +876,7 @@ class CameraStore:
         idempotency_key: str,
         source_hash: str | None = None,
         duration_ms: int | None = None,
+        parse_report: dict[str, Any] | None = None,
     ) -> tuple[ChangeSet, ImportResult]:
         file_hash = source_hash or self._raw_rows_hash(raw_rows)
         existing_id = self._changeset_idempotency.get(idempotency_key)
@@ -908,6 +911,8 @@ class CameraStore:
             items.append(
                 {
                     "entity_id": str(entity_id),
+                    "record_identity": self._record_identity(camera, raw_rows),
+                    "source_locator": asdict(camera.source) if camera.source is not None else None,
                     "base_revision": base_revision,
                     "base_payload": base_payload,
                     "patch": self._camera_payload(camera),
@@ -931,6 +936,7 @@ class CameraStore:
             file_hash=file_hash,
             items=items,
             raw_rows=raw_rows,
+            parse_report=parse_report or {},
         )
         self.changesets[changeset.id] = changeset
         self.file_import_results[changeset.id] = result
@@ -950,8 +956,119 @@ class CameraStore:
         )
         return changeset, result
 
+    def edit_file_import_changeset(
+        self,
+        project_id: UUID,
+        changeset_id: UUID,
+        record_identity: str,
+        field: str,
+        value: Any,
+        edited_by: str,
+    ) -> ChangeSet:
+        changeset = self.changesets.get(changeset_id)
+        if changeset is None or changeset.project_id != project_id:
+            raise KeyError("ChangeSet not found")
+        if changeset.origin != "FILE_IMPORT":
+            raise ValueError("ChangeSet is not a file import")
+        if changeset.status != "PENDING_APPROVAL":
+            raise ValueError(f"ChangeSet cannot be edited from {changeset.status}")
+        item = next((candidate for candidate in changeset.items if candidate.get("record_identity") == record_identity), None)
+        if item is None:
+            raise KeyError("ChangeSet record not found")
+        if field not in item.get("patch", {}):
+            raise ValueError(f"Field {field} is not editable in this ChangeSet")
+        before = {field: item["patch"].get(field)}
+        item["patch"][field] = value
+        self._add_event(
+            "FileImportNormalizedValueEdited",
+            changeset.id,
+            project_id,
+            changeset.file_revision or 0,
+            {
+                "file_id": str(changeset.file_id) if changeset.file_id else None,
+                "record_identity": record_identity,
+                "field": field,
+            },
+            actor=edited_by,
+            file_id=changeset.file_id,
+            changeset_id=changeset.id,
+            status=changeset.status,
+            before=before,
+            after={field: value},
+        )
+        return changeset
+
+    def reject_file_import_changeset(
+        self,
+        project_id: UUID,
+        changeset_id: UUID,
+        rejected_by: str,
+        reason: str | None = None,
+    ) -> ChangeSet:
+        changeset = self.changesets.get(changeset_id)
+        if changeset is None or changeset.project_id != project_id:
+            raise KeyError("ChangeSet not found")
+        if changeset.origin not in {"FILE_IMPORT", "DOCUMENT_IMPORT"}:
+            raise ValueError("ChangeSet is not an import")
+        if changeset.status != "PENDING_APPROVAL":
+            raise ValueError(f"ChangeSet cannot be rejected from {changeset.status}")
+        changeset.status = "REJECTED"
+        payload: dict[str, Any] = {"file_id": str(changeset.file_id) if changeset.file_id else None}
+        if reason:
+            payload["reason"] = reason
+        self._add_event(
+            "FileImportRejected",
+            changeset.id,
+            project_id,
+            changeset.file_revision or 0,
+            payload,
+            actor=rejected_by,
+            file_id=changeset.file_id,
+            changeset_id=changeset.id,
+            status=changeset.status,
+        )
+        return changeset
+
     def file_import_result(self, changeset_id: UUID) -> ImportResult | None:
         return self.file_import_results.get(changeset_id)
+
+    def sync_file_assets(
+        self,
+        project_id: UUID,
+        assets: list[dict[str, Any]],
+        actor: str,
+        idempotency_key: str,
+    ) -> dict[str, Any]:
+        if self.get_project(project_id) is None:
+            raise KeyError("Project not found")
+        inserted: list[dict[str, Any]] = []
+        unchanged: list[dict[str, Any]] = []
+        conflicts: list[dict[str, Any]] = []
+        for asset in assets:
+            asset_id = str(asset["asset_id"])
+            version = int(asset["asset_version"])
+            key = (project_id, asset_id, version)
+            fingerprint = hashlib.sha256(json.dumps(asset, ensure_ascii=False, sort_keys=True, default=str).encode("utf-8")).hexdigest()
+            previous = self.file_asset_versions.get(key)
+            if previous == fingerprint:
+                unchanged.append({"asset_id": asset_id, "asset_version": version})
+                continue
+            if previous is not None:
+                conflicts.append({"asset_id": asset_id, "asset_version": version, "reason": "asset version already has different content"})
+                continue
+            self.file_asset_versions[key] = fingerprint
+            self.file_asset_payloads[key] = dict(asset)
+            inserted.append({"asset_id": asset_id, "asset_version": version})
+        self._add_event(
+            "FileAssetSync",
+            uuid4(),
+            project_id,
+            len(self.file_asset_versions),
+            {"idempotency_key": idempotency_key, "inserted": len(inserted), "unchanged": len(unchanged), "conflicts": conflicts},
+            actor=actor,
+            status="CONFLICT_REVIEW" if conflicts else "SYNCED",
+        )
+        return {"inserted": inserted, "unchanged": unchanged, "conflicts": conflicts, "retry_history": [{"idempotency_key": idempotency_key, "status": "CONFLICT_REVIEW" if conflicts else "SYNCED"}]}
 
     def create_document_import_changeset(
         self,
@@ -960,6 +1077,7 @@ class CameraStore:
         created_by: str,
         duration_ms: int | None = None,
         idempotency_key: str | None = None,
+        parse_report: dict[str, Any] | None = None,
     ) -> ChangeSet:
         if self.get_project(project_id) is None:
             raise KeyError("Project not found")
@@ -991,6 +1109,7 @@ class CameraStore:
             relationship_proposals=proposals,
             document_tables=tables,
             document_mapped_tables=mapped_tables,
+            parse_report=parse_report or {},
         )
         self.changesets[changeset.id] = changeset
         if idempotency_key:
@@ -2151,6 +2270,19 @@ class CameraStore:
             "status": camera.status,
             "properties": camera.properties,
         }
+
+    @staticmethod
+    def _record_identity(camera: Camera, raw_rows: list[dict[str, Any]]) -> str:
+        if camera.source is not None:
+            for row in raw_rows:
+                if row.get("__record_identity") and (
+                    row.get("code") == camera.code
+                    or row.get("CameraCode") == camera.code
+                    or row.get("__source_locator", {}).get("row") == camera.source.row
+                ):
+                    return str(row["__record_identity"])
+            return f"row-{camera.source.row}"
+        return f"code-{camera.code}"
 
     @staticmethod
     def _camera_from_payload(entity_id: UUID, project_id: UUID, payload: dict[str, Any]) -> Camera:

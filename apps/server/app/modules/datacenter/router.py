@@ -45,6 +45,9 @@ from ...adapters.files.importers.excel import (
 
 from ...shared.schemas import (
     ApprovalRequest,
+    AssetSyncRequest,
+    ChangeSetEditRequest,
+    ChangeSetRejectRequest,
     ContractorCreate,
     DocumentImportRequest,
     DesktopNormalizedImportRequest,
@@ -82,6 +85,25 @@ class _StoreProxy:
 
 
 store = _StoreProxy()
+
+
+@router.post("/api/v1/projects/{project_id}/file-assets/sync", status_code=202)
+def sync_file_assets(
+    project_id: UUID,
+    request: AssetSyncRequest,
+    x_actor: str = Header(default="desktop-asset-sync"),
+    x_role: str = Header(default=Role.PROJECT_ADMIN.value),
+) -> dict[str, Any]:
+    _authorize_header(project_id, "changeset.sync", x_actor, x_role)
+    try:
+        return jsonable_encoder(store.sync_file_assets(
+            project_id,
+            [asset.model_dump() for asset in request.assets],
+            request.actor,
+            request.idempotency_key,
+        ))
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 def _workbook_profile(request: FileImportProfileRequest | None) -> WorkbookProfile | None:
@@ -140,8 +162,11 @@ def _preview_rows(scan: Any) -> list[dict[str, Any]]:
 def _desktop_record_rows(request: DesktopNormalizedImportRequest) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for record in request.records:
-        row = dict(record.fields)
+        row = dict(record.raw)
+        row.update(record.fields)
         row.update(record.unmapped)
+        if record.identity:
+            row["__record_identity"] = record.identity
         if record.source:
             row["__source_locator"] = record.source
         rows.append(row)
@@ -219,6 +244,7 @@ def _fallback_suffix(request: DesktopRawFallbackRequest) -> str:
         return suffix
     return {
         "XLSX": ".xlsx",
+        "XLS": ".xls",
         "CSV": ".csv",
         "TXT": ".txt",
         "MARKDOWN": ".md",
@@ -326,6 +352,7 @@ def create_desktop_normalized_import(
             "result": None,
             "parse_report": request.parse_report,
             "raw_deleted": True,
+            "retry_history": [{"attempt": request.retry_attempt, "status": "SUPPRESSED"}],
         }
 
     started_at = perf_counter()
@@ -337,6 +364,7 @@ def create_desktop_normalized_import(
             request.created_by,
             round((perf_counter() - started_at) * 1000),
             request.idempotency_key,
+            request.parse_report,
         )
         return jsonable_encoder({
             "status": "NORMALIZED_ACCEPTED",
@@ -345,6 +373,7 @@ def create_desktop_normalized_import(
             "parse_report": request.parse_report,
             "raw_deleted": True,
             "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+            "retry_history": [{"attempt": request.retry_attempt, "status": "NORMALIZED_ACCEPTED"}],
         })
 
     rows = _desktop_record_rows(request)
@@ -365,6 +394,7 @@ def create_desktop_normalized_import(
         request.idempotency_key,
         request.source_hash,
         round((perf_counter() - started_at) * 1000),
+        request.parse_report,
     )
     return jsonable_encoder({
         "status": "NORMALIZED_ACCEPTED",
@@ -373,6 +403,7 @@ def create_desktop_normalized_import(
         "parse_report": request.parse_report,
         "raw_deleted": True,
         "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+        "retry_history": [{"attempt": request.retry_attempt, "status": "NORMALIZED_ACCEPTED"}],
     })
 
 
@@ -420,7 +451,7 @@ def create_desktop_raw_fallback(
         with tempfile.TemporaryDirectory(prefix="desktop-import-") as temp_dir:
             path = Path(temp_dir) / f"source{_fallback_suffix(request)}"
             path.write_bytes(raw_bytes)
-            if request.format == "XLSX":
+            if request.format in {"XLSX", "XLS"}:
                 raw_rows, cameras, issues, _scan = parse_camera_workbook_for_import(
                     path,
                     file_id=request.file_id,
@@ -453,6 +484,7 @@ def create_desktop_raw_fallback(
                     request.idempotency_key,
                     request.source_hash,
                     round((perf_counter() - started_at) * 1000),
+                    request.parse_report,
                 )
             elif request.format == "CSV":
                 rows = list(csv.DictReader(io.StringIO(raw_bytes.decode("utf-8-sig"))))
@@ -481,6 +513,7 @@ def create_desktop_raw_fallback(
                     request.idempotency_key,
                     request.source_hash,
                     round((perf_counter() - started_at) * 1000),
+                    request.parse_report,
                 )
             else:
                 parsed = parse_document(
@@ -496,6 +529,7 @@ def create_desktop_raw_fallback(
                     request.created_by,
                     round((perf_counter() - started_at) * 1000),
                     request.idempotency_key,
+                    request.parse_report,
                 )
                 result = None
     except (OSError, ValueError, UnicodeDecodeError, BadZipFile) as exc:
@@ -525,6 +559,7 @@ def create_desktop_raw_fallback(
         "raw_deleted": True,
         "processing_duration_ms": round((perf_counter() - started_at) * 1000),
         "server_profile_id": server_profile_id,
+        "retry_history": [{"attempt": request.retry_attempt, "status": status}],
     })
 
 
@@ -728,6 +763,54 @@ def approve_file_import_changeset(
             status_code=409,
             detail={"code": "CONFLICT", "changeset_id": str(exc.changeset_id), "conflicts": exc.conflicts},
         ) from exc
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/v1/projects/{project_id}/file-imports/{changeset_id}/edit")
+def edit_file_import_changeset(
+    project_id: UUID,
+    changeset_id: UUID,
+    request: ChangeSetEditRequest,
+    x_actor: str = Header(default="changeset-editor"),
+    x_role: str = Header(default=Role.PROJECT_ADMIN.value),
+) -> dict[str, Any]:
+    _authorize_header(project_id, "changeset.edit", x_actor, x_role)
+    try:
+        changeset = store.edit_file_import_changeset(
+            project_id,
+            changeset_id,
+            request.record_identity,
+            request.field,
+            request.value,
+            request.edited_by,
+        )
+        return jsonable_encoder({"changeset": changeset})
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    except ValueError as exc:
+        raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+
+@router.post("/api/v1/projects/{project_id}/file-imports/{changeset_id}/reject")
+def reject_file_import_changeset(
+    project_id: UUID,
+    changeset_id: UUID,
+    request: ChangeSetRejectRequest,
+    x_actor: str = Header(default="changeset-reviewer"),
+    x_role: str = Header(default=Role.PROJECT_ADMIN.value),
+) -> dict[str, Any]:
+    _authorize_header(project_id, "changeset.reject", x_actor, x_role)
+    try:
+        changeset = store.reject_file_import_changeset(
+            project_id,
+            changeset_id,
+            request.rejected_by,
+            request.reason,
+        )
+        return jsonable_encoder({"changeset": changeset})
     except KeyError as exc:
         raise HTTPException(status_code=404, detail=str(exc)) from exc
     except ValueError as exc:

@@ -168,3 +168,81 @@ def test_normalized_document_import_creates_read_only_changeset(tmp_path) -> Non
     assert response.json()["status"] == "NORMALIZED_ACCEPTED"
     assert response.json()["changeset"]["representation"] == "DOCUMENT"
     assert response.json()["changeset"]["raw_rows"][0]["text"] == "CAM-001 is online"
+
+
+def test_changeset_review_edits_are_audited_and_approval_is_explicit(tmp_path) -> None:
+    client = TestClient(app)
+    project_id = create_project(client, tmp_path)["id"]
+    response = client.post(
+        f"/api/v1/projects/{project_id}/desktop-imports/normalized",
+        json={
+            "file_id": "ffffffff-ffff-ffff-ffff-ffffffffffff",
+            "file_revision": 1,
+            "idempotency_key": "desktop-review-1",
+            "format": "CSV",
+            "source_hash": "f" * 64,
+            "parser_version": "desktop-parser-v1",
+            "profile_id": "camera-csv",
+            "profile_version": 1,
+            "parsed_at": 1,
+            "records": [{
+                "identity": "record-stable-1",
+                "fields": {"code": "CAM-REVIEW", "name": "Before"},
+                "raw": {"Code": "CAM-REVIEW", "Name": "Before"},
+                "source": {"sheet": "CSV", "row": 2, "column": "A"},
+            }],
+        },
+    )
+    assert response.status_code == 202, response.text
+    changeset_id = response.json()["changeset"]["id"]
+    assert response.json()["changeset"]["items"][0]["record_identity"] == "record-stable-1"
+
+    edited = client.post(
+        f"/api/v1/projects/{project_id}/file-imports/{changeset_id}/edit",
+        json={"record_identity": "record-stable-1", "field": "name", "value": "After", "edited_by": "reviewer"},
+    )
+    assert edited.status_code == 200, edited.text
+    assert edited.json()["changeset"]["items"][0]["patch"]["name"] == "After"
+    assert store.cameras == {}
+
+    approved = client.post(
+        f"/api/v1/projects/{project_id}/file-imports/{changeset_id}/approve",
+        json={"approved_by": "approver"},
+    )
+    assert approved.status_code == 200, approved.text
+    assert approved.json()["changeset"]["status"] == "APPLIED"
+    assert next(iter(store.cameras.values())).name == "After"
+    audit = client.get(f"/api/v1/projects/{project_id}/audit?changeset_id={changeset_id}")
+    assert audit.status_code == 200, audit.text
+    assert any(event["operation"] == "FileImportNormalizedValueEdited" for event in audit.json())
+
+
+def test_asset_sync_is_idempotent_and_conflicts_without_overwrite(tmp_path) -> None:
+    client = TestClient(app)
+    project_id = create_project(client, tmp_path)["id"]
+    asset = {
+        "asset_id": "asset-local-1",
+        "asset_version": 1,
+        "source_hash": "1" * 64,
+        "source_path": "C:/Data/plan.png",
+        "source_locator": {"line": 3},
+        "payload": {"name": "plan.png", "bytes": 10},
+    }
+    first = client.post(
+        f"/api/v1/projects/{project_id}/file-assets/sync",
+        json={"idempotency_key": "asset-sync-1", "assets": [asset]},
+    )
+    duplicate = client.post(
+        f"/api/v1/projects/{project_id}/file-assets/sync",
+        json={"idempotency_key": "asset-sync-1", "assets": [asset]},
+    )
+    conflict = client.post(
+        f"/api/v1/projects/{project_id}/file-assets/sync",
+        json={"idempotency_key": "asset-sync-2", "assets": [{**asset, "payload": {"name": "changed.png"}}]},
+    )
+
+    assert first.status_code == 202, first.text
+    assert first.json()["inserted"] == [{"asset_id": "asset-local-1", "asset_version": 1}]
+    assert duplicate.json()["unchanged"] == [{"asset_id": "asset-local-1", "asset_version": 1}]
+    assert conflict.json()["conflicts"][0]["asset_id"] == "asset-local-1"
+    assert len(store.file_asset_payloads) == 1

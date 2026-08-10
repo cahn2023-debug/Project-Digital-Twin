@@ -19,8 +19,8 @@ export interface SyncBatchResult {
   message: string;
 }
 
-export async function initEncryptedDatabase(dbPath: string, secretPasskey: string): Promise<DbStatusResponse> {
-  return await invoke<DbStatusResponse>('init_encrypted_database', { dbPath, secretPasskey });
+export async function initEncryptedDatabase(dbPath: string, keychainScope: string): Promise<DbStatusResponse> {
+  return await invoke<DbStatusResponse>('init_encrypted_database', { dbPath, keychainScope });
 }
 
 export async function checkEncryptedDatabaseHealth(): Promise<DbStatusResponse> {

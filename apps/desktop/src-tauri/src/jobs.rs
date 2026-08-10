@@ -1,6 +1,6 @@
 use desktop_core::{
-    DiscoveredFile, FileScanContext, LocalImport, LocalImportHistory, LocalProfile, ManifestDb,
-    PendingJob, RawRecord,
+    DiscoveredFile, FileScanContext, LocalAsset, LocalAuditEvent, LocalImport, LocalImportHistory,
+    LocalProfile, ManifestDb, PendingJob, RawRecord,
 };
 
 #[tauri::command]
@@ -21,6 +21,46 @@ pub fn claim_pending_jobs(
         jobs.push(job);
     }
     Ok(jobs)
+}
+
+#[tauri::command]
+pub fn list_pending_jobs(
+    manifest_path: String,
+    source_id: Option<String>,
+) -> Result<Vec<PendingJob>, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .list_pending_jobs(source_id.as_deref())
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn update_pending_job_progress(
+    manifest_path: String,
+    job_id: String,
+    progress: i64,
+    phase: String,
+) -> Result<bool, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .update_job_progress(&job_id, progress, &phase)
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn cancel_pending_job(manifest_path: String, job_id: String) -> Result<bool, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .request_job_cancellation(&job_id)
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn is_pending_job_cancelled(manifest_path: String, job_id: String) -> Result<bool, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .is_job_cancel_requested(&job_id)
+        .map_err(|error| error.to_string())
 }
 
 #[tauri::command]
@@ -57,10 +97,12 @@ pub fn store_local_import_result(
     created_at: String,
     attempt: Option<i64>,
     raw_records: Vec<RawRecord>,
+    assets: Option<Vec<LocalAsset>>,
+    audit_events: Option<Vec<LocalAuditEvent>>,
 ) -> Result<(), String> {
     let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
     database
-        .store_local_import_result(
+        .store_local_import_result_with_metadata(
             &import_id,
             &project_id,
             &file_version_id,
@@ -69,6 +111,8 @@ pub fn store_local_import_result(
             &created_at,
             attempt.unwrap_or_default(),
             &raw_records,
+            assets.as_deref().unwrap_or_default(),
+            audit_events.as_deref().unwrap_or_default(),
         )
         .map_err(|error| error.to_string())
 }
@@ -104,6 +148,19 @@ pub fn list_local_import_history(
     let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
     database
         .list_local_import_history(&project_id, import_id.as_deref())
+        .map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+pub fn mark_local_asset_sync(
+    manifest_path: String,
+    asset_id: String,
+    asset_version: i64,
+    status: String,
+) -> Result<bool, String> {
+    let database = ManifestDb::open(manifest_path).map_err(|error| error.to_string())?;
+    database
+        .mark_local_asset_sync(&asset_id, asset_version, &status)
         .map_err(|error| error.to_string())
 }
 
