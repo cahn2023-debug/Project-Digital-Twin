@@ -14,6 +14,24 @@ CREATE TABLE IF NOT EXISTS source_registrations (
     UNIQUE(project_id, directory)
 );
 
+CREATE TABLE IF NOT EXISTS local_imports (
+    import_id TEXT PRIMARY KEY,
+    project_id TEXT NOT NULL,
+    file_version_id TEXT NOT NULL,
+    status TEXT NOT NULL,
+    payload TEXT NOT NULL,
+    created_at TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS local_profiles (
+    profile_id TEXT NOT NULL,
+    project_id TEXT NOT NULL,
+    version INTEGER NOT NULL,
+    payload TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    PRIMARY KEY(profile_id, version)
+);
+
 CREATE TABLE IF NOT EXISTS local_files (
     file_id TEXT PRIMARY KEY,
     logical_role TEXT NOT NULL,

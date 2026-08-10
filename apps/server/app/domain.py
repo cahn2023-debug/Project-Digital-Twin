@@ -946,9 +946,14 @@ class CameraStore:
         parsed: Any,
         created_by: str,
         duration_ms: int | None = None,
+        idempotency_key: str | None = None,
     ) -> ChangeSet:
         if self.get_project(project_id) is None:
             raise KeyError("Project not found")
+        if idempotency_key:
+            existing_id = self._changeset_idempotency.get(idempotency_key)
+            if existing_id is not None:
+                return self.changesets[existing_id]
         proposals = [asdict(proposal) for proposal in parsed.relationship_proposals]
         assets = [asdict(asset) for asset in parsed.assets]
         tables = [asdict(table) for table in parsed.tables]
@@ -975,6 +980,8 @@ class CameraStore:
             document_mapped_tables=mapped_tables,
         )
         self.changesets[changeset.id] = changeset
+        if idempotency_key:
+            self._changeset_idempotency[idempotency_key] = changeset.id
         self._add_event(
             "DocumentImportSubmitted",
             changeset.id,

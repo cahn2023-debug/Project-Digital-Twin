@@ -1,6 +1,6 @@
 {
   "taskId": "bnuso1",
-  "currentVersion": 2,
+  "currentVersion": 7,
   "versions": [
     {
       "id": "v1",
@@ -58,16 +58,16 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally.",
-              "completed": false
+              "completed": false,
+              "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
             },
             {
-              "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval.",
-              "completed": false
+              "completed": false,
+              "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
             },
             {
-              "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports.",
-              "completed": false
+              "completed": false,
+              "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
             }
           ]
         }
@@ -75,16 +75,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally.",
-            "completed": false
+            "completed": false,
+            "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
           },
           {
-            "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval.",
-            "completed": false
+            "completed": false,
+            "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
           },
           {
-            "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports.",
-            "completed": false
+            "completed": false,
+            "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
           }
         ],
         "archived": false,
@@ -111,6 +111,336 @@
         "timeSpent": 0,
         "title": "[desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence",
         "updatedAt": "2026-08-10T01:50:39.9367294Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "bnuso1",
+      "version": 3,
+      "timestamp": "2026-08-10T02:17:11.793563Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
+          },
+          {
+            "completed": false,
+            "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
+          },
+          {
+            "completed": false,
+            "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.755Z",
+        "description": "Implement the missing FILE_SCAN processing path. Select the existing Excel/document parser, persist file version/Raw/source locators and file-specific ChangeSets in the local encrypted boundary, submit known Profiles automatically, and create durable pending sync jobs without writing canonical state before approval.",
+        "fulfills": [
+          "AC-4",
+          "AC-6",
+          "AC-7",
+          "AC-9"
+        ],
+        "id": "bnuso1",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "import-worker",
+          "persistence"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence",
+        "updatedAt": "2026-08-10T02:17:11.793563Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "bnuso1",
+      "version": 4,
+      "timestamp": "2026-08-10T02:23:12.41214Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Extend the desktop manifest boundary with idempotent file-scan preparation, local import/ChangeSet payload persistence, and Raw/source-locator records; add focused restart/duplicate tests.\n2. Expose Tauri commands to prepare a scanned file version and store the local import result, then register them with the existing job IPC.\n3. Add a server `file-imports/from-path` adapter using the existing Excel parser and preserve document-import idempotency; add endpoint/parser tests.\n4. Implement a desktop import worker that claims `FILE_SCAN` jobs, dispatches Excel/document parsing, stores results locally, completes successful jobs, and retries failures with bounded backoff.\n5. Start the worker from Datacenter source management and refresh source state after processed jobs.\n6. Run focused Rust/Python/TypeScript checks, diff review, Knowns validation, and record AC/spec-decision compliance."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Plan prepared in active kn-flow; execution continues without a separate approval gate because the approved spec flow is already authorized."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
+          },
+          {
+            "completed": false,
+            "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
+          },
+          {
+            "completed": false,
+            "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.755Z",
+        "description": "Implement the missing FILE_SCAN processing path. Select the existing Excel/document parser, persist file version/Raw/source locators and file-specific ChangeSets in the local encrypted boundary, submit known Profiles automatically, and create durable pending sync jobs without writing canonical state before approval.",
+        "fulfills": [
+          "AC-4",
+          "AC-6",
+          "AC-7",
+          "AC-9"
+        ],
+        "id": "bnuso1",
+        "implementationNotes": "Plan prepared in active kn-flow; execution continues without a separate approval gate because the approved spec flow is already authorized.",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop manifest boundary with idempotent file-scan preparation, local import/ChangeSet payload persistence, and Raw/source-locator records; add focused restart/duplicate tests.\n2. Expose Tauri commands to prepare a scanned file version and store the local import result, then register them with the existing job IPC.\n3. Add a server `file-imports/from-path` adapter using the existing Excel parser and preserve document-import idempotency; add endpoint/parser tests.\n4. Implement a desktop import worker that claims `FILE_SCAN` jobs, dispatches Excel/document parsing, stores results locally, completes successful jobs, and retries failures with bounded backoff.\n5. Start the worker from Datacenter source management and refresh source state after processed jobs.\n6. Run focused Rust/Python/TypeScript checks, diff review, Knowns validation, and record AC/spec-decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "import-worker",
+          "persistence"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence",
+        "updatedAt": "2026-08-10T02:23:12.41214Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "bnuso1",
+      "version": 5,
+      "timestamp": "2026-08-10T02:33:40.6644518Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
+            },
+            {
+              "completed": false,
+              "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
+            },
+            {
+              "completed": false,
+              "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
+            },
+            {
+              "completed": true,
+              "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
+            },
+            {
+              "completed": true,
+              "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Plan prepared in active kn-flow; execution continues without a separate approval gate because the approved spec flow is already authorized.",
+          "newValue": "Plan prepared in active kn-flow; execution continues without a separate approval gate because the approved spec flow is already authorized.\nDone: FILE_SCAN now prepares immutable local file versions, dispatches source-aware Excel/document jobs through parser boundaries, persists ChangeSet/import payloads plus Raw/source locators transactionally, and completes jobs only after local persistence. Known-profile workbook imports create pending-approval ChangeSets; unmapped workbook structures return durable preview state. Document imports now use idempotency keys. Watcher timestamps use current epoch so debounce progresses after manual scan.\n\nVerification: cargo fmt --all -- --check; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 50 passed; git diff --check passed. Web typecheck remains blocked by unrelated Design/MapLibre work in apps/web/src/features/design/DesignView.tsx and apps/web/src/features/design/offlineBasemap.ts (current workspace errors), not by the ingestion files.\n\nReview: PASS, P1=0, P2=0. Delegated reviewer was closed after timeout; manual four-perspective review completed. No unrelated Design changes were altered.\n\nSystem Decision Impact: candidate @decision/20260810-0932-desktop-file-scan-imports-persist-local-results-before-synchronization (added) — durable local-first FILE_SCAN/parser/Raw persistence and idempotent retry contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
+          },
+          {
+            "completed": true,
+            "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
+          },
+          {
+            "completed": true,
+            "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.755Z",
+        "description": "Implement the missing FILE_SCAN processing path. Select the existing Excel/document parser, persist file version/Raw/source locators and file-specific ChangeSets in the local encrypted boundary, submit known Profiles automatically, and create durable pending sync jobs without writing canonical state before approval.",
+        "fulfills": [
+          "AC-4",
+          "AC-6",
+          "AC-7",
+          "AC-9"
+        ],
+        "id": "bnuso1",
+        "implementationNotes": "Plan prepared in active kn-flow; execution continues without a separate approval gate because the approved spec flow is already authorized.\nDone: FILE_SCAN now prepares immutable local file versions, dispatches source-aware Excel/document jobs through parser boundaries, persists ChangeSet/import payloads plus Raw/source locators transactionally, and completes jobs only after local persistence. Known-profile workbook imports create pending-approval ChangeSets; unmapped workbook structures return durable preview state. Document imports now use idempotency keys. Watcher timestamps use current epoch so debounce progresses after manual scan.\n\nVerification: cargo fmt --all -- --check; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 50 passed; git diff --check passed. Web typecheck remains blocked by unrelated Design/MapLibre work in apps/web/src/features/design/DesignView.tsx and apps/web/src/features/design/offlineBasemap.ts (current workspace errors), not by the ingestion files.\n\nReview: PASS, P1=0, P2=0. Delegated reviewer was closed after timeout; manual four-perspective review completed. No unrelated Design changes were altered.\n\nSystem Decision Impact: candidate @decision/20260810-0932-desktop-file-scan-imports-persist-local-results-before-synchronization (added) — durable local-first FILE_SCAN/parser/Raw persistence and idempotent retry contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop manifest boundary with idempotent file-scan preparation, local import/ChangeSet payload persistence, and Raw/source-locator records; add focused restart/duplicate tests.\n2. Expose Tauri commands to prepare a scanned file version and store the local import result, then register them with the existing job IPC.\n3. Add a server `file-imports/from-path` adapter using the existing Excel parser and preserve document-import idempotency; add endpoint/parser tests.\n4. Implement a desktop import worker that claims `FILE_SCAN` jobs, dispatches Excel/document parsing, stores results locally, completes successful jobs, and retries failures with bounded backoff.\n5. Start the worker from Datacenter source management and refresh source state after processed jobs.\n6. Run focused Rust/Python/TypeScript checks, diff review, Knowns validation, and record AC/spec-decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "import-worker",
+          "persistence"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence",
+        "updatedAt": "2026-08-10T02:33:40.6644518Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "bnuso1",
+      "version": 6,
+      "timestamp": "2026-08-10T02:33:54.2150438Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 1000
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally."
+          },
+          {
+            "completed": true,
+            "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval."
+          },
+          {
+            "completed": true,
+            "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.755Z",
+        "description": "Implement the missing FILE_SCAN processing path. Select the existing Excel/document parser, persist file version/Raw/source locators and file-specific ChangeSets in the local encrypted boundary, submit known Profiles automatically, and create durable pending sync jobs without writing canonical state before approval.",
+        "fulfills": [
+          "AC-4",
+          "AC-6",
+          "AC-7",
+          "AC-9"
+        ],
+        "id": "bnuso1",
+        "implementationNotes": "Plan prepared in active kn-flow; execution continues without a separate approval gate because the approved spec flow is already authorized.\nDone: FILE_SCAN now prepares immutable local file versions, dispatches source-aware Excel/document jobs through parser boundaries, persists ChangeSet/import payloads plus Raw/source locators transactionally, and completes jobs only after local persistence. Known-profile workbook imports create pending-approval ChangeSets; unmapped workbook structures return durable preview state. Document imports now use idempotency keys. Watcher timestamps use current epoch so debounce progresses after manual scan.\n\nVerification: cargo fmt --all -- --check; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 50 passed; git diff --check passed. Web typecheck remains blocked by unrelated Design/MapLibre work in apps/web/src/features/design/DesignView.tsx and apps/web/src/features/design/offlineBasemap.ts (current workspace errors), not by the ingestion files.\n\nReview: PASS, P1=0, P2=0. Delegated reviewer was closed after timeout; manual four-perspective review completed. No unrelated Design changes were altered.\n\nSystem Decision Impact: candidate @decision/20260810-0932-desktop-file-scan-imports-persist-local-results-before-synchronization (added) — durable local-first FILE_SCAN/parser/Raw persistence and idempotent retry contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop manifest boundary with idempotent file-scan preparation, local import/ChangeSet payload persistence, and Raw/source-locator records; add focused restart/duplicate tests.\n2. Expose Tauri commands to prepare a scanned file version and store the local import result, then register them with the existing job IPC.\n3. Add a server `file-imports/from-path` adapter using the existing Excel parser and preserve document-import idempotency; add endpoint/parser tests.\n4. Implement a desktop import worker that claims `FILE_SCAN` jobs, dispatches Excel/document parsing, stores results locally, completes successful jobs, and retries failures with bounded backoff.\n5. Start the worker from Datacenter source management and refresh source state after processed jobs.\n6. Run focused Rust/Python/TypeScript checks, diff review, Knowns validation, and record AC/spec-decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "import-worker",
+          "persistence"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 1000,
+        "title": "[desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence",
+        "updatedAt": "2026-08-10T02:33:54.2150438Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "bnuso1",
+      "version": 7,
+      "timestamp": "2026-08-10T02:34:04.4687544Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T02:34:04.4687544Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "FILE_SCAN jobs dispatch to the existing Excel/document parser boundary and register file version, Raw rows/assets and source locators locally.",
+            "completed": true
+          },
+          {
+            "text": "Known Profiles auto-submit; new/mismatched structures produce a durable preview/import state without canonical apply before approval.",
+            "completed": true
+          },
+          {
+            "text": "ChangeSets and pending sync jobs survive restart/offline and duplicate idempotency keys do not create duplicate imports.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:34:04.4687544Z",
+        "createdAt": "2026-08-10T01:50:21.755Z",
+        "description": "Implement the missing FILE_SCAN processing path. Select the existing Excel/document parser, persist file version/Raw/source locators and file-specific ChangeSets in the local encrypted boundary, submit known Profiles automatically, and create durable pending sync jobs without writing canonical state before approval.",
+        "fulfills": [
+          "AC-4",
+          "AC-6",
+          "AC-7",
+          "AC-9"
+        ],
+        "id": "bnuso1",
+        "implementationNotes": "Plan prepared in active kn-flow; execution continues without a separate approval gate because the approved spec flow is already authorized.\nDone: FILE_SCAN now prepares immutable local file versions, dispatches source-aware Excel/document jobs through parser boundaries, persists ChangeSet/import payloads plus Raw/source locators transactionally, and completes jobs only after local persistence. Known-profile workbook imports create pending-approval ChangeSets; unmapped workbook structures return durable preview state. Document imports now use idempotency keys. Watcher timestamps use current epoch so debounce progresses after manual scan.\n\nVerification: cargo fmt --all -- --check; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 50 passed; git diff --check passed. Web typecheck remains blocked by unrelated Design/MapLibre work in apps/web/src/features/design/DesignView.tsx and apps/web/src/features/design/offlineBasemap.ts (current workspace errors), not by the ingestion files.\n\nReview: PASS, P1=0, P2=0. Delegated reviewer was closed after timeout; manual four-perspective review completed. No unrelated Design changes were altered.\n\nSystem Decision Impact: candidate @decision/20260810-0932-desktop-file-scan-imports-persist-local-results-before-synchronization (added) — durable local-first FILE_SCAN/parser/Raw persistence and idempotent retry contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the desktop manifest boundary with idempotent file-scan preparation, local import/ChangeSet payload persistence, and Raw/source-locator records; add focused restart/duplicate tests.\n2. Expose Tauri commands to prepare a scanned file version and store the local import result, then register them with the existing job IPC.\n3. Add a server `file-imports/from-path` adapter using the existing Excel parser and preserve document-import idempotency; add endpoint/parser tests.\n4. Implement a desktop import worker that claims `FILE_SCAN` jobs, dispatches Excel/document parsing, stores results locally, completes successful jobs, and retries failures with bounded backoff.\n5. Start the worker from Datacenter source management and refresh source state after processed jobs.\n6. Run focused Rust/Python/TypeScript checks, diff review, Knowns validation, and record AC/spec-decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "import-worker",
+          "persistence"
+        ],
+        "order": 30,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 1000,
+        "title": "[desktop-data-source-folder-ingestion-03] Wire queued scans to parsers, Raw, ChangeSets and local-first persistence",
+        "updatedAt": "2026-08-10T02:34:04.4687544Z"
       }
     }
   ]

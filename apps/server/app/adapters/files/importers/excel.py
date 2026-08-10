@@ -311,6 +311,22 @@ def parse_camera_workbook(
     file_revision: int = 1,
     profile: WorkbookProfile | None = None,
 ) -> tuple[list[Camera], list[ImportIssue]]:
+    _, cameras, issues, _ = parse_camera_workbook_for_import(
+        path,
+        file_id=file_id,
+        file_revision=file_revision,
+        profile=profile,
+    )
+    return cameras, issues
+
+
+def parse_camera_workbook_for_import(
+    path: str | Path,
+    *,
+    file_id: UUID | None = None,
+    file_revision: int = 1,
+    profile: WorkbookProfile | None = None,
+) -> tuple[list[dict[str, Any]], list[Camera], list[ImportIssue], WorkbookScanResult]:
     profile = profile or WorkbookProfile(
         profile_id="camera-default",
         version=1,
@@ -321,13 +337,13 @@ def parse_camera_workbook(
     )
     scan = scan_workbook(path, file_id=file_id, file_revision=file_revision)
     if profile.sheet not in {region.sheet for region in scan.regions}:
-        return [], [ImportIssue("UNMAPPED_SHEET", f"Missing sheet {profile.sheet}", 0)]
+        return [], [], [ImportIssue("UNMAPPED_SHEET", f"Missing sheet {profile.sheet}", 0)], scan
     if _region_for_profile(scan, profile) is None:
-        return [], [ImportIssue("UNMAPPED_TABLE", f"Missing table in sheet {profile.sheet}", 0)]
+        return [], [], [ImportIssue("UNMAPPED_TABLE", f"Missing table in sheet {profile.sheet}", 0)], scan
     rows = _profile_rows(scan, profile)
     if not rows:
-        return [], [ImportIssue("UNSUPPORTED_ROW", "Workbook table has no data rows", 0)]
-    return parse_camera_rows(
+        return [], [], [ImportIssue("UNSUPPORTED_ROW", "Workbook table has no data rows", 0)], scan
+    cameras, issues = parse_camera_rows(
         rows,
         file_id=file_id,
         file_revision=file_revision,
@@ -335,3 +351,4 @@ def parse_camera_workbook(
         row_start=profile.data_start_row,
         aliases=profile.aliases,
     )
+    return rows, cameras, issues, scan

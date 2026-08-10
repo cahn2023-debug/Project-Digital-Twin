@@ -4,7 +4,7 @@ use std::sync::{
     Arc,
 };
 use std::thread;
-use std::time::Duration;
+use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use desktop_core::{scan_directory_best_effort, ManifestDb, SourceRegistration};
 use tauri::{Manager, State};
@@ -23,19 +23,10 @@ pub fn get_local_manifest_path(
     app: tauri::AppHandle,
     project_id: String,
 ) -> Result<String, String> {
-    let project_segment: String = project_id
-        .chars()
-        .map(|character| {
-            if character.is_ascii_alphanumeric() || matches!(character, '-' | '_') {
-                character
-            } else {
-                '-'
-            }
-        })
-        .collect();
-    if project_segment.is_empty() {
+    if project_id.trim().is_empty() {
         return Err("project id is required".to_owned());
     }
+    let project_segment = desktop_core::source_id_for_directory(&project_id, "manifest");
     let directory = app
         .path()
         .app_local_data_dir()
@@ -91,6 +82,13 @@ fn scan_and_enqueue(
         }
     }
     Ok(queued)
+}
+
+fn current_epoch_seconds() -> i64 {
+    SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .map(|duration| duration.as_secs() as i64)
+        .unwrap_or_default()
 }
 
 #[tauri::command]
@@ -193,7 +191,7 @@ fn start_watcher(
     }
     thread::spawn(move || {
         let interval = Duration::from_millis((debounce_seconds.max(1) as u64 * 500).max(250));
-        let mut observed_at = 0_i64;
+        let mut observed_at = current_epoch_seconds();
         while !stop.load(Ordering::Relaxed) {
             let _ = scan_and_enqueue(
                 &manifest_path,
@@ -253,7 +251,7 @@ pub fn start_source_watcher(
     }
     thread::spawn(move || {
         let interval = Duration::from_millis((debounce_seconds.max(1) as u64 * 500).max(250));
-        let mut observed_at = 0_i64;
+        let mut observed_at = current_epoch_seconds();
         while !stop.load(Ordering::Relaxed) {
             let _ = scan_registered_source(
                 &manifest_path,

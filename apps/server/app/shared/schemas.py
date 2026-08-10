@@ -27,6 +27,28 @@ class FileImportRequest(ImportRequest):
     source_hash: str | None = Field(default=None, min_length=64, max_length=64)
 
 
+class FileImportProfileRequest(BaseModel):
+    profile_id: str = Field(min_length=1, max_length=120)
+    version: int = Field(ge=1)
+    sheet: str = Field(min_length=1, max_length=120)
+    header_rows: list[int] = Field(min_length=1)
+    data_start_row: int = Field(ge=1)
+    table_start_row: int | None = Field(default=None, ge=1)
+    skip_row_patterns: list[str] = Field(default_factory=list)
+    aliases: dict[str, list[str]] = Field(default_factory=dict)
+
+
+class FileImportFromPathRequest(BaseModel):
+    path: str = Field(min_length=1)
+    file_id: UUID
+    file_revision: int = Field(ge=1)
+    idempotency_key: str = Field(min_length=1, max_length=200)
+    sheet: str = "CAMERA"
+    created_by: str = Field(default="desktop-import", min_length=1)
+    source_hash: str | None = Field(default=None, min_length=64, max_length=64)
+    profile: FileImportProfileRequest | None = None
+
+
 class GeometryRequest(BaseModel):
     latitude: float
     longitude: float
@@ -93,6 +115,7 @@ class DocumentImportRequest(BaseModel):
     file_id: UUID
     file_revision: int = Field(ge=1)
     created_by: str = Field(default="document-import", min_length=1)
+    idempotency_key: str | None = Field(default=None, min_length=1, max_length=200)
     canonical_entities: list[dict[str, Any]] = Field(default_factory=list)
 
 

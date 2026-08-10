@@ -1,5 +1,32 @@
 import { invoke } from "@tauri-apps/api/core";
 
+export interface FileScanContext {
+  file_id: string;
+  file_version_id: string;
+  file_revision: number;
+  path: string;
+  sha256: string;
+  size: number;
+  modified_at: string | null;
+}
+
+export interface LocalRawRecord {
+  raw_id: string;
+  file_version_id: string;
+  row_key: string;
+  payload: string;
+  source_locator: string;
+}
+
+export interface LocalImport {
+  import_id: string;
+  project_id: string;
+  file_version_id: string;
+  status: string;
+  payload: string;
+  created_at: string;
+}
+
 export interface PendingJob {
   job_id: string;
   job_type: string;
@@ -21,6 +48,62 @@ export async function claimPendingJobs(
     manifestPath,
     now,
     maxJobs,
+  });
+}
+
+export async function prepareFileScan(
+  manifestPath: string,
+  file: Pick<FileScanContext, "path" | "sha256" | "size" | "modified_at">,
+): Promise<FileScanContext> {
+  return invoke<FileScanContext>("prepare_file_scan", {
+    manifestPath,
+    path: file.path,
+    sha256: file.sha256,
+    size: file.size,
+    modifiedAt: file.modified_at,
+    createdAt: new Date().toISOString(),
+  });
+}
+
+export async function storeLocalImportResult(
+  manifestPath: string,
+  importId: string,
+  projectId: string,
+  fileVersionId: string,
+  status: string,
+  payload: string,
+  rawRecords: LocalRawRecord[],
+): Promise<void> {
+  return invoke("store_local_import_result", {
+    manifestPath,
+    importId,
+    projectId,
+    fileVersionId,
+    status,
+    payload,
+    createdAt: new Date().toISOString(),
+    rawRecords,
+  });
+}
+
+export async function listLocalImports(manifestPath: string, projectId: string): Promise<LocalImport[]> {
+  return invoke<LocalImport[]>("list_local_imports", { manifestPath, projectId });
+}
+
+export async function saveLocalProfile(
+  manifestPath: string,
+  profileId: string,
+  projectId: string,
+  version: number,
+  payload: string,
+): Promise<boolean> {
+  return invoke<boolean>("save_local_profile", {
+    manifestPath,
+    profileId,
+    projectId,
+    version,
+    payload,
+    createdAt: new Date().toISOString(),
   });
 }
 

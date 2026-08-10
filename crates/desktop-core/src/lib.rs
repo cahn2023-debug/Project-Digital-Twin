@@ -15,8 +15,8 @@ pub use crypto::DbPasskey;
 pub use db_encrypted::{CachedCredential, DbError, DbResult, EncryptedDb, MutationEvent};
 pub use hash::{sha256_file, sha256_reader};
 pub use manifest::{
-    source_id_for_directory, DiscoveredFile, FileVersion, ManifestDb, ManifestEntry, PendingJob,
-    RawRecord, ScanFailure, SourceRegistration,
+    file_id_for_path, source_id_for_directory, DiscoveredFile, FileScanContext, FileVersion,
+    LocalImport, ManifestDb, ManifestEntry, PendingJob, RawRecord, ScanFailure, SourceRegistration,
 };
 pub use mutation::{
     enqueue_mutation, fetch_pending_mutations, is_network_online, mark_mutation_status,
@@ -30,7 +30,8 @@ pub use server_sync::{ConflictChoice, ConflictItem, ServerSyncHandler};
 #[cfg(test)]
 mod tests {
     use super::{
-        safe_replace, scan_directory, sha256_reader, DiscoveredFile, ManifestDb, SafeWriteError,
+        safe_replace, scan_directory, sha256_reader, source_id_for_directory, DiscoveredFile,
+        ManifestDb, RawRecord, SafeWriteError,
     };
     use std::io::Cursor;
 
@@ -156,6 +157,63 @@ mod tests {
                 .revision,
             2
         );
+    }
+
+    #[test]
+    fn local_import_result_persists_change_set_payload_and_raw_records() {
+        let directory = tempfile::tempdir().expect("tempdir");
+        let database_path = directory.path().join("manifest.sqlite");
+        let version_id;
+        {
+            let database = ManifestDb::open(&database_path).expect("manifest");
+            database
+                .upsert_file("file-1", "SOURCE", "C:/Data/Camera.xlsx", "now")
+                .expect("file");
+            version_id = database
+                .register_file_version("version-1", "file-1", "hash-1", 10, None, "now")
+                .expect("version")
+                .expect("new version")
+                .file_version_id;
+            database
+                .store_local_import_result(
+                    "import-1",
+                    "project-1",
+                    &version_id,
+                    "IMPORTED",
+                    r#"{"changeset":{"id":"change-1"}}"#,
+                    "now",
+                    &[RawRecord {
+                        raw_id: "raw-1".to_owned(),
+                        file_version_id: version_id.clone(),
+                        row_key: "row-2".to_owned(),
+                        payload: r#"{"CameraCode":"CAM-001"}"#.to_owned(),
+                        source_locator: r#"{"sheet":"CAMERA","row":2,"column":"A"}"#.to_owned(),
+                    }],
+                )
+                .expect("local import");
+        }
+        let database = ManifestDb::open(&database_path).expect("reopen manifest");
+        assert_eq!(
+            database
+                .local_import("import-1")
+                .expect("import")
+                .expect("saved")
+                .2,
+            "IMPORTED"
+        );
+        assert_eq!(
+            database
+                .raw_records_for_version(&version_id)
+                .expect("raw records")
+                .len(),
+            1
+        );
+        assert!(database
+            .save_local_profile("camera-custom", "project-1", 1, "{}", "now")
+            .expect("profile"));
+        assert!(!database
+            .save_local_profile("camera-custom", "project-1", 1, "changed", "later")
+            .expect("immutable profile"));
     }
 
     #[test]
@@ -348,6 +406,10 @@ mod tests {
     #[test]
     fn source_scan_payload_contains_source_identity_and_is_idempotent() {
         let database = ManifestDb::open_in_memory().expect("manifest");
+        database
+            .register_source("project-1", "C:/Data", 5, "now")
+            .expect("register source");
+        let source_id = source_id_for_directory("project-1", "C:/Data");
         let file = DiscoveredFile {
             path: "C:/Data/Camera.xlsx".to_owned(),
             sha256: "hash".to_owned(),
@@ -355,13 +417,13 @@ mod tests {
             modified_at: Some("1".to_owned()),
         };
         assert!(database
-            .enqueue_file_scan_for_source("source-1", &file, "now")
+            .enqueue_file_scan_for_source(&source_id, &file, "now")
             .expect("enqueue"));
         assert!(!database
-            .enqueue_file_scan_for_source("source-1", &file, "later")
+            .enqueue_file_scan_for_source(&source_id, &file, "later")
             .expect("duplicate"));
         let job = database.claim_next_job(0).expect("claim").expect("job");
-        assert!(job.payload.contains("source-1"));
+        assert!(job.payload.contains(&source_id));
         assert!(job.payload.contains("Camera.xlsx"));
     }
 }

@@ -2,6 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Button, Icon, Panel, StatusBadge } from "../../shared/ui";
 import type { Tone } from "../../shared/types";
 import {
+  confirmPreviewImport,
+  loadLocalImports,
+  processPendingFileScans,
+  type ImportProfile,
+  type LocalImportView,
+} from "./importWorker";
+import {
   getLocalManifestPath,
   isDesktopRuntime,
   listLocalSources,
@@ -16,6 +23,7 @@ import {
 
 type SourceManagementModel = {
   sources: LocalSource[];
+  imports: LocalImportView[];
   queuedCounts: Record<string, number>;
   loading: boolean;
   error: string;
@@ -23,6 +31,7 @@ type SourceManagementModel = {
   addSource: () => Promise<void>;
   scanSource: (source: LocalSource) => Promise<void>;
   toggleWatcher: (source: LocalSource) => Promise<void>;
+  confirmPreview: (sourceId: string, item: LocalImportView, profile: ImportProfile) => Promise<void>;
 };
 
 function sourceName(directory: string): string {
@@ -38,6 +47,7 @@ function sourceTone(source: LocalSource): Tone {
 export function useSourceManagement(projectId: string | null, onAction: (message: string) => void): SourceManagementModel {
   const [manifestPath, setManifestPath] = useState("");
   const [sources, setSources] = useState<LocalSource[]>([]);
+  const [imports, setImports] = useState<LocalImportView[]>([]);
   const [queuedCounts, setQueuedCounts] = useState<Record<string, number>>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -48,10 +58,15 @@ export function useSourceManagement(projectId: string | null, onAction: (message
     setSources(nextSources);
   }, []);
 
+  const refreshImports = useCallback(async (path: string, activeProjectId: string) => {
+    setImports(await loadLocalImports(path, activeProjectId));
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     setManifestPath("");
     setSources([]);
+    setImports([]);
     setQueuedCounts({});
     setError("");
     if (!projectId) return () => undefined;
@@ -65,7 +80,7 @@ export function useSourceManagement(projectId: string | null, onAction: (message
       .then(async (path) => {
         if (cancelled) return;
         setManifestPath(path);
-        await refreshSources(path, projectId);
+        await Promise.all([refreshSources(path, projectId), refreshImports(path, projectId)]);
       })
       .catch((loadError) => {
         if (!cancelled) setError(loadError instanceof Error ? loadError.message : "Không thể tải nguồn dữ liệu.");
@@ -76,7 +91,30 @@ export function useSourceManagement(projectId: string | null, onAction: (message
     return () => {
       cancelled = true;
     };
-  }, [projectId, refreshSources]);
+  }, [projectId, refreshImports, refreshSources]);
+
+  useEffect(() => {
+    if (!manifestPath || !projectId) return () => undefined;
+    let cancelled = false;
+    let timer: number | undefined;
+    const poll = async () => {
+      try {
+        const processed = await processPendingFileScans(manifestPath);
+        if (!cancelled && processed > 0) {
+          await Promise.all([refreshSources(manifestPath, projectId), refreshImports(manifestPath, projectId)]);
+        }
+      } catch (workerError) {
+        if (!cancelled) setError(workerError instanceof Error ? workerError.message : "Không thể xử lý hàng đợi import.");
+      } finally {
+        if (!cancelled) timer = window.setTimeout(() => void poll(), 1000);
+      }
+    };
+    void poll();
+    return () => {
+      cancelled = true;
+      if (timer !== undefined) window.clearTimeout(timer);
+    };
+  }, [manifestPath, projectId, refreshImports, refreshSources]);
 
   const ensureManifestPath = async (): Promise<string> => {
     if (manifestPath) return manifestPath;
@@ -147,7 +185,97 @@ export function useSourceManagement(projectId: string | null, onAction: (message
     }
   };
 
-  return { sources, queuedCounts, loading, error, busySourceId, addSource, scanSource, toggleWatcher };
+  const confirmPreview = async (sourceId: string, item: LocalImportView, profile: ImportProfile) => {
+    setBusySourceId(sourceId);
+    setError("");
+    try {
+      if (!manifestPath) throw new Error("Manifest local chưa sẵn sàng.");
+      await confirmPreviewImport(manifestPath, item, sourceId, profile);
+      await refreshImports(manifestPath, item.project_id);
+      onAction(`Đã xác nhận mapping cho ${item.path.split(/[\\/]/).filter(Boolean).at(-1) ?? item.path}`);
+    } catch (mappingError) {
+      setError(mappingError instanceof Error ? mappingError.message : "Không thể xác nhận mapping.");
+    } finally {
+      setBusySourceId(null);
+    }
+  };
+
+  return { sources, imports, queuedCounts, loading, error, busySourceId, addSource, scanSource, toggleWatcher, confirmPreview };
+}
+
+function importTone(status: string): Tone {
+  if (status === "FAILED") return "danger";
+  if (status === "PREVIEW") return "warning";
+  if (status === "PENDING_APPROVAL" || status === "IMPORTED") return "success";
+  return "info";
+}
+
+function PreviewImportCard({
+  item,
+  busy,
+  onConfirm,
+}: {
+  item: LocalImportView;
+  busy: boolean;
+  onConfirm: (profile: ImportProfile) => Promise<void>;
+}) {
+  const region = item.preview?.regions?.[0];
+  const headers = Array.from(new Set((region?.headers ?? []).map((header) => String(header.value)).filter(Boolean)));
+  const [codeColumn, setCodeColumn] = useState(headers[0] ?? "");
+  const [nameColumn, setNameColumn] = useState(headers[1] ?? headers[0] ?? "");
+  const isPreview = item.status === "PREVIEW";
+  const confirm = async () => {
+    if (!isPreview || !codeColumn) return;
+    const headerRow = region?.header_candidates?.[0] ?? 1;
+    await onConfirm({
+      profile_id: `camera-${item.file_id}`,
+      version: 1,
+      sheet: region?.sheet ?? "CAMERA",
+      header_rows: [headerRow],
+      data_start_row: Math.max(headerRow + 1, region?.start_row ?? headerRow + 1),
+      table_start_row: region?.start_row ?? null,
+      skip_row_patterns: [],
+      aliases: {
+        code: [codeColumn],
+        ...(nameColumn ? { name: [nameColumn] } : {}),
+      },
+    });
+  };
+
+  return (
+    <details className="source-file-import" open={isPreview}>
+      <summary>
+        <span className="file-name" title={item.path}>{item.path.split(/[\\/]/).filter(Boolean).at(-1) ?? item.path}</span>
+        <StatusBadge tone={importTone(item.status)}>{item.status}</StatusBadge>
+      </summary>
+      {item.preview?.issues?.length ? (
+        <div className="source-management-error">
+          {item.preview.issues.map((issue, index) => <div key={`${issue.code}-${index}`}>{issue.code}: {issue.message}{issue.row ? ` (row ${issue.row})` : ""}</div>)}
+        </div>
+      ) : null}
+      {item.error ? <div className="source-management-error">{item.error}</div> : null}
+      {item.preview?.rows?.length ? (
+        <div className="meta-line">Preview: {item.preview.rows.slice(0, 3).map((row) => JSON.stringify(row)).join(" · ")}</div>
+      ) : null}
+      {isPreview ? (
+        <div className="source-mapping-form">
+          <label>Camera code
+            <select value={codeColumn} onChange={(event) => setCodeColumn(event.target.value)}>
+              <option value="">Chọn cột</option>
+              {headers.map((header) => <option key={`code-${header}`} value={header}>{header}</option>)}
+            </select>
+          </label>
+          <label>Name
+            <select value={nameColumn} onChange={(event) => setNameColumn(event.target.value)}>
+              <option value="">Bỏ qua</option>
+              {headers.map((header) => <option key={`name-${header}`} value={header}>{header}</option>)}
+            </select>
+          </label>
+          <button className="btn primary" type="button" onClick={() => void confirm()} disabled={busy || !codeColumn}>Xác nhận mapping</button>
+        </div>
+      ) : null}
+    </details>
+  );
 }
 
 export function SourceManagementPanel({ model }: { model: SourceManagementModel }) {
@@ -166,6 +294,7 @@ export function SourceManagementPanel({ model }: { model: SourceManagementModel 
           {model.sources.map((source) => {
             const busy = model.busySourceId === source.source_id;
             const queued = model.queuedCounts[source.source_id];
+            const sourceImports = model.imports.filter((item) => item.source_id === source.source_id);
             return (
               <div className="source-management-row" key={source.source_id}>
                 <div className="file-icon"><Icon name="file" size={15} /></div>
@@ -178,6 +307,18 @@ export function SourceManagementPanel({ model }: { model: SourceManagementModel 
                     {source.last_scan_at ? <span className="meta-line">Đã quét</span> : null}
                   </div>
                   {source.last_error ? <div className="source-management-error">{source.last_error}</div> : null}
+                  {sourceImports.length ? (
+                    <div className="source-file-imports">
+                      {sourceImports.map((item) => (
+                        <PreviewImportCard
+                          key={item.import_id}
+                          item={item}
+                          busy={busy}
+                          onConfirm={(profile) => model.confirmPreview(source.source_id, item, profile)}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
                 </div>
                 <div className="source-management-actions">
                   <button className="btn source-action" type="button" onClick={() => void model.scanSource(source)} disabled={busy} aria-label={`Quét ${sourceName(source.directory)}`} title="Quét source"><Icon name="refresh" size={12} /></button>

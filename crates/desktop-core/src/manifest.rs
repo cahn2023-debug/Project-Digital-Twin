@@ -60,12 +60,37 @@ pub struct SourceRegistration {
     pub last_error: Option<String>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct FileScanContext {
+    pub file_id: String,
+    pub file_version_id: String,
+    pub file_revision: i64,
+    pub path: String,
+    pub sha256: String,
+    pub size: u64,
+    pub modified_at: Option<String>,
+}
+
 pub fn source_id_for_directory(project_id: &str, directory: &str) -> String {
     let mut hasher = Sha256::new();
     hasher.update(project_id.as_bytes());
     hasher.update([0]);
     hasher.update(directory.as_bytes());
     format!("source-{:x}", hasher.finalize())
+}
+
+pub fn file_id_for_path(path: &str) -> String {
+    let digest = source_id_for_directory("file", path)
+        .trim_start_matches("source-")
+        .to_owned();
+    format!(
+        "{}-{}-{}-{}-{}",
+        &digest[0..8],
+        &digest[8..12],
+        &digest[12..16],
+        &digest[16..20],
+        &digest[20..32]
+    )
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -79,6 +104,16 @@ pub struct PendingJob {
     pub attempts: i64,
     pub next_retry_at: i64,
     pub last_error: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct LocalImport {
+    pub import_id: String,
+    pub project_id: String,
+    pub file_version_id: String,
+    pub status: String,
+    pub payload: String,
+    pub created_at: String,
 }
 
 pub struct ManifestDb {
@@ -209,9 +244,15 @@ impl ManifestDb {
         if self.is_self_write(&file.path, &file.sha256)? {
             return Ok(false);
         }
+        let source = self
+            .source_registration(source_id)?
+            .ok_or(rusqlite::Error::QueryReturnedNoRows)?;
+        let file_id = file_id_for_path(&file.path);
         let idempotency_key = format!("FILE_SCAN:{}:{}:{}", source_id, file.sha256, file.path);
         let payload = serde_json::json!({
             "source_id": source_id,
+            "project_id": source.project_id,
+            "file_id": file_id,
             "path": file.path,
             "sha256": file.sha256,
             "size": file.size,
@@ -224,6 +265,157 @@ impl ManifestDb {
             params![idempotency_key, payload, created_at],
         )?;
         Ok(inserted == 1)
+    }
+
+    pub fn register_scanned_file(
+        &self,
+        file: &DiscoveredFile,
+        created_at: &str,
+    ) -> SqlResult<FileScanContext> {
+        let file_id = file_id_for_path(&file.path);
+        self.upsert_file(&file_id, "SOURCE", &file.path, created_at)?;
+        let file_version_id = source_id_for_directory(&file_id, &file.sha256);
+        let version = match self.register_file_version(
+            &file_version_id,
+            &file_id,
+            &file.sha256,
+            file.size,
+            file.modified_at.as_deref(),
+            created_at,
+        )? {
+            Some(version) => version,
+            None => self
+                .latest_file_version(&file_id)?
+                .ok_or(rusqlite::Error::QueryReturnedNoRows)?,
+        };
+        Ok(FileScanContext {
+            file_id,
+            file_version_id: version.file_version_id,
+            file_revision: version.revision,
+            path: file.path.clone(),
+            sha256: file.sha256.clone(),
+            size: file.size,
+            modified_at: file.modified_at.clone(),
+        })
+    }
+
+    pub fn store_local_import_result(
+        &self,
+        import_id: &str,
+        project_id: &str,
+        file_version_id: &str,
+        status: &str,
+        payload: &str,
+        created_at: &str,
+        raw_records: &[RawRecord],
+    ) -> SqlResult<()> {
+        self.connection.execute_batch("BEGIN IMMEDIATE")?;
+        let result = (|| {
+            self.connection.execute(
+                "INSERT OR REPLACE INTO local_imports(
+                   import_id, project_id, file_version_id, status, payload, created_at
+                 ) VALUES (?1, ?2, ?3, ?4, ?5, ?6)",
+                params![
+                    import_id,
+                    project_id,
+                    file_version_id,
+                    status,
+                    payload,
+                    created_at
+                ],
+            )?;
+            for raw in raw_records {
+                self.connection.execute(
+                    "INSERT OR REPLACE INTO raw_records(
+                       raw_id, file_version_id, row_key, payload, source_locator
+                     ) VALUES (?1, ?2, ?3, ?4, ?5)",
+                    params![
+                        raw.raw_id,
+                        raw.file_version_id,
+                        raw.row_key,
+                        raw.payload,
+                        raw.source_locator
+                    ],
+                )?;
+            }
+            Ok(())
+        })();
+        match result {
+            Ok(()) => {
+                self.connection.execute_batch("COMMIT")?;
+                Ok(())
+            }
+            Err(error) => {
+                let _ = self.connection.execute_batch("ROLLBACK");
+                Err(error)
+            }
+        }
+    }
+
+    pub fn local_import(
+        &self,
+        import_id: &str,
+    ) -> SqlResult<Option<(String, String, String, String)>> {
+        self.connection
+            .query_row(
+                "SELECT project_id, file_version_id, status, payload
+                 FROM local_imports WHERE import_id = ?1",
+                params![import_id],
+                |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?)),
+            )
+            .optional()
+    }
+
+    pub fn list_local_imports(&self, project_id: &str) -> SqlResult<Vec<LocalImport>> {
+        let mut statement = self.connection.prepare(
+            "SELECT import_id, project_id, file_version_id, status, payload, created_at
+             FROM local_imports WHERE project_id = ?1 ORDER BY created_at DESC, import_id",
+        )?;
+        let rows = statement.query_map(params![project_id], |row| {
+            Ok(LocalImport {
+                import_id: row.get(0)?,
+                project_id: row.get(1)?,
+                file_version_id: row.get(2)?,
+                status: row.get(3)?,
+                payload: row.get(4)?,
+                created_at: row.get(5)?,
+            })
+        })?;
+        rows.collect()
+    }
+
+    pub fn save_local_profile(
+        &self,
+        profile_id: &str,
+        project_id: &str,
+        version: i64,
+        payload: &str,
+        created_at: &str,
+    ) -> SqlResult<bool> {
+        let inserted = self.connection.execute(
+            "INSERT OR IGNORE INTO local_profiles(
+               profile_id, project_id, version, payload, created_at
+             ) VALUES (?1, ?2, ?3, ?4, ?5)",
+            params![profile_id, project_id, version, payload, created_at],
+        )?;
+        Ok(inserted == 1)
+    }
+
+    pub fn raw_records_for_version(&self, file_version_id: &str) -> SqlResult<Vec<RawRecord>> {
+        let mut statement = self.connection.prepare(
+            "SELECT raw_id, file_version_id, row_key, payload, source_locator
+             FROM raw_records WHERE file_version_id = ?1 ORDER BY row_key",
+        )?;
+        let rows = statement.query_map(params![file_version_id], |row| {
+            Ok(RawRecord {
+                raw_id: row.get(0)?,
+                file_version_id: row.get(1)?,
+                row_key: row.get(2)?,
+                payload: row.get(3)?,
+                source_locator: row.get(4)?,
+            })
+        })?;
+        rows.collect()
     }
 
     pub fn set_sync_cursor(&self, project_id: &str, cursor: i64) -> SqlResult<()> {
@@ -616,6 +808,16 @@ impl ManifestDb {
                registered_at TEXT NOT NULL, updated_at TEXT NOT NULL,
                last_scan_at TEXT, last_error TEXT,
                UNIQUE(project_id, directory)
+             );
+             CREATE TABLE IF NOT EXISTS local_imports (
+               import_id TEXT PRIMARY KEY, project_id TEXT NOT NULL,
+               file_version_id TEXT NOT NULL, status TEXT NOT NULL,
+               payload TEXT NOT NULL, created_at TEXT NOT NULL
+             );
+             CREATE TABLE IF NOT EXISTS local_profiles (
+               profile_id TEXT NOT NULL, project_id TEXT NOT NULL,
+               version INTEGER NOT NULL, payload TEXT NOT NULL, created_at TEXT NOT NULL,
+               PRIMARY KEY(profile_id, version)
              );
              CREATE TABLE IF NOT EXISTS local_files (
                file_id TEXT PRIMARY KEY, logical_role TEXT NOT NULL,

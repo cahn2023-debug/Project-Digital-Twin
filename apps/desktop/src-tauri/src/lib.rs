@@ -11,7 +11,10 @@ mod state;
 pub use auth_cmd::{cache_user_session, offline_authenticate_user};
 pub use conflict_cmd::resolve_mutation_conflict;
 pub use db::{check_encrypted_database_health, init_encrypted_database, EncryptedDbState};
-pub use jobs::{claim_pending_jobs, complete_pending_job, retry_pending_job};
+pub use jobs::{
+    claim_pending_jobs, complete_pending_job, list_local_imports, prepare_file_scan,
+    retry_pending_job, save_local_profile, store_local_import_result,
+};
 pub use main_core::WatcherState;
 pub use mutation_cmd::{get_pending_mutation_count, push_client_mutation, set_network_status};
 pub use replay_cmd::trigger_manual_sync;
@@ -35,6 +38,10 @@ pub fn run() {
         stop_local_watcher,
         stop_source_watcher,
         claim_pending_jobs,
+        prepare_file_scan,
+        store_local_import_result,
+        list_local_imports,
+        save_local_profile,
         complete_pending_job,
         retry_pending_job,
         init_encrypted_database,

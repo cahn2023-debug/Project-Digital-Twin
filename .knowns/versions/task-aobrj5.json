@@ -1,6 +1,6 @@
 {
   "taskId": "aobrj5",
-  "currentVersion": 2,
+  "currentVersion": 6,
   "versions": [
     {
       "id": "v1",
@@ -57,16 +57,16 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version.",
-              "completed": false
+              "completed": false,
+              "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version."
             },
             {
-              "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw.",
-              "completed": false
+              "completed": false,
+              "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw."
             },
             {
-              "text": "Source UI renders per-file status and error details without blocking independent files.",
-              "completed": false
+              "completed": false,
+              "text": "Source UI renders per-file status and error details without blocking independent files."
             }
           ]
         }
@@ -74,16 +74,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version.",
-            "completed": false
+            "completed": false,
+            "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version."
           },
           {
-            "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw.",
-            "completed": false
+            "completed": false,
+            "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw."
           },
           {
-            "text": "Source UI renders per-file status and error details without blocking independent files.",
-            "completed": false
+            "completed": false,
+            "text": "Source UI renders per-file status and error details without blocking independent files."
           }
         ],
         "archived": false,
@@ -109,6 +109,276 @@
         "timeSpent": 0,
         "title": "[desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow",
         "updatedAt": "2026-08-10T01:50:41.7560378Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "aobrj5",
+      "version": 3,
+      "timestamp": "2026-08-10T02:35:10.8342371Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Extend the local manifest/Tauri boundary with listable import records and immutable profile-version persistence.\n2. Extend the Excel from-path contract to accept an explicit profile mapping and create a ChangeSet only after mapping confirmation.\n3. Add worker helpers to load preview records and confirm/persist a mapped import using the same file version and idempotency boundary.\n4. Render per-file preview, headers/rows, validation issues and a small code/name mapping form in Datacenter, keeping files independent.\n5. Add focused Rust/server tests, run package checks, review the diff, validate the task, and record D1-D7/System Decision compliance."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version."
+          },
+          {
+            "completed": false,
+            "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw."
+          },
+          {
+            "completed": false,
+            "text": "Source UI renders per-file status and error details without blocking independent files."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.791Z",
+        "description": "Expose unknown/mismatched structures through preview and mapping, allow Profile confirmation, and surface per-file/row/field validation results while continuing independent valid work. Connect preview/status data to the source UI and preserve Raw for unmapped, invalid and skipped values.",
+        "fulfills": [
+          "AC-5",
+          "AC-8"
+        ],
+        "id": "aobrj5",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the local manifest/Tauri boundary with listable import records and immutable profile-version persistence.\n2. Extend the Excel from-path contract to accept an explicit profile mapping and create a ChangeSet only after mapping confirmation.\n3. Add worker helpers to load preview records and confirm/persist a mapped import using the same file version and idempotency boundary.\n4. Render per-file preview, headers/rows, validation issues and a small code/name mapping form in Datacenter, keeping files independent.\n5. Add focused Rust/server tests, run package checks, review the diff, validate the task, and record D1-D7/System Decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "preview",
+          "mapping",
+          "validation"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow",
+        "updatedAt": "2026-08-10T02:35:10.8342371Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "aobrj5",
+      "version": 4,
+      "timestamp": "2026-08-10T02:42:41.3160715Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version."
+            },
+            {
+              "completed": false,
+              "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw."
+            },
+            {
+              "completed": false,
+              "text": "Source UI renders per-file status and error details without blocking independent files."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version."
+            },
+            {
+              "completed": true,
+              "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw."
+            },
+            {
+              "completed": true,
+              "text": "Source UI renders per-file status and error details without blocking independent files."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Done: local manifest/Tauri now lists import results and stores immutable (profile_id, version) profile records. Workbook preview exposes candidate regions, headers, rows and issues; confirmed code/name mapping is sent to the parser boundary, saved locally, and replaces the preview record with a pending-approval ChangeSet while preserving Raw evidence. Datacenter renders per-file status, preview data, row/field validation issues and independent mapping controls; parser failures persist file-level FAILED details and retry independently.\n\nVerification: cargo fmt --all; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 53 passed; web typecheck and production build passed; scoped git diff --check passed. Build emitted only the existing chunk-size warning.\n\nReview: PASS, P1=0, P2=0. Manual four-perspective review found no blocking issue; profile remains local-first and canonical state still waits for ChangeSet approval.\n\nSystem Decision Impact: candidate @decision/20260810-0942-desktop-source-preview-mapping-creates-immutable-local-profile-versions (added) — immutable local profile confirmation and preview-to-ChangeSet contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version."
+          },
+          {
+            "completed": true,
+            "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw."
+          },
+          {
+            "completed": true,
+            "text": "Source UI renders per-file status and error details without blocking independent files."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.791Z",
+        "description": "Expose unknown/mismatched structures through preview and mapping, allow Profile confirmation, and surface per-file/row/field validation results while continuing independent valid work. Connect preview/status data to the source UI and preserve Raw for unmapped, invalid and skipped values.",
+        "fulfills": [
+          "AC-5",
+          "AC-8"
+        ],
+        "id": "aobrj5",
+        "implementationNotes": "Done: local manifest/Tauri now lists import results and stores immutable (profile_id, version) profile records. Workbook preview exposes candidate regions, headers, rows and issues; confirmed code/name mapping is sent to the parser boundary, saved locally, and replaces the preview record with a pending-approval ChangeSet while preserving Raw evidence. Datacenter renders per-file status, preview data, row/field validation issues and independent mapping controls; parser failures persist file-level FAILED details and retry independently.\n\nVerification: cargo fmt --all; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 53 passed; web typecheck and production build passed; scoped git diff --check passed. Build emitted only the existing chunk-size warning.\n\nReview: PASS, P1=0, P2=0. Manual four-perspective review found no blocking issue; profile remains local-first and canonical state still waits for ChangeSet approval.\n\nSystem Decision Impact: candidate @decision/20260810-0942-desktop-source-preview-mapping-creates-immutable-local-profile-versions (added) — immutable local profile confirmation and preview-to-ChangeSet contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the local manifest/Tauri boundary with listable import records and immutable profile-version persistence.\n2. Extend the Excel from-path contract to accept an explicit profile mapping and create a ChangeSet only after mapping confirmation.\n3. Add worker helpers to load preview records and confirm/persist a mapped import using the same file version and idempotency boundary.\n4. Render per-file preview, headers/rows, validation issues and a small code/name mapping form in Datacenter, keeping files independent.\n5. Add focused Rust/server tests, run package checks, review the diff, validate the task, and record D1-D7/System Decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "preview",
+          "mapping",
+          "validation"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow",
+        "updatedAt": "2026-08-10T02:42:41.3160715Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "aobrj5",
+      "version": 5,
+      "timestamp": "2026-08-10T02:43:01.4580724Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 468
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version."
+          },
+          {
+            "completed": true,
+            "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw."
+          },
+          {
+            "completed": true,
+            "text": "Source UI renders per-file status and error details without blocking independent files."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:50:21.791Z",
+        "description": "Expose unknown/mismatched structures through preview and mapping, allow Profile confirmation, and surface per-file/row/field validation results while continuing independent valid work. Connect preview/status data to the source UI and preserve Raw for unmapped, invalid and skipped values.",
+        "fulfills": [
+          "AC-5",
+          "AC-8"
+        ],
+        "id": "aobrj5",
+        "implementationNotes": "Done: local manifest/Tauri now lists import results and stores immutable (profile_id, version) profile records. Workbook preview exposes candidate regions, headers, rows and issues; confirmed code/name mapping is sent to the parser boundary, saved locally, and replaces the preview record with a pending-approval ChangeSet while preserving Raw evidence. Datacenter renders per-file status, preview data, row/field validation issues and independent mapping controls; parser failures persist file-level FAILED details and retry independently.\n\nVerification: cargo fmt --all; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 53 passed; web typecheck and production build passed; scoped git diff --check passed. Build emitted only the existing chunk-size warning.\n\nReview: PASS, P1=0, P2=0. Manual four-perspective review found no blocking issue; profile remains local-first and canonical state still waits for ChangeSet approval.\n\nSystem Decision Impact: candidate @decision/20260810-0942-desktop-source-preview-mapping-creates-immutable-local-profile-versions (added) — immutable local profile confirmation and preview-to-ChangeSet contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the local manifest/Tauri boundary with listable import records and immutable profile-version persistence.\n2. Extend the Excel from-path contract to accept an explicit profile mapping and create a ChangeSet only after mapping confirmation.\n3. Add worker helpers to load preview records and confirm/persist a mapped import using the same file version and idempotency boundary.\n4. Render per-file preview, headers/rows, validation issues and a small code/name mapping form in Datacenter, keeping files independent.\n5. Add focused Rust/server tests, run package checks, review the diff, validate the task, and record D1-D7/System Decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "preview",
+          "mapping",
+          "validation"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "in-progress",
+        "timeSpent": 468,
+        "title": "[desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow",
+        "updatedAt": "2026-08-10T02:43:01.4580724Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "aobrj5",
+      "version": 6,
+      "timestamp": "2026-08-10T02:43:06.8756494Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T02:43:06.8756494Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Preview exposes candidate regions/headers and mapping confirmation creates an immutable Profile version.",
+            "completed": true
+          },
+          {
+            "text": "Validation results identify source/file/row/field and allow valid rows to proceed while preserving invalid/unmapped/skipped Raw.",
+            "completed": true
+          },
+          {
+            "text": "Source UI renders per-file status and error details without blocking independent files.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:43:06.8756494Z",
+        "createdAt": "2026-08-10T01:50:21.791Z",
+        "description": "Expose unknown/mismatched structures through preview and mapping, allow Profile confirmation, and surface per-file/row/field validation results while continuing independent valid work. Connect preview/status data to the source UI and preserve Raw for unmapped, invalid and skipped values.",
+        "fulfills": [
+          "AC-5",
+          "AC-8"
+        ],
+        "id": "aobrj5",
+        "implementationNotes": "Done: local manifest/Tauri now lists import results and stores immutable (profile_id, version) profile records. Workbook preview exposes candidate regions, headers, rows and issues; confirmed code/name mapping is sent to the parser boundary, saved locally, and replaces the preview record with a pending-approval ChangeSet while preserving Raw evidence. Datacenter renders per-file status, preview data, row/field validation issues and independent mapping controls; parser failures persist file-level FAILED details and retry independently.\n\nVerification: cargo fmt --all; cargo test -p desktop-core = 23 passed; cargo test -p project-digital-twin-desktop = 1 passed; cargo check -p project-digital-twin-desktop passed; server pytest = 53 passed; web typecheck and production build passed; scoped git diff --check passed. Build emitted only the existing chunk-size warning.\n\nReview: PASS, P1=0, P2=0. Manual four-perspective review found no blocking issue; profile remains local-first and canonical state still waits for ChangeSet approval.\n\nSystem Decision Impact: candidate @decision/20260810-0942-desktop-source-preview-mapping-creates-immutable-local-profile-versions (added) — immutable local profile confirmation and preview-to-ChangeSet contract; draft review-gated.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Extend the local manifest/Tauri boundary with listable import records and immutable profile-version persistence.\n2. Extend the Excel from-path contract to accept an explicit profile mapping and create a ChangeSet only after mapping confirmation.\n3. Add worker helpers to load preview records and confirm/persist a mapped import using the same file version and idempotency boundary.\n4. Render per-file preview, headers/rows, validation issues and a small code/name mapping form in Datacenter, keeping files independent.\n5. Add focused Rust/server tests, run package checks, review the diff, validate the task, and record D1-D7/System Decision compliance.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10",
+          "preview",
+          "mapping",
+          "validation"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 468,
+        "title": "[desktop-data-source-folder-ingestion-04] Add ingestion preview, mapping and error status flow",
+        "updatedAt": "2026-08-10T02:43:06.8756494Z"
       }
     }
   ]

@@ -1,6 +1,8 @@
 from fastapi.testclient import TestClient
 from uuid import UUID
 
+from openpyxl import Workbook
+
 from app.domain import Camera
 from app.main import app, store
 
@@ -441,6 +443,119 @@ def test_document_import_creates_read_only_changeset_with_evidence(tmp_path) -> 
     assert all(UUID(asset["id"]) in store.source_assets for asset in changeset["document_assets"])
     assert "read-only" in response.json()["notice"]
     assert client.get(f"/api/v1/projects/{project_id}/cameras").json() == []
+
+
+def test_file_import_from_path_parses_workbook_and_is_idempotent(tmp_path) -> None:
+    client = TestClient(app)
+    project_id = create_project(client, tmp_path, "Workbook Path Pilot")["id"]
+    source = tmp_path / "cameras.xlsx"
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "CAMERA"
+    sheet.append(["CameraCode", "Name", "IP Address"])
+    sheet.append(["CAM-001", "Main gate", "10.0.0.1"])
+    workbook.save(source)
+    request = {
+        "path": str(source),
+        "file_id": "88888888-8888-8888-8888-888888888888",
+        "file_revision": 1,
+        "idempotency_key": "desktop-file-scan-001",
+    }
+
+    first = client.post(f"/api/v1/projects/{project_id}/file-imports/from-path", json=request)
+    duplicate = client.post(f"/api/v1/projects/{project_id}/file-imports/from-path", json=request)
+
+    assert first.status_code == 202
+    assert duplicate.status_code == 202
+    assert first.json()["changeset"]["id"] == duplicate.json()["changeset"]["id"]
+    assert first.json()["changeset"]["raw_rows"] == [{"CameraCode": "CAM-001", "Name": "Main gate", "IP Address": "10.0.0.1"}]
+    assert len(store.changesets) == 1
+
+
+def test_file_import_from_path_returns_preview_for_unmapped_workbook(tmp_path) -> None:
+    client = TestClient(app)
+    project_id = create_project(client, tmp_path, "Workbook Preview Pilot")["id"]
+    source = tmp_path / "new-structure.xlsx"
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "NEW_LAYOUT"
+    sheet.append(["Asset", "Value"])
+    sheet.append(["A-001", "value"])
+    workbook.save(source)
+
+    response = client.post(
+        f"/api/v1/projects/{project_id}/file-imports/from-path",
+        json={
+            "path": str(source),
+            "file_id": "99999999-9999-9999-9999-999999999999",
+            "file_revision": 1,
+            "idempotency_key": "desktop-file-scan-preview-001",
+        },
+    )
+
+    assert response.status_code == 202
+    assert response.json()["changeset"] is None
+    assert response.json()["preview"]["issues"][0]["code"] == "UNMAPPED_SHEET"
+    assert response.json()["preview"]["regions"][0]["headers"][0]["value"] == "Asset"
+    assert response.json()["preview"]["rows"] == [{"Asset": "A-001", "Value": "value"}]
+    assert len(store.changesets) == 0
+
+
+def test_file_import_from_path_accepts_confirmed_profile_mapping(tmp_path) -> None:
+    client = TestClient(app)
+    project_id = create_project(client, tmp_path, "Workbook Mapping Pilot")["id"]
+    source = tmp_path / "mapped-structure.xlsx"
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "NEW_LAYOUT"
+    sheet.append(["Asset", "Label"])
+    sheet.append(["A-001", "Main gate"])
+    workbook.save(source)
+
+    response = client.post(
+        f"/api/v1/projects/{project_id}/file-imports/from-path",
+        json={
+            "path": str(source),
+            "file_id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+            "file_revision": 1,
+            "idempotency_key": "desktop-file-scan-mapped-001",
+            "profile": {
+                "profile_id": "camera-custom-bbbb",
+                "version": 1,
+                "sheet": "NEW_LAYOUT",
+                "header_rows": [1],
+                "data_start_row": 2,
+                "table_start_row": 1,
+                "aliases": {"code": ["Asset"], "name": ["Label"]},
+            },
+        },
+    )
+
+    assert response.status_code == 202
+    assert response.json()["changeset"]["status"] == "PENDING_APPROVAL"
+    assert response.json()["result"]["inserted"][0]["code"] == "A-001"
+    assert response.json()["changeset"]["raw_rows"] == [{"Asset": "A-001", "Label": "Main gate"}]
+
+
+def test_document_import_from_path_is_idempotent(tmp_path) -> None:
+    client = TestClient(app)
+    project_id = create_project(client, tmp_path, "Document Idempotency Pilot")["id"]
+    source = tmp_path / "wiki.md"
+    source.write_text("# Notes\n", encoding="utf-8")
+    request = {
+        "path": str(source),
+        "file_id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+        "file_revision": 1,
+        "idempotency_key": "desktop-document-scan-001",
+    }
+
+    first = client.post(f"/api/v1/projects/{project_id}/document-imports", json=request)
+    duplicate = client.post(f"/api/v1/projects/{project_id}/document-imports", json=request)
+
+    assert first.status_code == 202
+    assert duplicate.status_code == 202
+    assert first.json()["changeset"]["id"] == duplicate.json()["changeset"]["id"]
+    assert len(store.changesets) == 1
 
 
 def test_audit_is_project_scoped_filterable_exportable_and_permissioned(tmp_path) -> None:

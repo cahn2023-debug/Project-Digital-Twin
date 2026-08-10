@@ -1,7 +1,7 @@
 ---
 id: p0zoqt
 title: "[desktop-data-source-folder-ingestion-02] Build desktop add-source folder picker and source UI"
-status: in-progress
+status: done
 priority: high
 labels:
   - from-spec
@@ -10,8 +10,9 @@ labels:
   - desktop-ui
   - folder-picker
 createdAt: '2026-08-10T01:50:21.717Z'
-updatedAt: '2026-08-10T02:08:24.650Z'
-timeSpent: 0
+updatedAt: '2026-08-10T02:17:01.311Z'
+completedAt: '2026-08-10T02:17:01.311Z'
+timeSpent: 617
 assignee: '@me'
 spec: specs/2026-08-10/desktop-data-source-folder-ingestion
 fulfills:
@@ -28,9 +29,9 @@ Add the desktop/web source-management experience: native folder picker, source r
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Native folder picker rejects invalid paths and registers a selected directory against the active Project.
-- [ ] #2 UI lists multiple sources and exposes per-source scan, watcher, counts, progress and error states.
-- [ ] #3 Frontend typecheck/build and focused UI/API wiring checks pass.
+- [x] #1 Native folder picker rejects invalid paths and registers a selected directory against the active Project.
+- [x] #2 UI lists multiple sources and exposes per-source scan, watcher, counts, progress and error states.
+- [x] #3 Frontend typecheck/build and focused UI/API wiring checks pass.
 <!-- AC:END -->
 
 ## Implementation Plan
@@ -52,4 +53,14 @@ Add the desktop/web source-management experience: native folder picker, source r
 - Risk: browser-vs-Tauri runtime and manifest path safety; explicit runtime guard, app-local path resolution and type/build checks cover the risk.
 - Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass.
 <!-- SECTION:PLAN:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Done: Current HEAD contains the native folder-picker/source-management integration: per-project local manifest path, Tauri source API, Datacenter source list, register/scan/watcher controls, multiple-source status/count/error rendering and accessible actions.
+Verification: web typecheck/build passed before the concurrent Design/MapLibre changes appeared; Tauri tests passed; targeted source diff check passed. Current workspace-wide web typecheck/build is blocked by unrelated pre-existing errors in apps/web/src/features/design/DesignView.tsx and mapConfig.ts (missing basemapModes/type narrowing), which were not changed by this task and are left for the active Design work.
+Review: PASS for source UI/API scope, P1=0, P2=0, P3=0; delegated reviewer timed out and was closed, then manual four-perspective review completed.
+System Decision Impact: none — task consumes the stable source-registration/watcher contract from @decision/20260810-0906-desktop-sources-use-stable-registrations-with-independent-watchers and adds no new durable guidance.
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass
+<!-- SECTION:NOTES:END -->
 

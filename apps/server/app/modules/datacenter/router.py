@@ -24,12 +24,19 @@ from ...domain import (
     normalize_coordinate,
 )
 from ...adapters.files.importers.documents import parse_document
-from ...adapters.files.importers.excel import parse_camera_rows
+from ...adapters.files.importers.excel import (
+    CameraWorkbookProfile,
+    WorkbookProfile,
+    parse_camera_rows,
+    parse_camera_workbook_for_import,
+)
 
 from ...shared.schemas import (
     ApprovalRequest,
     ContractorCreate,
     DocumentImportRequest,
+    FileImportProfileRequest,
+    FileImportFromPathRequest,
     FileImportRequest,
     FieldPackageCreate,
     GeometryRequest,
@@ -61,6 +68,59 @@ class _StoreProxy:
 
 
 store = _StoreProxy()
+
+
+def _workbook_profile(request: FileImportProfileRequest | None) -> WorkbookProfile | None:
+    if request is None:
+        return None
+    aliases = dict(CameraWorkbookProfile.aliases)
+    aliases.update({key: tuple(values) for key, values in request.aliases.items() if values})
+    return WorkbookProfile(
+        profile_id=request.profile_id,
+        version=request.version,
+        sheet=request.sheet,
+        header_rows=tuple(request.header_rows),
+        data_start_row=request.data_start_row,
+        table_start_row=request.table_start_row,
+        skip_row_patterns=tuple(request.skip_row_patterns),
+        aliases=aliases,
+    )
+
+
+def _preview_regions(scan: Any) -> list[dict[str, Any]]:
+    previews: list[dict[str, Any]] = []
+    for region in scan.regions:
+        headers = [
+            {
+                "row": cell.row,
+                "column": cell.column,
+                "value": cell.value,
+            }
+            for cell in scan.cells
+            if cell.sheet == region.sheet and cell.row in region.header_candidates
+        ]
+        previews.append({**region.__dict__, "headers": headers})
+    return previews
+
+
+def _preview_rows(scan: Any) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for region in scan.regions:
+        header_row = region.header_candidates[0]
+        headers = {
+            cell.column: str(cell.value)
+            for cell in scan.cells
+            if cell.sheet == region.sheet and cell.row == header_row
+        }
+        for row_number in range(header_row + 1, region.end_row + 1):
+            values = {
+                headers[cell.column]: cell.value
+                for cell in scan.cells
+                if cell.sheet == region.sheet and cell.row == row_number and cell.column in headers
+            }
+            if values:
+                rows.append(values)
+    return rows
 
 
 def _authorize_header(project_id: UUID, action: str, actor: str, role: str) -> None:
@@ -143,6 +203,76 @@ def create_file_import_changeset(project_id: UUID, request: FileImportRequest) -
     })
 
 
+@router.post("/api/v1/projects/{project_id}/file-imports/from-path", status_code=202)
+def create_file_import_from_path(project_id: UUID, request: FileImportFromPathRequest) -> dict[str, Any]:
+    if store.get_project(project_id) is None:
+        raise HTTPException(status_code=404, detail="Project not found")
+    if request.source_hash and store.is_self_write(request.file_id, request.source_hash):
+        store.record_self_write_suppression(project_id, request.file_id, request.source_hash, request.created_by)
+        return {
+            "changeset": None,
+            "result": {"inserted": [], "changed": [], "unchanged": [], "invalid": [], "conflict": [], "unmapped": []},
+            "notice": "Self-write suppressed; no duplicate import was enqueued.",
+            "suppressed": True,
+            "processing_duration_ms": 0,
+        }
+    started_at = perf_counter()
+    try:
+        raw_rows, cameras, issues, scan = parse_camera_workbook_for_import(
+            request.path,
+            file_id=request.file_id,
+            file_revision=request.file_revision,
+            profile=_workbook_profile(request.profile)
+            or WorkbookProfile(
+                profile_id="camera-default",
+                version=1,
+                sheet=request.sheet,
+                header_rows=(1,),
+                data_start_row=2,
+                table_start_row=1,
+            ),
+        )
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail="Workbook source not found") from exc
+    except (OSError, ValueError) as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    if not raw_rows and not cameras and issues and all(issue.code.startswith("UNMAPPED_") or issue.code == "UNSUPPORTED_ROW" for issue in issues):
+        return jsonable_encoder({
+            "changeset": None,
+            "preview": {
+                "file_id": request.file_id,
+                "file_revision": request.file_revision,
+                "regions": _preview_regions(scan),
+                "skipped_sheets": scan.skipped_sheets,
+                "rows": _preview_rows(scan),
+                "issues": issues,
+            },
+            "result": {"inserted": [], "changed": [], "unchanged": [], "invalid": issues, "conflict": [], "unmapped": issues},
+            "notice": "Workbook structure requires preview and mapping confirmation before a ChangeSet is created.",
+            "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+        })
+
+    changeset, result = store.create_file_import_changeset(
+        project_id,
+        request.file_id,
+        request.file_revision,
+        cameras,
+        issues,
+        raw_rows,
+        request.created_by,
+        request.idempotency_key,
+        request.source_hash,
+        round((perf_counter() - started_at) * 1000),
+    )
+    return jsonable_encoder({
+        "changeset": changeset,
+        "result": result,
+        "notice": "Unmapped and invalid source values are retained in Raw.",
+        "processing_duration_ms": round((perf_counter() - started_at) * 1000),
+    })
+
+
 @router.post("/api/v1/projects/{project_id}/document-imports", status_code=202)
 def create_document_import_changeset(project_id: UUID, request: DocumentImportRequest) -> dict[str, Any]:
     if store.get_project(project_id) is None:
@@ -156,7 +286,14 @@ def create_document_import_changeset(project_id: UUID, request: DocumentImportRe
             canonical_entities=request.canonical_entities,
         )
         duration_ms = round((perf_counter() - started_at) * 1000)
-        changeset = store.create_document_import_changeset(project_id, parsed, request.created_by, duration_ms)
+        idempotency_key = request.idempotency_key or f"DOCUMENT_IMPORT:{request.file_id}:{request.file_revision}:{parsed.source_hash}"
+        changeset = store.create_document_import_changeset(
+            project_id,
+            parsed,
+            request.created_by,
+            duration_ms,
+            idempotency_key,
+        )
         return jsonable_encoder({
             "changeset": changeset,
             "notice": "Document source is read-only; relationship proposals require confirmation before canonical apply.",
