@@ -5,7 +5,7 @@ status: done
 priority: high
 labels: []
 createdAt: '2026-08-10T02:13:32.178Z'
-updatedAt: '2026-08-10T03:34:21.472Z'
+updatedAt: '2026-08-10T03:54:21.354Z'
 completedAt: '2026-08-10T02:34:54.605Z'
 timeSpent: 0
 spec: specs/2026-08-10/desktop-server-sync
@@ -64,5 +64,7 @@ Xây dựng Reconcile Batch Endpoint (POST /api/v1/sync/reconcile-batch) và Ser
 <!-- SECTION:NOTES:BEGIN -->
 Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.
 Flow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.
+Fixes recorded: reconciliation resolution now preserves the server value when no client/custom choice is supplied and rejects unknown client choices; regression coverage added.
+Review: PASS after server-value resolution regression fix. P1=0; field merge/idempotency behavior covered by the full server suite.
 <!-- SECTION:NOTES:END -->
 

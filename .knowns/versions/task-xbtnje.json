@@ -1,6 +1,6 @@
 {
   "taskId": "xbtnje",
-  "currentVersion": 5,
+  "currentVersion": 7,
   "versions": [
     {
       "id": "v1",
@@ -136,16 +136,16 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "Overlapping field mutations are staged with conflict status and client/workspace/user identity metadata.",
-              "completed": true
+              "completed": true,
+              "text": "Overlapping field mutations are staged with conflict status and client/workspace/user identity metadata."
             },
             {
-              "text": "Conflict list/detail/resolve APIs support choosing a client version or custom values and update canonical state.",
-              "completed": true
+              "completed": true,
+              "text": "Conflict list/detail/resolve APIs support choosing a client version or custom values and update canonical state."
             },
             {
-              "text": "Server tests cover conflict staging, listing and resolution.",
-              "completed": true
+              "completed": true,
+              "text": "Server tests cover conflict staging, listing and resolution."
             }
           ]
         },
@@ -153,6 +153,92 @@
           "field": "implementationNotes",
           "oldValue": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.",
           "newValue": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Overlapping field mutations are staged with conflict status and client/workspace/user identity metadata."
+          },
+          {
+            "completed": true,
+            "text": "Conflict list/detail/resolve APIs support choosing a client version or custom values and update canonical state."
+          },
+          {
+            "completed": true,
+            "text": "Server tests cover conflict staging, listing and resolution."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T02:45:49.857Z",
+        "createdAt": "2026-08-10T02:13:36.033Z",
+        "description": "Implement conflict detection for overlapping field mutations across client_ids, store in CONFLICT_PENDING staging table, and expose conflict resolution API endpoint.",
+        "id": "xbtnje",
+        "implementationNotes": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.",
+        "implementationPlan": "## Implementation Plan — Task @task-xbtnje\n\n### Overview\nXây dựng Server Conflict Detection Engine, Staging Store lưu giữ bản ghi xung đột và hệ thống REST API quản lý \u0026 phê duyệt xung đột (/api/v1/sync/conflicts).\n\n### Locked Decision Alignment\n- D1 (Conflict Resolution Strategy): Server tự động phát hiện khi 2 Client sửa trùng một trường (field) trên cùng 1 thực thể. Lưu bản ghi vào trạng thái PENDING_REVIEW trong Staging Store, đồng thời cung cấp API phê duyệt cho phép Admin/User chọn giá trị từ Client nào hoặc áp dụng giá trị tùy chỉnh.\n- D2 (Sync Status): Trả về trạng thái STAGED_FOR_REVIEW cho Replay Worker khi phát sinh xung đột trùng trường.\n- D3 (Client Identity): Lưu vết client_id, workspace_id, user_id trong Staging Record để hỗ trợ giao diện so sánh side-by-side.\n\n### Steps\n1. Bổ sung Pydantic Schemas (apps/server/app/shared/schemas.py):\n   - Thêm ConflictResolveRequest, StagedConflictResponse, StagedConflictListResponse.\n\n2. Cập nhật Reconciliation Engine \u0026 Staging Store (apps/server/app/shared/reconciler.py):\n   - Hoàn thiện cấu trúc StagedConflictRecord và hàm list_conflicts, get_conflict, resolve_conflict.\n   - Khi resolve_conflict được gọi: áp dụng giá trị của chosen_client_id hoặc custom_values vào entity_states, cập nhật entity_field_timestamps và đánh dấu status = RESOLVED.\n\n3. Thêm Conflict Resolution Endpoints (apps/server/app/modules/sync/router.py):\n   - GET /api/v1/sync/conflicts: Liệt kê danh sách các xung đột chờ duyệt.\n   - GET /api/v1/sync/conflicts/{conflict_id}: Xem chi tiết đối chiếu side-by-side của một xung đột.\n   - POST /api/v1/sync/conflicts/{conflict_id}/resolve: Thực thi phê duyệt chọn phiên bản Client hoặc Custom merged value.\n\n4. Integration Testing (apps/server/tests/test_sync_reconcile.py):\n   - Test kịch bản xung đột cùng trường (Client A sampling_rate=50 vs Client B sampling_rate=200).\n   - Test xem danh sách xung đột và phê duyệt chọn Client B -\u003e Xác minh entity state được cập nhật chính xác.\n\n### Verification Plan\n- Chạy uv run --project apps/server pytest apps/server/tests đảm bảo 100% tests trong apps/server pass cleanly.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-server-sync-03] Server Conflict Detection, Staging Table \u0026 Reconciliation API",
+        "updatedAt": "2026-08-10T03:34:24.6761831Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "xbtnje",
+      "version": 6,
+      "timestamp": "2026-08-10T03:46:50.0902716Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.",
+          "newValue": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.\nFixes recorded: resolved conflicts are excluded from the default pending list, and server-value resolution is covered by regression tests."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Overlapping field mutations are staged with conflict status and client/workspace/user identity metadata."
+          },
+          {
+            "completed": true,
+            "text": "Conflict list/detail/resolve APIs support choosing a client version or custom values and update canonical state."
+          },
+          {
+            "completed": true,
+            "text": "Server tests cover conflict staging, listing and resolution."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T02:45:49.857Z",
+        "createdAt": "2026-08-10T02:13:36.033Z",
+        "description": "Implement conflict detection for overlapping field mutations across client_ids, store in CONFLICT_PENDING staging table, and expose conflict resolution API endpoint.",
+        "id": "xbtnje",
+        "implementationNotes": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.\nFixes recorded: resolved conflicts are excluded from the default pending list, and server-value resolution is covered by regression tests.",
+        "implementationPlan": "## Implementation Plan — Task @task-xbtnje\n\n### Overview\nXây dựng Server Conflict Detection Engine, Staging Store lưu giữ bản ghi xung đột và hệ thống REST API quản lý \u0026 phê duyệt xung đột (/api/v1/sync/conflicts).\n\n### Locked Decision Alignment\n- D1 (Conflict Resolution Strategy): Server tự động phát hiện khi 2 Client sửa trùng một trường (field) trên cùng 1 thực thể. Lưu bản ghi vào trạng thái PENDING_REVIEW trong Staging Store, đồng thời cung cấp API phê duyệt cho phép Admin/User chọn giá trị từ Client nào hoặc áp dụng giá trị tùy chỉnh.\n- D2 (Sync Status): Trả về trạng thái STAGED_FOR_REVIEW cho Replay Worker khi phát sinh xung đột trùng trường.\n- D3 (Client Identity): Lưu vết client_id, workspace_id, user_id trong Staging Record để hỗ trợ giao diện so sánh side-by-side.\n\n### Steps\n1. Bổ sung Pydantic Schemas (apps/server/app/shared/schemas.py):\n   - Thêm ConflictResolveRequest, StagedConflictResponse, StagedConflictListResponse.\n\n2. Cập nhật Reconciliation Engine \u0026 Staging Store (apps/server/app/shared/reconciler.py):\n   - Hoàn thiện cấu trúc StagedConflictRecord và hàm list_conflicts, get_conflict, resolve_conflict.\n   - Khi resolve_conflict được gọi: áp dụng giá trị của chosen_client_id hoặc custom_values vào entity_states, cập nhật entity_field_timestamps và đánh dấu status = RESOLVED.\n\n3. Thêm Conflict Resolution Endpoints (apps/server/app/modules/sync/router.py):\n   - GET /api/v1/sync/conflicts: Liệt kê danh sách các xung đột chờ duyệt.\n   - GET /api/v1/sync/conflicts/{conflict_id}: Xem chi tiết đối chiếu side-by-side của một xung đột.\n   - POST /api/v1/sync/conflicts/{conflict_id}/resolve: Thực thi phê duyệt chọn phiên bản Client hoặc Custom merged value.\n\n4. Integration Testing (apps/server/tests/test_sync_reconcile.py):\n   - Test kịch bản xung đột cùng trường (Client A sampling_rate=50 vs Client B sampling_rate=200).\n   - Test xem danh sách xung đột và phê duyệt chọn Client B -\u003e Xác minh entity state được cập nhật chính xác.\n\n### Verification Plan\n- Chạy uv run --project apps/server pytest apps/server/tests đảm bảo 100% tests trong apps/server pass cleanly.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-server-sync-03] Server Conflict Detection, Staging Table \u0026 Reconciliation API",
+        "updatedAt": "2026-08-10T03:46:50.0902716Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "xbtnje",
+      "version": 7,
+      "timestamp": "2026-08-10T03:54:24.167117Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.\nFixes recorded: resolved conflicts are excluded from the default pending list, and server-value resolution is covered by regression tests.",
+          "newValue": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.\nFixes recorded: resolved conflicts are excluded from the default pending list, and server-value resolution is covered by regression tests.\nReview: PASS after default pending-conflict filtering and server-preserve resolution regression coverage. P1=0."
         }
       ],
       "snapshot": {
@@ -175,14 +261,14 @@
         "createdAt": "2026-08-10T02:13:36.033Z",
         "description": "Implement conflict detection for overlapping field mutations across client_ids, store in CONFLICT_PENDING staging table, and expose conflict resolution API endpoint.",
         "id": "xbtnje",
-        "implementationNotes": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.",
+        "implementationNotes": "Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed staging and resolution APIs.\nFixes recorded: resolved conflicts are excluded from the default pending list, and server-value resolution is covered by regression tests.\nReview: PASS after default pending-conflict filtering and server-preserve resolution regression coverage. P1=0.",
         "implementationPlan": "## Implementation Plan — Task @task-xbtnje\n\n### Overview\nXây dựng Server Conflict Detection Engine, Staging Store lưu giữ bản ghi xung đột và hệ thống REST API quản lý \u0026 phê duyệt xung đột (/api/v1/sync/conflicts).\n\n### Locked Decision Alignment\n- D1 (Conflict Resolution Strategy): Server tự động phát hiện khi 2 Client sửa trùng một trường (field) trên cùng 1 thực thể. Lưu bản ghi vào trạng thái PENDING_REVIEW trong Staging Store, đồng thời cung cấp API phê duyệt cho phép Admin/User chọn giá trị từ Client nào hoặc áp dụng giá trị tùy chỉnh.\n- D2 (Sync Status): Trả về trạng thái STAGED_FOR_REVIEW cho Replay Worker khi phát sinh xung đột trùng trường.\n- D3 (Client Identity): Lưu vết client_id, workspace_id, user_id trong Staging Record để hỗ trợ giao diện so sánh side-by-side.\n\n### Steps\n1. Bổ sung Pydantic Schemas (apps/server/app/shared/schemas.py):\n   - Thêm ConflictResolveRequest, StagedConflictResponse, StagedConflictListResponse.\n\n2. Cập nhật Reconciliation Engine \u0026 Staging Store (apps/server/app/shared/reconciler.py):\n   - Hoàn thiện cấu trúc StagedConflictRecord và hàm list_conflicts, get_conflict, resolve_conflict.\n   - Khi resolve_conflict được gọi: áp dụng giá trị của chosen_client_id hoặc custom_values vào entity_states, cập nhật entity_field_timestamps và đánh dấu status = RESOLVED.\n\n3. Thêm Conflict Resolution Endpoints (apps/server/app/modules/sync/router.py):\n   - GET /api/v1/sync/conflicts: Liệt kê danh sách các xung đột chờ duyệt.\n   - GET /api/v1/sync/conflicts/{conflict_id}: Xem chi tiết đối chiếu side-by-side của một xung đột.\n   - POST /api/v1/sync/conflicts/{conflict_id}/resolve: Thực thi phê duyệt chọn phiên bản Client hoặc Custom merged value.\n\n4. Integration Testing (apps/server/tests/test_sync_reconcile.py):\n   - Test kịch bản xung đột cùng trường (Client A sampling_rate=50 vs Client B sampling_rate=200).\n   - Test xem danh sách xung đột và phê duyệt chọn Client B -\u003e Xác minh entity state được cập nhật chính xác.\n\n### Verification Plan\n- Chạy uv run --project apps/server pytest apps/server/tests đảm bảo 100% tests trong apps/server pass cleanly.",
         "priority": "high",
         "spec": "specs/2026-08-10/desktop-server-sync",
         "status": "done",
         "timeSpent": 0,
         "title": "[desktop-server-sync-03] Server Conflict Detection, Staging Table \u0026 Reconciliation API",
-        "updatedAt": "2026-08-10T03:34:24.6761831Z"
+        "updatedAt": "2026-08-10T03:54:24.167117Z"
       }
     }
   ]

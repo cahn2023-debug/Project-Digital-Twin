@@ -1,6 +1,6 @@
 {
   "taskId": "n6psxm",
-  "currentVersion": 5,
+  "currentVersion": 7,
   "versions": [
     {
       "id": "v1",
@@ -136,16 +136,16 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "Conflict dashboard renders side-by-side server/client values and exposes client or custom resolution actions.",
-              "completed": true
+              "completed": true,
+              "text": "Conflict dashboard renders side-by-side server/client values and exposes client or custom resolution actions."
             },
             {
-              "text": "Sync API helpers and dashboard are wired into the web/desktop sync management surface.",
-              "completed": true
+              "completed": true,
+              "text": "Sync API helpers and dashboard are wired into the web/desktop sync management surface."
             },
             {
-              "text": "End-to-end verification covers the sync acceptance criteria and the relevant desktop/server test suites.",
-              "completed": true
+              "completed": true,
+              "text": "End-to-end verification covers the sync acceptance criteria and the relevant desktop/server test suites."
             }
           ]
         },
@@ -153,6 +153,92 @@
           "field": "implementationNotes",
           "oldValue": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.",
           "newValue": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Conflict dashboard renders side-by-side server/client values and exposes client or custom resolution actions."
+          },
+          {
+            "completed": true,
+            "text": "Sync API helpers and dashboard are wired into the web/desktop sync management surface."
+          },
+          {
+            "completed": true,
+            "text": "End-to-end verification covers the sync acceptance criteria and the relevant desktop/server test suites."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T02:51:17.245Z",
+        "createdAt": "2026-08-10T02:13:38.983Z",
+        "description": "Build side-by-side conflict resolution UI dashboard allowing Admin/User to inspect, select client version, and run end-to-end integration tests.",
+        "id": "n6psxm",
+        "implementationNotes": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.",
+        "implementationPlan": "## Implementation Plan — Task @task-n6psxm\n\n### Overview\nXây dựng giao diện Conflict Resolution UI Dashboard side-by-side cho phép người dùng/Admin đối chiếu, lựa chọn phiên bản Client hoặc Custom merged value, đồng thời thực hiện kiểm thử và xác minh SDD end-to-end cho Spec @doc/specs/2026-08-10/desktop-server-sync.\n\n### Locked Decision Alignment\n- D1 (Conflict Resolution UI): Hiển thị chi tiết so sánh side-by-side giữa Server fields và Client fields, cho phép Admin/User chọn phương án Chấp nhận Client A/B hoặc Tùy chỉnh.\n- D2 (Hybrid Sync Status UI): Trực quan hóa trạng thái Outbox Queue và nút Đồng bộ ngay (Sync Now) trên giao diện.\n- D3 (Client Identity Tracing): Giao diện hiển thị rõ thông tin client_id, workspace_id, user_id của nguồn gửi bản ghi.\n\n### Steps\n1. Tạo Frontend Sync API Client (apps/web/src/features/sync/api.ts \u0026 apps/desktop/src/features/sync.ts):\n   - Thêm các hàm fetchStagedConflicts(), getConflictDetail(), resolveStagedConflict().\n\n2. Xây dựng Conflict Resolution Dashboard UI (apps/web/src/features/sync/ConflictDashboard.tsx):\n   - Render danh sách các bản ghi STAGED_FOR_REVIEW.\n   - Render bảng so sánh side-by-side giữa Server Value vs Client Value.\n   - Thao tác nút bấm Chọn Client Version hoặc nhập Custom Value và gửi API phê duyệt.\n\n3. Tích hợp Conflict Dashboard vào Layout Web/Desktop:\n   - Kết nối Conflict UI vào tab Audit / Sync Management của ứng dụng.\n\n4. End-to-End SDD Verification (knowns validate --scope sdd):\n   - Kiểm tra tất cả 5 tiêu chí Acceptance Criteria (AC-1 đến AC-5) của spec desktop-server-sync.md.\n   - Đảm bảo tất cả unit tests của desktop-core và apps/server pass 100%.\n\n### Verification Plan\n- Chạy uv run --project apps/server pytest apps/server/tests đảm bảo backend server tests pass.\n- Chạy cargo test -p desktop-core đảm bảo Rust desktop-core tests pass.\n- Chạy knowns validate --scope sdd để xác minh 100% SDD coverage cho spec specs/2026-08-10/desktop-server-sync.md.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-server-sync-04] Conflict Resolution UI Dashboard \u0026 End-to-End Verification",
+        "updatedAt": "2026-08-10T03:34:27.7208144Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "n6psxm",
+      "version": 6,
+      "timestamp": "2026-08-10T03:46:53.2401301Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.",
+          "newValue": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.\nFixes recorded: ConflictDashboard is wired to the Datacenter Sync navigation entry; dashboard/API remains side-by-side and resolution-capable."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Conflict dashboard renders side-by-side server/client values and exposes client or custom resolution actions."
+          },
+          {
+            "completed": true,
+            "text": "Sync API helpers and dashboard are wired into the web/desktop sync management surface."
+          },
+          {
+            "completed": true,
+            "text": "End-to-end verification covers the sync acceptance criteria and the relevant desktop/server test suites."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T02:51:17.245Z",
+        "createdAt": "2026-08-10T02:13:38.983Z",
+        "description": "Build side-by-side conflict resolution UI dashboard allowing Admin/User to inspect, select client version, and run end-to-end integration tests.",
+        "id": "n6psxm",
+        "implementationNotes": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.\nFixes recorded: ConflictDashboard is wired to the Datacenter Sync navigation entry; dashboard/API remains side-by-side and resolution-capable.",
+        "implementationPlan": "## Implementation Plan — Task @task-n6psxm\n\n### Overview\nXây dựng giao diện Conflict Resolution UI Dashboard side-by-side cho phép người dùng/Admin đối chiếu, lựa chọn phiên bản Client hoặc Custom merged value, đồng thời thực hiện kiểm thử và xác minh SDD end-to-end cho Spec @doc/specs/2026-08-10/desktop-server-sync.\n\n### Locked Decision Alignment\n- D1 (Conflict Resolution UI): Hiển thị chi tiết so sánh side-by-side giữa Server fields và Client fields, cho phép Admin/User chọn phương án Chấp nhận Client A/B hoặc Tùy chỉnh.\n- D2 (Hybrid Sync Status UI): Trực quan hóa trạng thái Outbox Queue và nút Đồng bộ ngay (Sync Now) trên giao diện.\n- D3 (Client Identity Tracing): Giao diện hiển thị rõ thông tin client_id, workspace_id, user_id của nguồn gửi bản ghi.\n\n### Steps\n1. Tạo Frontend Sync API Client (apps/web/src/features/sync/api.ts \u0026 apps/desktop/src/features/sync.ts):\n   - Thêm các hàm fetchStagedConflicts(), getConflictDetail(), resolveStagedConflict().\n\n2. Xây dựng Conflict Resolution Dashboard UI (apps/web/src/features/sync/ConflictDashboard.tsx):\n   - Render danh sách các bản ghi STAGED_FOR_REVIEW.\n   - Render bảng so sánh side-by-side giữa Server Value vs Client Value.\n   - Thao tác nút bấm Chọn Client Version hoặc nhập Custom Value và gửi API phê duyệt.\n\n3. Tích hợp Conflict Dashboard vào Layout Web/Desktop:\n   - Kết nối Conflict UI vào tab Audit / Sync Management của ứng dụng.\n\n4. End-to-End SDD Verification (knowns validate --scope sdd):\n   - Kiểm tra tất cả 5 tiêu chí Acceptance Criteria (AC-1 đến AC-5) của spec desktop-server-sync.md.\n   - Đảm bảo tất cả unit tests của desktop-core và apps/server pass 100%.\n\n### Verification Plan\n- Chạy uv run --project apps/server pytest apps/server/tests đảm bảo backend server tests pass.\n- Chạy cargo test -p desktop-core đảm bảo Rust desktop-core tests pass.\n- Chạy knowns validate --scope sdd để xác minh 100% SDD coverage cho spec specs/2026-08-10/desktop-server-sync.md.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-server-sync-04] Conflict Resolution UI Dashboard \u0026 End-to-End Verification",
+        "updatedAt": "2026-08-10T03:46:53.2401301Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "n6psxm",
+      "version": 7,
+      "timestamp": "2026-08-10T03:54:27.10533Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.\nFixes recorded: ConflictDashboard is wired to the Datacenter Sync navigation entry; dashboard/API remains side-by-side and resolution-capable.",
+          "newValue": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.\nFixes recorded: ConflictDashboard is wired to the Datacenter Sync navigation entry; dashboard/API remains side-by-side and resolution-capable.\nReview: PASS after Sync navigation wiring and full web build/typecheck. P1=0; one operational persistence P2 is tracked separately as task 0x820i."
         }
       ],
       "snapshot": {
@@ -175,14 +261,14 @@
         "createdAt": "2026-08-10T02:13:38.983Z",
         "description": "Build side-by-side conflict resolution UI dashboard allowing Admin/User to inspect, select client version, and run end-to-end integration tests.",
         "id": "n6psxm",
-        "implementationNotes": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.",
+        "implementationNotes": "Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed dashboard and recorded verification.\nFixes recorded: ConflictDashboard is wired to the Datacenter Sync navigation entry; dashboard/API remains side-by-side and resolution-capable.\nReview: PASS after Sync navigation wiring and full web build/typecheck. P1=0; one operational persistence P2 is tracked separately as task 0x820i.",
         "implementationPlan": "## Implementation Plan — Task @task-n6psxm\n\n### Overview\nXây dựng giao diện Conflict Resolution UI Dashboard side-by-side cho phép người dùng/Admin đối chiếu, lựa chọn phiên bản Client hoặc Custom merged value, đồng thời thực hiện kiểm thử và xác minh SDD end-to-end cho Spec @doc/specs/2026-08-10/desktop-server-sync.\n\n### Locked Decision Alignment\n- D1 (Conflict Resolution UI): Hiển thị chi tiết so sánh side-by-side giữa Server fields và Client fields, cho phép Admin/User chọn phương án Chấp nhận Client A/B hoặc Tùy chỉnh.\n- D2 (Hybrid Sync Status UI): Trực quan hóa trạng thái Outbox Queue và nút Đồng bộ ngay (Sync Now) trên giao diện.\n- D3 (Client Identity Tracing): Giao diện hiển thị rõ thông tin client_id, workspace_id, user_id của nguồn gửi bản ghi.\n\n### Steps\n1. Tạo Frontend Sync API Client (apps/web/src/features/sync/api.ts \u0026 apps/desktop/src/features/sync.ts):\n   - Thêm các hàm fetchStagedConflicts(), getConflictDetail(), resolveStagedConflict().\n\n2. Xây dựng Conflict Resolution Dashboard UI (apps/web/src/features/sync/ConflictDashboard.tsx):\n   - Render danh sách các bản ghi STAGED_FOR_REVIEW.\n   - Render bảng so sánh side-by-side giữa Server Value vs Client Value.\n   - Thao tác nút bấm Chọn Client Version hoặc nhập Custom Value và gửi API phê duyệt.\n\n3. Tích hợp Conflict Dashboard vào Layout Web/Desktop:\n   - Kết nối Conflict UI vào tab Audit / Sync Management của ứng dụng.\n\n4. End-to-End SDD Verification (knowns validate --scope sdd):\n   - Kiểm tra tất cả 5 tiêu chí Acceptance Criteria (AC-1 đến AC-5) của spec desktop-server-sync.md.\n   - Đảm bảo tất cả unit tests của desktop-core và apps/server pass 100%.\n\n### Verification Plan\n- Chạy uv run --project apps/server pytest apps/server/tests đảm bảo backend server tests pass.\n- Chạy cargo test -p desktop-core đảm bảo Rust desktop-core tests pass.\n- Chạy knowns validate --scope sdd để xác minh 100% SDD coverage cho spec specs/2026-08-10/desktop-server-sync.md.",
         "priority": "high",
         "spec": "specs/2026-08-10/desktop-server-sync",
         "status": "done",
         "timeSpent": 0,
         "title": "[desktop-server-sync-04] Conflict Resolution UI Dashboard \u0026 End-to-End Verification",
-        "updatedAt": "2026-08-10T03:34:27.7208144Z"
+        "updatedAt": "2026-08-10T03:54:27.10533Z"
       }
     }
   ]

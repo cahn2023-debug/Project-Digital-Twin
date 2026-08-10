@@ -19,4 +19,3 @@ def register_feature_routers(app: FastAPI) -> None:
     app.include_router(organize_router)
     app.include_router(dashboard_router)
     app.include_router(sync_router)
-

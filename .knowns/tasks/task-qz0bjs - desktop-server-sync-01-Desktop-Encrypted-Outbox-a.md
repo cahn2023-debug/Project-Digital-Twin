@@ -5,7 +5,7 @@ status: done
 priority: high
 labels: []
 createdAt: '2026-08-10T02:13:29.013Z'
-updatedAt: '2026-08-10T03:34:17.842Z'
+updatedAt: '2026-08-10T03:54:18.356Z'
 completedAt: '2026-08-10T02:23:10.856Z'
 timeSpent: 0
 spec: specs/2026-08-10/desktop-server-sync
@@ -68,5 +68,7 @@ Xây dựng cơ chế Encrypted Outbox Queue và Replay Worker mở rộng cho �
 <!-- SECTION:NOTES:BEGIN -->
 Implemented SQLite encrypted outbox queue and hybrid replay worker in crates/desktop-core. Added client_id, workspace_id, user_id SyncPayloadEnvelope metadata and trigger_manual_sync. System Decision Impact: none — Extended desktop-core SQLite Encrypted Outbox queue to embed client_id, workspace_id, user_id metadata into mutation payloads for desktop-server sync. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.
 Flow audit: implementation ACs added and verified against the completed outbox/replay implementation.
+Fixes recorded: client_id and mutation_id now use UUID v4; manual replay posts real envelopes to /api/v1/sync/reconcile-batch using PROJECT_SYNC_SERVER_URL or an explicit server URL, and maps ACK/conflict/failure statuses to the encrypted outbox.
+Review: PASS after UUID v4, real batch transport, background replay worker and persisted retry-count fixes. P1=0; server persistence across restarts deferred to review follow-up task 0x820i.
 <!-- SECTION:NOTES:END -->
 

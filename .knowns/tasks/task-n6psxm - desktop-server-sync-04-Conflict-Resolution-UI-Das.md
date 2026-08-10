@@ -5,7 +5,7 @@ status: done
 priority: high
 labels: []
 createdAt: '2026-08-10T02:13:38.983Z'
-updatedAt: '2026-08-10T03:34:27.720Z'
+updatedAt: '2026-08-10T03:54:27.105Z'
 completedAt: '2026-08-10T02:51:17.245Z'
 timeSpent: 0
 spec: specs/2026-08-10/desktop-server-sync
@@ -65,5 +65,7 @@ Xây dựng giao diện Conflict Resolution UI Dashboard side-by-side cho phép 
 <!-- SECTION:NOTES:BEGIN -->
 Created Conflict Resolution Dashboard UI in apps/web/src/features/sync/ConflictDashboard.tsx and api helper in api.ts. Verified 100% tests in apps/server (54/54) and desktop-core (23/23). Verified SDD validation (0 errors). System Decision Impact: none — Implemented Conflict Resolution Dashboard UI and completed end-to-end SDD verification. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.
 Flow audit: implementation ACs added and verified against the completed dashboard and recorded verification.
+Fixes recorded: ConflictDashboard is wired to the Datacenter Sync navigation entry; dashboard/API remains side-by-side and resolution-capable.
+Review: PASS after Sync navigation wiring and full web build/typecheck. P1=0; one operational persistence P2 is tracked separately as task 0x820i.
 <!-- SECTION:NOTES:END -->
 

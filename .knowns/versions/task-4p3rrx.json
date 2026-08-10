@@ -1,6 +1,6 @@
 {
   "taskId": "4p3rrx",
-  "currentVersion": 5,
+  "currentVersion": 7,
   "versions": [
     {
       "id": "v1",
@@ -136,16 +136,16 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "Reconcile batch endpoint accepts mutation batches and repeated mutation identifiers are idempotent.",
-              "completed": true
+              "completed": true,
+              "text": "Reconcile batch endpoint accepts mutation batches and repeated mutation identifiers are idempotent."
             },
             {
-              "text": "Non-overlapping field changes from different clients are merged without losing either update.",
-              "completed": true
+              "completed": true,
+              "text": "Non-overlapping field changes from different clients are merged without losing either update."
             },
             {
-              "text": "Server tests cover field-level merge and duplicate-batch behavior.",
-              "completed": true
+              "completed": true,
+              "text": "Server tests cover field-level merge and duplicate-batch behavior."
             }
           ]
         },
@@ -153,6 +153,92 @@
           "field": "implementationNotes",
           "oldValue": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.",
           "newValue": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Reconcile batch endpoint accepts mutation batches and repeated mutation identifiers are idempotent."
+          },
+          {
+            "completed": true,
+            "text": "Non-overlapping field changes from different clients are merged without losing either update."
+          },
+          {
+            "completed": true,
+            "text": "Server tests cover field-level merge and duplicate-batch behavior."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T02:34:54.605Z",
+        "createdAt": "2026-08-10T02:13:32.178Z",
+        "description": "Implement POST /api/v1/sync/reconcile-batch endpoint with mutation idempotency and server reconciliation engine for Field-level Auto-Merge on non-conflicting fields.",
+        "id": "4p3rrx",
+        "implementationNotes": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.",
+        "implementationPlan": "## Implementation Plan — Task @task-4p3rrx\n\n### Overview\nXây dựng Reconcile Batch Endpoint (POST /api/v1/sync/reconcile-batch) và Server Reconciliation Engine thực hiện Field-level Auto-Merge dữ liệu từ các ứng dụng Desktop trên Server (apps/server).\n\n### Locked Decision Alignment\n- D1 (Conflict Strategy \u0026 Auto-Merge): Tự động hợp nhất (Field-level Auto-Merge) các trường dữ liệu không bị chồng lấn giữa các Client khác nhau. Trả về status: SYNCED cùng danh sách applied_fields.\n- D2 (Sync Transport): Đảm bảo tính Idempotent cho API POST /api/v1/sync/reconcile-batch bằng mutation_id / idempotency_key.\n- D3 (Client Identity): Đọc và sử dụng client_id, workspace_id, user_id từ SyncMutationItem để theo vết nguồn phát sinh dữ liệu.\n\n### Steps\n1. Định nghĩa Pydantic Schemas (apps/server/app/shared/schemas.py):\n   - Thêm SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse.\n\n2. Xây dựng Server Reconciliation Engine (apps/server/app/domain.py / apps/server/app/persistence.py):\n   - Thêm bộ nhớ theo dõi thực thể (entity state store), lịch sử mutation events và idempotency cache.\n   - Hàm reconcile_mutation_item(item: SyncMutationItem) thực hiện so sánh field_changes và tự động cập nhật dữ liệu nếu không bị xung đột cùng trường từ Client khác.\n\n3. Tạo REST Router Endpoint (apps/server/app/modules/sync/router.py):\n   - Khởi tạo router với đường dẫn POST /api/v1/sync/reconcile-batch.\n   - Đăng ký sync_router trong apps/server/app/main_core/router_registry.py.\n\n4. Unit \u0026 Integration Tests (apps/server/tests/test_sync_reconcile.py):\n   - Test 1: Field-level Auto-Merge khi Client A sửa name và Client B sửa status trên cùng một thực thể -\u003e Hợp nhất thành công.\n   - Test 2: Gửi lại cùng một lô mutation (Idempotency check) -\u003e Trả về IGNORED_DUPLICATE.\n\n### Verification Plan\n- Chạy pytest trong apps/server đảm bảo tất cả tests mới và tests hiện tại vượt qua 100%.\n- Kiểm tra kết quả trả về của POST /api/v1/sync/reconcile-batch với payload JSON chuẩn từ Desktop Outbox.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-server-sync-02] Server Reconcile Batch Endpoint \u0026 Field-level Auto-Merge Engine",
+        "updatedAt": "2026-08-10T03:34:21.4726262Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "4p3rrx",
+      "version": 6,
+      "timestamp": "2026-08-10T03:46:47.0089875Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.",
+          "newValue": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.\nFixes recorded: reconciliation resolution now preserves the server value when no client/custom choice is supplied and rejects unknown client choices; regression coverage added."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Reconcile batch endpoint accepts mutation batches and repeated mutation identifiers are idempotent."
+          },
+          {
+            "completed": true,
+            "text": "Non-overlapping field changes from different clients are merged without losing either update."
+          },
+          {
+            "completed": true,
+            "text": "Server tests cover field-level merge and duplicate-batch behavior."
+          }
+        ],
+        "archived": false,
+        "completedAt": "2026-08-10T02:34:54.605Z",
+        "createdAt": "2026-08-10T02:13:32.178Z",
+        "description": "Implement POST /api/v1/sync/reconcile-batch endpoint with mutation idempotency and server reconciliation engine for Field-level Auto-Merge on non-conflicting fields.",
+        "id": "4p3rrx",
+        "implementationNotes": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.\nFixes recorded: reconciliation resolution now preserves the server value when no client/custom choice is supplied and rejects unknown client choices; regression coverage added.",
+        "implementationPlan": "## Implementation Plan — Task @task-4p3rrx\n\n### Overview\nXây dựng Reconcile Batch Endpoint (POST /api/v1/sync/reconcile-batch) và Server Reconciliation Engine thực hiện Field-level Auto-Merge dữ liệu từ các ứng dụng Desktop trên Server (apps/server).\n\n### Locked Decision Alignment\n- D1 (Conflict Strategy \u0026 Auto-Merge): Tự động hợp nhất (Field-level Auto-Merge) các trường dữ liệu không bị chồng lấn giữa các Client khác nhau. Trả về status: SYNCED cùng danh sách applied_fields.\n- D2 (Sync Transport): Đảm bảo tính Idempotent cho API POST /api/v1/sync/reconcile-batch bằng mutation_id / idempotency_key.\n- D3 (Client Identity): Đọc và sử dụng client_id, workspace_id, user_id từ SyncMutationItem để theo vết nguồn phát sinh dữ liệu.\n\n### Steps\n1. Định nghĩa Pydantic Schemas (apps/server/app/shared/schemas.py):\n   - Thêm SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse.\n\n2. Xây dựng Server Reconciliation Engine (apps/server/app/domain.py / apps/server/app/persistence.py):\n   - Thêm bộ nhớ theo dõi thực thể (entity state store), lịch sử mutation events và idempotency cache.\n   - Hàm reconcile_mutation_item(item: SyncMutationItem) thực hiện so sánh field_changes và tự động cập nhật dữ liệu nếu không bị xung đột cùng trường từ Client khác.\n\n3. Tạo REST Router Endpoint (apps/server/app/modules/sync/router.py):\n   - Khởi tạo router với đường dẫn POST /api/v1/sync/reconcile-batch.\n   - Đăng ký sync_router trong apps/server/app/main_core/router_registry.py.\n\n4. Unit \u0026 Integration Tests (apps/server/tests/test_sync_reconcile.py):\n   - Test 1: Field-level Auto-Merge khi Client A sửa name và Client B sửa status trên cùng một thực thể -\u003e Hợp nhất thành công.\n   - Test 2: Gửi lại cùng một lô mutation (Idempotency check) -\u003e Trả về IGNORED_DUPLICATE.\n\n### Verification Plan\n- Chạy pytest trong apps/server đảm bảo tất cả tests mới và tests hiện tại vượt qua 100%.\n- Kiểm tra kết quả trả về của POST /api/v1/sync/reconcile-batch với payload JSON chuẩn từ Desktop Outbox.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-server-sync-02] Server Reconcile Batch Endpoint \u0026 Field-level Auto-Merge Engine",
+        "updatedAt": "2026-08-10T03:46:47.0089875Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "4p3rrx",
+      "version": 7,
+      "timestamp": "2026-08-10T03:54:21.3548179Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.\nFixes recorded: reconciliation resolution now preserves the server value when no client/custom choice is supplied and rejects unknown client choices; regression coverage added.",
+          "newValue": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.\nFixes recorded: reconciliation resolution now preserves the server value when no client/custom choice is supplied and rejects unknown client choices; regression coverage added.\nReview: PASS after server-value resolution regression fix. P1=0; field merge/idempotency behavior covered by the full server suite."
         }
       ],
       "snapshot": {
@@ -175,14 +261,14 @@
         "createdAt": "2026-08-10T02:13:32.178Z",
         "description": "Implement POST /api/v1/sync/reconcile-batch endpoint with mutation idempotency and server reconciliation engine for Field-level Auto-Merge on non-conflicting fields.",
         "id": "4p3rrx",
-        "implementationNotes": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.",
+        "implementationNotes": "Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge in apps/server. Added Pydantic schemas SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse, and tests in test_sync_reconcile.py. System Decision Impact: none — Implemented POST /api/v1/sync/reconcile-batch REST endpoint and ReconciliationEngine for Field-level Auto-Merge. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.\nFlow audit: implementation ACs added and verified against the completed reconcile endpoint and tests.\nFixes recorded: reconciliation resolution now preserves the server value when no client/custom choice is supplied and rejects unknown client choices; regression coverage added.\nReview: PASS after server-value resolution regression fix. P1=0; field merge/idempotency behavior covered by the full server suite.",
         "implementationPlan": "## Implementation Plan — Task @task-4p3rrx\n\n### Overview\nXây dựng Reconcile Batch Endpoint (POST /api/v1/sync/reconcile-batch) và Server Reconciliation Engine thực hiện Field-level Auto-Merge dữ liệu từ các ứng dụng Desktop trên Server (apps/server).\n\n### Locked Decision Alignment\n- D1 (Conflict Strategy \u0026 Auto-Merge): Tự động hợp nhất (Field-level Auto-Merge) các trường dữ liệu không bị chồng lấn giữa các Client khác nhau. Trả về status: SYNCED cùng danh sách applied_fields.\n- D2 (Sync Transport): Đảm bảo tính Idempotent cho API POST /api/v1/sync/reconcile-batch bằng mutation_id / idempotency_key.\n- D3 (Client Identity): Đọc và sử dụng client_id, workspace_id, user_id từ SyncMutationItem để theo vết nguồn phát sinh dữ liệu.\n\n### Steps\n1. Định nghĩa Pydantic Schemas (apps/server/app/shared/schemas.py):\n   - Thêm SyncMutationItem, SyncBatchRequest, SyncMutationAck, SyncBatchResponse.\n\n2. Xây dựng Server Reconciliation Engine (apps/server/app/domain.py / apps/server/app/persistence.py):\n   - Thêm bộ nhớ theo dõi thực thể (entity state store), lịch sử mutation events và idempotency cache.\n   - Hàm reconcile_mutation_item(item: SyncMutationItem) thực hiện so sánh field_changes và tự động cập nhật dữ liệu nếu không bị xung đột cùng trường từ Client khác.\n\n3. Tạo REST Router Endpoint (apps/server/app/modules/sync/router.py):\n   - Khởi tạo router với đường dẫn POST /api/v1/sync/reconcile-batch.\n   - Đăng ký sync_router trong apps/server/app/main_core/router_registry.py.\n\n4. Unit \u0026 Integration Tests (apps/server/tests/test_sync_reconcile.py):\n   - Test 1: Field-level Auto-Merge khi Client A sửa name và Client B sửa status trên cùng một thực thể -\u003e Hợp nhất thành công.\n   - Test 2: Gửi lại cùng một lô mutation (Idempotency check) -\u003e Trả về IGNORED_DUPLICATE.\n\n### Verification Plan\n- Chạy pytest trong apps/server đảm bảo tất cả tests mới và tests hiện tại vượt qua 100%.\n- Kiểm tra kết quả trả về của POST /api/v1/sync/reconcile-batch với payload JSON chuẩn từ Desktop Outbox.",
         "priority": "high",
         "spec": "specs/2026-08-10/desktop-server-sync",
         "status": "done",
         "timeSpent": 0,
         "title": "[desktop-server-sync-02] Server Reconcile Batch Endpoint \u0026 Field-level Auto-Merge Engine",
-        "updatedAt": "2026-08-10T03:34:21.4726262Z"
+        "updatedAt": "2026-08-10T03:54:21.3548179Z"
       }
     }
   ]

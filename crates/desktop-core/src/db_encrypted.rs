@@ -276,6 +276,19 @@ impl EncryptedDb {
         Ok(())
     }
 
+    pub fn update_mutation_status_with_retry(
+        &self,
+        event_id: &str,
+        status: &str,
+        retry_count: i32,
+    ) -> DbResult<()> {
+        self.conn.execute(
+            "UPDATE mutation_events SET status = ?1, retry_count = ?2 WHERE id = ?3;",
+            params![status, retry_count, event_id],
+        )?;
+        Ok(())
+    }
+
     pub fn pending_event_count(&self) -> DbResult<i64> {
         let count: i64 = self.conn.query_row(
             "SELECT count(*) FROM mutation_events WHERE status = 'PENDING';",

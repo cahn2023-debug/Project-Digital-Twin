@@ -1,0 +1,97 @@
+{
+  "taskId": "0x820i",
+  "currentVersion": 2,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "0x820i",
+      "version": 1,
+      "timestamp": "2026-08-10T03:53:58.7502696Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "medium"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T03:53:58.7487823Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T03:53:58.7487823Z"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "0x820i",
+      "version": 2,
+      "timestamp": "2026-08-10T03:54:05.5203826Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "text": "Processed mutation IDs and entity field state persist across server restart.",
+              "completed": false
+            },
+            {
+              "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers.",
+              "completed": false
+            },
+            {
+              "text": "Persistence and restart/integration tests cover idempotency and conflict recovery.",
+              "completed": false
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Processed mutation IDs and entity field state persist across server restart.",
+            "completed": false
+          },
+          {
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers.",
+            "completed": false
+          },
+          {
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery.",
+            "completed": false
+          }
+        ],
+        "archived": false,
+        "createdAt": "2026-08-10T03:53:58.748Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T03:54:05.5203826Z"
+      }
+    }
+  ]
+}

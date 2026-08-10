@@ -1,16 +1,18 @@
 use desktop_core::{DbPasskey, EncryptedDb};
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
-use std::sync::Mutex;
+use std::sync::{atomic::AtomicBool, Arc, Mutex};
 
 pub struct EncryptedDbState {
-    pub db: Mutex<Option<EncryptedDb>>,
+    pub db: Arc<Mutex<Option<EncryptedDb>>>,
+    pub sync_worker_started: AtomicBool,
 }
 
 impl Default for EncryptedDbState {
     fn default() -> Self {
         Self {
-            db: Mutex::new(None),
+            db: Arc::new(Mutex::new(None)),
+            sync_worker_started: AtomicBool::new(false),
         }
     }
 }
@@ -40,6 +42,8 @@ pub fn init_encrypted_database(
             let is_healthy = db.is_encrypted_and_healthy();
             let mut guard = state.db.lock().map_err(|e| e.to_string())?;
             *guard = Some(db);
+            drop(guard);
+            crate::replay_cmd::start_background_replay(&state);
 
             Ok(DbStatusResponse {
                 is_initialized: true,

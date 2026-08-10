@@ -44,8 +44,8 @@ export async function setNetworkStatus(online: boolean): Promise<boolean> {
   return await invoke<boolean>('set_network_status', { online });
 }
 
-export async function triggerManualSync(batchSize?: number): Promise<SyncBatchResult> {
-  return await invoke<SyncBatchResult>('trigger_manual_sync', { batchSize });
+export async function triggerManualSync(batchSize?: number, serverUrl?: string): Promise<SyncBatchResult> {
+  return await invoke<SyncBatchResult>('trigger_manual_sync', { batchSize, serverUrl });
 }
 
 export async function resolveMutationConflict(eventId: string, choice: 'USE_SERVER' | 'OVERWRITE_WITH_CLIENT'): Promise<boolean> {

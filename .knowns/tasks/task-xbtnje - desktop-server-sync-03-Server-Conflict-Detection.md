@@ -5,7 +5,7 @@ status: done
 priority: high
 labels: []
 createdAt: '2026-08-10T02:13:36.033Z'
-updatedAt: '2026-08-10T03:34:24.676Z'
+updatedAt: '2026-08-10T03:54:24.167Z'
 completedAt: '2026-08-10T02:45:49.857Z'
 timeSpent: 0
 spec: specs/2026-08-10/desktop-server-sync
@@ -64,5 +64,7 @@ Xây dựng Server Conflict Detection Engine, Staging Store lưu giữ bản ghi
 <!-- SECTION:NOTES:BEGIN -->
 Implemented conflict detection, Staging store (PENDING_REVIEW), and REST endpoints GET /api/v1/sync/conflicts and POST /api/v1/sync/conflicts/{conflict_id}/resolve. Added tests in test_sync_reconcile.py. System Decision Impact: none — Implemented conflict detection, PENDING_REVIEW staging table, and REST resolution API in apps/server. Spec Decision Compliance: D1=pass, D2=pass, D3=pass.
 Flow audit: implementation ACs added and verified against the completed staging and resolution APIs.
+Fixes recorded: resolved conflicts are excluded from the default pending list, and server-value resolution is covered by regression tests.
+Review: PASS after default pending-conflict filtering and server-preserve resolution regression coverage. P1=0.
 <!-- SECTION:NOTES:END -->
 
