@@ -286,7 +286,7 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
   return (
     <div className="page">
       <PageHeader
-        status="Revision D-042"
+        status="Draft Revision"
         subtitle="Không gian thiết kế Digital Twin: GIS, geometry và các representation DESIGNED độc lập với AS_BUILT."
         title="DESIGN"
         tone="info"
@@ -312,24 +312,16 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
             onOfflinePackageReady={handleOfflinePackageReady}
           />
         </Panel>
-        <Panel className="col-4" title="Inspector — CAM-114" subtitle="Canonical ID • 7ae9…91f2" action={<button className="icon-btn" type="button" aria-label="Chỉnh sửa CAM-114" onClick={() => onAction("Đang chỉnh sửa CAM-114")}><Icon name="edit" size={15} /></button>}>
+        <Panel className="col-4" title="Inspector — Thông tin đối tượng" subtitle="Chưa chọn entity" action={<button className="icon-btn" type="button" aria-label="Chỉnh sửa" disabled onClick={() => onAction("Chưa chọn đối tượng")}><Icon name="edit" size={15} /></button>}>
           <div className="panel-body flush">
-            <div className="property-list">
-              <div className="label">Code</div><div className="value entity-code">CAM-114</div>
-              <div className="label">Nút giao</div><div className="value">NG-044 • Trần Duy Hưng</div>
-              <div className="label">Model</div><div className="value">Hanwha XNV-8080</div>
-              <div className="label">Designed Lat</div><div className="value mono">21.0104821</div>
-              <div className="label">Designed Lon</div><div className="value mono">105.8012319</div>
-              <div className="label">As-built</div><div className="value"><StatusBadge tone="danger">Conflict</StatusBadge></div>
-              <div className="label">Revision</div><div className="value mono">DESIGNED/3</div>
-            </div>
-            <div className="panel-body">
-              <b className="subsection-title">Lịch sử thiết kế</b>
-              <div className="timeline">
-                <div className="timeline-item"><span className="timeline-dot" /><div className="timeline-title">Điều chỉnh hướng camera 12°</div><div className="timeline-meta">Rev 3 • Nguyễn A • hôm nay 14:21</div></div>
-                <div className="timeline-item"><span className="timeline-dot" /><div className="timeline-title">Di chuyển vị trí thiết kế 1.2 m</div><div className="timeline-meta">Rev 2 • Nguyễn A • 07/08</div></div>
-                <div className="timeline-item"><span className="timeline-dot" /><div className="timeline-title">Tạo từ CameraMaster.xlsx</div><div className="timeline-meta">Rev 1 • Import Job #184</div></div>
+            <div className="datacenter-empty-card" style={{ padding: "2.5rem 1.25rem", textAlign: "center" }}>
+              <div className="datacenter-empty-icon" style={{ marginBottom: "1rem" }}>
+                <Icon name="search" size={32} />
               </div>
+              <h4 style={{ margin: "0 0 0.5rem 0", fontSize: "1rem" }}>Chưa chọn entity trên bản đồ</h4>
+              <p style={{ margin: 0, color: "#666", fontSize: "0.85rem" }}>
+                Hãy bấm vào 1 camera hoặc nút giao trên bản đồ để xem thuộc tính chi tiết và lịch sử thiết kế.
+              </p>
             </div>
           </div>
         </Panel>
@@ -337,5 +329,3 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
     </div>
   );
 }
-
-

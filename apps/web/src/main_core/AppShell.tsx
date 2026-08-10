@@ -178,7 +178,7 @@ export default function App() {
           <div className="side-section"><div className="side-label">Workspace</div>{sidePrimary.map((item) => <button className={"side-item" + (activeSideItem === item.key ? " active" : "")} key={item.key} type="button" onClick={() => { setActiveSideItem(item.key); showToast(currentModule.label + " / " + item.label); }}><Icon name={item.icon} size={16} /><span className="side-text">{item.label}</span>{item.count ? <span className="mini-count">{item.count}</span> : null}</button>)}</div>
           {sideSecondary.length ? <div className="side-section"><div className="side-label">Khác</div>{sideSecondary.map((item) => <button className={"side-item" + (activeSideItem === item.key ? " active" : "")} key={item.key} type="button" onClick={() => { setActiveSideItem(item.key); showToast(currentModule.label + " / " + item.label); }}><Icon name={item.icon} size={16} /><span className="side-text">{item.label}</span>{item.count ? <span className="mini-count">{item.count}</span> : null}</button>)}</div> : null}
         </div>
-        <div className="sidebar-foot"><div className="storage-card"><div className="storage-line"><span>Project storage</span><b>38%</b></div><div className="progress"><span style={{ width: "38%" }} /></div><div className="meta-line storage-meta">3.8 GB / 10 GB • local + synced assets</div></div></div>
+        <div className="sidebar-foot"><div className="storage-card"><div className="storage-line"><span>Project storage</span><b>0%</b></div><div className="progress"><span style={{ width: "0%" }} /></div><div className="meta-line storage-meta">0 B / 10 GB • local + synced assets</div></div></div>
       </aside>
 
       <nav className="module-tabs" aria-label="Modules">

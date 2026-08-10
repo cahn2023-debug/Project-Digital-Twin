@@ -8,51 +8,55 @@ export function OperateView({ onAction }: { onAction: (message: string) => void 
         subtitle="Triển khai field package, xác minh hiện trường, GPS, ảnh và đồng bộ ChangeSet về DATACENTER."
         title="OPERATE"
         tone="success"
-        actions={<><Button onClick={() => onAction("Đang mở danh sách thiết bị")}>Quản lý thiết bị</Button><Button primary onClick={() => onAction("Đang tạo Field Package mới")}><Icon name="plus" size={14} />Tạo Field Package</Button></>}
+        actions={
+          <>
+            <Button onClick={() => onAction("Đang mở danh sách thiết bị")}>Quản lý thiết bị</Button>
+            <Button primary onClick={() => onAction("Đang tạo Field Package mới")}>
+              <Icon name="plus" size={14} />Tạo Field Package
+            </Button>
+          </>
+        }
       />
       <div className="kpi-grid">
-        <KpiCard icon="box" label="Field packages" value="12" foot={<><span className="delta up">8 active</span><span>4 completed</span></>} />
-        <KpiCard icon="check" label="Verified today" value="47" foot={<><span className="delta up">+18%</span><span>so với hôm qua</span></>} />
-        <KpiCard icon="refresh" label="Pending upload" value="8" foot={<><span className="delta warn">23 ảnh</span><span>đang chờ Wi-Fi</span></>} />
-        <KpiCard icon="alert" label="Field conflicts" value="3" foot={<><span className="delta down">cần xử lý</span><span>trước approval</span></>} />
+        <KpiCard icon="box" label="Field packages" value="0" foot={<><span className="delta">0 active</span><span>0 completed</span></>} />
+        <KpiCard icon="check" label="Verified today" value="0" foot={<><span className="delta">0%</span><span>chưa có dữ liệu</span></>} />
+        <KpiCard icon="refresh" label="Pending upload" value="0" foot={<><span className="delta">0 ảnh</span><span>đang chờ</span></>} />
+        <KpiCard icon="alert" label="Field conflicts" value="0" foot={<><span className="delta">0 xung đột</span><span>cần xử lý</span></>} />
       </div>
       <div className="grid-12">
-        <Panel className="col-8" title="Field Package Deployment" subtitle="Work package → entities → offline client" action={<Button onClick={() => onAction("Đã publish các package được chọn")}>Publish selected</Button>}>
-          <div className="panel-body">
-            <div className="workflow">
-              <div className="workflow-step"><div className="workflow-kicker">01 • Prepare</div><div className="workflow-title">WP-CAM-03</div><div className="workflow-meta">146 Camera • Nhà thầu A</div></div>
-              <div className="workflow-step"><div className="workflow-kicker">02 • Publish</div><div className="workflow-title">Package v7</div><div className="workflow-meta">24.8 MB • map + entities</div></div>
-              <div className="workflow-step"><div className="workflow-kicker">03 • Offline</div><div className="workflow-title">4 thiết bị</div><div className="workflow-meta">Last sync 11 phút</div></div>
-              <div className="workflow-step"><div className="workflow-kicker">04 • Verify</div><div className="workflow-title">103 / 146</div><div className="workflow-meta">71% hoàn thành</div></div>
+        <Panel
+          className="col-8"
+          title="Field Package Deployment"
+          subtitle="Work package → entities → offline client"
+          action={<Button onClick={() => onAction("Chưa chọn package để publish")}>Publish selected</Button>}
+        >
+          <div className="datacenter-empty-card" style={{ padding: "2.5rem 1.5rem", textAlign: "center" }}>
+            <div className="datacenter-empty-icon" style={{ marginBottom: "1rem" }}>
+              <Icon name="box" size={36} />
             </div>
-            <div className="progress large"><span style={{ width: "71%" }} /></div>
-          </div>
-          <div className="toolbar">
-            <input className="filter-input" placeholder="Tìm package…" aria-label="Tìm field package" />
-            <select className="select" aria-label="Lọc field package" defaultValue="all"><option value="all">Tất cả trạng thái</option><option value="active">Đang triển khai</option><option value="done">Hoàn tất</option></select>
-          </div>
-          <div className="panel-body flush table-wrap">
-            <table>
-              <thead><tr><th>Package</th><th>Nhà thầu</th><th>Entities</th><th>Verified</th><th>Sync</th><th>Status</th></tr></thead>
-              <tbody>
-                <tr><td className="entity-code">FP-CAM-003</td><td>Nhà thầu A</td><td>146</td><td>103</td><td>11 phút</td><td><StatusBadge tone="info">Active</StatusBadge></td></tr>
-                <tr><td className="entity-code">FP-CAM-004</td><td>Nhà thầu B</td><td>82</td><td>78</td><td>2 phút</td><td><StatusBadge tone="success">Near complete</StatusBadge></td></tr>
-                <tr><td className="entity-code">FP-CAM-006</td><td>Nhà thầu C</td><td>66</td><td>21</td><td>1 giờ</td><td><StatusBadge tone="warning">Offline device</StatusBadge></td></tr>
-              </tbody>
-            </table>
+            <h3 style={{ margin: "0 0 0.5rem 0", fontSize: "1.1rem" }}>Chưa có Field Package nào</h3>
+            <p style={{ margin: "0 0 1.25rem 0", color: "#666", fontSize: "0.9rem" }}>
+              Tạo mới Field Package từ Work Package để chuyển dữ liệu xuống thiết bị di động hiện trường.
+            </p>
+            <Button primary onClick={() => onAction("Đang khởi tạo Field Package mới")}>
+              <Icon name="plus" size={14} /> Tạo Field Package mới
+            </Button>
           </div>
         </Panel>
-        <Panel className="col-4" title="Mobile field preview" subtitle="Offline-first experience" action={<StatusBadge tone="neutral">Android</StatusBadge>}>
+        <Panel className="col-4" title="Mobile field preview" subtitle="Offline-first experience" action={<StatusBadge tone="neutral">Ready</StatusBadge>}>
           <div className="panel-body">
-            <div className="mobile-preview">
-              <div className="mobile-status"><span>15:48</span><span>Offline • 78%</span></div>
-              <div className="mobile-head"><b>FP-CAM-003</b><div>NG-031 • 4 Camera còn lại</div></div>
-              <div className="mobile-map"><div className="map-grid" /><div className="road r1" /><div className="road r2" /><div className="camera-pin p2" /><div className="node-pin n1" /></div>
-              <div className="mobile-list">
-                <div className="mobile-item"><b>CAM-001</b><StatusBadge tone="success">Done</StatusBadge><div className="meta-line">GPS 2.7 m • 3 photos</div></div>
-                <div className="mobile-item"><b>CAM-002</b><StatusBadge tone="warning">Verify</StatusBadge><div className="meta-line">Designed location 48 m away</div></div>
+            <div className="mobile-preview" style={{ opacity: 0.7 }}>
+              <div className="mobile-status"><span>--:--</span><span>Offline • 100%</span></div>
+              <div className="mobile-head"><b>Chưa có Package</b><div>Sẵn sàng nhận dữ liệu</div></div>
+              <div className="mobile-map" style={{ display: "flex", alignItems: "center", justifyContent: "center", color: "#888", fontSize: "0.85rem" }}>
+                Bản đồ hiện trường trống
               </div>
-              <div className="mobile-bottom"><span>Map</span><span>Tasks</span><span>Sync 8</span></div>
+              <div className="mobile-list">
+                <div style={{ padding: "1rem", textAlign: "center", color: "#888", fontSize: "0.85rem" }}>
+                  Chưa có nhiệm vụ xác minh
+                </div>
+              </div>
+              <div className="mobile-bottom"><span>Map</span><span>Tasks</span><span>Sync 0</span></div>
             </div>
           </div>
         </Panel>
@@ -60,5 +64,3 @@ export function OperateView({ onAction }: { onAction: (message: string) => void 
     </div>
   );
 }
-
-
