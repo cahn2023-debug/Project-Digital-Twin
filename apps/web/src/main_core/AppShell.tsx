@@ -90,7 +90,7 @@ export default function App() {
     }
     if (activeModule === "design") return <DesignView onAction={showToast} />;
     if (activeModule === "operate") return <OperateView onAction={showToast} />;
-    if (activeModule === "organize") return <OrganizeView onAction={showToast} projectId={currentProject?.id ?? null} />;
+    if (activeModule === "organize") return <OrganizeView onAction={showToast} onAddDataSource={() => activateModule("datacenter")} onCreateProject={openCreateProject} projectId={currentProject?.id ?? null} />;
     return <DashboardView onAction={showToast} />;
   };
 

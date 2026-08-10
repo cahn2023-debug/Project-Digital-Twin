@@ -9,6 +9,7 @@
     "specs/2026-08-09/project-create-and-delete-lifecycle": "doc-7ae348ec26cfce337fdb618b4b9eae27",
     "specs/2026-08-10/desktop-data-source-folder-ingestion": "doc-17707e951666bc800518658de0a1e082",
     "specs/2026-08-10/desktop-server-sync": "doc-babf7002372644dcd838732b51669ab6",
+    "specs/2026-08-10/sample-data-removal": "doc-4ff800b2e8a1c26a398426212e9fa75d",
     "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest": "doc-c3e305e7ce3575f96b01529b2e46b3b1"
   }
 }

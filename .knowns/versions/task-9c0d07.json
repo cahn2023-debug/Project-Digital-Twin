@@ -1,6 +1,6 @@
 {
   "taskId": "9c0d07",
-  "currentVersion": 5,
+  "currentVersion": 9,
   "versions": [
     {
       "id": "v1",
@@ -279,16 +279,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Provide reset / clean script for local databases",
-            "completed": true
+            "completed": true,
+            "text": "Provide reset / clean script for local databases"
           },
           {
-            "text": "Purge existing sample data without dropping tables",
-            "completed": true
+            "completed": true,
+            "text": "Purge existing sample data without dropping tables"
           },
           {
-            "text": "Run SDD verification for spec ACs",
-            "completed": true
+            "completed": true,
+            "text": "Run SDD verification for spec ACs"
           }
         ],
         "archived": false,
@@ -313,6 +313,226 @@
         "timeSpent": 0,
         "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
         "updatedAt": "2026-08-10T04:38:59.4056425Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "9c0d07",
+      "version": 6,
+      "timestamp": "2026-08-10T04:41:42.4729111Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "done",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nReview found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": "2026-08-10T04:38:18.25Z",
+          "newValue": null
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Provide reset / clean script for local databases"
+          },
+          {
+            "completed": true,
+            "text": "Purge existing sample data without dropping tables"
+          },
+          {
+            "completed": true,
+            "text": "Run SDD verification for spec ACs"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nReview found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs.",
+        "implementationPlan": "1. Add apps/server/app/clean_sample_data.py with explicit --yes confirmation, --dry-run reporting, PostgreSQL cleanup via TRUNCATE ... CASCADE plus runtime_store_snapshots reset, and SQLite/SQLCipher-compatible table DELETE without dropping schema.\n2. Support DATABASE_URL/DESKTOP_MANIFEST_PATH/DESKTOP_DB_PATH environment defaults and verify every selected target is empty after cleanup.\n3. Add focused tests using temporary SQLite databases for dry-run, data removal, schema preservation, and CLI validation; keep destructive PostgreSQL execution isolated behind the existing psycopg adapter.\n4. Run CLI tests, full server tests, compileall and task/SDD validation.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:41:42.4729111Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "9c0d07",
+      "version": 7,
+      "timestamp": "2026-08-10T04:43:16.5342255Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nReview found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs.",
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nReview found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs.\nFlow review/fix: replaced the initial PostgreSQL-only reset with a guarded CLI supporting --yes/--dry-run, PostgreSQL application-table cleanup plus runtime snapshot reset, and SQLite/SQLCipher-compatible desktop manifest/database cleanup without dropping tables. Added 4 focused CLI tests. Verification: 63 server tests passed, compileall passed, task validation passed. Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — the CLI implements the approved cleanup contract without adding new durable guidance."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Provide reset / clean script for local databases"
+          },
+          {
+            "completed": true,
+            "text": "Purge existing sample data without dropping tables"
+          },
+          {
+            "completed": true,
+            "text": "Run SDD verification for spec ACs"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nReview found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs.\nFlow review/fix: replaced the initial PostgreSQL-only reset with a guarded CLI supporting --yes/--dry-run, PostgreSQL application-table cleanup plus runtime snapshot reset, and SQLite/SQLCipher-compatible desktop manifest/database cleanup without dropping tables. Added 4 focused CLI tests. Verification: 63 server tests passed, compileall passed, task validation passed. Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — the CLI implements the approved cleanup contract without adding new durable guidance.",
+        "implementationPlan": "1. Add apps/server/app/clean_sample_data.py with explicit --yes confirmation, --dry-run reporting, PostgreSQL cleanup via TRUNCATE ... CASCADE plus runtime_store_snapshots reset, and SQLite/SQLCipher-compatible table DELETE without dropping schema.\n2. Support DATABASE_URL/DESKTOP_MANIFEST_PATH/DESKTOP_DB_PATH environment defaults and verify every selected target is empty after cleanup.\n3. Add focused tests using temporary SQLite databases for dry-run, data removal, schema preservation, and CLI validation; keep destructive PostgreSQL execution isolated behind the existing psycopg adapter.\n4. Run CLI tests, full server tests, compileall and task/SDD validation.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:43:16.5342255Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "9c0d07",
+      "version": 8,
+      "timestamp": "2026-08-10T04:43:30.8829855Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 311
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Provide reset / clean script for local databases"
+          },
+          {
+            "completed": true,
+            "text": "Purge existing sample data without dropping tables"
+          },
+          {
+            "completed": true,
+            "text": "Run SDD verification for spec ACs"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nReview found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs.\nFlow review/fix: replaced the initial PostgreSQL-only reset with a guarded CLI supporting --yes/--dry-run, PostgreSQL application-table cleanup plus runtime snapshot reset, and SQLite/SQLCipher-compatible desktop manifest/database cleanup without dropping tables. Added 4 focused CLI tests. Verification: 63 server tests passed, compileall passed, task validation passed. Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — the CLI implements the approved cleanup contract without adding new durable guidance.",
+        "implementationPlan": "1. Add apps/server/app/clean_sample_data.py with explicit --yes confirmation, --dry-run reporting, PostgreSQL cleanup via TRUNCATE ... CASCADE plus runtime_store_snapshots reset, and SQLite/SQLCipher-compatible table DELETE without dropping schema.\n2. Support DATABASE_URL/DESKTOP_MANIFEST_PATH/DESKTOP_DB_PATH environment defaults and verify every selected target is empty after cleanup.\n3. Add focused tests using temporary SQLite databases for dry-run, data removal, schema preservation, and CLI validation; keep destructive PostgreSQL execution isolated behind the existing psycopg adapter.\n4. Run CLI tests, full server tests, compileall and task/SDD validation.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "in-progress",
+        "timeSpent": 311,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:43:30.8829855Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "9c0d07",
+      "version": 9,
+      "timestamp": "2026-08-10T04:43:34.09474Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T04:43:34.09474Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Provide reset / clean script for local databases",
+            "completed": true
+          },
+          {
+            "text": "Purge existing sample data without dropping tables",
+            "completed": true
+          },
+          {
+            "text": "Run SDD verification for spec ACs",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T04:43:34.09474Z",
+        "createdAt": "2026-08-10T04:33:17.172Z",
+        "description": "Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI tool) to purge pre-existing sample data from current local databases and verify clean state across backend and desktop.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "9c0d07",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass\nSystem Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.\nReview found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs.\nFlow review/fix: replaced the initial PostgreSQL-only reset with a guarded CLI supporting --yes/--dry-run, PostgreSQL application-table cleanup plus runtime snapshot reset, and SQLite/SQLCipher-compatible desktop manifest/database cleanup without dropping tables. Added 4 focused CLI tests. Verification: 63 server tests passed, compileall passed, task validation passed. Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — the CLI implements the approved cleanup contract without adding new durable guidance.",
+        "implementationPlan": "1. Add apps/server/app/clean_sample_data.py with explicit --yes confirmation, --dry-run reporting, PostgreSQL cleanup via TRUNCATE ... CASCADE plus runtime_store_snapshots reset, and SQLite/SQLCipher-compatible table DELETE without dropping schema.\n2. Support DATABASE_URL/DESKTOP_MANIFEST_PATH/DESKTOP_DB_PATH environment defaults and verify every selected target is empty after cleanup.\n3. Add focused tests using temporary SQLite databases for dry-run, data removal, schema preservation, and CLI validation; keep destructive PostgreSQL execution isolated behind the existing psycopg adapter.\n4. Run CLI tests, full server tests, compileall and task/SDD validation.",
+        "labels": [
+          "from-spec",
+          "spec:sample-data-removal",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/sample-data-removal",
+        "status": "done",
+        "timeSpent": 311,
+        "title": "[sample-data-removal-04] Create database reset / clean sample data CLI script \u0026 verification",
+        "updatedAt": "2026-08-10T04:43:34.09474Z"
       }
     }
   ]

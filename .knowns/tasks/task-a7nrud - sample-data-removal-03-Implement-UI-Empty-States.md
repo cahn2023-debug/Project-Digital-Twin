@@ -8,9 +8,10 @@ labels:
   - spec:sample-data-removal
   - spec-date:2026-08-10
 createdAt: '2026-08-10T04:33:12.123Z'
-updatedAt: '2026-08-10T04:38:50.745Z'
-completedAt: '2026-08-10T04:37:41.593Z'
-timeSpent: 0
+updatedAt: '2026-08-10T04:45:01.507Z'
+completedAt: '2026-08-10T04:45:01.507Z'
+timeSpent: 68
+assignee: '@me'
 spec: specs/2026-08-10/sample-data-removal
 fulfills:
   - AC-2
@@ -37,5 +38,7 @@ Implement intuitive Empty State components with Call-To-Action buttons ('Create 
 <!-- SECTION:NOTES:BEGIN -->
 Spec Decision Compliance: D1=pass, D2=pass, D3=pass
 System Decision Impact: none — Replaced hardcoded sample arrays with empty datasets by default; added Empty State containers and CTA buttons across Datacenter, Organize and Projects UI; pnpm web & desktop builds passed.
+Flow review found the prior empty-state pass covered Datacenter but lacked Organize/Create-project CTA wiring; reopening to complete the full UI ACs.
+Flow review/fix: retained empty Datacenter camera/source states and wired Organize empty states to Create project and Add data source CTAs through AppShell. Verified projects menu already exposes Create CTA; desktop reuses the shared web bundle. Verification: web typecheck/build passed, web test runner has 0 tests, desktop typecheck passed; build emitted only the existing large-chunk warning. Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — empty-state behavior implements the approved UI contract.
 <!-- SECTION:NOTES:END -->
 

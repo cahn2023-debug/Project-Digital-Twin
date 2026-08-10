@@ -8,9 +8,9 @@ labels:
   - spec:sample-data-removal
   - spec-date:2026-08-10
 createdAt: '2026-08-10T04:33:17.172Z'
-updatedAt: '2026-08-10T04:38:59.405Z'
-completedAt: '2026-08-10T04:38:18.250Z'
-timeSpent: 0
+updatedAt: '2026-08-10T04:43:34.094Z'
+completedAt: '2026-08-10T04:43:34.094Z'
+timeSpent: 311
 assignee: '@me'
 spec: specs/2026-08-10/sample-data-removal
 fulfills:
@@ -45,5 +45,7 @@ Create a clean CLI/reset script (python -m app.clean_sample_data or backend CLI 
 <!-- SECTION:NOTES:BEGIN -->
 Spec Decision Compliance: D1=pass, D2=pass, D3=pass
 System Decision Impact: none — Created clean_sample_data CLI module for server persistence reset; verified 59 pytest tests and 24 cargo tests pass.
+Review found the initial CLI only reset PostgreSQL snapshots and lacked confirmation, dry-run, SQLite cleanup and tests; reopening to complete those ACs.
+Flow review/fix: replaced the initial PostgreSQL-only reset with a guarded CLI supporting --yes/--dry-run, PostgreSQL application-table cleanup plus runtime snapshot reset, and SQLite/SQLCipher-compatible desktop manifest/database cleanup without dropping tables. Added 4 focused CLI tests. Verification: 63 server tests passed, compileall passed, task validation passed. Spec Decision Compliance: D1=pass, D2=pass, D3=pass. System Decision Impact: none — the CLI implements the approved cleanup contract without adding new durable guidance.
 <!-- SECTION:NOTES:END -->
 

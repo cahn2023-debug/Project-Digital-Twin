@@ -2,7 +2,7 @@
 title: Sample Data Removal
 description: Specification for removing pre-seeded sample/mock data from backend persistence, desktop/web apps, and providing a clean empty state with reset capabilities.
 createdAt: '2026-08-10T04:30:00.000Z'
-updatedAt: '2026-08-10T04:30:00.000Z'
+updatedAt: '2026-08-10T04:46:42.428Z'
 tags:
   - spec
   - approved
@@ -43,10 +43,10 @@ Loại bỏ toàn bộ dữ liệu mẫu (pre-seeded/mock data) tồn tại tron
 
 ## Acceptance Criteria
 
-- [ ] AC-1: Khởi tạo lại cơ sở dữ liệu mới (server & desktop manifest), sau đó gọi API lấy danh sách Projects, Cameras, Organize Groups, Data Sources đều trả về mảng rỗng `[]` (HTTP status 200).
-- [ ] AC-2: Giao diện Web & Desktop hiển thị Empty State đúng chuẩn UI/UX ở từng phân hệ (Projects list, Camera list, Organize tab, Local sources) khi chưa có dữ liệu.
-- [ ] AC-3: Người dùng có thể tạo thành công Dự án đầu tiên và các dữ liệu liên quan qua UI mà không gặp lỗi ràng buộc hay lỗi id ngầm định.
-- [ ] AC-4: Chạy script reset/clean thành công xóa toàn bộ dữ liệu mẫu cũ trong môi trường local hiện tại mà không làm hỏng database schema.
+- [x] AC-1: Khởi tạo lại cơ sở dữ liệu mới (server & desktop manifest), sau đó gọi API lấy danh sách Projects, Cameras, Organize Groups, Data Sources đều trả về mảng rỗng `[]` (HTTP status 200).
+- [x] AC-2: Giao diện Web & Desktop hiển thị Empty State đúng chuẩn UI/UX ở từng phân hệ (Projects list, Camera list, Organize tab, Local sources) khi chưa có dữ liệu.
+- [x] AC-3: Người dùng có thể tạo thành công Dự án đầu tiên và các dữ liệu liên quan qua UI mà không gặp lỗi ràng buộc hay lỗi id ngầm định.
+- [x] AC-4: Chạy script reset/clean thành công xóa toàn bộ dữ liệu mẫu cũ trong môi trường local hiện tại mà không làm hỏng database schema.
 
 ## Scenarios
 

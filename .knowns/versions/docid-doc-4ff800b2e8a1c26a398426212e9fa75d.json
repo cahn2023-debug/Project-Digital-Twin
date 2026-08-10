@@ -1,0 +1,49 @@
+{
+  "docId": "doc-4ff800b2e8a1c26a398426212e9fa75d",
+  "docPath": "specs/2026-08-10/sample-data-removal",
+  "currentPath": "specs/2026-08-10/sample-data-removal",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "docId": "doc-4ff800b2e8a1c26a398426212e9fa75d",
+      "docPath": "specs/2026-08-10/sample-data-removal",
+      "currentPath": "specs/2026-08-10/sample-data-removal",
+      "version": 1,
+      "timestamp": "2026-08-10T04:46:42.4801031Z",
+      "author": "mcp",
+      "actor": "mcp",
+      "source": "mcp",
+      "baseHash": "743727b192f907ec26206f9885e3dab43155d7f76ad38f0c220660c2d94ac385",
+      "newHash": "3cb0662728e29eb44a00a511047c1f42a852587537614b48415d4134a124b97a",
+      "changes": [
+        {
+          "field": "content",
+          "oldValue": "## Acceptance Criteria\n\n- [ ] AC-1: Khởi tạo lại cơ sở dữ liệu mới (server \u0026 desktop manifest), sau đó gọi API lấy danh sách Projects, Cameras, Organize Groups, Data Sources đều trả về mảng rỗng `[]` (HTTP status 200).\n- [ ] AC-2: Giao diện Web \u0026 Desktop hiển thị Empty State đúng chuẩn UI/UX ở từng phân hệ (Projects list, Camera list, Organize tab, Local sources) khi chưa có dữ liệu.\n- [ ] AC-3: Người dùng có thể tạo thành công Dự án đầu tiên và các dữ liệu liên quan qua UI mà không gặp lỗi ràng buộc hay lỗi id ngầm định.\n- [ ] AC-4: Chạy script reset/clean thành công xóa toàn bộ dữ liệu mẫu cũ trong môi trường local hiện tại mà không làm hỏng database schema.",
+          "newValue": "## Acceptance Criteria\n\n- [x] AC-1: Khởi tạo lại cơ sở dữ liệu mới (server \u0026 desktop manifest), sau đó gọi API lấy danh sách Projects, Cameras, Organize Groups, Data Sources đều trả về mảng rỗng `[]` (HTTP status 200).\n- [x] AC-2: Giao diện Web \u0026 Desktop hiển thị Empty State đúng chuẩn UI/UX ở từng phân hệ (Projects list, Camera list, Organize tab, Local sources) khi chưa có dữ liệu.\n- [x] AC-3: Người dùng có thể tạo thành công Dự án đầu tiên và các dữ liệu liên quan qua UI mà không gặp lỗi ràng buộc hay lỗi id ngầm định.\n- [x] AC-4: Chạy script reset/clean thành công xóa toàn bộ dữ liệu mẫu cũ trong môi trường local hiện tại mà không làm hỏng database schema."
+        }
+      ],
+      "changedScopes": [
+        {
+          "type": "section",
+          "field": "content",
+          "section": "Acceptance Criteria",
+          "summary": "Section: Acceptance Criteria",
+          "oldBytes": 793,
+          "newBytes": 793
+        }
+      ],
+      "snapshot": {
+        "description": "Specification for removing pre-seeded sample/mock data from backend persistence, desktop/web apps, and providing a clean empty state with reset capabilities.",
+        "path": "specs/2026-08-10/sample-data-removal",
+        "tags": [
+          "spec",
+          "approved",
+          "sample-data",
+          "cleanup"
+        ],
+        "title": "Sample Data Removal"
+      }
+    }
+  ]
+}
