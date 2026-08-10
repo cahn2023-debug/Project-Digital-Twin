@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Any
 from .schemas import SyncBatchRequest, SyncBatchResponse, SyncMutationAck, SyncMutationItem
@@ -22,12 +22,33 @@ class StagedConflictRecord:
     created_at: str = ""
 
 
+@dataclass
+class ReconciliationState:
+    processed_mutations: set[str] = field(default_factory=set)
+    entity_states: dict[str, dict[str, Any]] = field(default_factory=dict)
+    entity_field_timestamps: dict[str, dict[str, tuple[str, int, Any]]] = field(default_factory=dict)
+    staged_conflicts: dict[str, StagedConflictRecord] = field(default_factory=dict)
+
+
 class ReconciliationEngine:
-    def __init__(self) -> None:
-        self.processed_mutations: set[str] = set()
-        self.entity_states: dict[str, dict[str, Any]] = {}
-        self.entity_field_timestamps: dict[str, dict[str, tuple[str, int, Any]]] = {}
-        self.staged_conflicts: dict[str, StagedConflictRecord] = {}
+    def __init__(self, state: ReconciliationState | None = None) -> None:
+        self.state = state or ReconciliationState()
+
+    @property
+    def processed_mutations(self) -> set[str]:
+        return self.state.processed_mutations
+
+    @property
+    def entity_states(self) -> dict[str, dict[str, Any]]:
+        return self.state.entity_states
+
+    @property
+    def entity_field_timestamps(self) -> dict[str, dict[str, tuple[str, int, Any]]]:
+        return self.state.entity_field_timestamps
+
+    @property
+    def staged_conflicts(self) -> dict[str, StagedConflictRecord]:
+        return self.state.staged_conflicts
 
     def reconcile_batch(self, request: SyncBatchRequest) -> SyncBatchResponse:
         results: list[SyncMutationAck] = []

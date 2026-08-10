@@ -8,6 +8,7 @@ from typing import Any, Iterator
 from uuid import UUID
 
 from . import domain
+from .shared.reconciler import ReconciliationState, StagedConflictRecord
 
 
 _DOMAIN_DATACLASSES = {
@@ -15,6 +16,12 @@ _DOMAIN_DATACLASSES = {
     for name, value in vars(domain).items()
     if isinstance(value, type) and is_dataclass(value)
 }
+_DOMAIN_DATACLASSES.update(
+    {
+        "ReconciliationState": ReconciliationState,
+        "StagedConflictRecord": StagedConflictRecord,
+    }
+)
 _ADAPTER_STATE_FIELDS = {"database_url", "store_key"}
 
 
@@ -101,6 +108,7 @@ class PostgresCameraStore(domain.CameraStore):
             raise ValueError("DATABASE_URL is required for PostgreSQL persistence")
         self.database_url = database_url
         self.store_key = store_key
+        self.reconciliation_state = ReconciliationState()
 
     @staticmethod
     def _driver() -> Any:

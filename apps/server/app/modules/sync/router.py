@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from fastapi import APIRouter, HTTPException
+from ...main_core.dependencies import get_store
 from ...shared.schemas import (
     ConflictResolveRequest,
     StagedConflictListResponse,
@@ -8,19 +9,24 @@ from ...shared.schemas import (
     SyncBatchRequest,
     SyncBatchResponse,
 )
-from ...shared.reconciler import GLOBAL_RECONCILER
+from ...shared.reconciler import GLOBAL_RECONCILER, ReconciliationEngine
 
 router = APIRouter()
 
 
+def _reconciliation_engine() -> ReconciliationEngine:
+    state = getattr(get_store(), "reconciliation_state", None)
+    return ReconciliationEngine(state) if state is not None else GLOBAL_RECONCILER
+
+
 @router.post("/api/v1/sync/reconcile-batch", response_model=SyncBatchResponse)
 def reconcile_batch(request: SyncBatchRequest) -> SyncBatchResponse:
-    return GLOBAL_RECONCILER.reconcile_batch(request)
+    return _reconciliation_engine().reconcile_batch(request)
 
 
 @router.get("/api/v1/sync/conflicts", response_model=StagedConflictListResponse)
 def list_conflicts(status: str | None = "PENDING_REVIEW") -> StagedConflictListResponse:
-    conflicts = GLOBAL_RECONCILER.list_conflicts(status_filter=status)
+    conflicts = _reconciliation_engine().list_conflicts(status_filter=status)
     items = [
         StagedConflictResponse(
             conflict_id=c.conflict_id,
@@ -43,7 +49,7 @@ def list_conflicts(status: str | None = "PENDING_REVIEW") -> StagedConflictListR
 
 @router.get("/api/v1/sync/conflicts/{conflict_id}", response_model=StagedConflictResponse)
 def get_conflict(conflict_id: str) -> StagedConflictResponse:
-    c = GLOBAL_RECONCILER.get_conflict(conflict_id)
+    c = _reconciliation_engine().get_conflict(conflict_id)
     if c is None:
         raise HTTPException(status_code=404, detail=f"Conflict {conflict_id} not found")
     return StagedConflictResponse(
@@ -65,7 +71,7 @@ def get_conflict(conflict_id: str) -> StagedConflictResponse:
 @router.post("/api/v1/sync/conflicts/{conflict_id}/resolve", response_model=StagedConflictResponse)
 def resolve_conflict(conflict_id: str, request: ConflictResolveRequest) -> StagedConflictResponse:
     try:
-        c = GLOBAL_RECONCILER.resolve_conflict(
+        c = _reconciliation_engine().resolve_conflict(
             conflict_id,
             chosen_client_id=request.chosen_client_id,
             custom_values=request.custom_values,

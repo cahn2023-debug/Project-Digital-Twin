@@ -1,6 +1,6 @@
 {
   "taskId": "0x820i",
-  "currentVersion": 3,
+  "currentVersion": 8,
   "versions": [
     {
       "id": "v1",
@@ -119,16 +119,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Processed mutation IDs and entity field state persist across server restart.",
-            "completed": false
+            "completed": false,
+            "text": "Processed mutation IDs and entity field state persist across server restart."
           },
           {
-            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers.",
-            "completed": false
+            "completed": false,
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
           },
           {
-            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery.",
-            "completed": false
+            "completed": false,
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
           }
         ],
         "archived": false,
@@ -147,6 +147,283 @@
         "timeSpent": 0,
         "title": "Review follow-up: persist server reconciliation state across restarts",
         "updatedAt": "2026-08-10T04:18:01.1601939Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "0x820i",
+      "version": 4,
+      "timestamp": "2026-08-10T04:22:18.5759954Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Extract reconciliation state into a serializable ReconciliationState and attach it to PostgresCameraStore so the existing runtime_store_snapshots transaction persists processed mutation IDs, entity field state, and staged conflicts across restarts.\n2. Route sync endpoints through an engine bound to the current store state; keep GLOBAL_RECONCILER as the development/test fallback, while the existing SELECT FOR UPDATE request transaction serializes multiple workers.\n3. Add restart snapshot and shared-state multi-worker tests covering duplicate idempotency, conflict listing/resolution, and state round-trip.\n4. Run targeted/full server tests, task/entity validation, and diff checks; record AC evidence and implementation notes."
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.",
+          "newValue": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Processed mutation IDs and entity field state persist across server restart."
+          },
+          {
+            "completed": false,
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
+          },
+          {
+            "completed": false,
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T03:53:58.748Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "implementationNotes": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.",
+        "implementationPlan": "1. Extract reconciliation state into a serializable ReconciliationState and attach it to PostgresCameraStore so the existing runtime_store_snapshots transaction persists processed mutation IDs, entity field state, and staged conflicts across restarts.\n2. Route sync endpoints through an engine bound to the current store state; keep GLOBAL_RECONCILER as the development/test fallback, while the existing SELECT FOR UPDATE request transaction serializes multiple workers.\n3. Add restart snapshot and shared-state multi-worker tests covering duplicate idempotency, conflict listing/resolution, and state round-trip.\n4. Run targeted/full server tests, task/entity validation, and diff checks; record AC evidence and implementation notes.",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T04:22:18.5759954Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "0x820i",
+      "version": 5,
+      "timestamp": "2026-08-10T04:23:54.5792824Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.",
+          "newValue": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.\nCheckpoint: added serializable ReconciliationState to PostgresCameraStore snapshot state; sync routes now resolve an engine from the request store, preserving the in-memory fallback. Targeted sync tests pass 6/6."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Processed mutation IDs and entity field state persist across server restart."
+          },
+          {
+            "completed": false,
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
+          },
+          {
+            "completed": false,
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T03:53:58.748Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "implementationNotes": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.\nCheckpoint: added serializable ReconciliationState to PostgresCameraStore snapshot state; sync routes now resolve an engine from the request store, preserving the in-memory fallback. Targeted sync tests pass 6/6.",
+        "implementationPlan": "1. Extract reconciliation state into a serializable ReconciliationState and attach it to PostgresCameraStore so the existing runtime_store_snapshots transaction persists processed mutation IDs, entity field state, and staged conflicts across restarts.\n2. Route sync endpoints through an engine bound to the current store state; keep GLOBAL_RECONCILER as the development/test fallback, while the existing SELECT FOR UPDATE request transaction serializes multiple workers.\n3. Add restart snapshot and shared-state multi-worker tests covering duplicate idempotency, conflict listing/resolution, and state round-trip.\n4. Run targeted/full server tests, task/entity validation, and diff checks; record AC evidence and implementation notes.",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T04:23:54.5792824Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "0x820i",
+      "version": 6,
+      "timestamp": "2026-08-10T04:25:31.0962629Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Processed mutation IDs and entity field state persist across server restart."
+            },
+            {
+              "completed": false,
+              "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
+            },
+            {
+              "completed": false,
+              "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Processed mutation IDs and entity field state persist across server restart."
+            },
+            {
+              "completed": true,
+              "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
+            },
+            {
+              "completed": true,
+              "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.\nCheckpoint: added serializable ReconciliationState to PostgresCameraStore snapshot state; sync routes now resolve an engine from the request store, preserving the in-memory fallback. Targeted sync tests pass 6/6.",
+          "newValue": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.\nCheckpoint: added serializable ReconciliationState to PostgresCameraStore snapshot state; sync routes now resolve an engine from the request store, preserving the in-memory fallback. Targeted sync tests pass 6/6.\nImplemented: ReconciliationState now serializes processed mutation IDs, entity field state and staged conflicts through PostgresCameraStore.runtime_store_snapshots. Sync routes bind to the current store-scoped state; GLOBAL_RECONCILER remains only for development/test fallback. Existing SELECT FOR UPDATE request transactions provide worker serialization. Added restart snapshot, shared multi-worker, and route-binding tests. Verification: uv run --project apps/server pytest -q apps/server/tests = 59 passed, 1 existing Starlette/httpx deprecation warning; server compileall passed; git diff --check passed with repository LF/CRLF warnings. System Decision Impact: candidate @decision/20260810-1124-server-reconciliation-state-uses-the-runtime-snapshot-boundary (added) — persist reconciliation state in the existing locked runtime snapshot boundary and retain the in-memory fallback only for development/tests."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Processed mutation IDs and entity field state persist across server restart."
+          },
+          {
+            "completed": true,
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
+          },
+          {
+            "completed": true,
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T03:53:58.748Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "implementationNotes": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.\nCheckpoint: added serializable ReconciliationState to PostgresCameraStore snapshot state; sync routes now resolve an engine from the request store, preserving the in-memory fallback. Targeted sync tests pass 6/6.\nImplemented: ReconciliationState now serializes processed mutation IDs, entity field state and staged conflicts through PostgresCameraStore.runtime_store_snapshots. Sync routes bind to the current store-scoped state; GLOBAL_RECONCILER remains only for development/test fallback. Existing SELECT FOR UPDATE request transactions provide worker serialization. Added restart snapshot, shared multi-worker, and route-binding tests. Verification: uv run --project apps/server pytest -q apps/server/tests = 59 passed, 1 existing Starlette/httpx deprecation warning; server compileall passed; git diff --check passed with repository LF/CRLF warnings. System Decision Impact: candidate @decision/20260810-1124-server-reconciliation-state-uses-the-runtime-snapshot-boundary (added) — persist reconciliation state in the existing locked runtime snapshot boundary and retain the in-memory fallback only for development/tests.",
+        "implementationPlan": "1. Extract reconciliation state into a serializable ReconciliationState and attach it to PostgresCameraStore so the existing runtime_store_snapshots transaction persists processed mutation IDs, entity field state, and staged conflicts across restarts.\n2. Route sync endpoints through an engine bound to the current store state; keep GLOBAL_RECONCILER as the development/test fallback, while the existing SELECT FOR UPDATE request transaction serializes multiple workers.\n3. Add restart snapshot and shared-state multi-worker tests covering duplicate idempotency, conflict listing/resolution, and state round-trip.\n4. Run targeted/full server tests, task/entity validation, and diff checks; record AC evidence and implementation notes.",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T04:25:31.0962629Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "0x820i",
+      "version": 7,
+      "timestamp": "2026-08-10T04:25:41.8082256Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 454
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Processed mutation IDs and entity field state persist across server restart."
+          },
+          {
+            "completed": true,
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers."
+          },
+          {
+            "completed": true,
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T03:53:58.748Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "implementationNotes": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.\nCheckpoint: added serializable ReconciliationState to PostgresCameraStore snapshot state; sync routes now resolve an engine from the request store, preserving the in-memory fallback. Targeted sync tests pass 6/6.\nImplemented: ReconciliationState now serializes processed mutation IDs, entity field state and staged conflicts through PostgresCameraStore.runtime_store_snapshots. Sync routes bind to the current store-scoped state; GLOBAL_RECONCILER remains only for development/test fallback. Existing SELECT FOR UPDATE request transactions provide worker serialization. Added restart snapshot, shared multi-worker, and route-binding tests. Verification: uv run --project apps/server pytest -q apps/server/tests = 59 passed, 1 existing Starlette/httpx deprecation warning; server compileall passed; git diff --check passed with repository LF/CRLF warnings. System Decision Impact: candidate @decision/20260810-1124-server-reconciliation-state-uses-the-runtime-snapshot-boundary (added) — persist reconciliation state in the existing locked runtime snapshot boundary and retain the in-memory fallback only for development/tests.",
+        "implementationPlan": "1. Extract reconciliation state into a serializable ReconciliationState and attach it to PostgresCameraStore so the existing runtime_store_snapshots transaction persists processed mutation IDs, entity field state, and staged conflicts across restarts.\n2. Route sync endpoints through an engine bound to the current store state; keep GLOBAL_RECONCILER as the development/test fallback, while the existing SELECT FOR UPDATE request transaction serializes multiple workers.\n3. Add restart snapshot and shared-state multi-worker tests covering duplicate idempotency, conflict listing/resolution, and state round-trip.\n4. Run targeted/full server tests, task/entity validation, and diff checks; record AC evidence and implementation notes.",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "in-progress",
+        "timeSpent": 454,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T04:25:41.8082256Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "0x820i",
+      "version": 8,
+      "timestamp": "2026-08-10T04:25:50.4128143Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T04:25:50.4128143Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Processed mutation IDs and entity field state persist across server restart.",
+            "completed": true
+          },
+          {
+            "text": "Staged conflicts remain queryable and resolvable when requests are handled by multiple workers.",
+            "completed": true
+          },
+          {
+            "text": "Persistence and restart/integration tests cover idempotency and conflict recovery.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T04:25:50.4128143Z",
+        "createdAt": "2026-08-10T03:53:58.748Z",
+        "description": "P2 follow-up from desktop-server-sync review: move ReconciliationEngine processed mutation IDs, entity field state and staged conflicts from process-local memory into the server persistence boundary so idempotency and conflict review survive process restarts and multiple workers.",
+        "id": "0x820i",
+        "implementationNotes": "Implementation started: replacing process-local reconciliation state with a persistent SQLite-backed server store and restart/multi-worker coverage.\nPlan check: AC1 maps to steps 1 and 3; AC2 maps to steps 2 and 3; AC3 maps to step 3. Assumption: reuse the existing PostgreSQL runtime_store_snapshots row lock/transaction boundary; no new dependency or migration table is needed.\nCheckpoint: added serializable ReconciliationState to PostgresCameraStore snapshot state; sync routes now resolve an engine from the request store, preserving the in-memory fallback. Targeted sync tests pass 6/6.\nImplemented: ReconciliationState now serializes processed mutation IDs, entity field state and staged conflicts through PostgresCameraStore.runtime_store_snapshots. Sync routes bind to the current store-scoped state; GLOBAL_RECONCILER remains only for development/test fallback. Existing SELECT FOR UPDATE request transactions provide worker serialization. Added restart snapshot, shared multi-worker, and route-binding tests. Verification: uv run --project apps/server pytest -q apps/server/tests = 59 passed, 1 existing Starlette/httpx deprecation warning; server compileall passed; git diff --check passed with repository LF/CRLF warnings. System Decision Impact: candidate @decision/20260810-1124-server-reconciliation-state-uses-the-runtime-snapshot-boundary (added) — persist reconciliation state in the existing locked runtime snapshot boundary and retain the in-memory fallback only for development/tests.",
+        "implementationPlan": "1. Extract reconciliation state into a serializable ReconciliationState and attach it to PostgresCameraStore so the existing runtime_store_snapshots transaction persists processed mutation IDs, entity field state, and staged conflicts across restarts.\n2. Route sync endpoints through an engine bound to the current store state; keep GLOBAL_RECONCILER as the development/test fallback, while the existing SELECT FOR UPDATE request transaction serializes multiple workers.\n3. Add restart snapshot and shared-state multi-worker tests covering duplicate idempotency, conflict listing/resolution, and state round-trip.\n4. Run targeted/full server tests, task/entity validation, and diff checks; record AC evidence and implementation notes.",
+        "labels": [
+          "review-followup",
+          "sync",
+          "persistence"
+        ],
+        "priority": "medium",
+        "status": "done",
+        "timeSpent": 454,
+        "title": "Review follow-up: persist server reconciliation state across restarts",
+        "updatedAt": "2026-08-10T04:25:50.4128143Z"
       }
     }
   ]
