@@ -1,32 +1,62 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as maplibregl from "maplibre-gl";
 import type { Map as MapLibreMap } from "maplibre-gl";
-import { basemapModes, googleHybridTiles, googleStreetTiles, mapLayerGroups, readBasemapPreference, readLayerPreferences, vectorStyleUrl, type BasemapKey, type LayerVisibility, type MapLayerKey } from "./mapConfig";
+import type { BasemapManifest } from "@project/domain";
+import { bundledManifest, defaultLayerVisibilityFromManifest, layerGroupMatchScore, layerGroupsFromManifest, loadBasemapManifest, manifestModes, readBasemapPreference, readCachedManifest, readLayerPreferences, vectorStyleUrl, type BasemapKey, type LayerVisibility, type MapLayerKey } from "./mapConfig";
+import { ensureOfflineBasemapProtocol, getActiveOfflinePackage, offlineTileTemplates, packageCoversViewport, type OfflineTilePackage } from "./offlineBasemap";
+import { OfflineBasemapPanel } from "./OfflineBasemapPanel";
 import { Button, Icon, PageHeader, Panel, StatusBadge } from "../../shared/ui";
 
 export function MapLibreMapView({
   layerVisibility,
+  manifest,
   mode,
+  offlinePackage,
+  online,
+  notice,
   onLayerToggle,
   onModeChange,
+  onOfflinePackageReady,
 }: {
   layerVisibility: LayerVisibility;
+  manifest: BasemapManifest;
   mode: BasemapKey;
+  offlinePackage: OfflineTilePackage | null;
+  online: boolean;
+  notice?: string;
   onLayerToggle: (key: MapLayerKey) => void;
   onModeChange: (mode: BasemapKey) => void;
+  onOfflinePackageReady: (packageToUse: OfflineTilePackage | null) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const [mapReady, setMapReady] = useState(false);
   const [mapError, setMapError] = useState("");
+  const [offlineNotice, setOfflineNotice] = useState("");
   const [googleMapUrl, setGoogleMapUrl] = useState("https://www.google.com/maps/@21.0285,105.8542,12z");
+  const modeRef = useRef(mode);
+  const onlineRef = useRef(online);
+  const offlinePackageRef = useRef(offlinePackage);
+  modeRef.current = mode;
+  onlineRef.current = online;
+  offlinePackageRef.current = offlinePackage;
+  const basemapModes = manifestModes(manifest);
+  const mapLayerGroups = layerGroupsFromManifest(manifest);
 
   useEffect(() => {
     if (!containerRef.current) return;
+    ensureOfflineBasemapProtocol();
+    setMapReady(false);
+    setMapError("");
+    setOfflineNotice("");
 
     const map = new maplibregl.Map({
       container: containerRef.current,
-      style: vectorStyleUrl,
+      style: online ? manifest.modes.vector.source.styleUrl ?? vectorStyleUrl : {
+        version: 8,
+        sources: {},
+        layers: [{ id: "background", type: "background", paint: { "background-color": "#eef2f7" } }],
+      },
       center: [105.8542, 21.0285],
       zoom: 11,
       attributionControl: false,
@@ -38,6 +68,16 @@ export function MapLibreMapView({
       const center = map.getCenter();
       const zoom = Math.max(1, Math.round(map.getZoom()));
       setGoogleMapUrl(`https://www.google.com/maps/@${center.lat.toFixed(6)},${center.lng.toFixed(6)},${zoom}z`);
+      const currentPackage = offlinePackageRef.current;
+      if (onlineRef.current) setOfflineNotice("");
+      else if (modeRef.current === "vector") setOfflineNotice("Vector chưa có tile package offline; chọn Street hoặc Hybrid để tải vùng.");
+      else if (!currentPackage || currentPackage.mode !== modeRef.current) setOfflineNotice("Chưa có tile package cho mode này. Chọn vùng và zoom để tải offline.");
+      else {
+        const viewport = map.getBounds();
+        const viewportBounds = { west: viewport.getWest(), south: viewport.getSouth(), east: viewport.getEast(), north: viewport.getNorth() };
+        if (!packageCoversViewport(currentPackage, viewportBounds) || zoom < currentPackage.minZoom || zoom > currentPackage.maxZoom) setOfflineNotice("Viewport ngoài phạm vi package offline; vùng trống. Hãy tải thêm khu vực hoặc zoom đã chọn.");
+        else setOfflineNotice("");
+      }
     };
     const handleMapError = (event: { error?: Error; sourceId?: string }) => {
       if (event.error) setMapError("Không tải được một phần nền bản đồ. Bạn có thể đổi chế độ nền.");
@@ -49,13 +89,13 @@ export function MapLibreMapView({
       const firstDataLayer = map.getStyle().layers?.find((layer: { id: string }) => layer.id !== "background")?.id;
       map.addSource("google-street", {
         type: "raster",
-        tiles: [googleStreetTiles],
+        tiles: !online && offlinePackage?.mode === "street" ? offlineTileTemplates(offlinePackage.id, manifest.modes.street.source.tiles.length) : manifest.modes.street.source.tiles,
         tileSize: 256,
         attribution: "Google Maps",
       });
       map.addSource("google-hybrid", {
         type: "raster",
-        tiles: [googleHybridTiles],
+        tiles: !online && offlinePackage?.mode === "hybrid" ? offlineTileTemplates(offlinePackage.id, manifest.modes.hybrid.source.tiles.length) : manifest.modes.hybrid.source.tiles,
         tileSize: 256,
         attribution: "Google Maps",
       });
@@ -89,7 +129,7 @@ export function MapLibreMapView({
       map.remove();
       mapRef.current = null;
     };
-  }, []);
+  }, [manifest, offlinePackage, online]);
 
   useEffect(() => {
     const map = mapRef.current;
@@ -104,10 +144,12 @@ export function MapLibreMapView({
     setVisibility("background", mode === "vector" ? "visible" : "none");
 
     for (const layer of map.getStyle().layers ?? []) {
-      const group = mapLayerGroups.find((candidate) => candidate.matches(layer.id));
+      const group = mapLayerGroups
+        .filter((candidate) => candidate.matches(layer.id))
+        .sort((left, right) => layerGroupMatchScore(right, layer.id) - layerGroupMatchScore(left, layer.id))[0];
       if (group) setVisibility(layer.id, layerVisibility[group.key] ? "visible" : "none");
     }
-  }, [layerVisibility, mapReady, mode]);
+  }, [layerVisibility, manifest, mapReady, mode]);
 
   return (
     <div className="map-panel maplibre-panel">
@@ -132,7 +174,7 @@ export function MapLibreMapView({
       <div className="map-layer-card">
         <div className="map-layer-head">
           <b className="map-layer-title">Lớp bản đồ</b>
-          <span>{mode === "vector" ? "Vector" : "Overlay"}</span>
+          <span>{mode === "vector" ? "Vector" : "Google raster + vector"}</span>
         </div>
         {mapLayerGroups.map((layer) => (
           <label className="layer-row" key={layer.key}>
@@ -147,32 +189,96 @@ export function MapLibreMapView({
           </label>
         ))}
         <div className="map-layer-note">Layer được điều khiển trực tiếp bằng MapLibre.</div>
+        <div className="map-layer-note">Street/Hybrid có chi tiết đã gộp sẵn trong raster public; checkbox điều khiển phần vector overlay.</div>
       </div>
+      <OfflineBasemapPanel manifest={manifest} mode={mode} activePackage={offlinePackage} onPackageReady={onOfflinePackageReady} />
       <a className="map-google-link" href={googleMapUrl} rel="noreferrer" target="_blank">
         Mở vị trí hiện tại trên Google Maps ↗
       </a>
-      <div className="map-attribution">© OpenStreetMap contributors · Google Maps tiles (experimental) · MapLibre</div>
-      {mapError ? <div className="map-error" role="status">{mapError}</div> : null}
+      <div className="map-attribution">{manifest.attribution.join(" · ")}</div>
+      {mapError || offlineNotice || notice ? <div className="map-error" role="status">{mapError || offlineNotice || notice}</div> : null}
     </div>
   );
 }
 
 
 export function DesignView({ onAction }: { onAction: (message: string) => void }) {
+  const initialManifest = readCachedManifest() ?? bundledManifest;
+  const [manifest, setManifest] = useState<BasemapManifest>(initialManifest);
+  const [manifestNotice, setManifestNotice] = useState("");
   const [basemap, setBasemap] = useState<BasemapKey>(readBasemapPreference);
-  const [layerVisibility, setLayerVisibility] = useState<LayerVisibility>(readLayerPreferences);
+  const [layerVisibility, setLayerVisibility] = useState<LayerVisibility>(() => readLayerPreferences(defaultLayerVisibilityFromManifest(initialManifest)));
+  const [offlinePackage, setOfflinePackage] = useState<OfflineTilePackage | null>(null);
+  const [online, setOnline] = useState(() => navigator.onLine);
+  const hasSavedLayerPreferences = useRef(Boolean(window.localStorage.getItem("pp-design-map-layers")));
+  const layerPreferencesInitialized = useRef(false);
+
+  const handleOfflinePackageReady = useCallback((packageToUse: OfflineTilePackage | null) => {
+    setOfflinePackage(packageToUse);
+  }, []);
+
+  useEffect(() => {
+    ensureOfflineBasemapProtocol();
+    let cancelled = false;
+    const refreshPackage = () => {
+      if (basemap === "vector") {
+        setOfflinePackage(null);
+        return;
+      }
+      void getActiveOfflinePackage(basemap, manifest.manifestVersion, manifest.modes[basemap].source.tiles).then((packageToUse) => {
+        if (!cancelled) setOfflinePackage(packageToUse);
+      }).catch(() => {
+        if (!cancelled) setOfflinePackage(null);
+      });
+    };
+    refreshPackage();
+    const handleOnline = () => setOnline(true);
+    const handleOffline = () => setOnline(false);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, [basemap, manifest]);
+
+  useEffect(() => {
+    let cancelled = false;
+    const refreshManifest = () => {
+      void loadBasemapManifest().then((result) => {
+        if (cancelled) return;
+        setManifest(result.manifest);
+        setManifestNotice(result.notice ?? "");
+        if (!hasSavedLayerPreferences.current) setLayerVisibility(defaultLayerVisibilityFromManifest(result.manifest));
+      });
+    };
+    refreshManifest();
+    window.addEventListener("online", refreshManifest);
+    const interval = window.setInterval(refreshManifest, 60_000);
+    return () => {
+      cancelled = true;
+      window.removeEventListener("online", refreshManifest);
+      window.clearInterval(interval);
+    };
+  }, []);
 
   useEffect(() => {
     window.localStorage.setItem("pp-design-basemap", basemap);
   }, [basemap]);
 
   useEffect(() => {
+    if (!layerPreferencesInitialized.current) {
+      layerPreferencesInitialized.current = true;
+      return;
+    }
     window.localStorage.setItem("pp-design-map-layers", JSON.stringify(layerVisibility));
+    hasSavedLayerPreferences.current = true;
   }, [layerVisibility]);
 
   const changeBasemap = (next: BasemapKey) => {
     setBasemap(next);
-    onAction(`Đã chuyển nền bản đồ sang ${basemapModes.find((item) => item.key === next)?.label}`);
+    onAction(`Đã chuyển nền bản đồ sang ${manifestModes(manifest).find((item) => item.key === next)?.label}`);
   };
 
   const toggleLayer = (key: MapLayerKey) => {
@@ -196,10 +302,16 @@ export function DesignView({ onAction }: { onAction: (message: string) => void }
       <div className="grid-12">
         <Panel className="col-8" title="Bản đồ thiết kế" subtitle="EPSG:4326 • Nền MapLibre • Địa giới và địa danh Việt Nam" action={<div className="panel-actions"><Button onClick={() => onAction("Chế độ chỉnh sửa bản đồ đã bật")}><Icon name="edit" size={13} />Chỉnh sửa</Button><Button onClick={() => onAction("Layer nền bản đồ đang được điều khiển trực tiếp")}>Layers</Button></div>}>
           <MapLibreMapView
+            key={`${manifest.manifestVersion}-${basemap}-${online}-${offlinePackage?.id ?? "none"}`}
             layerVisibility={layerVisibility}
+            manifest={manifest}
             mode={basemap}
+            offlinePackage={offlinePackage}
+            online={online}
+            notice={manifestNotice}
             onLayerToggle={toggleLayer}
             onModeChange={changeBasemap}
+            onOfflinePackageReady={handleOfflinePackageReady}
           />
         </Panel>
         <Panel className="col-4" title="Inspector — CAM-114" subtitle="Canonical ID • 7ae9…91f2" action={<button className="icon-btn" type="button" aria-label="Chỉnh sửa CAM-114" onClick={() => onAction("Đang chỉnh sửa CAM-114")}><Icon name="edit" size={15} /></button>}>

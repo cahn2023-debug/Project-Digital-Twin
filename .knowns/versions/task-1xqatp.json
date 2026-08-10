@@ -1,6 +1,6 @@
 {
   "taskId": "1xqatp",
-  "currentVersion": 4,
+  "currentVersion": 9,
   "versions": [
     {
       "id": "v1",
@@ -184,30 +184,30 @@
           "field": "acceptanceCriteria",
           "oldValue": [
             {
-              "text": "Define a versioned display-only manifest schema shared by server and clients.",
-              "completed": false
+              "completed": false,
+              "text": "Define a versioned display-only manifest schema shared by server and clients."
             },
             {
-              "text": "Expose the manifest with conditional response metadata and reject invalid contracts.",
-              "completed": false
+              "completed": false,
+              "text": "Expose the manifest with conditional response metadata and reject invalid contracts."
             },
             {
-              "text": "Add server contract tests proving no project entity data is present.",
-              "completed": false
+              "completed": false,
+              "text": "Add server contract tests proving no project entity data is present."
             }
           ],
           "newValue": [
             {
-              "text": "Define a versioned display-only manifest schema shared by server and clients.",
-              "completed": true
+              "completed": true,
+              "text": "Define a versioned display-only manifest schema shared by server and clients."
             },
             {
-              "text": "Expose the manifest with conditional response metadata and reject invalid contracts.",
-              "completed": true
+              "completed": true,
+              "text": "Expose the manifest with conditional response metadata and reject invalid contracts."
             },
             {
-              "text": "Add server contract tests proving no project entity data is present.",
-              "completed": true
+              "completed": true,
+              "text": "Add server contract tests proving no project entity data is present."
             }
           ]
         },
@@ -220,16 +220,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Define a versioned display-only manifest schema shared by server and clients.",
-            "completed": true
+            "completed": true,
+            "text": "Define a versioned display-only manifest schema shared by server and clients."
           },
           {
-            "text": "Expose the manifest with conditional response metadata and reject invalid contracts.",
-            "completed": true
+            "completed": true,
+            "text": "Expose the manifest with conditional response metadata and reject invalid contracts."
           },
           {
-            "text": "Add server contract tests proving no project entity data is present.",
-            "completed": true
+            "completed": true,
+            "text": "Add server contract tests proving no project entity data is present."
           }
         ],
         "archived": false,
@@ -257,6 +257,289 @@
         "timeSpent": 0,
         "title": "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint",
         "updatedAt": "2026-08-10T02:12:34.2670145Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "1xqatp",
+      "version": 5,
+      "timestamp": "2026-08-10T02:13:02.6344219Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.",
+          "newValue": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Define a versioned display-only manifest schema shared by server and clients."
+          },
+          {
+            "completed": true,
+            "text": "Expose the manifest with conditional response metadata and reject invalid contracts."
+          },
+          {
+            "completed": true,
+            "text": "Add server contract tests proving no project entity data is present."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.057Z",
+        "description": "Define the display-only MapLibre manifest contract and expose the server endpoint used by web and desktop, including schema/version metadata, basemap modes, tile/style sources, layer groups, attribution, package capabilities, validation, and conditional response metadata.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "1xqatp",
+        "implementationNotes": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the display-only basemap manifest types to `packages/domain/src/design.ts` and mirror the validated JSON contract with Pydantic models/fixtures in `apps/server/app/shared/schemas.py`; include schema/manifest versions, Street/Hybrid/Vector sources, layer groups, attribution, and tile-package capability metadata.\n2. Add a server-owned manifest provider and `GET /api/v1/basemap/manifest` in the design module. Preserve the existing production authentication middleware, avoid project-scoped data/authorization, emit stable ETag/Last-Modified metadata, return 304 when the conditional request matches, and reject invalid manifest construction.\n3. Add focused server contract tests in `apps/server/tests/test_basemap_manifest.py` for schema shape, all three modes/layer groups, no project entity payload, 200/304 conditional behavior, and validation failure handling.\n4. Run server pytest plus domain typecheck/build/test, Knowns task validation, and `git diff --check`.\n\n## Scope and assumptions\n\n- The manifest is a display contract only; it must not include project entities or project-specific tile data.\n- Existing `mapConfig.ts` remains the client fallback until task 02 consumes the endpoint.\n- The endpoint follows the current API authentication middleware in production; no new project authorization boundary is introduced.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "server",
+          "manifest",
+          "contract"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint",
+        "updatedAt": "2026-08-10T02:13:02.6344219Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "1xqatp",
+      "version": 6,
+      "timestamp": "2026-08-10T02:13:04.7678795Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 334
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Define a versioned display-only manifest schema shared by server and clients."
+          },
+          {
+            "completed": true,
+            "text": "Expose the manifest with conditional response metadata and reject invalid contracts."
+          },
+          {
+            "completed": true,
+            "text": "Add server contract tests proving no project entity data is present."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.057Z",
+        "description": "Define the display-only MapLibre manifest contract and expose the server endpoint used by web and desktop, including schema/version metadata, basemap modes, tile/style sources, layer groups, attribution, package capabilities, validation, and conditional response metadata.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "1xqatp",
+        "implementationNotes": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the display-only basemap manifest types to `packages/domain/src/design.ts` and mirror the validated JSON contract with Pydantic models/fixtures in `apps/server/app/shared/schemas.py`; include schema/manifest versions, Street/Hybrid/Vector sources, layer groups, attribution, and tile-package capability metadata.\n2. Add a server-owned manifest provider and `GET /api/v1/basemap/manifest` in the design module. Preserve the existing production authentication middleware, avoid project-scoped data/authorization, emit stable ETag/Last-Modified metadata, return 304 when the conditional request matches, and reject invalid manifest construction.\n3. Add focused server contract tests in `apps/server/tests/test_basemap_manifest.py` for schema shape, all three modes/layer groups, no project entity payload, 200/304 conditional behavior, and validation failure handling.\n4. Run server pytest plus domain typecheck/build/test, Knowns task validation, and `git diff --check`.\n\n## Scope and assumptions\n\n- The manifest is a display contract only; it must not include project entities or project-specific tile data.\n- Existing `mapConfig.ts` remains the client fallback until task 02 consumes the endpoint.\n- The endpoint follows the current API authentication middleware in production; no new project authorization boundary is introduced.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "server",
+          "manifest",
+          "contract"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 334,
+        "title": "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint",
+        "updatedAt": "2026-08-10T02:13:04.7678795Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "1xqatp",
+      "version": 7,
+      "timestamp": "2026-08-10T02:13:06.8069147Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T02:13:06.8069147Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Define a versioned display-only manifest schema shared by server and clients."
+          },
+          {
+            "completed": true,
+            "text": "Expose the manifest with conditional response metadata and reject invalid contracts."
+          },
+          {
+            "completed": true,
+            "text": "Add server contract tests proving no project entity data is present."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:13:06.8069147Z",
+        "createdAt": "2026-08-10T02:05:33.057Z",
+        "description": "Define the display-only MapLibre manifest contract and expose the server endpoint used by web and desktop, including schema/version metadata, basemap modes, tile/style sources, layer groups, attribution, package capabilities, validation, and conditional response metadata.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "1xqatp",
+        "implementationNotes": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the display-only basemap manifest types to `packages/domain/src/design.ts` and mirror the validated JSON contract with Pydantic models/fixtures in `apps/server/app/shared/schemas.py`; include schema/manifest versions, Street/Hybrid/Vector sources, layer groups, attribution, and tile-package capability metadata.\n2. Add a server-owned manifest provider and `GET /api/v1/basemap/manifest` in the design module. Preserve the existing production authentication middleware, avoid project-scoped data/authorization, emit stable ETag/Last-Modified metadata, return 304 when the conditional request matches, and reject invalid manifest construction.\n3. Add focused server contract tests in `apps/server/tests/test_basemap_manifest.py` for schema shape, all three modes/layer groups, no project entity payload, 200/304 conditional behavior, and validation failure handling.\n4. Run server pytest plus domain typecheck/build/test, Knowns task validation, and `git diff --check`.\n\n## Scope and assumptions\n\n- The manifest is a display contract only; it must not include project entities or project-specific tile data.\n- Existing `mapConfig.ts` remains the client fallback until task 02 consumes the endpoint.\n- The endpoint follows the current API authentication middleware in production; no new project authorization boundary is introduced.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "server",
+          "manifest",
+          "contract"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 334,
+        "title": "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint",
+        "updatedAt": "2026-08-10T02:13:06.8069147Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "1xqatp",
+      "version": 8,
+      "timestamp": "2026-08-10T02:49:03.0102569Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+          "newValue": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Define a versioned display-only manifest schema shared by server and clients."
+          },
+          {
+            "completed": true,
+            "text": "Expose the manifest with conditional response metadata and reject invalid contracts."
+          },
+          {
+            "completed": true,
+            "text": "Add server contract tests proving no project entity data is present."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:13:06.806Z",
+        "createdAt": "2026-08-10T02:05:33.057Z",
+        "description": "Define the display-only MapLibre manifest contract and expose the server endpoint used by web and desktop, including schema/version metadata, basemap modes, tile/style sources, layer groups, attribution, package capabilities, validation, and conditional response metadata.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "1xqatp",
+        "implementationNotes": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the display-only basemap manifest types to `packages/domain/src/design.ts` and mirror the validated JSON contract with Pydantic models/fixtures in `apps/server/app/shared/schemas.py`; include schema/manifest versions, Street/Hybrid/Vector sources, layer groups, attribution, and tile-package capability metadata.\n2. Add a server-owned manifest provider and `GET /api/v1/basemap/manifest` in the design module. Preserve the existing production authentication middleware, avoid project-scoped data/authorization, emit stable ETag/Last-Modified metadata, return 304 when the conditional request matches, and reject invalid manifest construction.\n3. Add focused server contract tests in `apps/server/tests/test_basemap_manifest.py` for schema shape, all three modes/layer groups, no project entity payload, 200/304 conditional behavior, and validation failure handling.\n4. Run server pytest plus domain typecheck/build/test, Knowns task validation, and `git diff --check`.\n\n## Scope and assumptions\n\n- The manifest is a display contract only; it must not include project entities or project-specific tile data.\n- Existing `mapConfig.ts` remains the client fallback until task 02 consumes the endpoint.\n- The endpoint follows the current API authentication middleware in production; no new project authorization boundary is introduced.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "server",
+          "manifest",
+          "contract"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 334,
+        "title": "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint",
+        "updatedAt": "2026-08-10T02:49:03.0102569Z"
+      }
+    },
+    {
+      "id": "v9",
+      "taskId": "1xqatp",
+      "version": 9,
+      "timestamp": "2026-08-10T02:49:22.348322Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+          "newValue": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Define a versioned display-only manifest schema shared by server and clients.",
+            "completed": true
+          },
+          {
+            "text": "Expose the manifest with conditional response metadata and reject invalid contracts.",
+            "completed": true
+          },
+          {
+            "text": "Add server contract tests proving no project entity data is present.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:13:06.806Z",
+        "createdAt": "2026-08-10T02:05:33.057Z",
+        "description": "Define the display-only MapLibre manifest contract and expose the server endpoint used by web and desktop, including schema/version metadata, basemap modes, tile/style sources, layer groups, attribution, package capabilities, validation, and conditional response metadata.",
+        "fulfills": [
+          "AC-1"
+        ],
+        "id": "1xqatp",
+        "implementationNotes": "Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.\nReview: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Add the display-only basemap manifest types to `packages/domain/src/design.ts` and mirror the validated JSON contract with Pydantic models/fixtures in `apps/server/app/shared/schemas.py`; include schema/manifest versions, Street/Hybrid/Vector sources, layer groups, attribution, and tile-package capability metadata.\n2. Add a server-owned manifest provider and `GET /api/v1/basemap/manifest` in the design module. Preserve the existing production authentication middleware, avoid project-scoped data/authorization, emit stable ETag/Last-Modified metadata, return 304 when the conditional request matches, and reject invalid manifest construction.\n3. Add focused server contract tests in `apps/server/tests/test_basemap_manifest.py` for schema shape, all three modes/layer groups, no project entity payload, 200/304 conditional behavior, and validation failure handling.\n4. Run server pytest plus domain typecheck/build/test, Knowns task validation, and `git diff --check`.\n\n## Scope and assumptions\n\n- The manifest is a display contract only; it must not include project entities or project-specific tile data.\n- Existing `mapConfig.ts` remains the client fallback until task 02 consumes the endpoint.\n- The endpoint follows the current API authentication middleware in production; no new project authorization boundary is introduced.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "server",
+          "manifest",
+          "contract"
+        ],
+        "order": 10,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 334,
+        "title": "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint",
+        "updatedAt": "2026-08-10T02:49:22.348322Z"
       }
     }
   ]

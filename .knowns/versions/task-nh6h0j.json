@@ -1,0 +1,41 @@
+{
+  "taskId": "nh6h0j",
+  "currentVersion": 1,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "nh6h0j",
+      "version": 1,
+      "timestamp": "2026-08-10T02:45:44.679031Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "medium"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T02:45:44.6778091Z",
+        "description": "Deferred P2 findings from review of serverdesktop shared MapLibre basemap: Google public Street/Hybrid composite raster details cannot be independently toggled by MapLibre layer IDs; Vector offline requires packaging style-resolved vector tiles plus glyph/sprite assets. Revisit only after provider/source capability is explicitly selected and licensed. Current UI must keep the limitation visible and must not treat project data as basemap content.",
+        "id": "nh6h0j",
+        "labels": [
+          "review-followup",
+          "maplibre",
+          "provider-limitation",
+          "offline-vector"
+        ],
+        "priority": "medium",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "Review follow-up: provider-specific MapLibre layer and Vector offline support",
+        "updatedAt": "2026-08-10T02:45:44.6778091Z"
+      }
+    }
+  ]
+}

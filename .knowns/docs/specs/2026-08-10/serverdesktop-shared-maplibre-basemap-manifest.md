@@ -2,7 +2,7 @@
 title: Server–desktop shared MapLibre basemap manifest
 description: Specification for a shared display-only MapLibre basemap manifest with online, server-offline, and fully-offline desktop behavior.
 createdAt: '2026-08-10T02:01:52.697Z'
-updatedAt: '2026-08-10T02:06:53.689Z'
+updatedAt: '2026-08-10T02:50:37.236Z'
 tags:
   - spec
   - approved
@@ -67,14 +67,14 @@ Liên quan:
 
 ## Acceptance Criteria
 
-- [ ] AC-1: Server trả manifest hợp lệ; web và desktop dùng cùng schema, cùng ba mode Street/Hybrid/Vector và cùng nhóm layer nền.
-- [ ] AC-2: Desktop nhận manifest mới bằng conditional request, validate thành công rồi active; response 304 giữ nguyên manifest cache.
-- [ ] AC-3: Khi server offline, desktop khởi động bằng manifest `last-known-good` và bản đồ vẫn hiển thị nếu Internet còn.
-- [ ] AC-4: Khi cả server và Internet offline, tile package đã tải theo vùng/zoom hiển thị được trong phạm vi của package.
-- [ ] AC-5: Ngoài phạm vi package, desktop hiển thị vùng trống, cảnh báo và hướng dẫn tải thêm; không hiển thị nhầm dữ liệu dự án.
-- [ ] AC-6: Manifest/package lỗi hoặc không tương thích không thay thế bản đang hoạt động; cảnh báo được hiển thị.
-- [ ] AC-7: Reconnect trigger kiểm tra manifest với timeout; desktop tiếp tục dùng cache trong lúc chờ.
-- [ ] AC-8: Kiểm thử liên thông server contract, web build/typecheck, Tauri smoke, server-offline, fully-offline, package download/restore và last-known-good đều pass.
+- [x] AC-1: Server trả manifest hợp lệ; web và desktop dùng cùng schema, cùng ba mode Street/Hybrid/Vector và cùng nhóm layer nền.
+- [x] AC-2: Desktop nhận manifest mới bằng conditional request, validate thành công rồi active; response 304 giữ nguyên manifest cache.
+- [x] AC-3: Khi server offline, desktop khởi động bằng manifest `last-known-good` và bản đồ vẫn hiển thị nếu Internet còn.
+- [x] AC-4: Khi cả server và Internet offline, tile package đã tải theo vùng/zoom hiển thị được trong phạm vi của package.
+- [x] AC-5: Ngoài phạm vi package, desktop hiển thị vùng trống, cảnh báo và hướng dẫn tải thêm; không hiển thị nhầm dữ liệu dự án.
+- [x] AC-6: Manifest/package lỗi hoặc không tương thích không thay thế bản đang hoạt động; cảnh báo được hiển thị.
+- [x] AC-7: Reconnect trigger kiểm tra manifest với timeout; desktop tiếp tục dùng cache trong lúc chờ.
+- [x] AC-8: Kiểm thử liên thông server contract, web build/typecheck, Tauri smoke, server-offline, fully-offline, package download/restore và last-known-good đều pass.
 
 ## Scenarios
 
@@ -117,10 +117,10 @@ Liên quan:
 
 ## Task Links
 
-- @task-1xqatp [serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint (todo)
-- @task-99f71h [serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback (todo)
-- @task-ahh0p8 [serverdesktop-shared-maplibre-03] Implement regional offline tile packages (todo)
-- @task-zllmsv [serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration (todo)
+- @task-1xqatp [serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint (done)
+- @task-99f71h [serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback (done)
+- @task-ahh0p8 [serverdesktop-shared-maplibre-03] Implement regional offline tile packages (done)
+- @task-zllmsv [serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration (done)
 
 ## Open Questions
 

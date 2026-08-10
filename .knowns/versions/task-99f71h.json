@@ -1,6 +1,6 @@
 {
   "taskId": "99f71h",
-  "currentVersion": 2,
+  "currentVersion": 8,
   "versions": [
     {
       "id": "v1",
@@ -60,16 +60,16 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "Load and validate the manifest from server or local last-known-good cache.",
-              "completed": false
+              "completed": false,
+              "text": "Load and validate the manifest from server or local last-known-good cache."
             },
             {
-              "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback.",
-              "completed": false
+              "completed": false,
+              "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
             },
             {
-              "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups.",
-              "completed": false
+              "completed": false,
+              "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
             }
           ]
         }
@@ -77,16 +77,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Load and validate the manifest from server or local last-known-good cache.",
-            "completed": false
+            "completed": false,
+            "text": "Load and validate the manifest from server or local last-known-good cache."
           },
           {
-            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback.",
-            "completed": false
+            "completed": false,
+            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
           },
           {
-            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups.",
-            "completed": false
+            "completed": false,
+            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
           }
         ],
         "archived": false,
@@ -115,6 +115,408 @@
         "timeSpent": 0,
         "title": "[serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback",
         "updatedAt": "2026-08-10T02:05:45.3370744Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "99f71h",
+      "version": 3,
+      "timestamp": "2026-08-10T02:19:53.9946543Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Hoàn thiện adapter manifest phía client trong `apps/web/src/features/design/mapConfig.ts`: validate schema/mode/layer/source, đọc và ghi cache last-known-good, gửi ETag/Last-Modified conditional request, timeout và fallback theo thứ tự server → cache → bundled.\n2. Đồng bộ `apps/web/src/features/design/DesignView.tsx` với manifest: refresh lúc startup/reconnect/interval, remount map khi manifest hợp lệ mới active, dùng cùng mode/layer groups và giữ trạng thái bật/tắt layer ở DESIGN.\n3. Review diff thực tế và sửa các lỗi P1/P2; không đưa project data vào basemap state.\n4. Chạy web typecheck, production build, test script và diff check; validate task trước khi hoàn tất.\n\n## Scope and assumptions\n\n- Tauri hiện tải cùng web frontend, nên localStorage là cache runtime dùng chung cho web/desktop trong phạm vi task này; native regional tile storage thuộc task 03.\n- Manifest mới chỉ active sau khi validate; 304 tiếp tục dùng cache; timeout/offline không chặn DESIGN.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Load and validate the manifest from server or local last-known-good cache."
+          },
+          {
+            "completed": false,
+            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
+          },
+          {
+            "completed": false,
+            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.124Z",
+        "description": "Implement the shared manifest client adapter for the web/Tauri frontend, conditional ETag/Last-Modified refresh, local last-known-good persistence, startup/reconnect timeout behavior, invalid-manifest fallback, and integration with the current MapLibre DESIGN UI.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "99f71h",
+        "implementationPlan": "## Implementation Plan\n\n1. Hoàn thiện adapter manifest phía client trong `apps/web/src/features/design/mapConfig.ts`: validate schema/mode/layer/source, đọc và ghi cache last-known-good, gửi ETag/Last-Modified conditional request, timeout và fallback theo thứ tự server → cache → bundled.\n2. Đồng bộ `apps/web/src/features/design/DesignView.tsx` với manifest: refresh lúc startup/reconnect/interval, remount map khi manifest hợp lệ mới active, dùng cùng mode/layer groups và giữ trạng thái bật/tắt layer ở DESIGN.\n3. Review diff thực tế và sửa các lỗi P1/P2; không đưa project data vào basemap state.\n4. Chạy web typecheck, production build, test script và diff check; validate task trước khi hoàn tất.\n\n## Scope and assumptions\n\n- Tauri hiện tải cùng web frontend, nên localStorage là cache runtime dùng chung cho web/desktop trong phạm vi task này; native regional tile storage thuộc task 03.\n- Manifest mới chỉ active sau khi validate; 304 tiếp tục dùng cache; timeout/offline không chặn DESIGN.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "web",
+          "desktop",
+          "manifest",
+          "fallback"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback",
+        "updatedAt": "2026-08-10T02:19:53.9946543Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "99f71h",
+      "version": 4,
+      "timestamp": "2026-08-10T02:46:13.5863861Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Load and validate the manifest from server or local last-known-good cache."
+            },
+            {
+              "completed": false,
+              "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
+            },
+            {
+              "completed": false,
+              "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Load and validate the manifest from server or local last-known-good cache."
+            },
+            {
+              "completed": true,
+              "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
+            },
+            {
+              "completed": true,
+              "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Load and validate the manifest from server or local last-known-good cache."
+          },
+          {
+            "completed": true,
+            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
+          },
+          {
+            "completed": true,
+            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.124Z",
+        "description": "Implement the shared manifest client adapter for the web/Tauri frontend, conditional ETag/Last-Modified refresh, local last-known-good persistence, startup/reconnect timeout behavior, invalid-manifest fallback, and integration with the current MapLibre DESIGN UI.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "99f71h",
+        "implementationNotes": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Hoàn thiện adapter manifest phía client trong `apps/web/src/features/design/mapConfig.ts`: validate schema/mode/layer/source, đọc và ghi cache last-known-good, gửi ETag/Last-Modified conditional request, timeout và fallback theo thứ tự server → cache → bundled.\n2. Đồng bộ `apps/web/src/features/design/DesignView.tsx` với manifest: refresh lúc startup/reconnect/interval, remount map khi manifest hợp lệ mới active, dùng cùng mode/layer groups và giữ trạng thái bật/tắt layer ở DESIGN.\n3. Review diff thực tế và sửa các lỗi P1/P2; không đưa project data vào basemap state.\n4. Chạy web typecheck, production build, test script và diff check; validate task trước khi hoàn tất.\n\n## Scope and assumptions\n\n- Tauri hiện tải cùng web frontend, nên localStorage là cache runtime dùng chung cho web/desktop trong phạm vi task này; native regional tile storage thuộc task 03.\n- Manifest mới chỉ active sau khi validate; 304 tiếp tục dùng cache; timeout/offline không chặn DESIGN.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "web",
+          "desktop",
+          "manifest",
+          "fallback"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback",
+        "updatedAt": "2026-08-10T02:46:13.5863861Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "99f71h",
+      "version": 5,
+      "timestamp": "2026-08-10T02:46:14.7134394Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 1577
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Load and validate the manifest from server or local last-known-good cache."
+          },
+          {
+            "completed": true,
+            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
+          },
+          {
+            "completed": true,
+            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.124Z",
+        "description": "Implement the shared manifest client adapter for the web/Tauri frontend, conditional ETag/Last-Modified refresh, local last-known-good persistence, startup/reconnect timeout behavior, invalid-manifest fallback, and integration with the current MapLibre DESIGN UI.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "99f71h",
+        "implementationNotes": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Hoàn thiện adapter manifest phía client trong `apps/web/src/features/design/mapConfig.ts`: validate schema/mode/layer/source, đọc và ghi cache last-known-good, gửi ETag/Last-Modified conditional request, timeout và fallback theo thứ tự server → cache → bundled.\n2. Đồng bộ `apps/web/src/features/design/DesignView.tsx` với manifest: refresh lúc startup/reconnect/interval, remount map khi manifest hợp lệ mới active, dùng cùng mode/layer groups và giữ trạng thái bật/tắt layer ở DESIGN.\n3. Review diff thực tế và sửa các lỗi P1/P2; không đưa project data vào basemap state.\n4. Chạy web typecheck, production build, test script và diff check; validate task trước khi hoàn tất.\n\n## Scope and assumptions\n\n- Tauri hiện tải cùng web frontend, nên localStorage là cache runtime dùng chung cho web/desktop trong phạm vi task này; native regional tile storage thuộc task 03.\n- Manifest mới chỉ active sau khi validate; 304 tiếp tục dùng cache; timeout/offline không chặn DESIGN.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "web",
+          "desktop",
+          "manifest",
+          "fallback"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 1577,
+        "title": "[serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback",
+        "updatedAt": "2026-08-10T02:46:14.7134394Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "99f71h",
+      "version": 6,
+      "timestamp": "2026-08-10T02:46:15.8296026Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T02:46:15.8296026Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Load and validate the manifest from server or local last-known-good cache."
+          },
+          {
+            "completed": true,
+            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
+          },
+          {
+            "completed": true,
+            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:46:15.8296026Z",
+        "createdAt": "2026-08-10T02:05:33.124Z",
+        "description": "Implement the shared manifest client adapter for the web/Tauri frontend, conditional ETag/Last-Modified refresh, local last-known-good persistence, startup/reconnect timeout behavior, invalid-manifest fallback, and integration with the current MapLibre DESIGN UI.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "99f71h",
+        "implementationNotes": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Hoàn thiện adapter manifest phía client trong `apps/web/src/features/design/mapConfig.ts`: validate schema/mode/layer/source, đọc và ghi cache last-known-good, gửi ETag/Last-Modified conditional request, timeout và fallback theo thứ tự server → cache → bundled.\n2. Đồng bộ `apps/web/src/features/design/DesignView.tsx` với manifest: refresh lúc startup/reconnect/interval, remount map khi manifest hợp lệ mới active, dùng cùng mode/layer groups và giữ trạng thái bật/tắt layer ở DESIGN.\n3. Review diff thực tế và sửa các lỗi P1/P2; không đưa project data vào basemap state.\n4. Chạy web typecheck, production build, test script và diff check; validate task trước khi hoàn tất.\n\n## Scope and assumptions\n\n- Tauri hiện tải cùng web frontend, nên localStorage là cache runtime dùng chung cho web/desktop trong phạm vi task này; native regional tile storage thuộc task 03.\n- Manifest mới chỉ active sau khi validate; 304 tiếp tục dùng cache; timeout/offline không chặn DESIGN.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "web",
+          "desktop",
+          "manifest",
+          "fallback"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 1577,
+        "title": "[serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback",
+        "updatedAt": "2026-08-10T02:46:15.8296026Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "99f71h",
+      "version": 7,
+      "timestamp": "2026-08-10T02:49:05.3207362Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+          "newValue": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Load and validate the manifest from server or local last-known-good cache."
+          },
+          {
+            "completed": true,
+            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback."
+          },
+          {
+            "completed": true,
+            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:46:15.829Z",
+        "createdAt": "2026-08-10T02:05:33.124Z",
+        "description": "Implement the shared manifest client adapter for the web/Tauri frontend, conditional ETag/Last-Modified refresh, local last-known-good persistence, startup/reconnect timeout behavior, invalid-manifest fallback, and integration with the current MapLibre DESIGN UI.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "99f71h",
+        "implementationNotes": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Hoàn thiện adapter manifest phía client trong `apps/web/src/features/design/mapConfig.ts`: validate schema/mode/layer/source, đọc và ghi cache last-known-good, gửi ETag/Last-Modified conditional request, timeout và fallback theo thứ tự server → cache → bundled.\n2. Đồng bộ `apps/web/src/features/design/DesignView.tsx` với manifest: refresh lúc startup/reconnect/interval, remount map khi manifest hợp lệ mới active, dùng cùng mode/layer groups và giữ trạng thái bật/tắt layer ở DESIGN.\n3. Review diff thực tế và sửa các lỗi P1/P2; không đưa project data vào basemap state.\n4. Chạy web typecheck, production build, test script và diff check; validate task trước khi hoàn tất.\n\n## Scope and assumptions\n\n- Tauri hiện tải cùng web frontend, nên localStorage là cache runtime dùng chung cho web/desktop trong phạm vi task này; native regional tile storage thuộc task 03.\n- Manifest mới chỉ active sau khi validate; 304 tiếp tục dùng cache; timeout/offline không chặn DESIGN.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "web",
+          "desktop",
+          "manifest",
+          "fallback"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 1577,
+        "title": "[serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback",
+        "updatedAt": "2026-08-10T02:49:05.3207362Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "99f71h",
+      "version": 8,
+      "timestamp": "2026-08-10T02:49:24.6968897Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+          "newValue": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Load and validate the manifest from server or local last-known-good cache.",
+            "completed": true
+          },
+          {
+            "text": "Use ETag/Last-Modified refresh with startup/reconnect timeout fallback.",
+            "completed": true
+          },
+          {
+            "text": "Wire the current DESIGN MapLibre controls to manifest-defined modes and layer groups.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:46:15.829Z",
+        "createdAt": "2026-08-10T02:05:33.124Z",
+        "description": "Implement the shared manifest client adapter for the web/Tauri frontend, conditional ETag/Last-Modified refresh, local last-known-good persistence, startup/reconnect timeout behavior, invalid-manifest fallback, and integration with the current MapLibre DESIGN UI.",
+        "fulfills": [
+          "AC-2",
+          "AC-3",
+          "AC-6",
+          "AC-7"
+        ],
+        "id": "99f71h",
+        "implementationNotes": "Implemented: client manifest adapter validates schema, mode/source compatibility, public HTTPS tile/style URLs, layer/package metadata, and ISO timestamps; sends ETag/Last-Modified conditionals with a timeout covering response body parsing; persists an atomic last-known-good cache record and falls back server → cache → bundled. DESIGN now refreshes startup/reconnect/interval, uses manifest modes/layers/attribution, applies manifest default visibility, remounts safely on manifest/runtime changes, and exposes online/offline state. Review: PASS with no P1 after fixing source-kind validation, longest-matching layer routing, timeout body fallback, default visibility refresh, and manifest attribution. Provider limitation deferred to review follow-up @task-nh6h0j: Google composite raster details cannot be independently split into MapLibre layers. Verification: web typecheck/build pass; web test runner pass with 0 tests; scoped diff check clean. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — completes client enforcement and last-known-good behavior for the shared manifest. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Hoàn thiện adapter manifest phía client trong `apps/web/src/features/design/mapConfig.ts`: validate schema/mode/layer/source, đọc và ghi cache last-known-good, gửi ETag/Last-Modified conditional request, timeout và fallback theo thứ tự server → cache → bundled.\n2. Đồng bộ `apps/web/src/features/design/DesignView.tsx` với manifest: refresh lúc startup/reconnect/interval, remount map khi manifest hợp lệ mới active, dùng cùng mode/layer groups và giữ trạng thái bật/tắt layer ở DESIGN.\n3. Review diff thực tế và sửa các lỗi P1/P2; không đưa project data vào basemap state.\n4. Chạy web typecheck, production build, test script và diff check; validate task trước khi hoàn tất.\n\n## Scope and assumptions\n\n- Tauri hiện tải cùng web frontend, nên localStorage là cache runtime dùng chung cho web/desktop trong phạm vi task này; native regional tile storage thuộc task 03.\n- Manifest mới chỉ active sau khi validate; 304 tiếp tục dùng cache; timeout/offline không chặn DESIGN.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "web",
+          "desktop",
+          "manifest",
+          "fallback"
+        ],
+        "order": 20,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 1577,
+        "title": "[serverdesktop-shared-maplibre-02] Sync manifest in web and desktop with last-known-good fallback",
+        "updatedAt": "2026-08-10T02:49:24.6968897Z"
       }
     }
   ]

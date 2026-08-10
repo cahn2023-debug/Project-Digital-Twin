@@ -686,6 +686,15 @@ tbody tr:hover { background: var(--surface-2); }
 .layer-copy b { color: var(--text); font-size: 10px; font-weight: 650; }
 .layer-copy small { color: var(--muted); font-size: 8px; }
 .map-layer-note { margin-top: 10px; color: var(--muted); font-size: 8px; line-height: 1.4; }
+.map-offline-card { position: absolute; z-index: 2; top: 160px; right: 12px; width: 250px; max-height: 270px; overflow: auto; padding: 10px; border: 1px solid rgba(13, 37, 52, .15); border-radius: 10px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: var(--shadow-md); backdrop-filter: blur(8px); }
+.map-offline-hint, .map-offline-meta, .map-offline-progress, .map-offline-message { margin-top: 7px; color: var(--muted); font-size: 8px; line-height: 1.4; }
+.map-offline-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; margin-top: 8px; }
+.map-offline-grid label { display: grid; gap: 3px; color: var(--muted); font-size: 8px; }
+.map-offline-grid input { width: 100%; box-sizing: border-box; padding: 4px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--text); font-size: 9px; }
+.map-offline-actions { display: flex; gap: 5px; margin-top: 8px; }
+.map-offline-actions button { padding: 5px 7px; border: 1px solid var(--border); border-radius: 5px; background: var(--surface); color: var(--text); font-size: 9px; cursor: pointer; }
+.map-offline-actions button:first-child { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.map-offline-actions button:disabled { cursor: wait; opacity: .65; }
 .map-google-link { position: absolute; z-index: 2; right: 12px; bottom: 28px; padding: 6px 8px; border: 1px solid rgba(13, 37, 52, .15); border-radius: 7px; background: color-mix(in srgb, var(--surface) 94%, transparent); box-shadow: var(--shadow-sm); color: var(--accent); font-size: 9px; text-decoration: none; }
 .map-google-link:hover { border-color: var(--accent); }
 .map-attribution { position: absolute; z-index: 2; right: 12px; bottom: 10px; color: rgba(13, 37, 52, .72); font-size: 8px; text-shadow: 0 1px 2px rgba(255, 255, 255, .8); }

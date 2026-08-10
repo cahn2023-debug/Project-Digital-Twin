@@ -1,6 +1,6 @@
 {
   "taskId": "zllmsv",
-  "currentVersion": 2,
+  "currentVersion": 8,
   "versions": [
     {
       "id": "v1",
@@ -56,16 +56,16 @@
           "oldValue": null,
           "newValue": [
             {
-              "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification.",
-              "completed": false
+              "completed": false,
+              "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
             },
             {
-              "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths.",
-              "completed": false
+              "completed": false,
+              "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
             },
             {
-              "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria.",
-              "completed": false
+              "completed": false,
+              "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
             }
           ]
         }
@@ -73,16 +73,16 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification.",
-            "completed": false
+            "completed": false,
+            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
           },
           {
-            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths.",
-            "completed": false
+            "completed": false,
+            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
           },
           {
-            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria.",
-            "completed": false
+            "completed": false,
+            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
           }
         ],
         "archived": false,
@@ -107,6 +107,384 @@
         "timeSpent": 0,
         "title": "[serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration",
         "updatedAt": "2026-08-10T02:05:50.4415646Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "zllmsv",
+      "version": 3,
+      "timestamp": "2026-08-10T02:47:08.9844926Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        },
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "## Implementation Plan\n\n1. Chạy server basemap contract tests và kiểm tra endpoint 200/304/invalid-contract; chạy domain contracts.\n2. Chạy web typecheck/build/test, desktop typecheck và Tauri `cargo check`; kiểm tra generated frontend bundle có các mode/layer/manifest/offline package symbols.\n3. Mô phỏng bằng guard/pure checks các path server unavailable/timeout/invalid manifest, package bbox/zoom limit, package compatibility/checksum/atomic state và outside coverage; thực hiện smoke build với server không cần chạy.\n4. Review integrated diff, validate task/spec SDD, ghi rõ provider/license/environment limitations và các follow-up không làm mất last-known-good.\n\n## Scope and assumptions\n\n- GUI Tauri automation không khả dụng trong môi trường hiện tại; `cargo check` và production web build là smoke boundary, còn thao tác click/download thực tế được kiểm tra qua code path/guard.\n- Không tải toàn bộ package Google trong verification để tránh external quota; chỉ kiểm tra tile endpoint headers và deterministic tile-selection guards.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
+          },
+          {
+            "completed": false,
+            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
+          },
+          {
+            "completed": false,
+            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.242Z",
+        "description": "Run integrated server contract, web build/typecheck, Tauri smoke, server-offline, Internet-offline, package download/restore, reconnect, and last-known-good verification; fix cross-boundary integration gaps.",
+        "fulfills": [
+          "AC-8"
+        ],
+        "id": "zllmsv",
+        "implementationPlan": "## Implementation Plan\n\n1. Chạy server basemap contract tests và kiểm tra endpoint 200/304/invalid-contract; chạy domain contracts.\n2. Chạy web typecheck/build/test, desktop typecheck và Tauri `cargo check`; kiểm tra generated frontend bundle có các mode/layer/manifest/offline package symbols.\n3. Mô phỏng bằng guard/pure checks các path server unavailable/timeout/invalid manifest, package bbox/zoom limit, package compatibility/checksum/atomic state và outside coverage; thực hiện smoke build với server không cần chạy.\n4. Review integrated diff, validate task/spec SDD, ghi rõ provider/license/environment limitations và các follow-up không làm mất last-known-good.\n\n## Scope and assumptions\n\n- GUI Tauri automation không khả dụng trong môi trường hiện tại; `cargo check` và production web build là smoke boundary, còn thao tác click/download thực tế được kiểm tra qua code path/guard.\n- Không tải toàn bộ package Google trong verification để tránh external quota; chỉ kiểm tra tile endpoint headers và deterministic tile-selection guards.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification",
+          "tauri"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration",
+        "updatedAt": "2026-08-10T02:47:08.9844926Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "zllmsv",
+      "version": 4,
+      "timestamp": "2026-08-10T02:48:29.069026Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
+            },
+            {
+              "completed": false,
+              "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
+            },
+            {
+              "completed": false,
+              "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
+            },
+            {
+              "completed": true,
+              "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
+            },
+            {
+              "completed": true,
+              "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
+          },
+          {
+            "completed": true,
+            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
+          },
+          {
+            "completed": true,
+            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.242Z",
+        "description": "Run integrated server contract, web build/typecheck, Tauri smoke, server-offline, Internet-offline, package download/restore, reconnect, and last-known-good verification; fix cross-boundary integration gaps.",
+        "fulfills": [
+          "AC-8"
+        ],
+        "id": "zllmsv",
+        "implementationNotes": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Chạy server basemap contract tests và kiểm tra endpoint 200/304/invalid-contract; chạy domain contracts.\n2. Chạy web typecheck/build/test, desktop typecheck và Tauri `cargo check`; kiểm tra generated frontend bundle có các mode/layer/manifest/offline package symbols.\n3. Mô phỏng bằng guard/pure checks các path server unavailable/timeout/invalid manifest, package bbox/zoom limit, package compatibility/checksum/atomic state và outside coverage; thực hiện smoke build với server không cần chạy.\n4. Review integrated diff, validate task/spec SDD, ghi rõ provider/license/environment limitations và các follow-up không làm mất last-known-good.\n\n## Scope and assumptions\n\n- GUI Tauri automation không khả dụng trong môi trường hiện tại; `cargo check` và production web build là smoke boundary, còn thao tác click/download thực tế được kiểm tra qua code path/guard.\n- Không tải toàn bộ package Google trong verification để tránh external quota; chỉ kiểm tra tile endpoint headers và deterministic tile-selection guards.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification",
+          "tauri"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration",
+        "updatedAt": "2026-08-10T02:48:29.069026Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "zllmsv",
+      "version": 5,
+      "timestamp": "2026-08-10T02:48:31.2939055Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "timeSpent",
+          "oldValue": null,
+          "newValue": 80
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
+          },
+          {
+            "completed": true,
+            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
+          },
+          {
+            "completed": true,
+            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T02:05:33.242Z",
+        "description": "Run integrated server contract, web build/typecheck, Tauri smoke, server-offline, Internet-offline, package download/restore, reconnect, and last-known-good verification; fix cross-boundary integration gaps.",
+        "fulfills": [
+          "AC-8"
+        ],
+        "id": "zllmsv",
+        "implementationNotes": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Chạy server basemap contract tests và kiểm tra endpoint 200/304/invalid-contract; chạy domain contracts.\n2. Chạy web typecheck/build/test, desktop typecheck và Tauri `cargo check`; kiểm tra generated frontend bundle có các mode/layer/manifest/offline package symbols.\n3. Mô phỏng bằng guard/pure checks các path server unavailable/timeout/invalid manifest, package bbox/zoom limit, package compatibility/checksum/atomic state và outside coverage; thực hiện smoke build với server không cần chạy.\n4. Review integrated diff, validate task/spec SDD, ghi rõ provider/license/environment limitations và các follow-up không làm mất last-known-good.\n\n## Scope and assumptions\n\n- GUI Tauri automation không khả dụng trong môi trường hiện tại; `cargo check` và production web build là smoke boundary, còn thao tác click/download thực tế được kiểm tra qua code path/guard.\n- Không tải toàn bộ package Google trong verification để tránh external quota; chỉ kiểm tra tile endpoint headers và deterministic tile-selection guards.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification",
+          "tauri"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "in-progress",
+        "timeSpent": 80,
+        "title": "[serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration",
+        "updatedAt": "2026-08-10T02:48:31.2939055Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "zllmsv",
+      "version": 6,
+      "timestamp": "2026-08-10T02:48:33.6780412Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T02:48:33.6780412Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
+          },
+          {
+            "completed": true,
+            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
+          },
+          {
+            "completed": true,
+            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:48:33.6780412Z",
+        "createdAt": "2026-08-10T02:05:33.242Z",
+        "description": "Run integrated server contract, web build/typecheck, Tauri smoke, server-offline, Internet-offline, package download/restore, reconnect, and last-known-good verification; fix cross-boundary integration gaps.",
+        "fulfills": [
+          "AC-8"
+        ],
+        "id": "zllmsv",
+        "implementationNotes": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Chạy server basemap contract tests và kiểm tra endpoint 200/304/invalid-contract; chạy domain contracts.\n2. Chạy web typecheck/build/test, desktop typecheck và Tauri `cargo check`; kiểm tra generated frontend bundle có các mode/layer/manifest/offline package symbols.\n3. Mô phỏng bằng guard/pure checks các path server unavailable/timeout/invalid manifest, package bbox/zoom limit, package compatibility/checksum/atomic state và outside coverage; thực hiện smoke build với server không cần chạy.\n4. Review integrated diff, validate task/spec SDD, ghi rõ provider/license/environment limitations và các follow-up không làm mất last-known-good.\n\n## Scope and assumptions\n\n- GUI Tauri automation không khả dụng trong môi trường hiện tại; `cargo check` và production web build là smoke boundary, còn thao tác click/download thực tế được kiểm tra qua code path/guard.\n- Không tải toàn bộ package Google trong verification để tránh external quota; chỉ kiểm tra tile endpoint headers và deterministic tile-selection guards.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification",
+          "tauri"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 80,
+        "title": "[serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration",
+        "updatedAt": "2026-08-10T02:48:33.6780412Z"
+      }
+    },
+    {
+      "id": "v7",
+      "taskId": "zllmsv",
+      "version": 7,
+      "timestamp": "2026-08-10T02:49:10.1785866Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+          "newValue": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification."
+          },
+          {
+            "completed": true,
+            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths."
+          },
+          {
+            "completed": true,
+            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria."
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:48:33.678Z",
+        "createdAt": "2026-08-10T02:05:33.242Z",
+        "description": "Run integrated server contract, web build/typecheck, Tauri smoke, server-offline, Internet-offline, package download/restore, reconnect, and last-known-good verification; fix cross-boundary integration gaps.",
+        "fulfills": [
+          "AC-8"
+        ],
+        "id": "zllmsv",
+        "implementationNotes": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "implementationPlan": "## Implementation Plan\n\n1. Chạy server basemap contract tests và kiểm tra endpoint 200/304/invalid-contract; chạy domain contracts.\n2. Chạy web typecheck/build/test, desktop typecheck và Tauri `cargo check`; kiểm tra generated frontend bundle có các mode/layer/manifest/offline package symbols.\n3. Mô phỏng bằng guard/pure checks các path server unavailable/timeout/invalid manifest, package bbox/zoom limit, package compatibility/checksum/atomic state và outside coverage; thực hiện smoke build với server không cần chạy.\n4. Review integrated diff, validate task/spec SDD, ghi rõ provider/license/environment limitations và các follow-up không làm mất last-known-good.\n\n## Scope and assumptions\n\n- GUI Tauri automation không khả dụng trong môi trường hiện tại; `cargo check` và production web build là smoke boundary, còn thao tác click/download thực tế được kiểm tra qua code path/guard.\n- Không tải toàn bộ package Google trong verification để tránh external quota; chỉ kiểm tra tile endpoint headers và deterministic tile-selection guards.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification",
+          "tauri"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 80,
+        "title": "[serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration",
+        "updatedAt": "2026-08-10T02:49:10.1785866Z"
+      }
+    },
+    {
+      "id": "v8",
+      "taskId": "zllmsv",
+      "version": 8,
+      "timestamp": "2026-08-10T02:49:29.5309101Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+          "newValue": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Run server contract, web typecheck/build, desktop typecheck, and Tauri smoke verification.",
+            "completed": true
+          },
+          {
+            "text": "Simulate server-offline, Internet-offline, invalid manifest, reconnect, package restore, and last-known-good paths.",
+            "completed": true
+          },
+          {
+            "text": "Record unresolved provider/license or environment limitations without weakening acceptance criteria.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T02:48:33.678Z",
+        "createdAt": "2026-08-10T02:05:33.242Z",
+        "description": "Run integrated server contract, web build/typecheck, Tauri smoke, server-offline, Internet-offline, package download/restore, reconnect, and last-known-good verification; fix cross-boundary integration gaps.",
+        "fulfills": [
+          "AC-8"
+        ],
+        "id": "zllmsv",
+        "implementationNotes": "Integrated verification completed. Passes: full server pytest 54/54 (including basemap 200/304 contract), workspace pnpm typecheck/build/test, domain tests 2/2, desktop typecheck, Tauri cargo check and cargo test 1/1, web offline tile-selection/zoom guard checks, and scoped diff check. The web test runner has 0 tests; no Playwright package or Tauri GUI automation is available in this environment, so browser click/download and real network-cutover paths are represented by the implemented code guards plus build/smoke boundaries, not claimed as GUI E2E. Provider/environment limitations recorded: Google public Street/Hybrid composite raster keeps roads/POI/labels baked into the image and source terms/production rights remain a deployment gate; current Vector manifest exposes styleUrl but not resolved vector tile/glyph/sprite package assets, so fully-offline Vector shows explicit guidance and follow-up @task-nh6h0j tracks it. No project data enters manifest or tile package. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — integrated server/web/Tauri/offline behavior and verification evidence. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\n\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass",
+        "implementationPlan": "## Implementation Plan\n\n1. Chạy server basemap contract tests và kiểm tra endpoint 200/304/invalid-contract; chạy domain contracts.\n2. Chạy web typecheck/build/test, desktop typecheck và Tauri `cargo check`; kiểm tra generated frontend bundle có các mode/layer/manifest/offline package symbols.\n3. Mô phỏng bằng guard/pure checks các path server unavailable/timeout/invalid manifest, package bbox/zoom limit, package compatibility/checksum/atomic state và outside coverage; thực hiện smoke build với server không cần chạy.\n4. Review integrated diff, validate task/spec SDD, ghi rõ provider/license/environment limitations và các follow-up không làm mất last-known-good.\n\n## Scope and assumptions\n\n- GUI Tauri automation không khả dụng trong môi trường hiện tại; `cargo check` và production web build là smoke boundary, còn thao tác click/download thực tế được kiểm tra qua code path/guard.\n- Không tải toàn bộ package Google trong verification để tránh external quota; chỉ kiểm tra tile endpoint headers và deterministic tile-selection guards.\n- Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.",
+        "labels": [
+          "from-spec",
+          "spec:serverdesktop-shared-maplibre-basemap-manifest",
+          "spec-date:2026-08-10",
+          "integration",
+          "verification",
+          "tauri"
+        ],
+        "order": 40,
+        "priority": "high",
+        "spec": "specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest",
+        "status": "done",
+        "timeSpent": 80,
+        "title": "[serverdesktop-shared-maplibre-04] Verify server–web–Tauri basemap integration",
+        "updatedAt": "2026-08-10T02:49:29.5309101Z"
       }
     }
   ]

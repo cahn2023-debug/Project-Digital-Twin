@@ -1,7 +1,7 @@
 ---
 id: 1xqatp
 title: "[serverdesktop-shared-maplibre-01] Define shared basemap manifest and server endpoint"
-status: in-progress
+status: done
 priority: high
 labels:
   - from-spec
@@ -11,8 +11,9 @@ labels:
   - manifest
   - contract
 createdAt: '2026-08-10T02:05:33.057Z'
-updatedAt: '2026-08-10T02:12:34.267Z'
-timeSpent: 0
+updatedAt: '2026-08-10T02:49:22.348Z'
+completedAt: '2026-08-10T02:13:06.806Z'
+timeSpent: 334
 assignee: '@me'
 spec: specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest
 fulfills:
@@ -56,5 +57,9 @@ Define the display-only MapLibre manifest contract and expose the server endpoin
 
 <!-- SECTION:NOTES:BEGIN -->
 Done: added shared TypeScript/Pydantic display-only manifest contract, server-owned /api/v1/basemap/manifest endpoint with ETag/Last-Modified and 304 behavior, static Street/Hybrid/Vector/layer/package metadata, and contract tests proving no project entity payload. Review fix: added layer excludePrefixes to prevent administrative/place-label overlap and ISO timestamp validation. Verification: server manifest pytest 3 passed (1 existing Starlette/httpx deprecation warning); @project/domain typecheck/build/test passed; diff check clean aside line-ending warnings.
+Review: PASS — no P1/P2 findings after adding layer excludePrefixes and generatedAt validation. System Decision Impact: candidate @decision/20260810-0902-server-authored-display-only-maplibre-manifest-with-desktop-last-known-good-fallback (changed) — establishes the shared display-only manifest contract and server conditional endpoint. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.
+
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass.
+Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass
 <!-- SECTION:NOTES:END -->
 

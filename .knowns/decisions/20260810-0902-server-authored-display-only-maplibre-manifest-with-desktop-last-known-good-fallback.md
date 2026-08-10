@@ -15,16 +15,21 @@ sources:
 relatedDocs:
   - specs/2026-08-10/serverdesktop-shared-maplibre-basemap-manifest
   - specs/2026-08-09/maplibre-basemap-for-design
-relatedTasks: []
+relatedTasks:
+  - 1xqatp
+  - 99f71h
+  - ahh0p8
+  - zllmsv
 verification: []
-reviewState: needs_evidence
-reviewBlockers:
-  - candidate needs at least one linked task or a spec with linked tasks before acceptance
+reviewState: ready_for_review
+reviewBlockers: []
 reviewMatches: []
-reviewAllowedResolutions: []
-reviewEvaluatedAt: '2026-08-10T02:02:02.349Z'
+reviewAllowedResolutions:
+  - accept_new
+  - reject_new
+reviewEvaluatedAt: '2026-08-10T02:50:58.938Z'
 createdAt: '2026-08-10T02:02:02.349Z'
-updatedAt: '2026-08-10T02:02:02.349Z'
+updatedAt: '2026-08-10T02:50:58.938Z'
 ---
 
 ## Context
