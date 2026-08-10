@@ -1,0 +1,280 @@
+{
+  "taskId": "cxn923",
+  "currentVersion": 6,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "cxn923",
+      "version": 1,
+      "timestamp": "2026-08-10T01:18:29.0950047Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T08:18:28.9799591+07:00",
+        "description": "Build server-side replay endpoint to process mutation events and conflict resolution UI + API handling.",
+        "id": "cxn923",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-05] Implement server replay endpoint and conflict resolution workflow",
+        "updatedAt": "2026-08-10T08:18:28.9799591+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "cxn923",
+      "version": 2,
+      "timestamp": "2026-08-10T01:28:10.1102622Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:28.979Z",
+        "description": "Build server-side replay endpoint to process mutation events and conflict resolution UI + API handling.",
+        "id": "cxn923",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-05] Implement server replay endpoint and conflict resolution workflow",
+        "updatedAt": "2026-08-10T01:28:10.1102622Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "cxn923",
+      "version": 3,
+      "timestamp": "2026-08-10T01:28:17.0375289Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Implement server sync and conflict resolution handler in desktop-core (crates/desktop-core/src/server_sync.rs) with version checking and resolution strategies (USE_SERVER vs OVERWRITE_WITH_CLIENT).\n2. Implement Tauri IPC command in src-tauri (apps/desktop/src-tauri/src/conflict_cmd.rs) for resolve_mutation_conflict.\n3. Add unit and integration tests verifying version conflict detection and resolution handling."
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:28.979Z",
+        "description": "Build server-side replay endpoint to process mutation events and conflict resolution UI + API handling.",
+        "id": "cxn923",
+        "implementationPlan": "1. Implement server sync and conflict resolution handler in desktop-core (crates/desktop-core/src/server_sync.rs) with version checking and resolution strategies (USE_SERVER vs OVERWRITE_WITH_CLIENT).\n2. Implement Tauri IPC command in src-tauri (apps/desktop/src-tauri/src/conflict_cmd.rs) for resolve_mutation_conflict.\n3. Add unit and integration tests verifying version conflict detection and resolution handling.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-05] Implement server replay endpoint and conflict resolution workflow",
+        "updatedAt": "2026-08-10T01:28:17.0375289Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "cxn923",
+      "version": 4,
+      "timestamp": "2026-08-10T01:28:22.0758687Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Implement server replay endpoint and conflict resolution module in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose resolve_mutation_conflict Tauri IPC command"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests verifying conflict detection and USE_SERVER vs OVERWRITE_WITH_CLIENT resolution choices"
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement server replay endpoint and conflict resolution module in desktop-core"
+          },
+          {
+            "completed": false,
+            "text": "Expose resolve_mutation_conflict Tauri IPC command"
+          },
+          {
+            "completed": false,
+            "text": "Add unit tests verifying conflict detection and USE_SERVER vs OVERWRITE_WITH_CLIENT resolution choices"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:28.979Z",
+        "description": "Build server-side replay endpoint to process mutation events and conflict resolution UI + API handling.",
+        "id": "cxn923",
+        "implementationPlan": "1. Implement server sync and conflict resolution handler in desktop-core (crates/desktop-core/src/server_sync.rs) with version checking and resolution strategies (USE_SERVER vs OVERWRITE_WITH_CLIENT).\n2. Implement Tauri IPC command in src-tauri (apps/desktop/src-tauri/src/conflict_cmd.rs) for resolve_mutation_conflict.\n3. Add unit and integration tests verifying version conflict detection and resolution handling.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-05] Implement server replay endpoint and conflict resolution workflow",
+        "updatedAt": "2026-08-10T01:28:22.0758687Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "cxn923",
+      "version": 5,
+      "timestamp": "2026-08-10T01:29:14.0776245Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Implement server replay endpoint and conflict resolution module in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose resolve_mutation_conflict Tauri IPC command"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests verifying conflict detection and USE_SERVER vs OVERWRITE_WITH_CLIENT resolution choices"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Implement server replay endpoint and conflict resolution module in desktop-core"
+            },
+            {
+              "completed": true,
+              "text": "Expose resolve_mutation_conflict Tauri IPC command"
+            },
+            {
+              "completed": true,
+              "text": "Add unit tests verifying conflict detection and USE_SERVER vs OVERWRITE_WITH_CLIENT resolution choices"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implemented server sync handler with version conflict detection and resolution strategies (USE_SERVER / OVERWRITE_WITH_CLIENT) in desktop-core (server_sync module) and exposed resolve_mutation_conflict Tauri IPC command in src-tauri. Verified with 19 passing tests. System Decision Impact: none — Reused established Conflict Resolution model. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T01:29:14.0776245Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement server replay endpoint and conflict resolution module in desktop-core"
+          },
+          {
+            "completed": true,
+            "text": "Expose resolve_mutation_conflict Tauri IPC command"
+          },
+          {
+            "completed": true,
+            "text": "Add unit tests verifying conflict detection and USE_SERVER vs OVERWRITE_WITH_CLIENT resolution choices"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:29:14.0776245Z",
+        "createdAt": "2026-08-10T01:18:28.979Z",
+        "description": "Build server-side replay endpoint to process mutation events and conflict resolution UI + API handling.",
+        "id": "cxn923",
+        "implementationNotes": "Implemented server sync handler with version conflict detection and resolution strategies (USE_SERVER / OVERWRITE_WITH_CLIENT) in desktop-core (server_sync module) and exposed resolve_mutation_conflict Tauri IPC command in src-tauri. Verified with 19 passing tests. System Decision Impact: none — Reused established Conflict Resolution model. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+        "implementationPlan": "1. Implement server sync and conflict resolution handler in desktop-core (crates/desktop-core/src/server_sync.rs) with version checking and resolution strategies (USE_SERVER vs OVERWRITE_WITH_CLIENT).\n2. Implement Tauri IPC command in src-tauri (apps/desktop/src-tauri/src/conflict_cmd.rs) for resolve_mutation_conflict.\n3. Add unit and integration tests verifying version conflict detection and resolution handling.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-05] Implement server replay endpoint and conflict resolution workflow",
+        "updatedAt": "2026-08-10T01:29:14.0776245Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "cxn923",
+      "version": 6,
+      "timestamp": "2026-08-10T01:30:26.0423355Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented server sync handler with version conflict detection and resolution strategies (USE_SERVER / OVERWRITE_WITH_CLIENT) in desktop-core (server_sync module) and exposed resolve_mutation_conflict Tauri IPC command in src-tauri. Verified with 19 passing tests. System Decision Impact: none — Reused established Conflict Resolution model. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+          "newValue": "Implemented server sync handler with version conflict detection and resolution strategies (USE_SERVER / OVERWRITE_WITH_CLIENT) in desktop-core (server_sync module) and exposed resolve_mutation_conflict Tauri IPC command in src-tauri. Verified with 19 passing tests. System Decision Impact: none — Reused established Conflict Resolution model. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Implement server replay endpoint and conflict resolution module in desktop-core",
+            "completed": true
+          },
+          {
+            "text": "Expose resolve_mutation_conflict Tauri IPC command",
+            "completed": true
+          },
+          {
+            "text": "Add unit tests verifying conflict detection and USE_SERVER vs OVERWRITE_WITH_CLIENT resolution choices",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:29:14.077Z",
+        "createdAt": "2026-08-10T01:18:28.979Z",
+        "description": "Build server-side replay endpoint to process mutation events and conflict resolution UI + API handling.",
+        "id": "cxn923",
+        "implementationNotes": "Implemented server sync handler with version conflict detection and resolution strategies (USE_SERVER / OVERWRITE_WITH_CLIENT) in desktop-core (server_sync module) and exposed resolve_mutation_conflict Tauri IPC command in src-tauri. Verified with 19 passing tests. System Decision Impact: none — Reused established Conflict Resolution model. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass",
+        "implementationPlan": "1. Implement server sync and conflict resolution handler in desktop-core (crates/desktop-core/src/server_sync.rs) with version checking and resolution strategies (USE_SERVER vs OVERWRITE_WITH_CLIENT).\n2. Implement Tauri IPC command in src-tauri (apps/desktop/src-tauri/src/conflict_cmd.rs) for resolve_mutation_conflict.\n3. Add unit and integration tests verifying version conflict detection and resolution handling.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-05] Implement server replay endpoint and conflict resolution workflow",
+        "updatedAt": "2026-08-10T01:30:26.0423355Z"
+      }
+    }
+  ]
+}

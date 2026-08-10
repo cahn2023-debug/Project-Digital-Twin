@@ -1,0 +1,328 @@
+{
+  "taskId": "y3uif4",
+  "currentVersion": 6,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "y3uif4",
+      "version": 1,
+      "timestamp": "2026-08-10T01:18:19.0776469Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T08:18:18.956987+07:00",
+        "description": "Set up SQLCipher encrypted SQLite database connection in Tauri Rust backend with OS keyring key derivation.",
+        "id": "y3uif4",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-01] Establish SQLCipher encrypted local database and Tauri Rust backend storage layer",
+        "updatedAt": "2026-08-10T08:18:18.956987+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "y3uif4",
+      "version": 2,
+      "timestamp": "2026-08-10T01:19:06.103632Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:18.956Z",
+        "description": "Set up SQLCipher encrypted SQLite database connection in Tauri Rust backend with OS keyring key derivation.",
+        "id": "y3uif4",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-01] Establish SQLCipher encrypted local database and Tauri Rust backend storage layer",
+        "updatedAt": "2026-08-10T01:19:06.103632Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "y3uif4",
+      "version": 3,
+      "timestamp": "2026-08-10T01:19:12.9815193Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Add rusqlite (SQLCipher feature) and keyring/stronghold dependencies to Tauri Rust backend Cargo.toml.\n2. Implement db::crypto module in Rust backend for master key derivation from OS Keyring.\n3. Build db::connection module initializing encrypted SQLite connection with PRAGMA key and applying initial migrations (cached_credentials, mutation_events, sync_checkpoints tables).\n4. Expose Tauri IPC commands (init_database, check_db_status) to React frontend.\n5. Add unit and integration tests verifying SQLCipher encryption integrity and database schema initialization."
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:18.956Z",
+        "description": "Set up SQLCipher encrypted SQLite database connection in Tauri Rust backend with OS keyring key derivation.",
+        "id": "y3uif4",
+        "implementationPlan": "1. Add rusqlite (SQLCipher feature) and keyring/stronghold dependencies to Tauri Rust backend Cargo.toml.\n2. Implement db::crypto module in Rust backend for master key derivation from OS Keyring.\n3. Build db::connection module initializing encrypted SQLite connection with PRAGMA key and applying initial migrations (cached_credentials, mutation_events, sync_checkpoints tables).\n4. Expose Tauri IPC commands (init_database, check_db_status) to React frontend.\n5. Add unit and integration tests verifying SQLCipher encryption integrity and database schema initialization.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-01] Establish SQLCipher encrypted local database and Tauri Rust backend storage layer",
+        "updatedAt": "2026-08-10T01:19:12.9815193Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "y3uif4",
+      "version": 4,
+      "timestamp": "2026-08-10T01:19:17.0025292Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Add SQLCipher dependency to Rust backend Cargo.toml"
+            },
+            {
+              "completed": false,
+              "text": "Implement OS Keyring key derivation in db::crypto"
+            },
+            {
+              "completed": false,
+              "text": "Initialize SQLCipher connection pool with PRAGMA key and schema migrations"
+            },
+            {
+              "completed": false,
+              "text": "Expose Tauri IPC commands for database initialization and status"
+            },
+            {
+              "completed": false,
+              "text": "Add unit test verifying file encryption and table schema"
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Add SQLCipher dependency to Rust backend Cargo.toml"
+          },
+          {
+            "completed": false,
+            "text": "Implement OS Keyring key derivation in db::crypto"
+          },
+          {
+            "completed": false,
+            "text": "Initialize SQLCipher connection pool with PRAGMA key and schema migrations"
+          },
+          {
+            "completed": false,
+            "text": "Expose Tauri IPC commands for database initialization and status"
+          },
+          {
+            "completed": false,
+            "text": "Add unit test verifying file encryption and table schema"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:18.956Z",
+        "description": "Set up SQLCipher encrypted SQLite database connection in Tauri Rust backend with OS keyring key derivation.",
+        "id": "y3uif4",
+        "implementationPlan": "1. Add rusqlite (SQLCipher feature) and keyring/stronghold dependencies to Tauri Rust backend Cargo.toml.\n2. Implement db::crypto module in Rust backend for master key derivation from OS Keyring.\n3. Build db::connection module initializing encrypted SQLite connection with PRAGMA key and applying initial migrations (cached_credentials, mutation_events, sync_checkpoints tables).\n4. Expose Tauri IPC commands (init_database, check_db_status) to React frontend.\n5. Add unit and integration tests verifying SQLCipher encryption integrity and database schema initialization.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-01] Establish SQLCipher encrypted local database and Tauri Rust backend storage layer",
+        "updatedAt": "2026-08-10T01:19:17.0025292Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "y3uif4",
+      "version": 5,
+      "timestamp": "2026-08-10T01:23:26.3157164Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Add SQLCipher dependency to Rust backend Cargo.toml"
+            },
+            {
+              "completed": false,
+              "text": "Implement OS Keyring key derivation in db::crypto"
+            },
+            {
+              "completed": false,
+              "text": "Initialize SQLCipher connection pool with PRAGMA key and schema migrations"
+            },
+            {
+              "completed": false,
+              "text": "Expose Tauri IPC commands for database initialization and status"
+            },
+            {
+              "completed": false,
+              "text": "Add unit test verifying file encryption and table schema"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Add SQLCipher dependency to Rust backend Cargo.toml"
+            },
+            {
+              "completed": true,
+              "text": "Implement OS Keyring key derivation in db::crypto"
+            },
+            {
+              "completed": true,
+              "text": "Initialize SQLCipher connection pool with PRAGMA key and schema migrations"
+            },
+            {
+              "completed": true,
+              "text": "Expose Tauri IPC commands for database initialization and status"
+            },
+            {
+              "completed": true,
+              "text": "Add unit test verifying file encryption and table schema"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implemented SQLCipher database storage engine in desktop-core (crypto and db_encrypted modules) and exposed Tauri IPC commands in src-tauri. All 15 unit and integration tests passed cleanly. System Decision Impact: candidate @decision/20260810-0823-sqlcipher-encrypted-local-storage-engine-for-desktop (added) — SQLCipher Encrypted Local Storage Engine for Desktop. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T01:23:26.3157164Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Add SQLCipher dependency to Rust backend Cargo.toml"
+          },
+          {
+            "completed": true,
+            "text": "Implement OS Keyring key derivation in db::crypto"
+          },
+          {
+            "completed": true,
+            "text": "Initialize SQLCipher connection pool with PRAGMA key and schema migrations"
+          },
+          {
+            "completed": true,
+            "text": "Expose Tauri IPC commands for database initialization and status"
+          },
+          {
+            "completed": true,
+            "text": "Add unit test verifying file encryption and table schema"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:23:26.3157164Z",
+        "createdAt": "2026-08-10T01:18:18.956Z",
+        "description": "Set up SQLCipher encrypted SQLite database connection in Tauri Rust backend with OS keyring key derivation.",
+        "id": "y3uif4",
+        "implementationNotes": "Implemented SQLCipher database storage engine in desktop-core (crypto and db_encrypted modules) and exposed Tauri IPC commands in src-tauri. All 15 unit and integration tests passed cleanly. System Decision Impact: candidate @decision/20260810-0823-sqlcipher-encrypted-local-storage-engine-for-desktop (added) — SQLCipher Encrypted Local Storage Engine for Desktop. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+        "implementationPlan": "1. Add rusqlite (SQLCipher feature) and keyring/stronghold dependencies to Tauri Rust backend Cargo.toml.\n2. Implement db::crypto module in Rust backend for master key derivation from OS Keyring.\n3. Build db::connection module initializing encrypted SQLite connection with PRAGMA key and applying initial migrations (cached_credentials, mutation_events, sync_checkpoints tables).\n4. Expose Tauri IPC commands (init_database, check_db_status) to React frontend.\n5. Add unit and integration tests verifying SQLCipher encryption integrity and database schema initialization.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-01] Establish SQLCipher encrypted local database and Tauri Rust backend storage layer",
+        "updatedAt": "2026-08-10T01:23:26.3157164Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "y3uif4",
+      "version": 6,
+      "timestamp": "2026-08-10T01:30:06.1619699Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented SQLCipher database storage engine in desktop-core (crypto and db_encrypted modules) and exposed Tauri IPC commands in src-tauri. All 15 unit and integration tests passed cleanly. System Decision Impact: candidate @decision/20260810-0823-sqlcipher-encrypted-local-storage-engine-for-desktop (added) — SQLCipher Encrypted Local Storage Engine for Desktop. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+          "newValue": "Implemented SQLCipher database storage engine in desktop-core (crypto and db_encrypted modules) and exposed Tauri IPC commands in src-tauri. All 15 unit and integration tests passed cleanly. System Decision Impact: candidate @decision/20260810-0823-sqlcipher-encrypted-local-storage-engine-for-desktop (added) — SQLCipher Encrypted Local Storage Engine for Desktop. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Add SQLCipher dependency to Rust backend Cargo.toml",
+            "completed": true
+          },
+          {
+            "text": "Implement OS Keyring key derivation in db::crypto",
+            "completed": true
+          },
+          {
+            "text": "Initialize SQLCipher connection pool with PRAGMA key and schema migrations",
+            "completed": true
+          },
+          {
+            "text": "Expose Tauri IPC commands for database initialization and status",
+            "completed": true
+          },
+          {
+            "text": "Add unit test verifying file encryption and table schema",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:23:26.315Z",
+        "createdAt": "2026-08-10T01:18:18.956Z",
+        "description": "Set up SQLCipher encrypted SQLite database connection in Tauri Rust backend with OS keyring key derivation.",
+        "id": "y3uif4",
+        "implementationNotes": "Implemented SQLCipher database storage engine in desktop-core (crypto and db_encrypted modules) and exposed Tauri IPC commands in src-tauri. All 15 unit and integration tests passed cleanly. System Decision Impact: candidate @decision/20260810-0823-sqlcipher-encrypted-local-storage-engine-for-desktop (added) — SQLCipher Encrypted Local Storage Engine for Desktop. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass",
+        "implementationPlan": "1. Add rusqlite (SQLCipher feature) and keyring/stronghold dependencies to Tauri Rust backend Cargo.toml.\n2. Implement db::crypto module in Rust backend for master key derivation from OS Keyring.\n3. Build db::connection module initializing encrypted SQLite connection with PRAGMA key and applying initial migrations (cached_credentials, mutation_events, sync_checkpoints tables).\n4. Expose Tauri IPC commands (init_database, check_db_status) to React frontend.\n5. Add unit and integration tests verifying SQLCipher encryption integrity and database schema initialization.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-01] Establish SQLCipher encrypted local database and Tauri Rust backend storage layer",
+        "updatedAt": "2026-08-10T01:30:06.1619699Z"
+      }
+    }
+  ]
+}

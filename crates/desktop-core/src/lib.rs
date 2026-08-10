@@ -1,9 +1,24 @@
+pub mod auth;
+pub mod crypto;
+pub mod db_encrypted;
 pub mod hash;
 pub mod manifest;
+pub mod mutation;
 pub mod queue;
+pub mod replay;
 pub mod safe_write;
 pub mod scanner;
+pub mod server_sync;
 
+pub use auth::{cache_session, hash_password, validate_offline_login, AuthResult};
+pub use crypto::DbPasskey;
+pub use db_encrypted::{CachedCredential, DbError, DbResult, EncryptedDb, MutationEvent};
+pub use mutation::{
+    enqueue_mutation, fetch_pending_mutations, is_network_online, mark_mutation_status,
+    pending_mutations_count, set_network_online,
+};
+pub use replay::{ReplayEngine, SyncBatchResult};
+pub use server_sync::{ConflictChoice, ConflictItem, ServerSyncHandler};
 pub use hash::{sha256_file, sha256_reader};
 pub use manifest::{
     DiscoveredFile, FileVersion, ManifestDb, ManifestEntry, PendingJob, RawRecord, ScanFailure,

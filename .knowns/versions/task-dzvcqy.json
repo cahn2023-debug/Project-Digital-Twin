@@ -1,0 +1,280 @@
+{
+  "taskId": "dzvcqy",
+  "currentVersion": 6,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "dzvcqy",
+      "version": 1,
+      "timestamp": "2026-08-10T01:18:21.1195507Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T08:18:20.99559+07:00",
+        "description": "Cache JWT and user profile credentials in encrypted local storage for offline login and session validation.",
+        "id": "dzvcqy",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-02] Implement offline authentication and cached credential management",
+        "updatedAt": "2026-08-10T08:18:20.99559+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "dzvcqy",
+      "version": 2,
+      "timestamp": "2026-08-10T01:24:12.0344938Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:20.995Z",
+        "description": "Cache JWT and user profile credentials in encrypted local storage for offline login and session validation.",
+        "id": "dzvcqy",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-02] Implement offline authentication and cached credential management",
+        "updatedAt": "2026-08-10T01:24:12.0344938Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "dzvcqy",
+      "version": 3,
+      "timestamp": "2026-08-10T01:24:18.2579848Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Implement auth module in desktop-core (crates/desktop-core/src/auth.rs) providing save_session and validate_offline_session with password hash verification and JWT expiration checks against EncryptedDb.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/auth_cmd.rs) for offline_login and cache_online_session.\n3. Add unit and integration tests covering online session caching, successful offline authentication, and invalid password/expired session rejections."
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:20.995Z",
+        "description": "Cache JWT and user profile credentials in encrypted local storage for offline login and session validation.",
+        "id": "dzvcqy",
+        "implementationPlan": "1. Implement auth module in desktop-core (crates/desktop-core/src/auth.rs) providing save_session and validate_offline_session with password hash verification and JWT expiration checks against EncryptedDb.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/auth_cmd.rs) for offline_login and cache_online_session.\n3. Add unit and integration tests covering online session caching, successful offline authentication, and invalid password/expired session rejections.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-02] Implement offline authentication and cached credential management",
+        "updatedAt": "2026-08-10T01:24:18.2579848Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "dzvcqy",
+      "version": 4,
+      "timestamp": "2026-08-10T01:24:23.2217517Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Implement auth session caching and offline validation in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose offline_login and cache_online_session Tauri IPC commands"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests verifying offline authentication with valid and invalid passwords"
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement auth session caching and offline validation in desktop-core"
+          },
+          {
+            "completed": false,
+            "text": "Expose offline_login and cache_online_session Tauri IPC commands"
+          },
+          {
+            "completed": false,
+            "text": "Add unit tests verifying offline authentication with valid and invalid passwords"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:20.995Z",
+        "description": "Cache JWT and user profile credentials in encrypted local storage for offline login and session validation.",
+        "id": "dzvcqy",
+        "implementationPlan": "1. Implement auth module in desktop-core (crates/desktop-core/src/auth.rs) providing save_session and validate_offline_session with password hash verification and JWT expiration checks against EncryptedDb.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/auth_cmd.rs) for offline_login and cache_online_session.\n3. Add unit and integration tests covering online session caching, successful offline authentication, and invalid password/expired session rejections.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-02] Implement offline authentication and cached credential management",
+        "updatedAt": "2026-08-10T01:24:23.2217517Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "dzvcqy",
+      "version": 5,
+      "timestamp": "2026-08-10T01:25:32.1046209Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Implement auth session caching and offline validation in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose offline_login and cache_online_session Tauri IPC commands"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests verifying offline authentication with valid and invalid passwords"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Implement auth session caching and offline validation in desktop-core"
+            },
+            {
+              "completed": true,
+              "text": "Expose offline_login and cache_online_session Tauri IPC commands"
+            },
+            {
+              "completed": true,
+              "text": "Add unit tests verifying offline authentication with valid and invalid passwords"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implemented auth session caching and offline authentication validation in desktop-core (auth module) and exposed cache_user_session and offline_authenticate_user Tauri IPC commands. Verified with 16 passing tests. System Decision Impact: none — Followed established SQLCipher encrypted database architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T01:25:32.1046209Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement auth session caching and offline validation in desktop-core"
+          },
+          {
+            "completed": true,
+            "text": "Expose offline_login and cache_online_session Tauri IPC commands"
+          },
+          {
+            "completed": true,
+            "text": "Add unit tests verifying offline authentication with valid and invalid passwords"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:25:32.1046209Z",
+        "createdAt": "2026-08-10T01:18:20.995Z",
+        "description": "Cache JWT and user profile credentials in encrypted local storage for offline login and session validation.",
+        "id": "dzvcqy",
+        "implementationNotes": "Implemented auth session caching and offline authentication validation in desktop-core (auth module) and exposed cache_user_session and offline_authenticate_user Tauri IPC commands. Verified with 16 passing tests. System Decision Impact: none — Followed established SQLCipher encrypted database architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+        "implementationPlan": "1. Implement auth module in desktop-core (crates/desktop-core/src/auth.rs) providing save_session and validate_offline_session with password hash verification and JWT expiration checks against EncryptedDb.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/auth_cmd.rs) for offline_login and cache_online_session.\n3. Add unit and integration tests covering online session caching, successful offline authentication, and invalid password/expired session rejections.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-02] Implement offline authentication and cached credential management",
+        "updatedAt": "2026-08-10T01:25:32.1046209Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "dzvcqy",
+      "version": 6,
+      "timestamp": "2026-08-10T01:30:11.043377Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented auth session caching and offline authentication validation in desktop-core (auth module) and exposed cache_user_session and offline_authenticate_user Tauri IPC commands. Verified with 16 passing tests. System Decision Impact: none — Followed established SQLCipher encrypted database architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+          "newValue": "Implemented auth session caching and offline authentication validation in desktop-core (auth module) and exposed cache_user_session and offline_authenticate_user Tauri IPC commands. Verified with 16 passing tests. System Decision Impact: none — Followed established SQLCipher encrypted database architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Implement auth session caching and offline validation in desktop-core",
+            "completed": true
+          },
+          {
+            "text": "Expose offline_login and cache_online_session Tauri IPC commands",
+            "completed": true
+          },
+          {
+            "text": "Add unit tests verifying offline authentication with valid and invalid passwords",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:25:32.104Z",
+        "createdAt": "2026-08-10T01:18:20.995Z",
+        "description": "Cache JWT and user profile credentials in encrypted local storage for offline login and session validation.",
+        "id": "dzvcqy",
+        "implementationNotes": "Implemented auth session caching and offline authentication validation in desktop-core (auth module) and exposed cache_user_session and offline_authenticate_user Tauri IPC commands. Verified with 16 passing tests. System Decision Impact: none — Followed established SQLCipher encrypted database architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass",
+        "implementationPlan": "1. Implement auth module in desktop-core (crates/desktop-core/src/auth.rs) providing save_session and validate_offline_session with password hash verification and JWT expiration checks against EncryptedDb.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/auth_cmd.rs) for offline_login and cache_online_session.\n3. Add unit and integration tests covering online session caching, successful offline authentication, and invalid password/expired session rejections.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-02] Implement offline authentication and cached credential management",
+        "updatedAt": "2026-08-10T01:30:11.043377Z"
+      }
+    }
+  ]
+}

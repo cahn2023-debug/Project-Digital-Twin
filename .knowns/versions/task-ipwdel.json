@@ -1,0 +1,280 @@
+{
+  "taskId": "ipwdel",
+  "currentVersion": 6,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "ipwdel",
+      "version": 1,
+      "timestamp": "2026-08-10T01:18:23.1757999Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T08:18:23.0609931+07:00",
+        "description": "Build local Append-Only Mutation Event queue table in SQLite and network online/offline event listener.",
+        "id": "ipwdel",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-03] Implement Append-Only Mutation Event queue and network status listener",
+        "updatedAt": "2026-08-10T08:18:23.0609931+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "ipwdel",
+      "version": 2,
+      "timestamp": "2026-08-10T01:25:41.0391871Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:23.06Z",
+        "description": "Build local Append-Only Mutation Event queue table in SQLite and network online/offline event listener.",
+        "id": "ipwdel",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-03] Implement Append-Only Mutation Event queue and network status listener",
+        "updatedAt": "2026-08-10T01:25:41.0391871Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "ipwdel",
+      "version": 3,
+      "timestamp": "2026-08-10T01:25:46.1023332Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Implement mutation module in desktop-core (crates/desktop-core/src/mutation.rs) providing enqueue_mutation_event, peek_pending_events, and mark_event_status helpers for Append-Only event log queueing.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/mutation_cmd.rs) for pushing mutation events, retrieving pending count, and broadcasting network status.\n3. Add unit and integration tests verifying FIFO event ordering, status transitions, and payload encryption."
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:23.06Z",
+        "description": "Build local Append-Only Mutation Event queue table in SQLite and network online/offline event listener.",
+        "id": "ipwdel",
+        "implementationPlan": "1. Implement mutation module in desktop-core (crates/desktop-core/src/mutation.rs) providing enqueue_mutation_event, peek_pending_events, and mark_event_status helpers for Append-Only event log queueing.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/mutation_cmd.rs) for pushing mutation events, retrieving pending count, and broadcasting network status.\n3. Add unit and integration tests verifying FIFO event ordering, status transitions, and payload encryption.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-03] Implement Append-Only Mutation Event queue and network status listener",
+        "updatedAt": "2026-08-10T01:25:46.1023332Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "ipwdel",
+      "version": 4,
+      "timestamp": "2026-08-10T01:25:51.0501356Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Implement Append-Only mutation queue helpers in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose push_client_mutation_event and get_pending_mutation_count Tauri IPC commands"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests verifying event queue ordering and status updates"
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement Append-Only mutation queue helpers in desktop-core"
+          },
+          {
+            "completed": false,
+            "text": "Expose push_client_mutation_event and get_pending_mutation_count Tauri IPC commands"
+          },
+          {
+            "completed": false,
+            "text": "Add unit tests verifying event queue ordering and status updates"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:23.06Z",
+        "description": "Build local Append-Only Mutation Event queue table in SQLite and network online/offline event listener.",
+        "id": "ipwdel",
+        "implementationPlan": "1. Implement mutation module in desktop-core (crates/desktop-core/src/mutation.rs) providing enqueue_mutation_event, peek_pending_events, and mark_event_status helpers for Append-Only event log queueing.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/mutation_cmd.rs) for pushing mutation events, retrieving pending count, and broadcasting network status.\n3. Add unit and integration tests verifying FIFO event ordering, status transitions, and payload encryption.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-03] Implement Append-Only Mutation Event queue and network status listener",
+        "updatedAt": "2026-08-10T01:25:51.0501356Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "ipwdel",
+      "version": 5,
+      "timestamp": "2026-08-10T01:26:44.0920605Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Implement Append-Only mutation queue helpers in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose push_client_mutation_event and get_pending_mutation_count Tauri IPC commands"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests verifying event queue ordering and status updates"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Implement Append-Only mutation queue helpers in desktop-core"
+            },
+            {
+              "completed": true,
+              "text": "Expose push_client_mutation_event and get_pending_mutation_count Tauri IPC commands"
+            },
+            {
+              "completed": true,
+              "text": "Add unit tests verifying event queue ordering and status updates"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implemented Append-Only Mutation Event queue and network status monitoring in desktop-core (mutation module) and exposed push_client_mutation, get_pending_mutation_count, and set_network_status Tauri IPC commands. Verified with 17 passing tests. System Decision Impact: none — Reused established Append-Only event outbox architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T01:26:44.0920605Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement Append-Only mutation queue helpers in desktop-core"
+          },
+          {
+            "completed": true,
+            "text": "Expose push_client_mutation_event and get_pending_mutation_count Tauri IPC commands"
+          },
+          {
+            "completed": true,
+            "text": "Add unit tests verifying event queue ordering and status updates"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:26:44.0920605Z",
+        "createdAt": "2026-08-10T01:18:23.06Z",
+        "description": "Build local Append-Only Mutation Event queue table in SQLite and network online/offline event listener.",
+        "id": "ipwdel",
+        "implementationNotes": "Implemented Append-Only Mutation Event queue and network status monitoring in desktop-core (mutation module) and exposed push_client_mutation, get_pending_mutation_count, and set_network_status Tauri IPC commands. Verified with 17 passing tests. System Decision Impact: none — Reused established Append-Only event outbox architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+        "implementationPlan": "1. Implement mutation module in desktop-core (crates/desktop-core/src/mutation.rs) providing enqueue_mutation_event, peek_pending_events, and mark_event_status helpers for Append-Only event log queueing.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/mutation_cmd.rs) for pushing mutation events, retrieving pending count, and broadcasting network status.\n3. Add unit and integration tests verifying FIFO event ordering, status transitions, and payload encryption.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-03] Implement Append-Only Mutation Event queue and network status listener",
+        "updatedAt": "2026-08-10T01:26:44.0920605Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "ipwdel",
+      "version": 6,
+      "timestamp": "2026-08-10T01:30:16.0299198Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented Append-Only Mutation Event queue and network status monitoring in desktop-core (mutation module) and exposed push_client_mutation, get_pending_mutation_count, and set_network_status Tauri IPC commands. Verified with 17 passing tests. System Decision Impact: none — Reused established Append-Only event outbox architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+          "newValue": "Implemented Append-Only Mutation Event queue and network status monitoring in desktop-core (mutation module) and exposed push_client_mutation, get_pending_mutation_count, and set_network_status Tauri IPC commands. Verified with 17 passing tests. System Decision Impact: none — Reused established Append-Only event outbox architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Implement Append-Only mutation queue helpers in desktop-core",
+            "completed": true
+          },
+          {
+            "text": "Expose push_client_mutation_event and get_pending_mutation_count Tauri IPC commands",
+            "completed": true
+          },
+          {
+            "text": "Add unit tests verifying event queue ordering and status updates",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:26:44.092Z",
+        "createdAt": "2026-08-10T01:18:23.06Z",
+        "description": "Build local Append-Only Mutation Event queue table in SQLite and network online/offline event listener.",
+        "id": "ipwdel",
+        "implementationNotes": "Implemented Append-Only Mutation Event queue and network status monitoring in desktop-core (mutation module) and exposed push_client_mutation, get_pending_mutation_count, and set_network_status Tauri IPC commands. Verified with 17 passing tests. System Decision Impact: none — Reused established Append-Only event outbox architecture. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass",
+        "implementationPlan": "1. Implement mutation module in desktop-core (crates/desktop-core/src/mutation.rs) providing enqueue_mutation_event, peek_pending_events, and mark_event_status helpers for Append-Only event log queueing.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/mutation_cmd.rs) for pushing mutation events, retrieving pending count, and broadcasting network status.\n3. Add unit and integration tests verifying FIFO event ordering, status transitions, and payload encryption.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-03] Implement Append-Only Mutation Event queue and network status listener",
+        "updatedAt": "2026-08-10T01:30:16.0299198Z"
+      }
+    }
+  ]
+}

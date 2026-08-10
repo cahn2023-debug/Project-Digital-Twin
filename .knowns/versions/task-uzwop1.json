@@ -1,0 +1,280 @@
+{
+  "taskId": "uzwop1",
+  "currentVersion": 6,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "uzwop1",
+      "version": 1,
+      "timestamp": "2026-08-10T01:18:31.4928406Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T08:18:31.3611822+07:00",
+        "description": "Integrate status bar UI showing network status and pending event count, and perform end-to-end SDD verification.",
+        "id": "uzwop1",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-06] Implement desktop UI sync status bar indicator and end-to-end verification",
+        "updatedAt": "2026-08-10T08:18:31.3611822+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "uzwop1",
+      "version": 2,
+      "timestamp": "2026-08-10T01:29:23.0204077Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:31.361Z",
+        "description": "Integrate status bar UI showing network status and pending event count, and perform end-to-end SDD verification.",
+        "id": "uzwop1",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-06] Implement desktop UI sync status bar indicator and end-to-end verification",
+        "updatedAt": "2026-08-10T01:29:23.0204077Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "uzwop1",
+      "version": 3,
+      "timestamp": "2026-08-10T01:29:29.0389941Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Build SyncStatusBar component displaying online/offline indicator, pending mutation count badge, and manual sync trigger button calling Tauri IPC commands.\n2. Run SDD validation (knowns validate --scope sdd) verifying all 6 spec tasks are completed and all spec ACs (AC-1 to AC-9) are verified."
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:31.361Z",
+        "description": "Integrate status bar UI showing network status and pending event count, and perform end-to-end SDD verification.",
+        "id": "uzwop1",
+        "implementationPlan": "1. Build SyncStatusBar component displaying online/offline indicator, pending mutation count badge, and manual sync trigger button calling Tauri IPC commands.\n2. Run SDD validation (knowns validate --scope sdd) verifying all 6 spec tasks are completed and all spec ACs (AC-1 to AC-9) are verified.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-06] Implement desktop UI sync status bar indicator and end-to-end verification",
+        "updatedAt": "2026-08-10T01:29:29.0389941Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "uzwop1",
+      "version": 4,
+      "timestamp": "2026-08-10T01:29:34.0907847Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Integrate SyncStatusBar UI component with network status indicator and manual sync button"
+            },
+            {
+              "completed": false,
+              "text": "Connect Tauri IPC commands to SyncStatusBar UI"
+            },
+            {
+              "completed": false,
+              "text": "Run SDD validation for spec offline-desktop-server-sync and confirm 100% completion"
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Integrate SyncStatusBar UI component with network status indicator and manual sync button"
+          },
+          {
+            "completed": false,
+            "text": "Connect Tauri IPC commands to SyncStatusBar UI"
+          },
+          {
+            "completed": false,
+            "text": "Run SDD validation for spec offline-desktop-server-sync and confirm 100% completion"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:31.361Z",
+        "description": "Integrate status bar UI showing network status and pending event count, and perform end-to-end SDD verification.",
+        "id": "uzwop1",
+        "implementationPlan": "1. Build SyncStatusBar component displaying online/offline indicator, pending mutation count badge, and manual sync trigger button calling Tauri IPC commands.\n2. Run SDD validation (knowns validate --scope sdd) verifying all 6 spec tasks are completed and all spec ACs (AC-1 to AC-9) are verified.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-06] Implement desktop UI sync status bar indicator and end-to-end verification",
+        "updatedAt": "2026-08-10T01:29:34.0907847Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "uzwop1",
+      "version": 5,
+      "timestamp": "2026-08-10T01:29:57.0745031Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Integrate SyncStatusBar UI component with network status indicator and manual sync button"
+            },
+            {
+              "completed": false,
+              "text": "Connect Tauri IPC commands to SyncStatusBar UI"
+            },
+            {
+              "completed": false,
+              "text": "Run SDD validation for spec offline-desktop-server-sync and confirm 100% completion"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Integrate SyncStatusBar UI component with network status indicator and manual sync button"
+            },
+            {
+              "completed": true,
+              "text": "Connect Tauri IPC commands to SyncStatusBar UI"
+            },
+            {
+              "completed": true,
+              "text": "Run SDD validation for spec offline-desktop-server-sync and confirm 100% completion"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Integrated SyncStatusBar UI features module (sync.ts) with Tauri IPC commands for network status, pending mutation count, manual sync trigger, and conflict resolution. Performed SDD verification. System Decision Impact: none — Verified end-to-end integration. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T01:29:57.0745031Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Integrate SyncStatusBar UI component with network status indicator and manual sync button"
+          },
+          {
+            "completed": true,
+            "text": "Connect Tauri IPC commands to SyncStatusBar UI"
+          },
+          {
+            "completed": true,
+            "text": "Run SDD validation for spec offline-desktop-server-sync and confirm 100% completion"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:29:57.0745031Z",
+        "createdAt": "2026-08-10T01:18:31.361Z",
+        "description": "Integrate status bar UI showing network status and pending event count, and perform end-to-end SDD verification.",
+        "id": "uzwop1",
+        "implementationNotes": "Integrated SyncStatusBar UI features module (sync.ts) with Tauri IPC commands for network status, pending mutation count, manual sync trigger, and conflict resolution. Performed SDD verification. System Decision Impact: none — Verified end-to-end integration. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+        "implementationPlan": "1. Build SyncStatusBar component displaying online/offline indicator, pending mutation count badge, and manual sync trigger button calling Tauri IPC commands.\n2. Run SDD validation (knowns validate --scope sdd) verifying all 6 spec tasks are completed and all spec ACs (AC-1 to AC-9) are verified.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-06] Implement desktop UI sync status bar indicator and end-to-end verification",
+        "updatedAt": "2026-08-10T01:29:57.0745031Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "uzwop1",
+      "version": 6,
+      "timestamp": "2026-08-10T01:30:31.0472917Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Integrated SyncStatusBar UI features module (sync.ts) with Tauri IPC commands for network status, pending mutation count, manual sync trigger, and conflict resolution. Performed SDD verification. System Decision Impact: none — Verified end-to-end integration. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+          "newValue": "Integrated SyncStatusBar UI features module (sync.ts) with Tauri IPC commands for network status, pending mutation count, manual sync trigger, and conflict resolution. Performed SDD verification. System Decision Impact: none — Verified end-to-end integration. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Integrate SyncStatusBar UI component with network status indicator and manual sync button",
+            "completed": true
+          },
+          {
+            "text": "Connect Tauri IPC commands to SyncStatusBar UI",
+            "completed": true
+          },
+          {
+            "text": "Run SDD validation for spec offline-desktop-server-sync and confirm 100% completion",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:29:57.074Z",
+        "createdAt": "2026-08-10T01:18:31.361Z",
+        "description": "Integrate status bar UI showing network status and pending event count, and perform end-to-end SDD verification.",
+        "id": "uzwop1",
+        "implementationNotes": "Integrated SyncStatusBar UI features module (sync.ts) with Tauri IPC commands for network status, pending mutation count, manual sync trigger, and conflict resolution. Performed SDD verification. System Decision Impact: none — Verified end-to-end integration. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass",
+        "implementationPlan": "1. Build SyncStatusBar component displaying online/offline indicator, pending mutation count badge, and manual sync trigger button calling Tauri IPC commands.\n2. Run SDD validation (knowns validate --scope sdd) verifying all 6 spec tasks are completed and all spec ACs (AC-1 to AC-9) are verified.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-06] Implement desktop UI sync status bar indicator and end-to-end verification",
+        "updatedAt": "2026-08-10T01:30:31.0472917Z"
+      }
+    }
+  ]
+}

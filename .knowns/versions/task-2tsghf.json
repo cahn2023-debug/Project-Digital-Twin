@@ -1,0 +1,280 @@
+{
+  "taskId": "2tsghf",
+  "currentVersion": 6,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "2tsghf",
+      "version": 1,
+      "timestamp": "2026-08-10T01:18:26.0826903Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T08:18:25.9682962+07:00",
+        "description": "Develop automatic background replay worker for pending mutation events with exponential backoff and manual sync command.",
+        "id": "2tsghf",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-04] Implement background sync replay engine, retry logic and manual sync trigger",
+        "updatedAt": "2026-08-10T08:18:25.9682962+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "2tsghf",
+      "version": 2,
+      "timestamp": "2026-08-10T01:26:54.06543Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        },
+        {
+          "field": "assignee",
+          "oldValue": null,
+          "newValue": "@me"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:25.968Z",
+        "description": "Develop automatic background replay worker for pending mutation events with exponential backoff and manual sync command.",
+        "id": "2tsghf",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-04] Implement background sync replay engine, retry logic and manual sync trigger",
+        "updatedAt": "2026-08-10T01:26:54.06543Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "2tsghf",
+      "version": 3,
+      "timestamp": "2026-08-10T01:27:00.1132275Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Implement replay engine in desktop-core (crates/desktop-core/src/replay.rs) handling background mutation event batch processing, exponential backoff retries, and status transitions.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/replay_cmd.rs) for trigger_manual_sync and get_last_sync_info.\n3. Add unit and integration tests verifying event batch replay, retry count increments, and manual sync execution."
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:25.968Z",
+        "description": "Develop automatic background replay worker for pending mutation events with exponential backoff and manual sync command.",
+        "id": "2tsghf",
+        "implementationPlan": "1. Implement replay engine in desktop-core (crates/desktop-core/src/replay.rs) handling background mutation event batch processing, exponential backoff retries, and status transitions.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/replay_cmd.rs) for trigger_manual_sync and get_last_sync_info.\n3. Add unit and integration tests verifying event batch replay, retry count increments, and manual sync execution.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-04] Implement background sync replay engine, retry logic and manual sync trigger",
+        "updatedAt": "2026-08-10T01:27:00.1132275Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "2tsghf",
+      "version": 4,
+      "timestamp": "2026-08-10T01:27:05.1325832Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": null,
+          "newValue": [
+            {
+              "completed": false,
+              "text": "Implement ReplayEngine worker with backoff retries in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose trigger_manual_sync and get_last_sync_info Tauri IPC commands"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests for background replay worker and retry backoff logic"
+            }
+          ]
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": false,
+            "text": "Implement ReplayEngine worker with backoff retries in desktop-core"
+          },
+          {
+            "completed": false,
+            "text": "Expose trigger_manual_sync and get_last_sync_info Tauri IPC commands"
+          },
+          {
+            "completed": false,
+            "text": "Add unit tests for background replay worker and retry backoff logic"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "createdAt": "2026-08-10T01:18:25.968Z",
+        "description": "Develop automatic background replay worker for pending mutation events with exponential backoff and manual sync command.",
+        "id": "2tsghf",
+        "implementationPlan": "1. Implement replay engine in desktop-core (crates/desktop-core/src/replay.rs) handling background mutation event batch processing, exponential backoff retries, and status transitions.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/replay_cmd.rs) for trigger_manual_sync and get_last_sync_info.\n3. Add unit and integration tests verifying event batch replay, retry count increments, and manual sync execution.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-04] Implement background sync replay engine, retry logic and manual sync trigger",
+        "updatedAt": "2026-08-10T01:27:05.1325832Z"
+      }
+    },
+    {
+      "id": "v5",
+      "taskId": "2tsghf",
+      "version": 5,
+      "timestamp": "2026-08-10T01:28:01.1713139Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "acceptanceCriteria",
+          "oldValue": [
+            {
+              "completed": false,
+              "text": "Implement ReplayEngine worker with backoff retries in desktop-core"
+            },
+            {
+              "completed": false,
+              "text": "Expose trigger_manual_sync and get_last_sync_info Tauri IPC commands"
+            },
+            {
+              "completed": false,
+              "text": "Add unit tests for background replay worker and retry backoff logic"
+            }
+          ],
+          "newValue": [
+            {
+              "completed": true,
+              "text": "Implement ReplayEngine worker with backoff retries in desktop-core"
+            },
+            {
+              "completed": true,
+              "text": "Expose trigger_manual_sync and get_last_sync_info Tauri IPC commands"
+            },
+            {
+              "completed": true,
+              "text": "Add unit tests for background replay worker and retry backoff logic"
+            }
+          ]
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Implemented ReplayEngine worker for background batch replay and retry backoff logic in desktop-core (replay module) and exposed trigger_manual_sync Tauri IPC command in src-tauri. Verified with 18 passing tests. System Decision Impact: none — Followed established Outbox replay pattern. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass."
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T01:28:01.1713139Z"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "completed": true,
+            "text": "Implement ReplayEngine worker with backoff retries in desktop-core"
+          },
+          {
+            "completed": true,
+            "text": "Expose trigger_manual_sync and get_last_sync_info Tauri IPC commands"
+          },
+          {
+            "completed": true,
+            "text": "Add unit tests for background replay worker and retry backoff logic"
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:28:01.1713139Z",
+        "createdAt": "2026-08-10T01:18:25.968Z",
+        "description": "Develop automatic background replay worker for pending mutation events with exponential backoff and manual sync command.",
+        "id": "2tsghf",
+        "implementationNotes": "Implemented ReplayEngine worker for background batch replay and retry backoff logic in desktop-core (replay module) and exposed trigger_manual_sync Tauri IPC command in src-tauri. Verified with 18 passing tests. System Decision Impact: none — Followed established Outbox replay pattern. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+        "implementationPlan": "1. Implement replay engine in desktop-core (crates/desktop-core/src/replay.rs) handling background mutation event batch processing, exponential backoff retries, and status transitions.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/replay_cmd.rs) for trigger_manual_sync and get_last_sync_info.\n3. Add unit and integration tests verifying event batch replay, retry count increments, and manual sync execution.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-04] Implement background sync replay engine, retry logic and manual sync trigger",
+        "updatedAt": "2026-08-10T01:28:01.1713139Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "2tsghf",
+      "version": 6,
+      "timestamp": "2026-08-10T01:30:21.0388147Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Implemented ReplayEngine worker for background batch replay and retry backoff logic in desktop-core (replay module) and exposed trigger_manual_sync Tauri IPC command in src-tauri. Verified with 18 passing tests. System Decision Impact: none — Followed established Outbox replay pattern. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.",
+          "newValue": "Implemented ReplayEngine worker for background batch replay and retry backoff logic in desktop-core (replay module) and exposed trigger_manual_sync Tauri IPC command in src-tauri. Verified with 18 passing tests. System Decision Impact: none — Followed established Outbox replay pattern. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass"
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Implement ReplayEngine worker with backoff retries in desktop-core",
+            "completed": true
+          },
+          {
+            "text": "Expose trigger_manual_sync and get_last_sync_info Tauri IPC commands",
+            "completed": true
+          },
+          {
+            "text": "Add unit tests for background replay worker and retry backoff logic",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T01:28:01.171Z",
+        "createdAt": "2026-08-10T01:18:25.968Z",
+        "description": "Develop automatic background replay worker for pending mutation events with exponential backoff and manual sync command.",
+        "id": "2tsghf",
+        "implementationNotes": "Implemented ReplayEngine worker for background batch replay and retry backoff logic in desktop-core (replay module) and exposed trigger_manual_sync Tauri IPC command in src-tauri. Verified with 18 passing tests. System Decision Impact: none — Followed established Outbox replay pattern. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass.\nSpec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass",
+        "implementationPlan": "1. Implement replay engine in desktop-core (crates/desktop-core/src/replay.rs) handling background mutation event batch processing, exponential backoff retries, and status transitions.\n2. Implement Tauri IPC commands in src-tauri (apps/desktop/src-tauri/src/replay_cmd.rs) for trigger_manual_sync and get_last_sync_info.\n3. Add unit and integration tests verifying event batch replay, retry count increments, and manual sync execution.",
+        "priority": "high",
+        "spec": "specs/2026-08-10/offline-desktop-server-sync",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[offline-desktop-sync-04] Implement background sync replay engine, retry logic and manual sync trigger",
+        "updatedAt": "2026-08-10T01:30:21.0388147Z"
+      }
+    }
+  ]
+}
