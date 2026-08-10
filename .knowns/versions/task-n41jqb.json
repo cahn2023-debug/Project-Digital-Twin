@@ -1,0 +1,90 @@
+{
+  "taskId": "n41jqb",
+  "currentVersion": 2,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "n41jqb",
+      "version": 1,
+      "timestamp": "2026-08-10T11:07:46.8624684Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T18:07:46.8407876+07:00",
+        "description": "Implement Open Project handler for browsing project folders or SQLite DB files, validating manifest structure, activating project, and updating Recent Projects history.",
+        "fulfills": [
+          "AC-3"
+        ],
+        "id": "n41jqb",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-03] Implement Open Project Folder/File Picker and Validation",
+        "updatedAt": "2026-08-10T18:07:46.8407876+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "n41jqb",
+      "version": 2,
+      "timestamp": "2026-08-10T11:10:23.8571932Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "done"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Open project picker \u0026 validation flow"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T11:10:23.8571932Z"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "completedAt": "2026-08-10T11:10:23.8571932Z",
+        "createdAt": "2026-08-10T11:07:46.84Z",
+        "description": "Implement Open Project handler for browsing project folders or SQLite DB files, validating manifest structure, activating project, and updating Recent Projects history.",
+        "fulfills": [
+          "AC-3"
+        ],
+        "id": "n41jqb",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Open project picker \u0026 validation flow",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-03] Implement Open Project Folder/File Picker and Validation",
+        "updatedAt": "2026-08-10T11:10:23.8571932Z"
+      }
+    }
+  ]
+}

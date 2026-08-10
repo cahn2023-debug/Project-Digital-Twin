@@ -9,6 +9,7 @@ import { DesignView } from "../features/design/DesignView";
 import { OperateView } from "../features/operate/OperateView";
 import { OrganizeView } from "../features/organize/OrganizeView";
 import { ProjectCreateDialog, ProjectDialog } from "../features/project-lifecycle/ProjectDialogs";
+import { WelcomeLauncherHub } from "../features/project-lifecycle/WelcomeLauncherHub";
 import type { ModuleKey } from "../shared/types";
 import { modules, moduleTabs } from "./navigation";
 import { useProjectContext } from "./ProjectContext";
@@ -47,6 +48,11 @@ export default function App() {
     projectError,
     setProjectError,
     projectBusy,
+    recentProjects,
+    saveActiveProject,
+    addRecentProject,
+    removeRecentProject,
+    closeCurrentProject,
     closeProjectDialog,
     openCreateProject,
     openDeleteProject,
@@ -83,6 +89,21 @@ export default function App() {
   };
 
   const renderView = () => {
+    if (!currentProject) {
+      return (
+        <WelcomeLauncherHub
+          recentProjects={recentProjects}
+          allProjects={projects}
+          onSelectProject={(id) => {
+            saveActiveProject(id);
+            showToast("Đã mở dự án");
+          }}
+          onCreateProject={openCreateProject}
+          onOpenProjectFromDisk={openCreateProject}
+          onRemoveRecentProject={removeRecentProject}
+        />
+      );
+    }
     if (activeModule === "datacenter") {
       if (activeSideItem === "audit") return <AuditView onAction={showToast} />;
       if (activeSideItem === "sync") return <ConflictDashboard onAction={showToast} />;
@@ -124,7 +145,16 @@ export default function App() {
             <div className="project-menu" role="dialog" aria-label="Project switcher">
               <div className="project-menu-head">
                 <div><div className="panel-title">Projects</div><div className="panel-sub">Chọn workspace đang làm việc</div></div>
-                <button className="button primary small" type="button" onClick={openCreateProject}><Icon name="plus" size={13} />Tạo</button>
+                <div style={{ display: "flex", gap: 4 }}>
+                  {currentProject ? (
+                    <button className="button secondary small" type="button" onClick={closeCurrentProject}>
+                      <Icon name="x" size={13} />Đóng
+                    </button>
+                  ) : null}
+                  <button className="button primary small" type="button" onClick={openCreateProject}>
+                    <Icon name="plus" size={13} />Tạo
+                  </button>
+                </div>
               </div>
               <div className="project-menu-tabs" role="tablist" aria-label="Project filter">
                 <button className={projectFilter === "active" ? "active" : ""} type="button" role="tab" aria-selected={projectFilter === "active"} onClick={() => setProjectFilter("active")}>Đang dùng ({projects.length})</button>
@@ -141,7 +171,11 @@ export default function App() {
                     className="project-menu-main"
                     type="button"
                     disabled={project.status !== "ACTIVE"}
-                    onClick={() => { setSelectedProjectId(project.id); setProjectMenuOpen(false); }}
+                    onClick={() => {
+                      saveActiveProject(project.id);
+                      addRecentProject({ id: project.id, name: project.name, rootPath: project.rootPath, status: "ACTIVE" });
+                      setProjectMenuOpen(false);
+                    }}
                   >
                     <span className="project-menu-code">{project.code}</span>
                     <span className="project-menu-copy"><strong>{project.name}</strong><small>{project.rootPath}</small></span>

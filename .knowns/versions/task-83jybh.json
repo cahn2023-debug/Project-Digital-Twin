@@ -1,0 +1,90 @@
+{
+  "taskId": "83jybh",
+  "currentVersion": 2,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "83jybh",
+      "version": 1,
+      "timestamp": "2026-08-10T11:07:49.9204835Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T18:07:49.893042+07:00",
+        "description": "Implement Header Project Dropdown control on App Shell with Close Project and Switch Project actions to return to Welcome Launcher Hub.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "83jybh",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-04] Implement Header Project Selector Dropdown, Close \u0026 Switch Project",
+        "updatedAt": "2026-08-10T18:07:49.893042+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "83jybh",
+      "version": 2,
+      "timestamp": "2026-08-10T11:10:28.8491195Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "done"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Header project switcher, Close project \u0026 Switch project flow"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T11:10:28.8491195Z"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "completedAt": "2026-08-10T11:10:28.8491195Z",
+        "createdAt": "2026-08-10T11:07:49.893Z",
+        "description": "Implement Header Project Dropdown control on App Shell with Close Project and Switch Project actions to return to Welcome Launcher Hub.",
+        "fulfills": [
+          "AC-4"
+        ],
+        "id": "83jybh",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Header project switcher, Close project \u0026 Switch project flow",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-04] Implement Header Project Selector Dropdown, Close \u0026 Switch Project",
+        "updatedAt": "2026-08-10T11:10:28.8491195Z"
+      }
+    }
+  ]
+}

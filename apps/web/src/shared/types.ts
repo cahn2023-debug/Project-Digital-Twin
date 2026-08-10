@@ -17,6 +17,7 @@ export type IconName =
   | "eye"
   | "file"
   | "filter"
+  | "folder"
   | "git"
   | "grid"
   | "map"
@@ -27,7 +28,8 @@ export type IconName =
   | "refresh"
   | "search"
   | "sun"
-  | "users";
+  | "users"
+  | "x";
 export type Tone = "danger" | "info" | "neutral" | "success" | "warning";
 
 

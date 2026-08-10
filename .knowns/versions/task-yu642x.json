@@ -1,0 +1,164 @@
+{
+  "taskId": "yu642x",
+  "currentVersion": 4,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "yu642x",
+      "version": 1,
+      "timestamp": "2026-08-10T11:07:40.8721276Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T18:07:40.8490652+07:00",
+        "description": "Implement zero-state Welcome Launcher Hub component when activeProject is null, including Recent Projects list, persistence, deleted path warning, and primary action buttons.",
+        "fulfills": [
+          "AC-1",
+          "AC-5"
+        ],
+        "id": "yu642x",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-01] Implement Welcome Launcher Hub UI and Active Project State",
+        "updatedAt": "2026-08-10T18:07:40.8490652+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "yu642x",
+      "version": 2,
+      "timestamp": "2026-08-10T11:08:21.844547Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "in-progress"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T11:07:40.849Z",
+        "description": "Implement zero-state Welcome Launcher Hub component when activeProject is null, including Recent Projects list, persistence, deleted path warning, and primary action buttons.",
+        "fulfills": [
+          "AC-1",
+          "AC-5"
+        ],
+        "id": "yu642x",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-01] Implement Welcome Launcher Hub UI and Active Project State",
+        "updatedAt": "2026-08-10T11:08:21.844547Z"
+      }
+    },
+    {
+      "id": "v3",
+      "taskId": "yu642x",
+      "version": 3,
+      "timestamp": "2026-08-10T11:08:26.8725924Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "implementationPlan",
+          "oldValue": null,
+          "newValue": "1. Add active project state and closeCurrentProject helper in ProjectContext.tsx\n2. Create WelcomeLauncherHub component in features/project-lifecycle/WelcomeLauncherHub.tsx\n3. Support Recent Projects list with persistence and missing path warnings\n4. Integrate WelcomeLauncherHub in AppShell when currentProject is null"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T11:07:40.849Z",
+        "description": "Implement zero-state Welcome Launcher Hub component when activeProject is null, including Recent Projects list, persistence, deleted path warning, and primary action buttons.",
+        "fulfills": [
+          "AC-1",
+          "AC-5"
+        ],
+        "id": "yu642x",
+        "implementationPlan": "1. Add active project state and closeCurrentProject helper in ProjectContext.tsx\n2. Create WelcomeLauncherHub component in features/project-lifecycle/WelcomeLauncherHub.tsx\n3. Support Recent Projects list with persistence and missing path warnings\n4. Integrate WelcomeLauncherHub in AppShell when currentProject is null",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "in-progress",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-01] Implement Welcome Launcher Hub UI and Active Project State",
+        "updatedAt": "2026-08-10T11:08:26.8725924Z"
+      }
+    },
+    {
+      "id": "v4",
+      "taskId": "yu642x",
+      "version": 4,
+      "timestamp": "2026-08-10T11:10:14.8477803Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "in-progress",
+          "newValue": "done"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Desktop launcher UI implemented"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T11:10:14.8477803Z"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "completedAt": "2026-08-10T11:10:14.8477803Z",
+        "createdAt": "2026-08-10T11:07:40.849Z",
+        "description": "Implement zero-state Welcome Launcher Hub component when activeProject is null, including Recent Projects list, persistence, deleted path warning, and primary action buttons.",
+        "fulfills": [
+          "AC-1",
+          "AC-5"
+        ],
+        "id": "yu642x",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Desktop launcher UI implemented",
+        "implementationPlan": "1. Add active project state and closeCurrentProject helper in ProjectContext.tsx\n2. Create WelcomeLauncherHub component in features/project-lifecycle/WelcomeLauncherHub.tsx\n3. Support Recent Projects list with persistence and missing path warnings\n4. Integrate WelcomeLauncherHub in AppShell when currentProject is null",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-01] Implement Welcome Launcher Hub UI and Active Project State",
+        "updatedAt": "2026-08-10T11:10:14.8477803Z"
+      }
+    }
+  ]
+}

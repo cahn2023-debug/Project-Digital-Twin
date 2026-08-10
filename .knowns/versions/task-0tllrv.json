@@ -1,0 +1,90 @@
+{
+  "taskId": "0tllrv",
+  "currentVersion": 2,
+  "versions": [
+    {
+      "id": "v1",
+      "taskId": "0tllrv",
+      "version": 1,
+      "timestamp": "2026-08-10T11:07:43.8468641Z",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": null,
+          "newValue": "todo"
+        },
+        {
+          "field": "priority",
+          "oldValue": null,
+          "newValue": "high"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "createdAt": "2026-08-10T18:07:43.8294119+07:00",
+        "description": "Implement Create Project dialog form (Name, Description, Local Path Picker) and initialize project manifest/DB on disk.",
+        "fulfills": [
+          "AC-2"
+        ],
+        "id": "0tllrv",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "todo",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-02] Implement Create Project Dialog and Disk Storage Initialization",
+        "updatedAt": "2026-08-10T18:07:43.8294119+07:00"
+      }
+    },
+    {
+      "id": "v2",
+      "taskId": "0tllrv",
+      "version": 2,
+      "timestamp": "2026-08-10T11:10:19.8047476Z",
+      "author": "cli",
+      "changes": [
+        {
+          "field": "status",
+          "oldValue": "todo",
+          "newValue": "done"
+        },
+        {
+          "field": "implementationNotes",
+          "oldValue": null,
+          "newValue": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Create project wizard \u0026 folder picker integration"
+        },
+        {
+          "field": "completedAt",
+          "oldValue": null,
+          "newValue": "2026-08-10T11:10:19.8047476Z"
+        }
+      ],
+      "snapshot": {
+        "archived": false,
+        "completedAt": "2026-08-10T11:10:19.8047476Z",
+        "createdAt": "2026-08-10T11:07:43.829Z",
+        "description": "Implement Create Project dialog form (Name, Description, Local Path Picker) and initialize project manifest/DB on disk.",
+        "fulfills": [
+          "AC-2"
+        ],
+        "id": "0tllrv",
+        "implementationNotes": "Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass. System Decision Impact: none — Create project wizard \u0026 folder picker integration",
+        "labels": [
+          "from-spec",
+          "spec:desktop-project-creation-and-open",
+          "spec-date:2026-08-10"
+        ],
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-project-creation-and-open",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-project-creation-02] Implement Create Project Dialog and Disk Storage Initialization",
+        "updatedAt": "2026-08-10T11:10:19.8047476Z"
+      }
+    }
+  ]
+}

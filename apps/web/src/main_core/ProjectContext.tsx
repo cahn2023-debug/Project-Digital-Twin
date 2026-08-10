@@ -4,11 +4,23 @@ import { apiBase, requestJson } from "../shared/api";
 import type { Tone } from "../shared/types";
 import { toProject, type ApiProject } from "../features/project-lifecycle/api";
 
+import type { RecentProjectItem } from "../features/project-lifecycle/WelcomeLauncherHub";
+
 export function useProjectContext(showToast: (message: string) => void) {
   const [connection, setConnection] = useState({ label: "Đang kết nối API", tone: "warning" as Tone });
   const [projects, setProjects] = useState<Project[]>([]);
   const [archivedProjects, setArchivedProjects] = useState<Project[]>([]);
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(() => {
+    return window.localStorage.getItem("pp-active-project-id");
+  });
+  const [recentProjects, setRecentProjects] = useState<RecentProjectItem[]>(() => {
+    try {
+      const saved = window.localStorage.getItem("pp-recent-projects");
+      return saved ? (JSON.parse(saved) as RecentProjectItem[]) : [];
+    } catch {
+      return [];
+    }
+  });
   const [projectMenuOpen, setProjectMenuOpen] = useState(false);
   const [projectFilter, setProjectFilter] = useState<"active" | "archived">("active");
   const [projectLoading, setProjectLoading] = useState(false);
@@ -18,8 +30,42 @@ export function useProjectContext(showToast: (message: string) => void) {
   const [projectDraftRoot, setProjectDraftRoot] = useState("");
   const [projectError, setProjectError] = useState("");
   const [projectBusy, setProjectBusy] = useState(false);
-  const currentProject = projects.find((project) => project.id === selectedProjectId) ?? projects[0] ?? null;
+
+  const currentProject = selectedProjectId ? (projects.find((project) => project.id === selectedProjectId) ?? null) : null;
   const projectOptions = [...projects, ...archivedProjects];
+
+  const saveActiveProject = (id: string | null) => {
+    setSelectedProjectId(id);
+    if (id) {
+      window.localStorage.setItem("pp-active-project-id", id);
+    } else {
+      window.localStorage.removeItem("pp-active-project-id");
+    }
+  };
+
+  const addRecentProject = (item: RecentProjectItem) => {
+    setRecentProjects((prev) => {
+      const filtered = prev.filter((p) => p.id !== item.id);
+      const updated = [item, ...filtered];
+      window.localStorage.setItem("pp-recent-projects", JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const removeRecentProject = (id: string) => {
+    setRecentProjects((prev) => {
+      const updated = prev.filter((p) => p.id !== id);
+      window.localStorage.setItem("pp-recent-projects", JSON.stringify(updated));
+      return updated;
+    });
+    showToast("Đã xóa khỏi danh sách gần đây");
+  };
+
+  const closeCurrentProject = () => {
+    saveActiveProject(null);
+    setProjectMenuOpen(false);
+    showToast("Đã đóng dự án hiện tại");
+  };
 
   const refreshProjects = async (preferredId?: string): Promise<boolean> => {
     setProjectLoading(true);
@@ -31,10 +77,11 @@ export function useProjectContext(showToast: (message: string) => void) {
       const nextProjects = active.map(toProject);
       setProjects(nextProjects);
       setArchivedProjects(archived.map(toProject));
+      
       setSelectedProjectId((previous) => {
         if (preferredId && nextProjects.some((project) => project.id === preferredId)) return preferredId;
         if (previous && nextProjects.some((project) => project.id === previous)) return previous;
-        return nextProjects[0]?.id ?? null;
+        return null;
       });
       setProjectError("");
       return true;
@@ -97,8 +144,11 @@ export function useProjectContext(showToast: (message: string) => void) {
           const restored = await requestJson<ApiProject>(`/api/v1/projects/${existingProject.id}/restore`, { method: "POST" });
           if (!await refreshProjects(restored.id)) throw new Error("Project đã khôi phục nhưng không thể tải lại danh sách");
           setProjectFilter("active");
+          saveActiveProject(restored.id);
+          addRecentProject({ id: restored.id, name: restored.name, rootPath: restored.root_path, status: "ACTIVE" });
         } else {
-          setSelectedProjectId(existingProject.id);
+          saveActiveProject(existingProject.id);
+          addRecentProject({ id: existingProject.id, name: existingProject.name, rootPath: existingProject.rootPath, status: "ACTIVE" });
         }
         closeProjectDialog();
         showToast(`Đã mở project ${existingProject.name}`);
@@ -116,6 +166,8 @@ export function useProjectContext(showToast: (message: string) => void) {
         body: JSON.stringify({ name: projectDraftName.trim(), root_path: projectDraftRoot.trim() }),
       });
       if (!await refreshProjects(created.id)) throw new Error("Project đã tạo nhưng không thể tải lại danh sách");
+      saveActiveProject(created.id);
+      addRecentProject({ id: created.id, name: created.name, rootPath: created.root_path, status: "ACTIVE" });
       closeProjectDialog();
       showToast("Đã tạo và chọn project mới");
     } catch (error) {
@@ -200,6 +252,11 @@ export function useProjectContext(showToast: (message: string) => void) {
     projectError,
     setProjectError,
     projectBusy,
+    recentProjects,
+    saveActiveProject,
+    addRecentProject,
+    removeRecentProject,
+    closeCurrentProject,
     refreshProjects,
     closeProjectDialog,
     openCreateProject,

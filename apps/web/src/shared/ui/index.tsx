@@ -307,6 +307,15 @@ const iconPaths: Record<IconName, ReactNode> = {
       strokeWidth="1.7"
     />
   ),
+  folder: (
+    <path
+      d="M3 6.5A1.5 1.5 0 0 1 4.5 5h4l2 2.5h8A1.5 1.5 0 0 1 20 9v9.5a1.5 1.5 0 0 1-1.5 1.5h-14A1.5 1.5 0 0 1 3 18.5v-12Z"
+      fill="none"
+      stroke="currentColor"
+      strokeLinejoin="round"
+      strokeWidth="1.7"
+    />
+  ),
   git: (
     <>
       <circle
@@ -523,6 +532,15 @@ const iconPaths: Record<IconName, ReactNode> = {
         strokeWidth="1.7"
       />
     </>
+  ),
+  x: (
+    <path
+      d="M18 6 6 18M6 6l12 12"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeWidth="1.8"
+    />
   ),
 };
 
