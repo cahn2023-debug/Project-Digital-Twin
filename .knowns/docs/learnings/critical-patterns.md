@@ -2,7 +2,7 @@
 title: Critical Patterns
 description: Promoted learnings that save the most time. Read at session start.
 createdAt: '2026-08-10T08:33:00.000Z'
-updatedAt: '2026-08-10T06:19:28.130Z'
+updatedAt: '2026-08-10T15:11:01.380Z'
 tags:
   - learning
   - critical
@@ -32,5 +32,15 @@ Compiling `rusqlite` with `bundled-sqlcipher-vendored-openssl` on Windows MSVC r
 **Tags:** [desktop, parsing, raw-fallback, retry, provenance]
 
 Keep the desktop parser gate explicit: a unique profile produces normalized payload only; unsupported/ambiguous/failed parsing produces a raw-fallback result with reason. Persist the latest local projection and append-only retry history so offline retries reuse the cached parse result, preserve provenance, and remain idempotent. Standalone exact compliance-marker lines are required for aggregate SDD validation.
+
+**Full entry:** @doc/learnings/learning-desktop-parse-before-server-upload
+
+## 2026-08-10 Desktop Folder Ingestion Invariants
+**Category:** pattern / failure prevention
+**Source:** @task-fqzovh, @task-hc5m2d, @task-ho64sc, @task-t9mo1e, @task-746tlu, @task-724y4b, @task-at3xfd
+**System Decisions:** @decision/20260810-1958-desktop-parser-format-boundary-for-csv-and-legacy-word, @decision/20260810-2003-deterministic-source-record-identity-and-revision-diff, @decision/20260810-2014-desktop-changeset-review-is-append-only-and-approval-gated, @decision/20260810-2129-desktop-manifest-persists-provenance-and-obtains-db-keys-from-os-keychain, @decision/20260810-2135-desktop-changeset-and-asset-sync-remain-idempotent-and-review-gated, @decision/20260810-2145-desktop-ingestion-jobs-expose-per-file-progress-and-cancellation
+**Tags:** [desktop, ingestion, provenance, identity, approval, retry]
+
+A folder ingestion pipeline should preserve source evidence at every boundary: deterministic record identity and revision history, Raw/ChangeSet/assets/audit provenance, explicit approval before canonical apply, and per-file progress/retry/cancellation. Treat ambiguous parser input, locked files, conflicts, stale decision evidence, and zero-suite test runs as visible states requiring review rather than successful completion.
 
 **Full entry:** @doc/learnings/learning-desktop-parse-before-server-upload

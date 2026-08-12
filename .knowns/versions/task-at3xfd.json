@@ -1,6 +1,6 @@
 {
   "taskId": "at3xfd",
-  "currentVersion": 5,
+  "currentVersion": 6,
   "versions": [
     {
       "id": "v1",
@@ -287,20 +287,20 @@
       "snapshot": {
         "acceptanceCriteria": [
           {
-            "text": "Integrated fixtures cover Excel, CSV, TXT, Markdown, .doc/.docx, malformed/locked files, assets, schema drift, identity and revision rollback.",
-            "completed": true
+            "completed": true,
+            "text": "Integrated fixtures cover Excel, CSV, TXT, Markdown, .doc/.docx, malformed/locked files, assets, schema drift, identity and revision rollback."
           },
           {
-            "text": "Restart/offline, retry/idempotency, conflict review, approval gate, archive and audit flows pass end to end.",
-            "completed": true
+            "completed": true,
+            "text": "Restart/offline, retry/idempotency, conflict review, approval gate, archive and audit flows pass end to end."
           },
           {
-            "text": "Desktop, desktop-core, web and server typecheck/build/test plus git diff check pass.",
-            "completed": true
+            "completed": true,
+            "text": "Desktop, desktop-core, web and server typecheck/build/test plus git diff check pass."
           },
           {
-            "text": "Knowns task/spec validation and D1-D31 compliance evidence are complete.",
-            "completed": true
+            "completed": true,
+            "text": "Knowns task/spec validation and D1-D31 compliance evidence are complete."
           }
         ],
         "archived": false,
@@ -326,6 +326,63 @@
         "timeSpent": 0,
         "title": "[desktop-data-source-folder-ingestion-12] Run integrated parsing and SDD verification",
         "updatedAt": "2026-08-10T14:49:04.7858432Z"
+      }
+    },
+    {
+      "id": "v6",
+      "taskId": "at3xfd",
+      "version": 6,
+      "timestamp": "2026-08-10T15:11:27.6723792Z",
+      "author": "mcp",
+      "changes": [
+        {
+          "field": "implementationNotes",
+          "oldValue": "Done: integrated verification covered Excel/XLS/XLSX, CSV, TXT/Markdown, .doc/.docx parser fixtures, malformed/ambiguous values, identity/revision diff, preview/review, local asset/audit/archive persistence, asset idempotency/conflict, approval gate, cancellation/progress and source isolation. Verification: cargo test --workspace = 37 passed; cargo check desktop passed; server full pytest = 71 passed; web typecheck/build passed; web test runner passed with 0 suites; Python compileall passed; git diff --check passed; task and spec entity validation passed. System Decision Impact: none — verification produced no new durable guidance beyond existing task decisions. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass. SDD aggregate warning: remaining errors are legacy tasks outside this feature wave (desktop-project-creation-and-open and older partial compliance records); the target spec/task entities validate cleanly.",
+          "newValue": "Done: integrated verification covered Excel/XLS/XLSX, CSV, TXT/Markdown, .doc/.docx parser fixtures, malformed/ambiguous values, identity/revision diff, preview/review, local asset/audit/archive persistence, asset idempotency/conflict, approval gate, cancellation/progress and source isolation. Verification: cargo test --workspace = 37 passed; cargo check desktop passed; server full pytest = 71 passed; web typecheck/build passed; web test runner passed with 0 suites; Python compileall passed; git diff --check passed; task and spec entity validation passed. System Decision Impact: none — verification produced no new durable guidance beyond existing task decisions. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass. SDD aggregate warning: remaining errors are legacy tasks outside this feature wave (desktop-project-creation-and-open and older partial compliance records); the target spec/task entities validate cleanly.\n\n📚 Extracted reusable folder-ingestion patterns, decisions, and verification failures to @doc/learnings/learning-desktop-parse-before-server-upload and promoted the invariant summary in @doc/learnings/critical-patterns. Added project memory @memory-8s6ih7 (proposed)."
+        }
+      ],
+      "snapshot": {
+        "acceptanceCriteria": [
+          {
+            "text": "Integrated fixtures cover Excel, CSV, TXT, Markdown, .doc/.docx, malformed/locked files, assets, schema drift, identity and revision rollback.",
+            "completed": true
+          },
+          {
+            "text": "Restart/offline, retry/idempotency, conflict review, approval gate, archive and audit flows pass end to end.",
+            "completed": true
+          },
+          {
+            "text": "Desktop, desktop-core, web and server typecheck/build/test plus git diff check pass.",
+            "completed": true
+          },
+          {
+            "text": "Knowns task/spec validation and D1-D31 compliance evidence are complete.",
+            "completed": true
+          }
+        ],
+        "archived": false,
+        "assignee": "@me",
+        "completedAt": "2026-08-10T14:49:04.785Z",
+        "createdAt": "2026-08-10T12:45:30.212Z",
+        "description": "Verify the complete D8-D31 implementation across parser fixtures, preview/review, local persistence, offline sync, identity/revision, archive and UI; close documentation/SDD evidence before handoff.",
+        "fulfills": [
+          "AC-18"
+        ],
+        "id": "at3xfd",
+        "implementationNotes": "Done: integrated verification covered Excel/XLS/XLSX, CSV, TXT/Markdown, .doc/.docx parser fixtures, malformed/ambiguous values, identity/revision diff, preview/review, local asset/audit/archive persistence, asset idempotency/conflict, approval gate, cancellation/progress and source isolation. Verification: cargo test --workspace = 37 passed; cargo check desktop passed; server full pytest = 71 passed; web typecheck/build passed; web test runner passed with 0 suites; Python compileall passed; git diff --check passed; task and spec entity validation passed. System Decision Impact: none — verification produced no new durable guidance beyond existing task decisions. Spec Decision Compliance: D1=pass, D2=pass, D3=pass, D4=pass, D5=pass, D6=pass, D7=pass, D8=pass, D9=pass, D10=pass, D11=pass, D12=pass, D13=pass, D14=pass, D15=pass, D16=pass, D17=pass, D18=pass, D19=pass, D20=pass, D21=pass, D22=pass, D23=pass, D24=pass, D25=pass, D26=pass, D27=pass, D28=pass, D29=pass, D30=pass, D31=pass. SDD aggregate warning: remaining errors are legacy tasks outside this feature wave (desktop-project-creation-and-open and older partial compliance records); the target spec/task entities validate cleanly.\n\n📚 Extracted reusable folder-ingestion patterns, decisions, and verification failures to @doc/learnings/learning-desktop-parse-before-server-upload and promoted the invariant summary in @doc/learnings/critical-patterns. Added project memory @memory-8s6ih7 (proposed).",
+        "implementationPlan": "## Implementation Plan\n\n1. Assemble the end-to-end fixture matrix from the linked spec and verify each new acceptance criterion against the completed task wave.\n2. Run workspace Rust, server, web and desktop checks plus focused integration/manual checks for offline, conflict, archive and rollback.\n3. Review task/spec links, compliance markers, System Decision Impact and remaining warnings.\n4. Update the spec/task evidence and learning references only after verification passes.\n5. Stop the task timer and mark this verification task done with the final evidence.",
+        "labels": [
+          "from-spec",
+          "spec:desktop-data-source-folder-ingestion",
+          "spec-date:2026-08-10"
+        ],
+        "order": 120,
+        "priority": "high",
+        "spec": "specs/2026-08-10/desktop-data-source-folder-ingestion",
+        "status": "done",
+        "timeSpent": 0,
+        "title": "[desktop-data-source-folder-ingestion-12] Run integrated parsing and SDD verification",
+        "updatedAt": "2026-08-10T15:11:27.6723792Z"
       }
     }
   ]
