@@ -67,27 +67,31 @@ pub struct ParserProfile {
 
 impl ParserProfile {
     fn built_in(format: &FileFormat) -> Self {
+        let spreadsheet_discovery = matches!(format, FileFormat::Xlsx | FileFormat::Xls);
         let mut aliases = BTreeMap::new();
-        aliases.insert(
-            "code".to_owned(),
-            vec![
+        if !spreadsheet_discovery {
+            aliases.insert(
                 "code".to_owned(),
-                "camera code".to_owned(),
-                "camera_id".to_owned(),
-                "camera id".to_owned(),
-                "mã camera".to_owned(),
-            ],
-        );
-        aliases.insert(
-            "name".to_owned(),
-            vec![
+                vec![
+                    "code".to_owned(),
+                    "camera code".to_owned(),
+                    "camera_id".to_owned(),
+                    "camera id".to_owned(),
+                    "mã camera".to_owned(),
+                ],
+            );
+            aliases.insert(
                 "name".to_owned(),
-                "camera name".to_owned(),
-                "tên camera".to_owned(),
-            ],
-        );
+                vec![
+                    "name".to_owned(),
+                    "camera name".to_owned(),
+                    "tên camera".to_owned(),
+                ],
+            );
+        }
         Self {
             profile_id: match format {
+                FileFormat::Xlsx | FileFormat::Xls => "spreadsheet-discovery".to_owned(),
                 FileFormat::Word | FileFormat::Markdown | FileFormat::Txt => {
                     "document-default".to_owned()
                 }
@@ -95,12 +99,16 @@ impl ParserProfile {
             },
             version: 1,
             format: Some(format.clone()),
-            sheet: matches!(format, FileFormat::Xlsx).then(|| "CAMERA".to_owned()),
+            sheet: None,
             header_row: 1,
             data_start_row: 2,
-            required_fields: matches!(format, FileFormat::Xlsx | FileFormat::Xls | FileFormat::Csv)
-                .then(|| vec!["code".to_owned()])
-                .unwrap_or_default(),
+            required_fields: if spreadsheet_discovery {
+                Vec::new()
+            } else {
+                matches!(format, FileFormat::Csv)
+                    .then(|| vec!["code".to_owned()])
+                    .unwrap_or_default()
+            },
             aliases,
             field_types: BTreeMap::new(),
             skip_rows: Vec::new(),
@@ -219,7 +227,7 @@ pub fn parse_file(request: &ParseRequest) -> Result<DesktopParseResult, String> 
         status,
         profile_id: profile.map(|value| value.profile_id.clone()),
         profile_version: profile.map(|value| value.version),
-        parser_version: "desktop-parser-v1".to_owned(),
+        parser_version: "desktop-parser-v2".to_owned(),
         records,
         report,
         fallback_reason: reason,
@@ -295,7 +303,23 @@ pub fn parse_file(request: &ParseRequest) -> Result<DesktopParseResult, String> 
         }
         report.issues.push(issue);
     }
-    let status = if report.valid_records == 0 && report.invalid_records > 0 {
+    let discovery_profile = matches!(format, FileFormat::Xlsx | FileFormat::Xls)
+        && profile.profile_id == "spreadsheet-discovery"
+        && profile.sheet.is_none();
+    if discovery_profile {
+        report.warning_count += 1;
+        report.issues.push(ParseIssue {
+            code: "PROFILE_REQUIRED".to_owned(),
+            message: "Workbook structure was discovered without a source Profile; preview mapping is required before import".to_owned(),
+            severity: ParseIssueSeverity::Warning,
+            row: None,
+            line: None,
+            column: None,
+        });
+    }
+    let status = if discovery_profile {
+        ParseStatus::Partial
+    } else if report.valid_records == 0 && report.invalid_records > 0 {
         ParseStatus::RawFallback
     } else if report.invalid_records > 0 {
         ParseStatus::Partial
@@ -1189,7 +1213,7 @@ mod tests {
     }
 
     #[test]
-    fn xlsx_parser_reads_the_builtin_camera_profile() {
+    fn xlsx_parser_discovers_the_first_sheet_without_camera_default() {
         let directory = tempfile::tempdir().expect("tempdir");
         let path = directory.path().join("cameras.xlsx");
         let file = File::create(&path).expect("xlsx");
@@ -1206,7 +1230,7 @@ mod tests {
             ),
             (
                 "xl/workbook.xml",
-                "<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><sheets><sheet name=\"CAMERA\" sheetId=\"1\" r:id=\"rId1\"/></sheets></workbook>",
+                "<workbook xmlns=\"http://schemas.openxmlformats.org/spreadsheetml/2006/main\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"><sheets><sheet name=\"NEW_LAYOUT\" sheetId=\"1\" r:id=\"rId1\"/></sheets></workbook>",
             ),
             (
                 "xl/_rels/workbook.xml.rels",
@@ -1232,12 +1256,19 @@ mod tests {
             source_hash: None,
         })
         .expect("parse");
-        assert_eq!(result.status, ParseStatus::Parsed);
+        assert_eq!(result.status, ParseStatus::Partial);
         assert_eq!(result.records.len(), 1);
         assert_eq!(
-            result.records[0].fields.get("code"),
+            result.records[0].raw.get("Code"),
             Some(&Value::String("CAM-1".to_owned()))
         );
+        assert_eq!(result.records[0].source.sheet, "NEW_LAYOUT");
+        assert!(result
+            .report
+            .issues
+            .iter()
+            .any(|issue| issue.code == "PROFILE_REQUIRED"));
+        assert_eq!(result.parser_version, "desktop-parser-v2");
         assert!(result.parsed_at > 0);
     }
 

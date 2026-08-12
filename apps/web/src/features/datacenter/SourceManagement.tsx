@@ -369,7 +369,7 @@ function PreviewImportCard({
     await onConfirm({
       profile_id: `camera-${item.file_id}`,
       version: Math.max(1, (item.desktop_parse?.profile_version ?? 0) + 1),
-      sheet: region?.sheet ?? "CAMERA",
+      sheet: region?.sheet ?? "WORKBOOK",
       header_rows: [headerRow],
       data_start_row: Math.max(headerRow + 1, region?.start_row ?? headerRow + 1),
       table_start_row: region?.start_row ?? null,

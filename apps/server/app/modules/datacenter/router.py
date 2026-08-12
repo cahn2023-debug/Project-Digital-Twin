@@ -173,6 +173,14 @@ def _desktop_record_rows(request: DesktopNormalizedImportRequest) -> list[dict[s
     return rows
 
 
+def _desktop_record_sheet(request: DesktopNormalizedImportRequest) -> str:
+    for record in request.records:
+        sheet = record.source.get("sheet")
+        if isinstance(sheet, str) and sheet.strip():
+            return sheet
+    return "CSV" if request.format == "CSV" else "WORKBOOK"
+
+
 def _desktop_document_result(
     project_id: UUID,
     request: DesktopNormalizedImportRequest,
@@ -381,7 +389,7 @@ def create_desktop_normalized_import(
         rows,
         file_id=request.file_id,
         file_revision=request.file_revision,
-        sheet="CAMERA" if request.format == "XLSX" else "CSV",
+        sheet=_desktop_record_sheet(request),
     )
     changeset, result = store.create_file_import_changeset(
         project_id,
@@ -459,7 +467,7 @@ def create_desktop_raw_fallback(
                     profile=WorkbookProfile(
                         profile_id=server_profile_id,
                         version=1,
-                        sheet="CAMERA",
+                        sheet=None,
                         header_rows=(1,),
                         data_start_row=2,
                         table_start_row=1,

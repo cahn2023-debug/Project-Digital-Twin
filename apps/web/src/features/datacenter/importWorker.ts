@@ -1,6 +1,8 @@
 import { invoke } from "@tauri-apps/api/core";
 import { requestJson } from "../../shared/api";
 
+const DESKTOP_PARSER_VERSION = "desktop-parser-v2";
+
 export type PendingJob = {
   job_id: string;
   job_type: string;
@@ -201,7 +203,47 @@ function classifyFileError(message: string): string {
   const normalized = message.toLowerCase();
   if (["permission", "access is denied", "os error 5", "unauthorized"].some((term) => normalized.includes(term))) return "FILE_PERMISSION_DENIED";
   if (["locked", "being used", "sharing violation", "os error 32", "resource busy"].some((term) => normalized.includes(term))) return "FILE_LOCKED";
+  if (normalized.includes("project not found")) return "PROJECT_NOT_FOUND";
+  if (normalized.includes("worksheet ") && normalized.includes(" not found")) return "PARSER_PROFILE_MISMATCH";
+  if (normalized.includes("desktop parser version mismatch")) return "DESKTOP_PARSER_OUTDATED";
   return "IMPORT_TRANSIENT_ERROR";
+}
+
+function errorMessage(error: unknown, fallback: string): string {
+  if (error instanceof Error) return error.message;
+  if (typeof error === "string" && error.trim()) return error;
+  if (isRecord(error)) {
+    const message = error.message ?? error.error ?? error.reason;
+    if (typeof message === "string" && message.trim()) return message;
+  }
+  return fallback;
+}
+
+async function ensureServerProject(projectId: string): Promise<void> {
+  try {
+    await requestJson(`/api/v1/projects/${projectId}`);
+    return;
+  } catch (error) {
+    if (!errorMessage(error, "").toLowerCase().includes("project not found")) throw error;
+  }
+
+  let localProject: { id: string; name: string; rootPath: string } | null = null;
+  try {
+    const saved = JSON.parse(window.localStorage.getItem("pp-recent-projects") ?? "[]") as unknown;
+    if (Array.isArray(saved)) {
+      const match = saved.find((item): item is Record<string, unknown> => isRecord(item) && item.id === projectId);
+      if (match && typeof match.name === "string" && typeof match.rootPath === "string") {
+        localProject = { id: projectId, name: match.name, rootPath: match.rootPath };
+      }
+    }
+  } catch {
+    // Let the original project error surface when local metadata is unavailable.
+  }
+  if (!localProject) throw new Error("Project not found");
+  await requestJson("/api/v1/projects", {
+    method: "POST",
+    body: JSON.stringify({ id: localProject.id, name: localProject.name, root_path: localProject.rootPath }),
+  });
 }
 
 type RevisionDiff = {
@@ -260,9 +302,14 @@ function parserFormat(path: string): DesktopParseResult["format"] {
   return "UNSUPPORTED";
 }
 
+function isCurrentDesktopParse(value: unknown): value is DesktopParseResult {
+  return isRecord(value) && value.parser_version === DESKTOP_PARSER_VERSION;
+}
+
 async function loadParserProfiles(manifestPath: string, projectId: string, format: DesktopParseResult["format"]): Promise<Record<string, unknown>[]> {
   const profiles = await invoke<LocalProfileRecord[]>("list_local_profiles", { manifestPath, projectId });
   return profiles.flatMap((record) => {
+    if (record.profile_id === "camera-default") return [];
     try {
       const value: unknown = JSON.parse(record.payload);
       if (!isRecord(value)) return [];
@@ -270,7 +317,7 @@ async function loadParserProfiles(manifestPath: string, projectId: string, forma
         profile_id: record.profile_id,
         version: record.version,
         format,
-        sheet: typeof value.sheet === "string" ? value.sheet : "CAMERA",
+        sheet: typeof value.sheet === "string" ? value.sheet : undefined,
         header_row: Array.isArray(value.header_rows) && typeof value.header_rows[0] === "number" ? value.header_rows[0] : 1,
         data_start_row: typeof value.data_start_row === "number" ? value.data_start_row : 2,
         skip_rows: Array.isArray(value.skip_rows) ? value.skip_rows.filter((row): row is number => typeof row === "number") : [],
@@ -312,7 +359,7 @@ function previewFromDesktopParse(result: DesktopParseResult): PreviewInfo {
   const headers = Array.from(new Set(rows.flatMap((row) => Object.keys(row))));
   const inferred_types = Object.fromEntries(headers.map((header) => [header, inferPreviewType(rows.map((row) => row[header]))])) as Record<string, PreviewValueType>;
   const firstSource = result.records[0]?.source ?? {};
-  const sheet = typeof firstSource.sheet === "string" ? firstSource.sheet : "CAMERA";
+  const sheet = typeof firstSource.sheet === "string" ? firstSource.sheet : "WORKBOOK";
   const firstRow = typeof firstSource.row === "number" ? firstSource.row : 1;
   return {
     file_id: result.file_id,
@@ -342,15 +389,21 @@ async function parseLocalFile(
   const profiles = format === "XLSX" || format === "XLS" || format === "CSV"
     ? await loadParserProfiles(manifestPath, payload.project_id, format)
     : [];
-  return invoke<DesktopParseResult>("parse_file", {
-    path: payload.path,
-    file_id: context.file_id,
-    file_revision: context.file_revision,
-    profiles,
-    project_id: payload.project_id,
-    source_id: payload.source_id,
-    source_hash: context.sha256,
+  const result = await invoke<DesktopParseResult>("parse_file", {
+    request: {
+      path: payload.path,
+      file_id: context.file_id,
+      file_revision: context.file_revision,
+      profiles,
+      project_id: payload.project_id,
+      source_id: payload.source_id,
+      source_hash: context.sha256,
+    },
   });
+  if (result.parser_version !== DESKTOP_PARSER_VERSION) {
+    throw new Error(`Desktop parser version mismatch: expected ${DESKTOP_PARSER_VERSION}, received ${result.parser_version}`);
+  }
+  return result;
 }
 
 function rawRecordsFromParse(
@@ -461,7 +514,7 @@ function rawRecordsFromResponse(
       source_id: sourceId,
       file_id: context.file_id,
       file_revision: context.file_revision,
-      sheet: isDocument ? "DOCUMENT" : "CAMERA",
+      sheet: isDocument ? "DOCUMENT" : "WORKBOOK",
       row: index + (isDocument ? 1 : 2),
       column: "",
     };
@@ -571,7 +624,7 @@ async function processFileScan(manifestPath: string, job: PendingJob): Promise<v
     modifiedAt: payload.modified_at,
     createdAt: new Date().toISOString(),
   });
-  const idempotencyKey = job.idempotency_key ?? `FILE_SCAN:${payload.file_id}:${payload.sha256}`;
+  const idempotencyKey = `FILE_SCAN:${context.file_id}:${payload.sha256}`;
   const importId = `${context.file_version_id}:${payload.sha256}`;
   let desktopParse: DesktopParseResult | null = null;
   let localPayload = localImportPayload(payload, context);
@@ -585,8 +638,8 @@ async function processFileScan(manifestPath: string, job: PendingJob): Promise<v
     if (cached) {
       try {
         const cachedPayload: unknown = JSON.parse(cached.payload);
-        if (isRecord(cachedPayload) && isRecord(cachedPayload.desktop_parse)) {
-          desktopParse = cachedPayload.desktop_parse as unknown as DesktopParseResult;
+        if (isRecord(cachedPayload) && isCurrentDesktopParse(cachedPayload.desktop_parse)) {
+          desktopParse = cachedPayload.desktop_parse;
           localPayload = cachedPayload;
         }
       } catch {
@@ -635,6 +688,7 @@ async function processFileScan(manifestPath: string, job: PendingJob): Promise<v
     await storeLocalImport(manifestPath, importId, payload, context, "UPLOADING", localPayload, [], job.attempts + 1);
     const revisionDiff = Array.isArray(localPayload.revision_diff) ? localPayload.revision_diff : undefined;
     const parseReport = revisionDiff ? { ...desktopParse.report, revision_diff: revisionDiff } : desktopParse.report;
+    await ensureServerProject(payload.project_id);
     const response = desktopParse.status === "RAW_FALLBACK"
       ? await requestJson<ImportResponse>("/api/v1/projects/{project_id}/desktop-imports/raw-fallback".replace("{project_id}", payload.project_id), {
           method: "POST",
@@ -687,7 +741,7 @@ async function processFileScan(manifestPath: string, job: PendingJob): Promise<v
         response,
       );
   } catch (error) {
-    const message = error instanceof Error ? error.message : "File import failed";
+    const message = errorMessage(error, "File import failed");
     const cancelled = error instanceof JobCancelledError;
     const errorCode = classifyFileError(message);
     try {
@@ -785,15 +839,21 @@ export async function confirmPreviewImport(
   };
   const format = parserFormat(importView.path);
   const desktopParse = await invoke<DesktopParseResult>("parse_file", {
-    path: importView.path,
-    file_id: importView.file_id,
-    file_revision: importView.file_revision,
-    profiles: [parserProfileFromImportProfile(profile, format)],
-    project_id: importView.project_id,
-    source_id: sourceId,
-    source_hash: importView.sha256,
+    request: {
+      path: importView.path,
+      file_id: importView.file_id,
+      file_revision: importView.file_revision,
+      profiles: [parserProfileFromImportProfile(profile, format)],
+      project_id: importView.project_id,
+      source_id: sourceId,
+      source_hash: importView.sha256,
+    },
   });
+  if (desktopParse.parser_version !== DESKTOP_PARSER_VERSION) {
+    throw new Error(`Desktop parser version mismatch: expected ${DESKTOP_PARSER_VERSION}, received ${desktopParse.parser_version}`);
+  }
   const idempotencyKey = `FILE_IMPORT_PROFILE:${importView.file_id}:${importView.file_revision}:${profile.profile_id}:v${profile.version}`;
+  await ensureServerProject(importView.project_id);
   const response = desktopParse.status === "RAW_FALLBACK"
     ? await requestJson<ImportResponse>(`/api/v1/projects/${importView.project_id}/desktop-imports/raw-fallback`, {
         method: "POST",
@@ -1028,7 +1088,7 @@ export async function processPendingFileScans(manifestPath: string, maxJobs = 4)
           await invoke("cancel_pending_job", { manifestPath, jobId: job.job_id });
           continue;
         }
-        const message = error instanceof Error ? error.message : "Asset sync failed";
+        const message = errorMessage(error, "Asset sync failed");
         const delaySeconds = Math.min(300, 5 * 2 ** Math.min(job.attempts + 1, 6));
         await invoke("retry_pending_job", {
           manifestPath,
@@ -1053,14 +1113,14 @@ export async function processPendingFileScans(manifestPath: string, maxJobs = 4)
         await invoke("cancel_pending_job", { manifestPath, jobId: job.job_id });
         continue;
       }
-      const message = error instanceof Error ? error.message : "File import failed";
+      const message = errorMessage(error, "File import failed");
       const delaySeconds = Math.min(300, 5 * 2 ** Math.min(job.attempts + 1, 6));
       await invoke("retry_pending_job", {
         manifestPath,
         jobId: job.job_id,
         error: message,
         nextRetryAt: Math.floor(Date.now() / 1000) + delaySeconds,
-        maxAttempts: 3,
+        maxAttempts: ["PROJECT_NOT_FOUND", "PARSER_PROFILE_MISMATCH", "DESKTOP_PARSER_OUTDATED"].includes(classifyFileError(message)) ? 1 : 3,
       });
     }
   }
