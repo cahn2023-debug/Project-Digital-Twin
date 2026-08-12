@@ -6,6 +6,10 @@ import { toProject, type ApiProject } from "../features/project-lifecycle/api";
 
 import type { RecentProjectItem } from "../features/project-lifecycle/WelcomeLauncherHub";
 
+function isUuid(value: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
+}
+
 export function useProjectContext(showToast: (message: string) => void) {
   const [connection, setConnection] = useState({ label: "Đang kết nối API", tone: "warning" as Tone });
   const [projects, setProjects] = useState<Project[]>([]);
@@ -90,7 +94,21 @@ export function useProjectContext(showToast: (message: string) => void) {
         requestJson<ApiProject[]>("/api/v1/projects?status=ACTIVE"),
         requestJson<ApiProject[]>("/api/v1/projects?status=ARCHIVED"),
       ]);
-      const nextProjects = active.map(toProject);
+      const serverIds = new Set([...active, ...archived].map((project) => project.id));
+      const restoredLocally = await Promise.all(recentProjects
+        .filter((recent) => recent.status !== "ARCHIVED" && isUuid(recent.id) && !serverIds.has(recent.id))
+        .map(async (recent) => {
+          try {
+            return await requestJson<ApiProject>("/api/v1/projects", {
+              method: "POST",
+              body: JSON.stringify({ id: recent.id, name: recent.name, root_path: recent.rootPath }),
+            });
+          } catch {
+            return null;
+          }
+        }));
+      const nextProjects = [...active, ...restoredLocally.filter((project): project is ApiProject => Boolean(project))]
+        .map(toProject);
       setProjects(nextProjects);
       setArchivedProjects(archived.map(toProject));
       
@@ -189,7 +207,7 @@ export function useProjectContext(showToast: (message: string) => void) {
     } catch (error) {
       const name = projectDraftName.trim();
       const rootPath = projectDraftRoot.trim() || `C:\\Projects\\${name}`;
-      const localId = "proj-local-" + Date.now();
+      const localId = crypto.randomUUID();
       const localItem: RecentProjectItem = {
         id: localId,
         name,

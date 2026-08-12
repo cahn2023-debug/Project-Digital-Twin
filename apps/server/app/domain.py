@@ -178,7 +178,7 @@ class CameraStore:
             sequence += 1
         return f"P-{sequence:03d}"
 
-    def create_project(self, name: str, root_path: str) -> Project:
+    def create_project(self, name: str, root_path: str, project_id: UUID | None = None) -> Project:
         project_name = name.strip()
         if not project_name:
             raise ProjectValidationError("Project name is required")
@@ -186,8 +186,10 @@ class CameraStore:
         root_key = self._root_key(normalized_root)
         if root_key in self.project_roots:
             raise ProjectConflictError("Project root directory is already in use")
+        if project_id is not None and project_id in self.projects:
+            raise ProjectConflictError("Project id is already in use")
         project = Project(
-            id=uuid4(),
+            id=project_id or uuid4(),
             code=self._next_project_code(),
             name=project_name,
             root_path=normalized_root,

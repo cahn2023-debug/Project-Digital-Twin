@@ -5,6 +5,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field, model_validator
 
 class ProjectCreate(BaseModel):
+    id: UUID | None = None
     name: str = Field(min_length=1, max_length=200)
     root_path: str = Field(min_length=1)
 

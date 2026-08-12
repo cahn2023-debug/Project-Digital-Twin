@@ -86,7 +86,7 @@ def list_projects(status: str = "ACTIVE") -> list[dict[str, Any]]:
 @router.post("/api/v1/projects", status_code=201)
 def create_project(request: ProjectCreate) -> dict[str, Any]:
     try:
-        project = store.create_project(request.name, request.root_path)
+        project = store.create_project(request.name, request.root_path, project_id=request.id)
     except ProjectValidationError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
     except ProjectConflictError as exc:

@@ -120,6 +120,22 @@ def test_project_lifecycle_validates_roots_and_preserves_data(tmp_path) -> None:
     assert client.get("/api/v1/projects?status=deleted").json()[0]["id"] == project["id"]
 
 
+def test_project_can_be_rehydrated_with_stable_local_id(tmp_path) -> None:
+    client = TestClient(app)
+    root = tmp_path / "rehydrated-project"
+    root.mkdir()
+    project_id = "12345678-1234-4234-8234-123456789012"
+
+    response = client.post(
+        "/api/v1/projects",
+        json={"id": project_id, "name": "Rehydrated", "root_path": str(root)},
+    )
+
+    assert response.status_code == 201, response.text
+    assert response.json()["id"] == project_id
+    assert client.get(f"/api/v1/projects/{project_id}").status_code == 200
+
+
 def test_project_delete_requires_exact_name_and_allows_new_identity_from_root(tmp_path) -> None:
     client = TestClient(app)
     root = tmp_path / "reusable-root"
